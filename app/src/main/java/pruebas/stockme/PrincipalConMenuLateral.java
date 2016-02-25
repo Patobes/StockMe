@@ -18,6 +18,7 @@ public class PrincipalConMenuLateral extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //subida 2 en la rama de Juan
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal_con_menu_lateral);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
