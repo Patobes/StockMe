@@ -61,6 +61,7 @@ public class Principal extends AppCompatActivity {
         if (id == R.id.action_settings) {
             Toast.makeText(this, "Hola qué tal?", Toast.LENGTH_LONG).show();
             return true;
+            //prueba de commit
         }
 
         return super.onOptionsItemSelected(item);
