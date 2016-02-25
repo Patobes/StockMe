@@ -17,7 +17,7 @@ public class Principal extends AppCompatActivity {
     private Button btnLateral;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {//Comentario
+    protected void onCreate(Bundle savedInstanceState) {//Comentario2
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
