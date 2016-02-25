@@ -62,6 +62,7 @@ public class Principal extends AppCompatActivity {
             Toast.makeText(this, "Hola qué tal?", Toast.LENGTH_LONG).show();
             return true;
             //prueba de commit
+            //prueba cambios en rama Juan
         }
 
         return super.onOptionsItemSelected(item);
