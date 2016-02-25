@@ -1,2 +1,0 @@
-# StockMe
-Aplicación para InfoMovil
