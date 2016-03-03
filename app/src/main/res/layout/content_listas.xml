@@ -9,21 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="stockme.stockme.Principal"
-    tools:showIn="@layout/app_bar_principal">
+    tools:context="stockme.stockme.Listas"
+    tools:showIn="@layout/activity_listas">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:id="@+id/textView2" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Listas"
-        android:id="@+id/principal_btn_listas"
-        android:layout_below="@+id/textView2"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="77dp" />
 </RelativeLayout>

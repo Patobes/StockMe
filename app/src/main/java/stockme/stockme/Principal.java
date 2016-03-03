@@ -12,9 +12,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.content.Intent;
 
 public class Principal extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private Button btn_listas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,17 @@ public class Principal extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        btn_listas = (Button) findViewById(R.id.principal_btn_listas);
+        btn_listas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent (v.getContext(),Listas.class);
+                startActivity(i);
+            }
+        });
+
     }
 
     @Override
