@@ -24,11 +24,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
 
-            <Button
-                android:layout_width="247dp"
-                android:layout_height="125dp"
-                android:text="Articulos"
-                android:id="@+id/lista_btn_articulos"
+            <TextView
+                android:layout_width="139dp"
+                android:layout_height="138dp"
+                android:text="Aquí saldrán los artículos"
+                android:id="@+id/textView3"
                 android:layout_gravity="center" />
         </FrameLayout>
     </LinearLayout>

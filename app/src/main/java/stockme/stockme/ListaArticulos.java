@@ -1,6 +1,5 @@
 package stockme.stockme;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,17 +9,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
-public class Listas extends AppCompatActivity {
+public class ListaArticulos extends AppCompatActivity {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
-    private Button btn_articulos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listas);
+        setContentView(R.layout.activity_lista_articulos);
 
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -29,14 +26,15 @@ public class Listas extends AppCompatActivity {
         // Find our drawer view
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        btn_articulos = (Button) findViewById(R.id.lista_btn_articulos);
-        btn_articulos.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent i = new Intent (v.getContext(),ListaArticulos.class);
-                startActivity(i);
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -57,4 +55,6 @@ public class Listas extends AppCompatActivity {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
     }
+
+
 }
