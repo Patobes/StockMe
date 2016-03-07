@@ -1,5 +1,6 @@
 package stockme.stockme;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,7 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.content.Intent;
+
+import stockme.stockme.persistencia.BDHandler;
 
 public class Principal extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -45,12 +47,15 @@ public class Principal extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        BDHandler handler = new BDHandler(this);
+        handler.obtenerProductos();
+
 
         btn_listas = (Button) findViewById(R.id.principal_btn_listas);
         btn_listas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent (v.getContext(),Listas.class);
+                Intent i = new Intent(v.getContext(), Listas.class);
                 startActivity(i);
             }
         });
