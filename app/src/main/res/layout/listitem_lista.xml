@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre"
+        android:id="@+id/listitem_lista_nombre"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Supermercado"
+        android:id="@+id/listitem_lista_supermercado"
+        android:layout_below="@+id/listitem_lista_nombre"
+        android:layout_alignParentStart="true"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fecha"
+        android:id="@+id/listitem_lista_fecha"
+        android:layout_alignBottom="@+id/listitem_lista_supermercado"
+        android:layout_toEndOf="@+id/listitem_lista_supermercado"
+        android:layout_marginLeft="10dp"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NProductos"
+        android:id="@+id/listitem_lista_nproductos"
+        android:layout_alignBottom="@+id/listitem_lista_fecha"
+        android:layout_toEndOf="@+id/listitem_lista_fecha"
+        android:layout_marginLeft="10dp"
+        android:textSize="16sp" />
+</RelativeLayout>

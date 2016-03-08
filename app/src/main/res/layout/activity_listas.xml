@@ -19,19 +19,47 @@
             android:layout_height="wrap_content" />
 
         <!-- The main content view where fragments are loaded -->
-        <FrameLayout
-            android:id="@+id/flContent"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+        <!--<FrameLayout-->
+            <!--android:id="@+id/flContent"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" >-->
 
-            <Button
-                android:layout_width="247dp"
-                android:layout_height="125dp"
-                android:text="Articulos"
-                android:id="@+id/lista_btn_articulos"
-                android:layout_gravity="center" />
-        </FrameLayout>
+            <!-- -->
+        <!--</FrameLayout>-->
     </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/flContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="247dp"
+            android:layout_height="125dp"
+            android:text="Articulos"
+            android:id="@+id/lista_btn_articulos"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Listas"
+            android:id="@+id/listas_tv_titulo"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="58dp" />
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="337dp"
+            android:id="@+id/listas_lv_listas"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_below="@+id/listas_tv_titulo"
+            android:layout_alignParentStart="true"
+            android:layout_above="@+id/lista_btn_articulos" />
+    </RelativeLayout>
 
     <!-- The navigation drawer that comes from the left -->
     <!-- Note that `android:layout_gravity` needs to be set to 'start' -->

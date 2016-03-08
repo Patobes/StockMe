@@ -10,6 +10,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import stockme.stockme.logica.Lista;
 import stockme.stockme.logica.Producto;
 import stockme.stockme.util.Util;
 
@@ -38,17 +39,22 @@ public class BDHandler  extends SQLiteOpenHelper {
         //tabla de stock
         db.execSQL("DROP TABLE IF EXISTS 'STOCK';");
         db.execSQL("CREATE TABLE IF NOT EXISTS `STOCK` ( `PRODUCTO` INTEGER NOT NULL, `CANTIDAD` INTEGER NOT NULL, PRIMARY KEY(PRODUCTO), FOREIGN KEY(`PRODUCTO`) REFERENCES PRODUCTO(ID));");
+        //tabla lista
+        db.execSQL("DROP TABLE IF EXISTS 'LISTA';");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `LISTA` ( `ID` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `NOMBRE` TEXT NOT NULL,`SUPERMERCADO` TEXT NOT NULL, `NUM_PRODUCTOS` INTEGER NOT NULL, `FECHA` TEXT NOT NULL);");
 
         //ahora se añaden los elementos iniciales
         db.execSQL("INSERT INTO `PRODUCTO` VALUES(1, 'Leche', 'Hacendado', 'Mercadona', 0.60);");
         db.execSQL("INSERT INTO 'SUPERMERCADO' VALUES(1, 'Mercadona', 'Calle Vara del Rey 5, 26003');");
         db.execSQL("INSERT INTO 'STOCK' VALUES(1, 3)");
+        db.execSQL("INSERT INTO `LISTA` VALUES(1, 'Lista 1', 'Mercadona', 3, '08/03/2016');");
+        db.execSQL("INSERT INTO `LISTA` VALUES(2, 'Lista 2', 'Dia', 6, '08/03/2016');");
+        db.execSQL("INSERT INTO `LISTA` VALUES(3, 'Lista 3', 'Eroski', 2, '08/03/2016');");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //cuando cambie la versión de la base de datos
-        //lo recomendado es que se borre lo existente y se importe de nuevo
+        insertarIniciales(db);
     }
 
     public SQLiteDatabase obtenerManejadorLectura()
@@ -69,6 +75,33 @@ public class BDHandler  extends SQLiteOpenHelper {
     public void cerrar()
     {
         this.close();
+    }
+
+    public List<Lista> obtenerListas(){
+        ArrayList<Lista> lista = new ArrayList();
+        String query = "SELECT * FROM LISTA";
+
+        // 2. get reference to writable DB
+        SQLiteDatabase db = this.obtenerManejadorLectura();
+        Cursor cursor = db.rawQuery(query, null);
+
+        // 3. go over each row, build book and add it to list
+        Lista book = null;
+        if (cursor.moveToFirst()) {
+            do {
+                book = new Lista();
+                book.setId(cursor.getInt(cursor.getColumnIndex("ID")));
+                book.setNombre(cursor.getString(cursor.getColumnIndex("NOMBRE")));
+                book.setSupermercado(cursor.getString(cursor.getColumnIndex("SUPERMERCADO")));
+                book.setFecha(cursor.getString(cursor.getColumnIndex("FECHA")));
+                book.setNumProductos(cursor.getInt(cursor.getColumnIndex("NUM_PRODUCTOS")));
+                lista.add(book);
+            } while (cursor.moveToNext());
+        }
+
+        Log.d("getAllBooks()", lista.toString());
+        db.close();
+        return lista;
     }
 
     public List<Producto> obtenerProductos(){

@@ -11,11 +11,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
+
+import java.util.List;
+
+import stockme.stockme.adaptadores.AdaptadorListItemListas;
+import stockme.stockme.logica.Lista;
+import stockme.stockme.persistencia.BDHandler;
 
 public class Listas extends AppCompatActivity {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private Button btn_articulos;
+    private ListView lista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +45,15 @@ public class Listas extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        lista = (ListView)findViewById(R.id.listas_lv_listas);
+        //recojo las listas existenes
+        BDHandler manejador = new BDHandler(this);
+        List<Lista> listaListas = manejador.obtenerListas();
+        //las añado al adaptador
+        AdaptadorListItemListas adaptador = new AdaptadorListItemListas(this, listaListas);
+        //asigno el adaptador a la list view
+        lista.setAdapter(adaptador);
     }
 
     @Override
