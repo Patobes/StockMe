@@ -14,13 +14,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import stockme.stockme.persistencia.BDHandler;
 
 public class Principal extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    private Button btn_listas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +28,7 @@ public class Principal extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,7 +36,7 @@ public class Principal extends AppCompatActivity
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -49,16 +49,6 @@ public class Principal extends AppCompatActivity
 
         BDHandler handler = new BDHandler(this);
         handler.obtenerProductos();
-
-
-        btn_listas = (Button) findViewById(R.id.principal_btn_listas);
-        btn_listas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), Listas.class);
-                startActivity(i);
-            }
-        });
 
     }
 
@@ -114,4 +104,11 @@ public class Principal extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    //metodo llamado por el boton de inicio imageButtonListas para iniciar la actividad Listas
+    public void openListas(View v){
+        Intent intent = new Intent(this, Listas.class);
+        startActivity(intent);
+    }
+
 }
