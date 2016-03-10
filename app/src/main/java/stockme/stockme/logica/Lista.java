@@ -4,34 +4,22 @@ package stockme.stockme.logica;
  * Created by JuanMiguel on 08/03/2016.
  */
 public class Lista {
-    private int id;
+
     private String nombre;
-    private String supermercado;
-    private int numProductos;
-    private String fecha;
+    private String fechaCreacion;
+    private String fechaModificacion;
 
     public Lista(){
-        this.id = 0;
         this.nombre = "";
-        this.supermercado ="";
-        this.numProductos = 0;
-        this.fecha = "";
+        this.fechaCreacion = "";
+        this.fechaModificacion = "";
     }
 
-    public Lista(int id, String nombre, String supermercado, int numProductos, String fecha) {
-        this.id = id;
+    public Lista(String nombre, String fechaCreacion, String fechaModificacion) {
+
         this.nombre = nombre;
-        this.supermercado = supermercado;
-        this.numProductos = numProductos;
-        this.fecha = fecha;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaModificacion = fechaModificacion;
     }
 
     public String getNombre() {
@@ -42,27 +30,19 @@ public class Lista {
         this.nombre = nombre;
     }
 
-    public String getSupermercado() {
-        return supermercado;
+    public String getFechaCreacion() {
+        return fechaCreacion;
     }
 
-    public void setSupermercado(String supermercado) {
-        this.supermercado = supermercado;
+    public void setFechaCreacion(String fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
-    public int getNumProductos() {
-        return numProductos;
+    public String getFechaModificacion() {
+        return fechaModificacion;
     }
 
-    public void setNumProductos(int numProductos) {
-        this.numProductos = numProductos;
-    }
-
-    public String getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
+    public void setFechaModificacion(String fechaModificacion) {
+        this.fechaModificacion = fechaModificacion;
     }
 }

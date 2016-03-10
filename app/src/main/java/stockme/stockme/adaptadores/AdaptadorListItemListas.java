@@ -31,13 +31,13 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
         lblNombre.setText(datos.get(position).getNombre());
 
         TextView lblSupermercado = (TextView)item.findViewById(R.id.listitem_lista_supermercado);
-        lblSupermercado.setText(datos.get(position).getSupermercado());
+        lblSupermercado.setText("Supermercado");
 
         TextView lblFecha = (TextView)item.findViewById(R.id.listitem_lista_fecha);
-        lblFecha.setText(datos.get(position).getFecha());
+        lblFecha.setText("fecha");
 
         TextView lblNProductos = (TextView)item.findViewById(R.id.listitem_lista_nproductos);
-        lblNProductos.setText(String.valueOf(datos.get(position).getNumProductos()));
+        lblNProductos.setText("numProductos");
 
         return(item);
     }

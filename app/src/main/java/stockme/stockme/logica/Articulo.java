@@ -3,14 +3,14 @@ package stockme.stockme.logica;
 /**
  * Created by JuanMiguel on 03/03/2016.
  */
-public class Producto {
+public class Articulo {
     private int id;
     private String nombre;
     private String marca;
     private String supermercado;
     private float precio;
 
-    public Producto(){
+    public Articulo(){
         this.id = 0;
         this.nombre = "";
         this.marca = "";
@@ -18,7 +18,7 @@ public class Producto {
         this.precio = 0.0f;
     }
 
-    public Producto(int id, String nombre, String marca, String supermercado, float precio) {
+    public Articulo(int id, String nombre, String marca, String supermercado, float precio) {
         this.id = id;
         this.nombre = nombre;
         this.marca = marca;

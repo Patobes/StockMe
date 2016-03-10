@@ -4,32 +4,43 @@ package stockme.stockme.logica;
  * Created by JuanMiguel on 03/03/2016.
  */
 public class Stock {
-    private int producto;
-    private int cantidad;
+    private int articulo;
+    private int minimo;
+    private int canitdad;
 
     public Stock(){
-        this.producto = 0;
-        this.cantidad = 0;
+        articulo = 0;
+        minimo = 0;
+        canitdad = 0;
     }
 
-    public Stock(int producto, int cantidad) {
-        this.producto = producto;
-        this.cantidad = cantidad;
+    public Stock(int articulo, int minimo, int canitdad) {
+        this.articulo = articulo;
+        this.minimo = minimo;
+        this.canitdad = canitdad;
     }
 
-    public int getProducto() {
-        return producto;
+    public int getArticulo() {
+        return articulo;
     }
 
-    public void setProducto(int producto) {
-        this.producto = producto;
+    public void setArticulo(int articulo) {
+        this.articulo = articulo;
     }
 
-    public int getCantidad() {
-        return cantidad;
+    public int getMinimo() {
+        return minimo;
     }
 
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
+    public void setMinimo(int minimo) {
+        this.minimo = minimo;
+    }
+
+    public int getCanitdad() {
+        return canitdad;
+    }
+
+    public void setCanitdad(int canitdad) {
+        this.canitdad = canitdad;
     }
 }

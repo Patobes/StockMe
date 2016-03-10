@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import stockme.stockme.logica.Lista;
-import stockme.stockme.logica.Producto;
+import stockme.stockme.logica.Articulo;
 import stockme.stockme.util.Util;
 
 /**
@@ -30,26 +30,67 @@ public class BDHandler  extends SQLiteOpenHelper {
     }
 
     private void insertarIniciales(SQLiteDatabase db) {
-        //tabla de producto
-        db.execSQL("DROP TABLE IF EXISTS 'PRODUCTO';");
-        db.execSQL("CREATE TABLE IF NOT EXISTS `PRODUCTO` ( `ID` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `NOMBRE` TEXT NOT NULL,`MARCA` TEXT,`SUPERMERCADO` TEXT NOT NULL, `PRECIO` REAL NOT NULL);");
+        //tabla de articulo
+        String articulo = "CREATE TABLE `ARTICULO` (" +
+            "`Id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
+            "`Nombre` TEXT NOT NULL," +
+            "`Marca` TEXT," +
+            "`Supermercado` TEXT NOT NULL," +
+            "`Precio` REAL," +
+            "FOREIGN KEY(`Supermercado`) REFERENCES `SUPERMERCADO`(`Nombre`)" +
+        ")";
+        db.execSQL("DROP TABLE IF EXISTS 'ARTICULO';");
+        db.execSQL(articulo);
+
         //tabla de supermercado
+        String supermercado = "CREATE TABLE `SUPERMERCADO` (" +
+            "`Nombre` TEXT NOT NULL," +
+            "PRIMARY KEY(Nombre)" +
+        ")";
         db.execSQL("DROP TABLE IF EXISTS 'SUPERMERCADO';");
-        db.execSQL("CREATE TABLE IF NOT EXISTS `SUPERMERCADO` ( `ID` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `NOMBRE` TEXT NOT NULL,`DIRECCION` TEXT NOT NULL);");
+        db.execSQL(supermercado);
+
         //tabla de stock
+        String stock = "CREATE TABLE `STOCK` (" +
+            "`Articulo` INTEGER NOT NULL," +
+            "`Minimo` INTEGER NOT NULL DEFAULT 0," +
+            "`Cantidad` INTEGER NOT NULL DEFAULT 0," +
+            "PRIMARY KEY(Articulo)," +
+            "FOREIGN KEY(`Articulo`) REFERENCES ARTICULO(Id)" +
+        ")";
         db.execSQL("DROP TABLE IF EXISTS 'STOCK';");
-        db.execSQL("CREATE TABLE IF NOT EXISTS `STOCK` ( `PRODUCTO` INTEGER NOT NULL, `CANTIDAD` INTEGER NOT NULL, PRIMARY KEY(PRODUCTO), FOREIGN KEY(`PRODUCTO`) REFERENCES PRODUCTO(ID));");
+        db.execSQL(stock);
+
         //tabla lista
+        String lista = "CREATE TABLE `LISTA` (" +
+            "`Nombre` TEXT NOT NULL," +
+            "`FechaCreacion` TEXT NOT NULL," +
+            "`FechaModificacion` TEXT NOT NULL," +
+            "PRIMARY KEY(Nombre)" +
+        ")";
         db.execSQL("DROP TABLE IF EXISTS 'LISTA';");
-        db.execSQL("CREATE TABLE IF NOT EXISTS `LISTA` ( `ID` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `NOMBRE` TEXT NOT NULL,`SUPERMERCADO` TEXT NOT NULL, `NUM_PRODUCTOS` INTEGER NOT NULL, `FECHA` TEXT NOT NULL);");
+        db.execSQL(lista);
+
+        //Lista_Articulo
+        String listaArticulo = "CREATE TABLE `LISTA_ARTICULO` (" +
+            "`Articulo` INTEGER NOT NULL," +
+            "`Nombre` TEXT NOT NULL," +
+            "`Cantidad` INTEGER NOT NULL DEFAULT 0," +
+            "PRIMARY KEY(Articulo,Nombre)," +
+            "FOREIGN KEY(`Articulo`) REFERENCES ARTICULO(Id)," +
+            "FOREIGN KEY(`Nombre`) REFERENCES LISTA(Nombre)" +
+        ")";
+        db.execSQL("DROP TABLE IF EXISTS 'LISTA_ARTICULO';");
+        db.execSQL(listaArticulo);
 
         //ahora se añaden los elementos iniciales
-        db.execSQL("INSERT INTO `PRODUCTO` VALUES(1, 'Leche', 'Hacendado', 'Mercadona', 0.60);");
-        db.execSQL("INSERT INTO 'SUPERMERCADO' VALUES(1, 'Mercadona', 'Calle Vara del Rey 5, 26003');");
-        db.execSQL("INSERT INTO 'STOCK' VALUES(1, 3)");
-        db.execSQL("INSERT INTO `LISTA` VALUES(1, 'Lista 1', 'Mercadona', 3, '08/03/2016');");
-        db.execSQL("INSERT INTO `LISTA` VALUES(2, 'Lista 2', 'Dia', 6, '08/03/2016');");
-        db.execSQL("INSERT INTO `LISTA` VALUES(3, 'Lista 3', 'Eroski', 2, '08/03/2016');");
+        db.execSQL("INSERT INTO `ARTICULO` VALUES(1, 'Leche', 'Hacendado', 'Mercadona', 0.60);");
+
+        db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Día');");
+        db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Mercadona');");
+        db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Eroski');");
+        db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Simply');");
+        db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Carrefour');");
     }
 
     @Override
@@ -90,11 +131,9 @@ public class BDHandler  extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 book = new Lista();
-                book.setId(cursor.getInt(cursor.getColumnIndex("ID")));
-                book.setNombre(cursor.getString(cursor.getColumnIndex("NOMBRE")));
-                book.setSupermercado(cursor.getString(cursor.getColumnIndex("SUPERMERCADO")));
-                book.setFecha(cursor.getString(cursor.getColumnIndex("FECHA")));
-                book.setNumProductos(cursor.getInt(cursor.getColumnIndex("NUM_PRODUCTOS")));
+                book.setNombre(cursor.getString(cursor.getColumnIndex("Nombre")));
+                book.setFechaCreacion(cursor.getString(cursor.getColumnIndex("FechaCreacion")));
+                book.setFechaModificacion(cursor.getString(cursor.getColumnIndex("FechaModificacion")));
                 lista.add(book);
             } while (cursor.moveToNext());
         }
@@ -104,24 +143,24 @@ public class BDHandler  extends SQLiteOpenHelper {
         return lista;
     }
 
-    public List<Producto> obtenerProductos(){
-        ArrayList<Producto> lista = new ArrayList();
-        String query = "SELECT * FROM PRODUCTO";
+    public List<Articulo> obtenerArticulos(){
+        ArrayList<Articulo> lista = new ArrayList();
+        String query = "SELECT * FROM ARTICULO";
 
         // 2. get reference to writable DB
         SQLiteDatabase db = this.obtenerManejadorLectura();
         Cursor cursor = db.rawQuery(query, null);
 
         // 3. go over each row, build book and add it to list
-        Producto book = null;
+        Articulo book = null;
         if (cursor.moveToFirst()) {
             do {
-                book = new Producto();
-                book.setId(cursor.getInt(cursor.getColumnIndex("ID")));
-                book.setNombre(cursor.getString(cursor.getColumnIndex("NOMBRE")));
-                book.setMarca(cursor.getString(cursor.getColumnIndex("MARCA")));
-                book.setSupermercado(cursor.getString(cursor.getColumnIndex("SUPERMERCADO")));
-                book.setPrecio(cursor.getFloat(cursor.getColumnIndex("PRECIO")));
+                book = new Articulo();
+                book.setId(cursor.getInt(cursor.getColumnIndex("Id")));
+                book.setNombre(cursor.getString(cursor.getColumnIndex("Nombre")));
+                book.setMarca(cursor.getString(cursor.getColumnIndex("Marca")));
+                book.setSupermercado(cursor.getString(cursor.getColumnIndex("Supermercado")));
+                book.setPrecio(cursor.getFloat(cursor.getColumnIndex("Precio")));
                 lista.add(book);
             } while (cursor.moveToNext());
         }
@@ -131,30 +170,30 @@ public class BDHandler  extends SQLiteOpenHelper {
         return lista;
     }
 
-    public boolean insertarProducto(Producto producto){
+    public boolean insertarArticulo(Articulo articulo){
         boolean ok = false;
         SQLiteDatabase db = this.obtenerManejadorEscritura();
         ContentValues values = new ContentValues();
 
-        values.put("ID", producto.getId());
-        values.put("NOMBRE", producto.getNombre());
-        values.put("MARCA", producto.getMarca());
-        values.put("SUPERMERCADO", producto.getSupermercado());
-        values.put("PRECIO", producto.getPrecio());
+        values.put("Id", articulo.getId());
+        values.put("Nombre", articulo.getNombre());
+        values.put("Marca", articulo.getMarca());
+        values.put("Supermercado", articulo.getSupermercado());
+        values.put("Precio", articulo.getPrecio());
 
         long indent = -1;
         SQLiteDatabase dbRead = this.obtenerManejadorLectura();
-        String query = "select id from producto where id = " + producto.getId();
+        String query = "select id from producto where id = " + articulo.getId();
         Cursor cursor = db.rawQuery(query, null);
         if(!cursor.moveToFirst()){//no existe en la bd
-            indent = db.insert("PRODUCTO",
+            indent = db.insert("ARTICULO",
                     null,
                     values);
         }
         dbRead.close();
 
         if(indent != -1){
-            producto.setId((int) indent);
+            articulo.setId((int) indent);
             ok = true;
         }
 
