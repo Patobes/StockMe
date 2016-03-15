@@ -1,7 +1,9 @@
 package stockme.stockme;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,7 +17,7 @@ import android.view.MenuItem;
 import stockme.stockme.persistencia.BDHandler;
 
 public class Principal extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, Fragment_listas.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,14 +88,25 @@ public class Principal extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        boolean fragTransact = false;
+        Fragment fragmento = null;
 
-        } else if (id == R.id.nav_slideshow) {
+        if (id == R.id.nav_listas) {
+            fragmento = new Fragment_listas();
+            fragTransact = true;
+        } else if (id == R.id.nav_stock) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_supermercados) {
 
+        } else if (id == R.id.nav_ajustes) {
+
+        }
+
+
+        if(fragTransact){
+            getSupportFragmentManager().beginTransaction().replace(R.id.contenido_principal, fragmento).commit();
+            item.setChecked(true);
+            getSupportActionBar().setTitle(item.getTitle());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -107,4 +120,8 @@ public class Principal extends AppCompatActivity
         startActivity(intent);
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }
