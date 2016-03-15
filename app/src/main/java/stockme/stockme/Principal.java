@@ -48,6 +48,9 @@ public class Principal extends AppCompatActivity
         BDHandler handler = new BDHandler(this);
         handler.obtenerArticulos();
 
+        Fragment fragmento = new Fragment_listas();
+        getSupportFragmentManager().beginTransaction().replace(R.id.contenido_principal, fragmento).commit();
+        this.setTitle("Listas");
     }
 
     @Override
