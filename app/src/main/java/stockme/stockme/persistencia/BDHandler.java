@@ -91,6 +91,9 @@ public class BDHandler  extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Eroski');");
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Simply');");
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Carrefour');");
+
+        db.execSQL("INSERT INTO 'LISTA' VALUES('LISTACHUNGA','HOY','MAÑANA')");
+        db.execSQL("INSERT INTO 'LISTA' VALUES('LISTACHU','AYER','TOMORROW')");
     }
 
     @Override
