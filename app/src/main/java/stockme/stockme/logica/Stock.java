@@ -8,6 +8,10 @@ public class Stock {
     private int minimo;
     private int canitdad;
 
+    public static String ARTICULO = "Articulo";
+    public static String MINIMO = "Minimo";
+    public static String CANTIDAD = "Cantidad";
+
     public Stock(){
         articulo = 0;
         minimo = 0;

@@ -8,6 +8,10 @@ public class ListaArticulo {
     private String nombre;
     private int cantidad;
 
+    public static String ARTICULO = "Articulo";
+    public static String NOMBRE = "Nombre";
+    public static String CANTIDAD = "Cantidad";
+
     public ListaArticulo(){
         this.articulo = 0;
         this.nombre = "";

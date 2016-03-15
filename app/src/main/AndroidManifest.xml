@@ -36,9 +36,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="stockme.stockme.Listas" />
         </activity>
-        <activity android:name=".PrincipalBuena">
-
-        </activity>
+        <activity
+            android:name=".ListaAdd"
+            android:label="@string/title_activity_lista_add"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

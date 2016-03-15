@@ -51,6 +51,8 @@ public class Principal extends AppCompatActivity
         Fragment fragmento = new Fragment_listas();
         getSupportFragmentManager().beginTransaction().replace(R.id.contenido_principal, fragmento).commit();
         this.setTitle("Listas");
+
+        navigationView.getMenu().getItem(0).setChecked(true);
     }
 
     @Override

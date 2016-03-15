@@ -6,6 +6,8 @@ package stockme.stockme.logica;
 public class Supermercado {
     private String nombre;
 
+    public static String NOMBRE = "Nombre";
+
     public Supermercado(){
         this.nombre = "";
     }

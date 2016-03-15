@@ -134,9 +134,9 @@ public class BDHandler  extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 book = new Lista();
-                book.setNombre(cursor.getString(cursor.getColumnIndex("Nombre")));
-                book.setFechaCreacion(cursor.getString(cursor.getColumnIndex("FechaCreacion")));
-                book.setFechaModificacion(cursor.getString(cursor.getColumnIndex("FechaModificacion")));
+                book.setNombre(cursor.getString(cursor.getColumnIndex(Lista.NOMBRE)));
+                book.setFechaCreacion(cursor.getString(cursor.getColumnIndex(Lista.FECHA_CREACION)));
+                book.setFechaModificacion(cursor.getString(cursor.getColumnIndex(Lista.FECHA_MODIFICACION)));
                 lista.add(book);
             } while (cursor.moveToNext());
         }
@@ -144,6 +144,21 @@ public class BDHandler  extends SQLiteOpenHelper {
         Log.d("getAllBooks()", lista.toString());
         db.close();
         return lista;
+    }
+
+    public boolean insertarLista(Lista lista){
+        boolean ok = false;
+        SQLiteDatabase db = this.obtenerManejadorEscritura();
+
+        ContentValues values = new ContentValues();
+        values.put(Lista.NOMBRE, lista.getNombre());
+        values.put(Lista.FECHA_CREACION, lista.getFechaCreacion());
+        values.put(Lista.FECHA_MODIFICACION, lista.getFechaModificacion());
+
+        db.insert("LISTA", null, values);
+
+        db.close();
+        return ok;
     }
 
     public List<Articulo> obtenerArticulos(){
@@ -159,11 +174,11 @@ public class BDHandler  extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 book = new Articulo();
-                book.setId(cursor.getInt(cursor.getColumnIndex("Id")));
-                book.setNombre(cursor.getString(cursor.getColumnIndex("Nombre")));
-                book.setMarca(cursor.getString(cursor.getColumnIndex("Marca")));
-                book.setSupermercado(cursor.getString(cursor.getColumnIndex("Supermercado")));
-                book.setPrecio(cursor.getFloat(cursor.getColumnIndex("Precio")));
+                book.setId(cursor.getInt(cursor.getColumnIndex(Articulo.ID)));
+                book.setNombre(cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)));
+                book.setMarca(cursor.getString(cursor.getColumnIndex(Articulo.MARCA)));
+                book.setSupermercado(cursor.getString(cursor.getColumnIndex(Articulo.SUPERMERCADO)));
+                        book.setPrecio(cursor.getFloat(cursor.getColumnIndex(Articulo.PRECIO)));
                 lista.add(book);
             } while (cursor.moveToNext());
         }
@@ -178,15 +193,15 @@ public class BDHandler  extends SQLiteOpenHelper {
         SQLiteDatabase db = this.obtenerManejadorEscritura();
         ContentValues values = new ContentValues();
 
-        values.put("Id", articulo.getId());
-        values.put("Nombre", articulo.getNombre());
-        values.put("Marca", articulo.getMarca());
-        values.put("Supermercado", articulo.getSupermercado());
-        values.put("Precio", articulo.getPrecio());
+        values.put(Articulo.ID, articulo.getId());
+        values.put(Articulo.NOMBRE, articulo.getNombre());
+        values.put(Articulo.MARCA, articulo.getMarca());
+        values.put(Articulo.SUPERMERCADO, articulo.getSupermercado());
+        values.put(Articulo.PRECIO, articulo.getPrecio());
 
         long indent = -1;
         SQLiteDatabase dbRead = this.obtenerManejadorLectura();
-        String query = "select id from producto where id = " + articulo.getId();
+        String query = "insert into ARTICULO where id = " + articulo.getId();
         Cursor cursor = db.rawQuery(query, null);
         if(!cursor.moveToFirst()){//no existe en la bd
             indent = db.insert("ARTICULO",

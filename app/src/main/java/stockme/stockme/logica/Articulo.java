@@ -10,6 +10,12 @@ public class Articulo {
     private String supermercado;
     private float precio;
 
+    public static String ID = "Id";
+    public static String NOMBRE = "Nombre";
+    public static String MARCA = "Marca";
+    public static String SUPERMERCADO = "Supermercado";
+    public static String PRECIO = "Precio";
+
     public Articulo(){
         this.id = 0;
         this.nombre = "";

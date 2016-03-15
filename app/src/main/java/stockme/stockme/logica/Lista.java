@@ -9,6 +9,10 @@ public class Lista {
     private String fechaCreacion;
     private String fechaModificacion;
 
+    public static final String NOMBRE = "Nombre";
+    public static final String FECHA_CREACION = "FechaCreacion";
+    public static final String FECHA_MODIFICACION = "FechaModificacion";
+
     public Lista(){
         this.nombre = "";
         this.fechaCreacion = "";
