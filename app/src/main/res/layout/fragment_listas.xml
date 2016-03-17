@@ -29,7 +29,6 @@
             android:text="+"
             android:id="@+id/fragment_listas_btn_mas"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="64dp" />
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
 </FrameLayout>

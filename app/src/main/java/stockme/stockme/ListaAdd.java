@@ -1,5 +1,6 @@
 package stockme.stockme;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.Date;
 
@@ -31,8 +33,10 @@ public class ListaAdd extends AppCompatActivity {
         btn_aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Context context = getApplicationContext();
+                int duration = Toast.LENGTH_SHORT;
 
-                String nombre = ((EditText)findViewById(R.id.lista_add_et_nombre)).getText().toString();
+                String nombre = ((EditText) findViewById(R.id.lista_add_et_nombre)).getText().toString();
 
                 if (!nombre.matches("")) {
                     String fecha = new Date().toString();
@@ -43,6 +47,10 @@ public class ListaAdd extends AppCompatActivity {
                     manejador.insertarLista(nueva);
 
                     finish();
+                } else {
+                    CharSequence text = "¡Falta un nombre!";
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
                 }
 
             }

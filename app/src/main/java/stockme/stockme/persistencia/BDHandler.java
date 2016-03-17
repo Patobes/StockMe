@@ -232,4 +232,12 @@ public class BDHandler  extends SQLiteOpenHelper {
             prep.setString(3, "blub");
         * */
     }
+
+    public void eliminarLista(Lista lista){
+
+        SQLiteDatabase db = this.obtenerManejadorEscritura();
+        db.delete("LISTA", Lista.NOMBRE + "=?", new String[]{lista.getNombre()});
+
+        db.close();
+    }
 }
