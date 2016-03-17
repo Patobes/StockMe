@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ import java.util.Date;
 
 import stockme.stockme.logica.Lista;
 import stockme.stockme.persistencia.BDHandler;
+import stockme.stockme.util.Util;
 
 public class ListaAdd extends AppCompatActivity {
     private Button btn_aceptar;
@@ -39,12 +41,13 @@ public class ListaAdd extends AppCompatActivity {
                 String nombre = ((EditText) findViewById(R.id.lista_add_et_nombre)).getText().toString();
 
                 if (!nombre.matches("")) {
-                    String fecha = new Date().toString();
+                    String fecha = Util.diaMesAnyo.format(new Date());
 
                     Lista nueva = new Lista(nombre, fecha, fecha);
                     BDHandler manejador = new BDHandler(v.getContext());
 
-                    manejador.insertarLista(nueva);
+                    if(!manejador.insertarLista(nueva))
+                        Toast.makeText(v.getContext(), "Ya existe la lista", Toast.LENGTH_SHORT).show();
 
                     finish();
                 } else {

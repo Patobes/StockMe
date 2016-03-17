@@ -121,6 +121,8 @@ public class BDHandler  extends SQLiteOpenHelper {
         this.close();
     }
 
+
+    //LISTAS
     public List<Lista> obtenerListas(){
         ArrayList<Lista> lista = new ArrayList();
         String query = "SELECT * FROM LISTA";
@@ -148,28 +150,43 @@ public class BDHandler  extends SQLiteOpenHelper {
 
     public boolean insertarLista(Lista lista){
         boolean ok = false;
-        SQLiteDatabase db = null;
-        try {
-            db = this.obtenerManejadorEscritura();
 
+        //hay que hacer una preconsulta ya que no hemos podido controlar la excepción de UNIQUE
+        String query = "SELECT * FROM LISTA";
+        SQLiteDatabase lectura = this.obtenerManejadorLectura();
+        Cursor cursor = lectura.rawQuery(query, null);
+        if(!cursor.moveToFirst()) {//no existe en la bd
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
             ContentValues values = new ContentValues();
             values.put(Lista.NOMBRE, lista.getNombre());
             values.put(Lista.FECHA_CREACION, lista.getFechaCreacion());
             values.put(Lista.FECHA_MODIFICACION, lista.getFechaModificacion());
 
             db.insert("LISTA", null, values);
-
-//            db.close();
+            db.close();
             ok = true;
-        } catch (Exception e) {
-            ok = false;
-        } finally{
-            if(db != null)
-                db.close();
         }
+        lectura.close();
         return ok;
     }
 
+    public Lista obtenerLista(String nombre){
+        Lista lista = null;
+        String query = "SELECT * FROM LISTA";
+        SQLiteDatabase lectura = this.obtenerManejadorLectura();
+        Cursor cursor = lectura.rawQuery(query, null);
+        if(cursor.moveToFirst()){
+            lista = new Lista();
+            lista.setNombre(cursor.getString(cursor.getColumnIndex(Lista.NOMBRE)));
+            lista.setFechaCreacion(cursor.getString(cursor.getColumnIndex(Lista.FECHA_CREACION)));
+            lista.setFechaModificacion(cursor.getString(cursor.getColumnIndex(Lista.FECHA_MODIFICACION)));
+        }
+        lectura.close();
+        return lista;
+    }
+
+
+    //ARTICULOS
     public List<Articulo> obtenerArticulos(){
         ArrayList<Articulo> lista = new ArrayList();
         String query = "SELECT * FROM ARTICULO";

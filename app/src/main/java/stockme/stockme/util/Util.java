@@ -1,5 +1,7 @@
 package stockme.stockme.util;
 
+import java.text.SimpleDateFormat;
+
 /**
  * Created by JuanMiguel on 03/03/2016.
  */
@@ -9,4 +11,5 @@ public class Util {
     public static int getBD_VERSION(){
         return BD_VERSION;
     }
+    public static SimpleDateFormat diaMesAnyo = new SimpleDateFormat("dd/MM/yyyy");
 }
