@@ -148,16 +148,25 @@ public class BDHandler  extends SQLiteOpenHelper {
 
     public boolean insertarLista(Lista lista){
         boolean ok = false;
-        SQLiteDatabase db = this.obtenerManejadorEscritura();
+        SQLiteDatabase db = null;
+        try {
+            db = this.obtenerManejadorEscritura();
 
-        ContentValues values = new ContentValues();
-        values.put(Lista.NOMBRE, lista.getNombre());
-        values.put(Lista.FECHA_CREACION, lista.getFechaCreacion());
-        values.put(Lista.FECHA_MODIFICACION, lista.getFechaModificacion());
+            ContentValues values = new ContentValues();
+            values.put(Lista.NOMBRE, lista.getNombre());
+            values.put(Lista.FECHA_CREACION, lista.getFechaCreacion());
+            values.put(Lista.FECHA_MODIFICACION, lista.getFechaModificacion());
 
-        db.insert("LISTA", null, values);
+            db.insert("LISTA", null, values);
 
-        db.close();
+//            db.close();
+            ok = true;
+        } catch (Exception e) {
+            ok = false;
+        } finally{
+            if(db != null)
+                db.close();
+        }
         return ok;
     }
 

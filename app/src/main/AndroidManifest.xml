@@ -19,24 +19,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Listas"
-            android:label="@string/title_activity_listas"
-            android:parentActivityName=".Principal"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="stockme.stockme.Principal" />
-        </activity>
-        <activity
-            android:name=".ListaArticulos"
-            android:label="@string/title_activity_lista_articulos"
-            android:parentActivityName=".Listas"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="stockme.stockme.Listas" />
-        </activity>
-        <activity
             android:name=".ListaAdd"
             android:label="@string/title_activity_lista_add"
             android:theme="@style/AppTheme"></activity>

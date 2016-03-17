@@ -120,12 +120,6 @@ public class Principal extends AppCompatActivity
         return true;
     }
 
-    //metodo llamado por el boton de inicio imageButtonListas para iniciar la actividad Listas
-    public void openListas(View v){
-        Intent intent = new Intent(this, Listas.class);
-        startActivity(intent);
-    }
-
     @Override
     public void onFragmentInteraction(Uri uri) {
 
