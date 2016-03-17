@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
  * Created by JuanMiguel on 03/03/2016.
  */
 public class Util {
-    private static final int BD_VERSION = 5;
+    private static final int BD_VERSION = 6;
 
     public static int getBD_VERSION(){
         return BD_VERSION;

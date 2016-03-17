@@ -12,6 +12,7 @@ import java.util.List;
 
 import stockme.stockme.logica.Lista;
 import stockme.stockme.logica.Articulo;
+import stockme.stockme.logica.ListaArticulo;
 import stockme.stockme.util.Util;
 
 /**
@@ -172,7 +173,7 @@ public class BDHandler  extends SQLiteOpenHelper {
 
     public Lista obtenerLista(String nombre){
         Lista lista = null;
-        String query = "SELECT * FROM LISTA";
+        String query = "SELECT * FROM LISTA WHERE nombre = '"+nombre+"'";
         SQLiteDatabase lectura = this.obtenerManejadorLectura();
         Cursor cursor = lectura.rawQuery(query, null);
         if(cursor.moveToFirst()){
@@ -212,6 +213,23 @@ public class BDHandler  extends SQLiteOpenHelper {
         Log.d("getAllBooks()", lista.toString());
         db.close();
         return lista;
+    }
+
+    public Articulo obtenerArticulo(int id){
+        Articulo articulo = null;
+        String query = "SELECT * FROM ARTICULO WHERE id = '"+id+"'";
+        SQLiteDatabase lectura = this.obtenerManejadorLectura();
+        Cursor cursor = lectura.rawQuery(query, null);
+        if(cursor.moveToFirst()){
+            articulo = new Articulo();
+            articulo.setId(cursor.getInt(cursor.getColumnIndex(Articulo.ID)));
+            articulo.setNombre(cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)));
+            articulo.setMarca(cursor.getString(cursor.getColumnIndex(Articulo.MARCA)));
+            articulo.setSupermercado(cursor.getString(cursor.getColumnIndex(Articulo.SUPERMERCADO)));
+            articulo.setPrecio(cursor.getFloat(cursor.getColumnIndex(Articulo.PRECIO)));
+        }
+        lectura.close();
+        return articulo;
     }
 
     public boolean insertarArticulo(Articulo articulo){
@@ -256,5 +274,31 @@ public class BDHandler  extends SQLiteOpenHelper {
         db.delete("LISTA", Lista.NOMBRE + "=?", new String[]{lista.getNombre()});
 
         db.close();
+    }
+
+    //LISTAARTICULO
+    public void insertarArticuloEnLista(int articulo, Lista lista, int cantidad){ //Esto hay que mirarlo....
+
+        SQLiteDatabase db = this.obtenerManejadorEscritura();
+        String query = "INSERT INTO LISTA_ARTICULO VALUES("+articulo+", '"+lista.getNombre()+"', "+cantidad+")";
+
+        db.execSQL(query);
+        db.close();
+    }
+
+    public ArrayList<Articulo> obtenerArticulosEnLista(String nombre){
+        ArrayList<Articulo> articulos = null;
+        String query = "SELECT * FROM LISTA_ARTICULOS WHERE nombre = '"+nombre+"'";
+        SQLiteDatabase lectura = this.obtenerManejadorLectura();
+        Cursor cursor = lectura.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                articulos.add(obtenerArticulo(cursor.getInt(cursor.getColumnIndex(ListaArticulo.ARTICULO))));
+            } while (cursor.moveToNext());
+        }
+
+        lectura.close();
+        return articulos;
     }
 }

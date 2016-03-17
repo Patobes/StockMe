@@ -8,9 +8,9 @@ public class ListaArticulo {
     private String nombre;
     private int cantidad;
 
-    public static String ARTICULO = "Articulo";
+    public static int ARTICULO = 0;
     public static String NOMBRE = "Nombre";
-    public static String CANTIDAD = "Cantidad";
+    public static int CANTIDAD = 0;
 
     public ListaArticulo(){
         this.articulo = 0;
