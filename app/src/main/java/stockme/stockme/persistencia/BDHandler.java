@@ -152,7 +152,7 @@ public class BDHandler  extends SQLiteOpenHelper {
         boolean ok = false;
 
         //hay que hacer una preconsulta ya que no hemos podido controlar la excepción de UNIQUE
-        String query = "SELECT * FROM LISTA";
+        String query = "SELECT * FROM LISTA WHERE " + Lista.NOMBRE + "='"+lista.getNombre()+"'";
         SQLiteDatabase lectura = this.obtenerManejadorLectura();
         Cursor cursor = lectura.rawQuery(query, null);
         if(!cursor.moveToFirst()) {//no existe en la bd

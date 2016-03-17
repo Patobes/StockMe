@@ -124,4 +124,12 @@ public class Principal extends AppCompatActivity
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Fragment fragmento = new Fragment_listas();
+        getSupportFragmentManager().beginTransaction().replace(R.id.contenido_principal, fragmento).commit();
+        this.setTitle("Listas");
+    }
 }

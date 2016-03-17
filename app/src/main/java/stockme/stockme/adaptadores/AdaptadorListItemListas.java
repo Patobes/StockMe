@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import stockme.stockme.Principal;
 import stockme.stockme.R;
 import stockme.stockme.logica.Lista;
 import stockme.stockme.persistencia.BDHandler;
