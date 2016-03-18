@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre"
+        android:id="@+id/listitem_articulos_nombre"
+        android:textSize="20sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Marca"
+        android:id="@+id/listitem_articulos_marca"
+        android:layout_below="@+id/listitem_articulos_nombre"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="3dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Supermercado"
+        android:id="@+id/listitem_articulos_superm"
+        android:layout_alignBottom="@+id/listitem_articulos_marca"
+        android:layout_toEndOf="@+id/listitem_articulos_marca"
+        android:layout_marginLeft="3dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listitem_articulos_tv_precio"
+        android:layout_alignBaseline="@+id/listitem_articulos_superm"
+        android:layout_toEndOf="@+id/listitem_articulos_superm"
+        android:hint="Precio"
+        android:layout_marginLeft="3dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="euros"
+        android:id="@+id/listitem_articulos_moneda"
+        android:layout_alignBottom="@+id/listitem_articulos_superm"
+        android:layout_toEndOf="@+id/listitem_articulos_tv_precio"
+        android:layout_marginLeft="3dp" />
+
+</RelativeLayout>

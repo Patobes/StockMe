@@ -48,9 +48,9 @@ public class ListaAdd extends AppCompatActivity {
                     BDHandler manejador = new BDHandler(v.getContext());
 
                     if(!manejador.insertarLista(nueva))
-                        Toast.makeText(v.getContext(), "Ya existe la lista", Toast.LENGTH_SHORT).show();
-
-                    finish();
+                        Toast.makeText(v.getContext(), "Ya existe la lista '" + nueva.getNombre() + "'", Toast.LENGTH_SHORT).show();
+                    else
+                        finish();
                 } else {
                     CharSequence text = "¡Falta un nombre!";
                     Toast toast = Toast.makeText(context, text, duration);

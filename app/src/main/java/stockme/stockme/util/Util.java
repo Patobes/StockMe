@@ -3,6 +3,7 @@ package stockme.stockme.util;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 
@@ -10,7 +11,10 @@ import java.text.SimpleDateFormat;
  * Created by JuanMiguel on 03/03/2016.
  */
 public class Util {
-    private static final int BD_VERSION = 6;
+    //hay que INCREMENTAR en 1 cada vez que se hace una modificación en la estructura o en contenido inicial
+    private static final int BD_VERSION = 7;
+    public static int getBdVersion(){return BD_VERSION;}
+
 
     public static int getBD_VERSION(){
         return BD_VERSION;
@@ -44,5 +48,9 @@ public class Util {
     //esta sobrecarga permite además establecer el título del diálogo
     public static void crearMensajeAlerta(String mensaje, String titulo, DialogInterface.OnClickListener listenerConfirm, Context ctx){
         crearMensajeAlerta(mensaje, titulo, "Sí", "No", listenerConfirm, null, ctx);
+    }
+
+    public static void mostrarToast(Context context, String mensaje){
+        Toast.makeText(context, mensaje, Toast.LENGTH_SHORT).show();
     }
 }

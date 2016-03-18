@@ -13,4 +13,5 @@
     <string name="title_activity_lista_add">ListaAdd</string>
     <string name="lista_add_nombre">Nombre:</string>
     <string name="lista_add_elementos">Elementos:</string>
+    <string name="title_activity_lista_de_articulos">ListaDeArticulos</string>
 </resources>

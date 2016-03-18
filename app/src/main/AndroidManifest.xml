@@ -21,7 +21,16 @@
         <activity
             android:name=".ListaAdd"
             android:label="@string/title_activity_lista_add"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ListaDeArticulos"
+            android:label="@string/title_activity_lista_de_articulos"
+            android:parentActivityName=".Principal"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="stockme.stockme.Principal" />
+        </activity>
     </application>
 
 </manifest>
