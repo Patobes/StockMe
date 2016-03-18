@@ -186,6 +186,11 @@ public class BDHandler  extends SQLiteOpenHelper {
         return lista;
     }
 
+    public void eliminarLista(Lista lista){
+        SQLiteDatabase db = this.obtenerManejadorEscritura();
+        db.delete("LISTA", Lista.NOMBRE + "=?", new String[]{lista.getNombre()});
+        db.close();
+    }
 
     //ARTICULOS
     public List<Articulo> obtenerArticulos(){
@@ -266,14 +271,6 @@ public class BDHandler  extends SQLiteOpenHelper {
             prep.setString(2, "bla");
             prep.setString(3, "blub");
         * */
-    }
-
-    public void eliminarLista(Lista lista){
-
-        SQLiteDatabase db = this.obtenerManejadorEscritura();
-        db.delete("LISTA", Lista.NOMBRE + "=?", new String[]{lista.getNombre()});
-
-        db.close();
     }
 
     //LISTAARTICULO
