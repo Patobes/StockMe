@@ -18,7 +18,7 @@ import android.view.MenuItem;
 import stockme.stockme.persistencia.BDHandler;
 
 public class Principal extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, Fragment_listas.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, Fragment_listas.OnFragmentInteractionListener, Fragment_stock.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +101,8 @@ public class Principal extends AppCompatActivity
             fragmento = new Fragment_listas();
             fragTransact = true;
         } else if (id == R.id.nav_stock) {
-
+            fragmento = new Fragment_stock();
+            fragTransact = true;
         } else if (id == R.id.nav_supermercados) {
 
         } else if (id == R.id.nav_ajustes) {

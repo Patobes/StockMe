@@ -13,6 +13,7 @@ import java.util.List;
 import stockme.stockme.logica.Lista;
 import stockme.stockme.logica.Articulo;
 import stockme.stockme.logica.ListaArticulo;
+import stockme.stockme.logica.Stock;
 import stockme.stockme.util.Util;
 
 /**
@@ -100,6 +101,9 @@ public class BDHandler  extends SQLiteOpenHelper {
 
         db.execSQL("INSERT INTO 'LISTA_ARTICULO' VALUES(1,'LISTACHUNGA', 6)");
         db.execSQL("INSERT INTO 'LISTA_ARTICULO' VALUES(2,'LISTACHUNGA', 1)");
+
+        db.execSQL("INSERT INTO 'STOCK' VALUES (1, 2, 4)");
+        db.execSQL("INSERT INTO 'STOCK' VALUES (2, 3, 5)");
     }
 
     @Override
@@ -335,4 +339,31 @@ public class BDHandler  extends SQLiteOpenHelper {
         lectura.close();
         return articulos;
     }
+
+    //STOCK
+    public List<Stock> obtenerStock(){
+        ArrayList<Stock> lista = new ArrayList();
+        String query = "SELECT * FROM STOCK";
+
+        // 2. get reference to writable DB
+        SQLiteDatabase db = this.obtenerManejadorLectura();
+        Cursor cursor = db.rawQuery(query, null);
+
+        // 3. go over each row, build book and add it to list
+        Stock book = null;
+        if (cursor.moveToFirst()) {
+            do {
+                book = new Stock();
+                book.setArticulo(cursor.getInt(cursor.getColumnIndex(Stock.ARTICULO)));
+                book.setCanitdad(cursor.getInt(cursor.getColumnIndex(Stock.CANTIDAD)));
+                book.setMinimo(cursor.getInt(cursor.getColumnIndex(Stock.MINIMO)));
+                lista.add(book);
+            } while (cursor.moveToNext());
+        }
+
+        Log.d("getAllBooks()", lista.toString());
+        db.close();
+        return lista;
+    }
+
 }
