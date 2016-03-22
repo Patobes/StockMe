@@ -16,9 +16,6 @@ import stockme.stockme.logica.ListaArticulo;
 import stockme.stockme.logica.Stock;
 import stockme.stockme.util.Util;
 
-/**
- * Created by JuanMiguel on 03/03/2016.
- */
 public class BDHandler  extends SQLiteOpenHelper {
     private static int bdVersion = Util.getBD_VERSION();
 
@@ -32,7 +29,13 @@ public class BDHandler  extends SQLiteOpenHelper {
     }
 
     private void insertarIniciales(SQLiteDatabase db) {
-        //tabla de articulo
+        /* TABLA ARTICULO
+        ID - INT - PK
+        NOMBRE - STRING
+        MARCA - STRING
+        SUPERMERCADO - STRING - FK
+        PRECIO - FLOAT
+         */
         String articulo = "CREATE TABLE `ARTICULO` (" +
             "`Id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
             "`Nombre` TEXT NOT NULL," +
@@ -44,7 +47,9 @@ public class BDHandler  extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS 'ARTICULO';");
         db.execSQL(articulo);
 
-        //tabla de supermercado
+        /* TABLA SUPERMERCADO
+        NOMBRE - STRING - PK
+         */
         String supermercado = "CREATE TABLE `SUPERMERCADO` (" +
             "`Nombre` TEXT NOT NULL," +
             "PRIMARY KEY(Nombre)" +
@@ -52,7 +57,11 @@ public class BDHandler  extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS 'SUPERMERCADO';");
         db.execSQL(supermercado);
 
-        //tabla de stock
+        /* TABLA STOCK
+        ARTICULO - INT - PK - FK
+        MINIMO - INT
+        CANTIDAD - INT
+         */
         String stock = "CREATE TABLE `STOCK` (" +
             "`Articulo` INTEGER NOT NULL," +
             "`Minimo` INTEGER NOT NULL DEFAULT 0," +
@@ -63,7 +72,11 @@ public class BDHandler  extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS 'STOCK';");
         db.execSQL(stock);
 
-        //tabla lista
+        /* TABLA LISTA
+        NOMBRE - STRING - PK
+        FECHACREACION - STRING
+        FECHAMODIFICACION - STRING
+         */
         String lista = "CREATE TABLE `LISTA` (" +
             "`Nombre` TEXT NOT NULL," +
             "`FechaCreacion` TEXT NOT NULL," +
@@ -73,7 +86,11 @@ public class BDHandler  extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS 'LISTA';");
         db.execSQL(lista);
 
-        //Lista_Articulo
+        /* TABLA LISTA_ARTICULO
+        ARTICULO - INT - PK - FK
+        NOMBRE - STRING - PK - FK
+        CANTIDAD - INT
+         */
         String listaArticulo = "CREATE TABLE `LISTA_ARTICULO` (" +
             "`Articulo` INTEGER NOT NULL," +
             "`Nombre` TEXT NOT NULL," +
@@ -85,7 +102,7 @@ public class BDHandler  extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS 'LISTA_ARTICULO';");
         db.execSQL(listaArticulo);
 
-        //ahora se añaden los elementos iniciales
+        //ELEMENTOS INICIALES
         db.execSQL("INSERT INTO `ARTICULO` VALUES(1, 'Leche', 'Hacendado', 'Mercadona', 0.60);");
         db.execSQL("INSERT INTO `ARTICULO` VALUES(2, 'Pizza', 'Hacendado', 'Mercadona', 2.60);");
         db.execSQL("INSERT INTO `ARTICULO` VALUES(3, 'Ketchup', 'Heinz', 'Mercadona', 0.60);");
@@ -95,12 +112,13 @@ public class BDHandler  extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Eroski');");
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Simply');");
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Carrefour');");
+        db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Supersol');");
 
-        db.execSQL("INSERT INTO 'LISTA' VALUES('LISTACHUNGA','HOY','MAÑANA')");
-        db.execSQL("INSERT INTO 'LISTA' VALUES('LISTACHU','AYER','TOMORROW')");
+        db.execSQL("INSERT INTO 'LISTA' VALUES('Lista prueba','HOY','MAÑANA')");
+        db.execSQL("INSERT INTO 'LISTA' VALUES('Lista prueba 2','AYER','TOMORROW')");
 
-        db.execSQL("INSERT INTO 'LISTA_ARTICULO' VALUES(1,'LISTACHUNGA', 6)");
-        db.execSQL("INSERT INTO 'LISTA_ARTICULO' VALUES(2,'LISTACHUNGA', 1)");
+        db.execSQL("INSERT INTO 'LISTA_ARTICULO' VALUES(1,'Lista prueba', 6)");
+        db.execSQL("INSERT INTO 'LISTA_ARTICULO' VALUES(2,'Lista prueba', 1)");
 
         db.execSQL("INSERT INTO 'STOCK' VALUES (1, 2, 4)");
         db.execSQL("INSERT INTO 'STOCK' VALUES (2, 3, 5)");
@@ -131,16 +149,11 @@ public class BDHandler  extends SQLiteOpenHelper {
         this.close();
     }
 
-    //OPERACIONES
-    public int numArticulosEnLista(String nombre){
-        String query = "SELECT COUNT(*) FROM LISTA_ARTICULO WHERE " + ListaArticulo.NOMBRE + " = ?";
-        SQLiteDatabase lectura = this.obtenerManejadorLectura();
-        Cursor cursor = lectura.rawQuery(query, new String[]{nombre});
-        cursor.moveToFirst();
-        return cursor.getInt(0);
-    }
+
 
     //LISTAS
+
+    //Obtiene todas las listas de la BD, devuelve un List<Lista>
     public List<Lista> obtenerListas(){
         //1. crear lista a devolver
         ArrayList<Lista> listas = new ArrayList();
@@ -169,12 +182,15 @@ public class BDHandler  extends SQLiteOpenHelper {
         return listas;
     }
 
+    //Inserta una lista en la BD, devuelve el éxito o el fracaso de la operación
     public boolean insertarLista(Lista lista){
         boolean ok = false;
-        //hay que hacer una preconsulta ya que no hemos podido controlar la excepción de UNIQUE
-        if(!estaLista(lista.getNombre())) {//no existe en la bd
+
+        if(!estaLista(lista.getNombre())) {
+
             SQLiteDatabase db = this.obtenerManejadorEscritura();
             ContentValues values = new ContentValues();
+
             values.put(Lista.NOMBRE, lista.getNombre());
             values.put(Lista.FECHA_CREACION, lista.getFechaCreacion());
             values.put(Lista.FECHA_MODIFICACION, lista.getFechaModificacion());
@@ -186,87 +202,131 @@ public class BDHandler  extends SQLiteOpenHelper {
         return ok;
     }
 
+    //Obtiene una lista con el nombre indicado
     public Lista obtenerLista(String nombre){
         Lista lista = null;
         String query = "SELECT * FROM LISTA WHERE " + Lista.NOMBRE + " = ?";
+
         SQLiteDatabase lectura = this.obtenerManejadorLectura();
         Cursor cursor = lectura.rawQuery(query, new String[]{nombre});
+
         if(cursor.moveToFirst()){
             lista = new Lista();
             lista.setNombre(cursor.getString(cursor.getColumnIndex(Lista.NOMBRE)));
             lista.setFechaCreacion(cursor.getString(cursor.getColumnIndex(Lista.FECHA_CREACION)));
             lista.setFechaModificacion(cursor.getString(cursor.getColumnIndex(Lista.FECHA_MODIFICACION)));
         }
+        lectura.close();
         return lista;
     }
 
+    //Comprueba si esta una lista de nombre indicado
     public boolean estaLista(String nombre){
         String query = "SELECT * FROM LISTA WHERE " + Lista.NOMBRE + " = ?";
+
         SQLiteDatabase lectura = this.obtenerManejadorLectura();
         Cursor cursor = lectura.rawQuery(query, new String[]{nombre});
+
         boolean ok = cursor.moveToFirst();
         lectura.close();
         return ok;
     }
 
-    //cambia los valores de la lista pasada por parámetro. El nombre debe ser el de la lista que se quiere modificar
+    //Cambia los valores de la lista indicada, debe existir previamente
     public boolean modificarLista(Lista lista){
         int filaActu = 0;
         if(estaLista(lista.getNombre())){
-            //obtenemos acceso de escritura a la bd
+
             SQLiteDatabase db = this.obtenerManejadorEscritura();
-            //creamos los valores a actualizar
+
             ContentValues valores = new ContentValues();
             valores.put(Lista.NOMBRE, lista.getNombre());
             valores.put(Lista.FECHA_CREACION, lista.getFechaCreacion());
             valores.put(Lista.FECHA_MODIFICACION, lista.getFechaModificacion());
-            //actualizamos y recogemos el num de filas actualizadas (debería ser 1 claro)
+
             filaActu = db.update("LISTA", valores, Lista.NOMBRE + "=?", new String[]{lista.getNombre()});
+            db.close();
         }
         return filaActu > 0;
     }
 
+    //Elimina la lista indicada, debe existir previamente
     public boolean eliminarLista(Lista lista){
-        SQLiteDatabase db = this.obtenerManejadorEscritura();
-        int filaBorrada = db.delete("LISTA", Lista.NOMBRE + "=?", new String[]{lista.getNombre()});
-        db.close();
+        int filaBorrada = 0;
+
+        if(estaLista(lista.getNombre())){
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+            filaBorrada = db.delete("LISTA", Lista.NOMBRE + "=?", new String[]{lista.getNombre()});
+            db.close();
+        }
+
         return filaBorrada > 0;
     }
 
     //ARTICULOS
+
+    //Obtiene todos los articulos de la BD, devuelve un List<Articulo>
     public List<Articulo> obtenerArticulos(){
         ArrayList<Articulo> lista = new ArrayList();
         String query = "SELECT * FROM ARTICULO";
 
-        // 2. get reference to writable DB
         SQLiteDatabase db = this.obtenerManejadorLectura();
         Cursor cursor = db.rawQuery(query, null);
 
-        // 3. go over each row, build book and add it to list
-        Articulo book = null;
+        Articulo art = null;
         if (cursor.moveToFirst()) {
             do {
-                book = new Articulo();
-                book.setId(cursor.getInt(cursor.getColumnIndex(Articulo.ID)));
-                book.setNombre(cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)));
-                book.setMarca(cursor.getString(cursor.getColumnIndex(Articulo.MARCA)));
-                book.setSupermercado(cursor.getString(cursor.getColumnIndex(Articulo.SUPERMERCADO)));
-                        book.setPrecio(cursor.getFloat(cursor.getColumnIndex(Articulo.PRECIO)));
-                lista.add(book);
+                art = new Articulo();
+                art.setId(cursor.getInt(cursor.getColumnIndex(Articulo.ID)));
+                art.setNombre(cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)));
+                art.setMarca(cursor.getString(cursor.getColumnIndex(Articulo.MARCA)));
+                art.setSupermercado(cursor.getString(cursor.getColumnIndex(Articulo.SUPERMERCADO)));
+                art.setPrecio(cursor.getFloat(cursor.getColumnIndex(Articulo.PRECIO)));
+
+                lista.add(art);
             } while (cursor.moveToNext());
         }
 
-        Log.d("getAllBooks()", lista.toString());
+        Log.d("obtenerArticulos()", lista.toString());
         db.close();
         return lista;
     }
 
+    //Inserta un articulo en la BD, devuelve exito o fracaso
+    public boolean insertarArticulo(Articulo articulo){
+
+        boolean ok = false;
+
+        if(!estaArticulo(articulo.getId())) {
+
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+            ContentValues values = new ContentValues();
+
+            values.put(Articulo.ID, articulo.getId());
+            values.put(Articulo.NOMBRE, articulo.getNombre());
+            values.put(Articulo.MARCA, articulo.getMarca());
+            values.put(Articulo.SUPERMERCADO, articulo.getSupermercado());
+            values.put(Articulo.PRECIO, articulo.getPrecio());
+
+            db.insert("ARTICULO", null, values);
+            db.close();
+            ok = true;
+        }
+        return ok;
+
+    }
+
+    //Obtiene el articulo con el id indicado
     public Articulo obtenerArticulo(int id){
+
         Articulo articulo = null;
-        String query = "SELECT * FROM ARTICULO WHERE id = '"+id+"'";
+        String query = "SELECT * FROM ARTICULO WHERE "+Articulo.ID + " = ?";
         SQLiteDatabase lectura = this.obtenerManejadorLectura();
-        Cursor cursor = lectura.rawQuery(query, null);
+
+        Cursor cursor = lectura.rawQuery(query, new String[]{Integer.toString(id)});
+
         if(cursor.moveToFirst()){
+
             articulo = new Articulo();
             articulo.setId(cursor.getInt(cursor.getColumnIndex(Articulo.ID)));
             articulo.setNombre(cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)));
@@ -278,69 +338,162 @@ public class BDHandler  extends SQLiteOpenHelper {
         return articulo;
     }
 
-    public boolean insertarArticulo(Articulo articulo){
-        boolean ok = false;
-        SQLiteDatabase db = this.obtenerManejadorEscritura();
-        ContentValues values = new ContentValues();
+    //Comprueba si esta un articulo de id indicado
+    public boolean estaArticulo(int id){
+        String query = "SELECT * FROM ARTICULO WHERE " + Articulo.ID + " = ?";
 
-        values.put(Articulo.ID, articulo.getId());
-        values.put(Articulo.NOMBRE, articulo.getNombre());
-        values.put(Articulo.MARCA, articulo.getMarca());
-        values.put(Articulo.SUPERMERCADO, articulo.getSupermercado());
-        values.put(Articulo.PRECIO, articulo.getPrecio());
+        SQLiteDatabase lectura = this.obtenerManejadorLectura();
+        Cursor cursor = lectura.rawQuery(query, new String[]{Integer.toString(id)});
 
-        long indent = -1;
-        SQLiteDatabase dbRead = this.obtenerManejadorLectura();
-        String query = "insert into ARTICULO where id = " + articulo.getId();
-        Cursor cursor = db.rawQuery(query, null);
-        if(!cursor.moveToFirst()){//no existe en la bd
-            indent = db.insert("ARTICULO",
-                    null,
-                    values);
-        }
-        dbRead.close();
+        boolean ok = cursor.moveToFirst();
+        lectura.close();
 
-        if(indent != -1){
-            articulo.setId((int) indent);
-            ok = true;
-        }
-
-        db.close();
         return ok;
-        /*
-        * PreparedStatement prep = conn.prepareStatement("insert into participants values ($next_id,?,?);");
-            prep.setString(2, "bla");
-            prep.setString(3, "blub");
-        * */
+    }
+
+    //Cambia los valores del articulo indicado, debe existir previamente
+    public boolean modificarArticulo(Articulo articulo){
+        int filaActu = 0;
+        if(estaArticulo(articulo.getId())){
+
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+
+            ContentValues valores = new ContentValues();
+            valores.put(Articulo.ID, articulo.getId());
+            valores.put(Articulo.NOMBRE, articulo.getNombre());
+            valores.put(Articulo.MARCA, articulo.getMarca());
+            valores.put(Articulo.SUPERMERCADO, articulo.getSupermercado());
+            valores.put(Articulo.PRECIO, articulo.getPrecio());
+
+            filaActu = db.update("ARTICULO", valores, Articulo.ID + "=?", new String[]{Integer.toString(articulo.getId())});
+            db.close();
+        }
+        return filaActu > 0;
+    }
+
+    //Elimina el articulo indicado, debe existir previamente
+    public boolean eliminarArticulo(Articulo articulo){
+        int filaBorrada = 0;
+
+        if(estaArticulo(articulo.getId())){
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+            filaBorrada = db.delete("ARTICULO", Articulo.ID + "=?", new String[]{Integer.toString(articulo.getId())});
+            db.close();
+        }
+
+        return filaBorrada > 0;
     }
 
     //LISTAARTICULO
-    public void insertarArticuloEnLista(int articulo, Lista lista, int cantidad){ //Esto hay que mirarlo....
 
-        SQLiteDatabase db = this.obtenerManejadorEscritura();
-        String query = "INSERT INTO LISTA_ARTICULO VALUES("+articulo+", '"+lista.getNombre()+"', "+cantidad+")";
+    //Obtiene una lista de los articulos en una lista
+    public List<Articulo> obtenerArticulosEnLista(ListaArticulo lista){
 
-        db.execSQL(query);
-        db.close();
-    }
+        ArrayList<Articulo> articulos = new ArrayList();
+        String query = "SELECT * FROM LISTA_ARTICULO WHERE " + ListaArticulo.NOMBRE + " =?";
 
-    public ArrayList<Articulo> obtenerArticulosEnLista(String nombre){
-        ArrayList<Articulo> articulos = null;
-        String query = "SELECT * FROM LISTA_ARTICULOS WHERE nombre = '"+nombre+"'";
-        SQLiteDatabase lectura = this.obtenerManejadorLectura();
-        Cursor cursor = lectura.rawQuery(query, null);
+        SQLiteDatabase db = this.obtenerManejadorLectura();
+        Cursor cursor = db.rawQuery(query, new String[]{lista.getNombre()});
 
+        Articulo art = null;
         if (cursor.moveToFirst()) {
             do {
-                articulos.add(obtenerArticulo(cursor.getInt(cursor.getColumnIndex(ListaArticulo.ARTICULO))));
+                art = new Articulo();
+                art.setId(cursor.getInt(cursor.getColumnIndex(Articulo.ID)));
+                art.setNombre(cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)));
+                art.setMarca(cursor.getString(cursor.getColumnIndex(Articulo.MARCA)));
+                art.setSupermercado(cursor.getString(cursor.getColumnIndex(Articulo.SUPERMERCADO)));
+                art.setPrecio(cursor.getFloat(cursor.getColumnIndex(Articulo.PRECIO)));
+
+                articulos.add(art);
             } while (cursor.moveToNext());
         }
 
-        lectura.close();
+        Log.d("obtenerArticulosEnLista", articulos.toString());
+        db.close();
         return articulos;
     }
 
+    //Inserta en la BD la cantidad del articulo en la lista indicados
+    public boolean insertarArticuloEnLista(ListaArticulo listaArticulo){
+
+        boolean ok = false;
+
+        if(!estaArticuloEnLista(listaArticulo.getArticulo(), listaArticulo.getNombre())) {
+
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+            ContentValues values = new ContentValues();
+
+            values.put(ListaArticulo.ARTICULO, listaArticulo.getArticulo());
+            values.put(ListaArticulo.NOMBRE, listaArticulo.getNombre());
+            values.put(ListaArticulo.CANTIDAD, listaArticulo.getCantidad());
+
+            db.insert("LISTA_ARTICULO", null, values);
+            db.close();
+            ok = true;
+        }
+        return ok;
+    }
+
+    //Dice si un articulo está o no en una lista
+    public boolean estaArticuloEnLista(int articulo, String lista){
+        String query = "SELECT * FROM LISTA_ARTICULO WHERE " + ListaArticulo.ARTICULO + " = ? AND " + ListaArticulo.NOMBRE + " = ?";
+
+        SQLiteDatabase lectura = this.obtenerManejadorLectura();
+        Cursor cursor = lectura.rawQuery(query, new String[]{Integer.toString(articulo), lista});
+
+        boolean ok = cursor.moveToFirst();
+        lectura.close();
+
+        return ok;
+    }
+
+    //Modifica un articulo en una lista, significativo uso para la cantidad
+    public boolean modificarArticuloEnLista(ListaArticulo listaArticulo){
+        int filaActu = 0;
+        if(estaArticuloEnLista(listaArticulo.getArticulo(), listaArticulo.getNombre())) {
+
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+
+            ContentValues valores = new ContentValues();
+            valores.put(ListaArticulo.ARTICULO, listaArticulo.getArticulo());
+            valores.put(ListaArticulo.NOMBRE, listaArticulo.getNombre());
+            valores.put(ListaArticulo.CANTIDAD, listaArticulo.getCantidad());
+
+            filaActu = db.update("LISTA_ARTICULO", valores, ListaArticulo.ARTICULO + "=? AND " + ListaArticulo.NOMBRE +"=?", new String[]{Integer.toString(listaArticulo.getArticulo()),listaArticulo.getNombre()});
+            db.close();
+        }
+        return filaActu > 0;
+    }
+
+    //Elimina el articulo de la lista
+    public boolean eliminarArticuloEnLista(ListaArticulo listaArticulo){
+        int filaBorrada = 0;
+
+        if(estaArticuloEnLista(listaArticulo.getArticulo(), listaArticulo.getNombre())) {
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+            filaBorrada = db.delete("LISTA_ARTICULO", ListaArticulo.ARTICULO + "=? AND " + ListaArticulo.NOMBRE +"=?", new String[]{Integer.toString(listaArticulo.getArticulo()),listaArticulo.getNombre()});
+            db.close();
+        }
+
+        return filaBorrada > 0;
+    }
+
+    //TODO este método sobra, hay que usar el de arriba
+    public int numArticulosEnLista(String nombre){
+        String query = "SELECT COUNT(*) FROM LISTA_ARTICULO WHERE " + ListaArticulo.NOMBRE + " = ?";
+
+        SQLiteDatabase lectura = this.obtenerManejadorLectura();
+        Cursor cursor = lectura.rawQuery(query, new String[]{nombre});
+
+        cursor.moveToFirst();
+        lectura.close();
+        return cursor.getInt(0);
+    }
+
     //STOCK
+
+    //TODO no hagais métodos con comentarios repetidos o con ejemplos de libros por favor...
     public List<Stock> obtenerStock(){
         ArrayList<Stock> lista = new ArrayList();
         String query = "SELECT * FROM STOCK";
@@ -365,5 +518,7 @@ public class BDHandler  extends SQLiteOpenHelper {
         db.close();
         return lista;
     }
+
+
 
 }

@@ -7,12 +7,9 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 
-/**
- * Created by JuanMiguel on 03/03/2016.
- */
 public class Util {
     //hay que INCREMENTAR en 1 cada vez que se hace una modificación en la estructura o en contenido inicial
-    private static final int BD_VERSION = 8;
+    private static final int BD_VERSION = 9;
     public static int getBdVersion(){return BD_VERSION;}
 
 

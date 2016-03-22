@@ -1,8 +1,6 @@
 package stockme.stockme.util;
 
-/**
- * Created by Juanmi on 18/03/2016.
- */
+
 public class GlobalVars {
     private static GlobalVars instancia = null;
     private String moneda;
