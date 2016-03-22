@@ -21,9 +21,6 @@ import stockme.stockme.logica.Lista;
 import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.Util;
 
-/**
- * Created by JuanMiguel on 08/03/2016.
- */
 public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
     private List<Lista> datos;
     private ImageButton btn_delete;
@@ -78,42 +75,12 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
                     }
                 };
                 Util.crearMensajeAlerta("¿Quieres eliminar la lista?", borrarListaListener, v.getContext());
-//                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        switch (which){
-//                            case DialogInterface.BUTTON_POSITIVE:
-//
-//                                BDHandler manejador = new BDHandler(getContext());
-//
-//                                if(!manejador.eliminarLista(new Lista(lblNombre.getText().toString(),"","")))
-//                                    Util.mostrarToast(getContext(), "No se ha podido eliminar la lista");
-//                                break;
-//
-//                            case DialogInterface.BUTTON_NEGATIVE:
-//
-//                                break;
-//                        }
-//                    }
-//                };
-//                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-//                builder.setMessage("¿Quieres eliminar la lista?").setPositiveButton("Si", dialogClickListener)
-//                        .setNegativeButton("No", dialogClickListener).show();
+
             }
         });
 
         manejador.close();
-        //TODO: esto debería ir en Fragment_lista pero no lo he conseguido >.<, así funciona
-        item.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), ListaDeArticulos.class);
-                String nombreLista = lista.getNombre();
-                Util.mostrarToast(v.getContext(), nombreLista);
-                i.putExtra("NombreLista", nombreLista);
-                getContext().startActivity(i);
-            }
-        });
+
         return(item);
     }
 }

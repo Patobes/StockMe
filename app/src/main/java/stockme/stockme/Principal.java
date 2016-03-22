@@ -127,10 +127,10 @@ public class Principal extends AppCompatActivity
     }
 
     @Override
-    protected void onResume() {
+    protected void onResume() { //TODO quitar esto, hay que actualizarlo mejor
         super.onResume();
-        Fragment fragmento = new Fragment_listas();
+        /*Fragment fragmento = new Fragment_listas();
         getSupportFragmentManager().beginTransaction().replace(R.id.contenido_principal, fragmento).commit();
-        this.setTitle("Listas");
+        this.setTitle("Listas");*/
     }
 }

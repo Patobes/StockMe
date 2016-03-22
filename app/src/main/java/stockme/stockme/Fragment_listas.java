@@ -76,16 +76,16 @@ public class Fragment_listas extends Fragment {
         });
 
         //al click en un elemento de la lista voy a inspeccionar sus artículos
-//        listas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent i = new Intent(parent.getContext(), ListaDeArticulos.class);
-//                String nombreLista = ((Lista)parent.getItemAtPosition(position)).getNombre();
-//                Util.mostrarToast(parent.getContext(), nombreLista);
-//                i.putExtra("NombreLista", nombreLista);
-//                startActivity(i);
-//            }
-//        });
+        listas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(parent.getContext(), ListaDeArticulos.class);
+                String nombreLista = ((Lista)parent.getItemAtPosition(position)).getNombre();
+                Util.mostrarToast(parent.getContext(), nombreLista);
+                i.putExtra("NombreLista", nombreLista);
+                startActivity(i);
+            }
+        });
         manejador.cerrar();
     }
 
