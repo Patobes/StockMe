@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.List;
@@ -20,6 +21,7 @@ import stockme.stockme.persistencia.BDHandler;
 public class Fragment_stock extends Fragment {
     private OnFragmentInteractionListener mListener;
     private ListView stock;
+    private Button btnMas;
 
     public Fragment_stock() {
         // Required empty public constructor
@@ -57,15 +59,15 @@ public class Fragment_stock extends Fragment {
         //asigno el adaptador a la list view
         stock.setAdapter(adaptador);
 
-        /*
-        btn_mas = (Button)view.findViewById(R.id.fragment_stock_button);
-        btn_mas.setOnClickListener(new View.OnClickListener() {
+        //Click sobre el boton +
+        btnMas = (Button)view.findViewById(R.id.fragment_stock_button);
+        btnMas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), ListaAdd.class);
+                Intent i = new Intent(v.getContext(), StockAdd.class);
                 startActivityForResult(i, 1);
             }
-        });*/
+        });
 
         manejador.cerrar();
     }

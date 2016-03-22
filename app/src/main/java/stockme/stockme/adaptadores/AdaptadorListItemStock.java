@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
@@ -43,9 +44,14 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
         //Componentes de listitem_stock (de momento vacío)
         lblNombre = (TextView)item.findViewById(R.id.listitem_stock_nombre);
         lblNombre.setText(manejador.obtenerArticulo(stock.getArticulo()).getNombre());
+
+        lblCantidad = (TextView)item.findViewById(R.id.listitem_stock_cantidad);
+        lblCantidad.setText(String.valueOf(stock.getCanitdad()));
+
+        lblMarca = (TextView)item.findViewById(R.id.listitem_stock_marca);
+        lblMarca.setText(manejador.obtenerArticulo(stock.getArticulo()).getMarca());
         //repetir esto con todos los lbl
         //añadir boton para añadir stock y darle funcionalidad
-
 
         return(item);
     }
