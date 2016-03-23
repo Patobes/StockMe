@@ -53,7 +53,7 @@ public class Fragment_stock extends Fragment {
         stock = (ListView)view.findViewById(R.id.fragment_stock_listview);
         //recojo las listas existenes
         BDHandler manejador = new BDHandler(view.getContext());
-        List<Stock> listaArticulos = manejador.obtenerStock();
+        List<Stock> listaArticulos = manejador.obtenerStocks();
         //las añado al adaptador
         AdaptadorListItemStock adaptador = new AdaptadorListItemStock(view.getContext(), listaArticulos);
         //asigno el adaptador a la list view

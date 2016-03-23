@@ -1,8 +1,6 @@
 package stockme.stockme.logica;
 
-/**
- * Created by JuanMiguel on 03/03/2016.
- */
+
 public class Stock {
     private int articulo;
     private int minimo;
