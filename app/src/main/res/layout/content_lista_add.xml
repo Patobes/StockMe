@@ -12,44 +12,26 @@
     tools:context="stockme.stockme.ListaAdd"
     tools:showIn="@layout/activity_lista_add">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/lista_add_tv_nombre"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:text="@string/lista_add_nombre"
-        android:textSize="30sp" />
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/lista_add_et_nombre"
-        android:layout_alignBaseline="@+id/lista_add_tv_nombre"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/lista_add_tv_nombre"
         android:textSize="25sp"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:hint="Nombre de la lista"
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/lista_add_btn_cancelar"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/lista_add_tv_elementos"
-        android:layout_below="@+id/lista_add_tv_nombre"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="33dp"
+        android:id="@+id/lista_add_tv_supermercado"
+        android:layout_marginTop="44dp"
         android:textSize="30sp"
-        android:text="@string/lista_add_elementos" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Añadir"
-        android:id="@+id/lista_add_btn_anyadir"
-        android:layout_alignBaseline="@+id/lista_add_tv_elementos"
-        android:layout_toEndOf="@+id/lista_add_tv_elementos"
-        android:textSize="23sp"
-        android:layout_marginLeft="10dp"/>
+        android:text="@string/lista_add_supermercado"
+        android:layout_below="@+id/lista_add_et_nombre"
+        android:layout_alignStart="@+id/lista_add_btn_aceptar" />
 
     <Button
         android:layout_width="wrap_content"
@@ -68,6 +50,13 @@
         android:id="@+id/lista_add_btn_cancelar"
         android:textSize="23sp"
         android:layout_marginLeft="10dp"
-        android:layout_alignBottom="@+id/lista_add_btn_aceptar"
-        android:layout_toEndOf="@+id/lista_add_btn_aceptar" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lista_add_spinner_supermercados"
+        android:layout_below="@+id/lista_add_tv_supermercado"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

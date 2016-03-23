@@ -77,12 +77,15 @@ public class BDHandler  extends SQLiteOpenHelper {
         NOMBRE - STRING - PK
         FECHACREACION - STRING
         FECHAMODIFICACION - STRING
+        SUPERMERCADO - STRING - FK
          */
         String lista = "CREATE TABLE `LISTA` (" +
             "`Nombre` TEXT NOT NULL," +
             "`FechaCreacion` TEXT NOT NULL," +
             "`FechaModificacion` TEXT NOT NULL," +
+            "`Supermercado` TEXT NOT NULL," +
             "PRIMARY KEY(Nombre)" +
+            "FOREIGN KEY(`Supermercado`) REFERENCES ARTICULO(Nombre)" +
         ")";
         db.execSQL("DROP TABLE IF EXISTS 'LISTA';");
         db.execSQL(lista);
@@ -108,6 +111,7 @@ public class BDHandler  extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO `ARTICULO` VALUES(2, 'Pizza', 'Hacendado', 'Mercadona', 2.60);");
         db.execSQL("INSERT INTO `ARTICULO` VALUES(3, 'Ketchup', 'Heinz', 'Mercadona', 0.60);");
 
+        db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Cualquiera');");
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Día');");
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Mercadona');");
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Eroski');");
@@ -115,8 +119,8 @@ public class BDHandler  extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Carrefour');");
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Supersol');");
 
-        db.execSQL("INSERT INTO 'LISTA' VALUES('Lista prueba','HOY','MAÑANA')");
-        db.execSQL("INSERT INTO 'LISTA' VALUES('Lista prueba 2','AYER','TOMORROW')");
+        db.execSQL("INSERT INTO 'LISTA' VALUES('Lista prueba','HOY','MAÑANA','Día')");
+        db.execSQL("INSERT INTO 'LISTA' VALUES('Lista prueba 2','AYER','TOMORROW','Cualquiera')");
 
         db.execSQL("INSERT INTO 'LISTA_ARTICULO' VALUES(1,'Lista prueba', 6)");
         db.execSQL("INSERT INTO 'LISTA_ARTICULO' VALUES(2,'Lista prueba', 1)");
@@ -172,6 +176,7 @@ public class BDHandler  extends SQLiteOpenHelper {
                 lista.setNombre(cursor.getString(cursor.getColumnIndex(Lista.NOMBRE)));
                 lista.setFechaCreacion(cursor.getString(cursor.getColumnIndex(Lista.FECHA_CREACION)));
                 lista.setFechaModificacion(cursor.getString(cursor.getColumnIndex(Lista.FECHA_MODIFICACION)));
+                lista.setSupermercado(cursor.getString(cursor.getColumnIndex(Lista.SUPERMERCADO)));
                 listas.add(lista);
             } while (cursor.moveToNext());
         }
@@ -195,6 +200,7 @@ public class BDHandler  extends SQLiteOpenHelper {
             values.put(Lista.NOMBRE, lista.getNombre());
             values.put(Lista.FECHA_CREACION, lista.getFechaCreacion());
             values.put(Lista.FECHA_MODIFICACION, lista.getFechaModificacion());
+            values.put(Lista.SUPERMERCADO, lista.getSupermercado());
 
             db.insert("LISTA", null, values);
             db.close();
@@ -216,6 +222,7 @@ public class BDHandler  extends SQLiteOpenHelper {
             lista.setNombre(cursor.getString(cursor.getColumnIndex(Lista.NOMBRE)));
             lista.setFechaCreacion(cursor.getString(cursor.getColumnIndex(Lista.FECHA_CREACION)));
             lista.setFechaModificacion(cursor.getString(cursor.getColumnIndex(Lista.FECHA_MODIFICACION)));
+            lista.setSupermercado(cursor.getString(cursor.getColumnIndex(Lista.SUPERMERCADO)));
         }
         lectura.close();
         return lista;
@@ -244,6 +251,7 @@ public class BDHandler  extends SQLiteOpenHelper {
             valores.put(Lista.NOMBRE, lista.getNombre());
             valores.put(Lista.FECHA_CREACION, lista.getFechaCreacion());
             valores.put(Lista.FECHA_MODIFICACION, lista.getFechaModificacion());
+            valores.put(Lista.SUPERMERCADO, lista.getSupermercado());
 
             filaActu = db.update("LISTA", valores, Lista.NOMBRE + "=?", new String[]{lista.getNombre()});
             db.close();
@@ -601,21 +609,18 @@ public class BDHandler  extends SQLiteOpenHelper {
 
     //SUPERMERCADO
 
-    //Obtiene todos los supermercados
-    public List<Supermercado> obtenerSupermercados(){
+    //Obtiene todos los supermercados y devuelve un list de STRINGS
+    public List<String> obtenerSupermercados(){
 
-        ArrayList<Supermercado> supermercados = new ArrayList();
+        ArrayList<String> supermercados = new ArrayList();
         String query = "SELECT * FROM SUPERMERCADO";
 
         SQLiteDatabase db = this.obtenerManejadorLectura();
         Cursor cursor = db.rawQuery(query, null);
 
-        Supermercado supermercado = null;
         if (cursor.moveToFirst()) {
             do {
-                supermercado = new Supermercado();
-                supermercado.setNombre(cursor.getString(cursor.getColumnIndex(Supermercado.NOMBRE)));
-                supermercados.add(supermercado);
+                supermercados.add(cursor.getString(cursor.getColumnIndex(Supermercado.NOMBRE)));
             } while (cursor.moveToNext());
         }
 

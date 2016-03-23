@@ -46,6 +46,7 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
         lista.setNombre(datos.get(position).getNombre());
         lista.setFechaCreacion(datos.get(position).getFechaCreacion());
         lista.setFechaModificacion(datos.get(position).getFechaModificacion());
+        lista.setSupermercado(datos.get(position).getSupermercado());
 
         BDHandler manejador = new BDHandler(getContext());
 
@@ -53,8 +54,7 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
         lblNombre.setText(lista.getNombre());
 
         lblSupermercado = (TextView)item.findViewById(R.id.listitem_lista_supermercado);
-        lblSupermercado.setText("FALTA SUPERM");
-        //TODO: Falta modificar la bd para añadir el supermercado?
+        lblSupermercado.setText(lista.getSupermercado());
 
         lblFecha = (TextView)item.findViewById(R.id.listitem_lista_fecha);
         lblFecha.setText(lista.getFechaModificacion());
@@ -69,7 +69,7 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
                 DialogInterface.OnClickListener borrarListaListener = new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         BDHandler manejador = new BDHandler(getContext());
-                        if(!manejador.eliminarLista(new Lista(lblNombre.getText().toString(),"","")))
+                        if(!manejador.eliminarLista(new Lista(lblNombre.getText().toString(),"","","")))
                             Util.mostrarToast(getContext(), "No se ha podido eliminar la lista");
                         manejador.cerrar();
                     }

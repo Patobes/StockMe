@@ -10,13 +10,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import stockme.stockme.logica.Lista;
+import stockme.stockme.logica.Supermercado;
 import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.Util;
 
@@ -32,6 +37,15 @@ public class ListaAdd extends AppCompatActivity {
         setSupportActionBar(toolbar);
         this.setTitle("Crear lista");
 
+        BDHandler manejador = new BDHandler(this);
+        List<String> supermercados = manejador.obtenerSupermercados();
+        Spinner spinner = (Spinner) findViewById(R.id.lista_add_spinner_supermercados);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, supermercados);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
         btn_aceptar = (Button)findViewById(R.id.lista_add_btn_aceptar);
         btn_aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,7 +58,10 @@ public class ListaAdd extends AppCompatActivity {
                 if (!nombre.matches("")) {
                     String fecha = Util.diaMesAnyo.format(new Date());
 
-                    Lista nueva = new Lista(nombre, fecha, fecha);
+                    Spinner spinner = (Spinner)findViewById(R.id.lista_add_spinner_supermercados);
+                    String supermercado = spinner.getSelectedItem().toString();
+
+                    Lista nueva = new Lista(nombre, fecha, fecha, supermercado);
                     BDHandler manejador = new BDHandler(v.getContext());
 
                     if(!manejador.insertarLista(nueva))

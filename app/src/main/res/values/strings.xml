@@ -8,10 +8,11 @@
     <string name="title_activity_listas">Listas</string>
     <string name="title_activity_lista_articulos">ListaArticulos</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_lista_add">ListaAdd</string>
     <string name="lista_add_nombre">Nombre:</string>
     <string name="lista_add_elementos">Elementos:</string>
+    <string name="lista_add_supermercado">Supermercado:</string>
     <string name="title_activity_lista_de_articulos">ListaDeArticulos</string>
+
 </resources>
