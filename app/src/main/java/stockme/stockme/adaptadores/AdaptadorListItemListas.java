@@ -37,7 +37,7 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
         this.datos = datos;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View item = inflater.inflate(R.layout.listitem_lista, null);
 
@@ -69,7 +69,7 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
                 DialogInterface.OnClickListener borrarListaListener = new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         BDHandler manejador = new BDHandler(getContext());
-                        if(!manejador.eliminarLista(new Lista(lblNombre.getText().toString(),"","","")))
+                        if(!manejador.eliminarLista(new Lista(datos.get(position).getNombre(),"","","")))
                             Util.mostrarToast(getContext(), "No se ha podido eliminar la lista");
                         manejador.cerrar();
 

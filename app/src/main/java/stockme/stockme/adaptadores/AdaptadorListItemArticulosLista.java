@@ -40,11 +40,8 @@ public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> {
         this.lista = lista;
     }
 
-    /*TODO: hay que obtener en en ListaDeArticulo el extra que se puso en el AdaptadorListItemListas con el nombre de la lista
-    mirad cómo obtener datos de un intent. Luego se le tiene que pasar a este adapter y analizar el otro adaptador para ver
-    cómo extraer y construir los datos*/
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View item = inflater.inflate(R.layout.listitem_articulos_lista, null);
         BDHandler manejador = new BDHandler(getContext());
@@ -69,18 +66,18 @@ public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> {
         lblPrecio = (TextView)item.findViewById(R.id.listitem_articulos_tv_precio);
         lblPrecio.setText(Float.toString(articulo.getPrecio()));
 
-        final int cantidad = manejador.obtenerCantidadArticuloEnLista(articulo.getId(), lista);
+        int cantidad = manejador.obtenerCantidadArticuloEnLista(articulo.getId(), lista);
 
         lblCantidad = (TextView)item.findViewById(R.id.listitem_articulos_cantidad);
         lblCantidad.setText(Integer.toString(cantidad));
 
-        //TODO el mas y el menos solo actualizan el ultimo item de la lista
         btnMas = (ImageButton)item.findViewById(R.id.listitem_articulos_mas);
         btnMas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 BDHandler manejador = new BDHandler(getContext());
-                manejador.modificarArticuloEnLista(new ListaArticulo(articulo.getId(), lista.getNombre(), Integer.parseInt(lblCantidad.getText().toString()) + 1));
+                int cantidad = manejador.obtenerCantidadArticuloEnLista(datos.get(position).getId(), lista);
+                manejador.modificarArticuloEnLista(new ListaArticulo(datos.get(position).getId(), lista.getNombre(), cantidad + 1));
                 manejador.cerrar();
                 notifyDataSetChanged();
             }
@@ -91,29 +88,33 @@ public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> {
             @Override
             public void onClick(View v) {
                 BDHandler manejador = new BDHandler(getContext());
-                manejador.modificarArticuloEnLista(new ListaArticulo(articulo.getId(),lista.getNombre(), Integer.parseInt(lblCantidad.getText().toString()) - 1));
+                int cantidad = manejador.obtenerCantidadArticuloEnLista(datos.get(position).getId(), lista);
+                manejador.modificarArticuloEnLista(new ListaArticulo(datos.get(position).getId(),lista.getNombre(), cantidad - 1));
                 manejador.cerrar();
                 notifyDataSetChanged();
             }
         });
 
+
+        //TODO arreglar el checkbox para que se chekee y arreglar la vista para cantidades >10, no dejar q metan <0
         cbCompletar = (CheckBox)item.findViewById(R.id.listitem_articulos_completar);
-        cbCompletar.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        cbCompletar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            public void onClick(View v) {
                 BDHandler manejador = new BDHandler(getContext());
 
                 if (!cbCompletar.isChecked()) {
-                    manejador.modificarArticuloEnLista(new ListaArticulo(articulo.getId(), lista.getNombre(), 0));
+                    manejador.modificarArticuloEnLista(new ListaArticulo(datos.get(position).getId(), lista.getNombre(), 0));
                 } else {
-                    manejador.modificarArticuloEnLista(new ListaArticulo(articulo.getId(), lista.getNombre(), 1));
+                    manejador.modificarArticuloEnLista(new ListaArticulo(datos.get(position).getId(), lista.getNombre(), 1));
                 }
+
+                cbCompletar.setChecked(!cbCompletar.isChecked());
 
                 manejador.cerrar();
                 notifyDataSetChanged();
             }
         });
-
 
         manejador.close();
         return item;

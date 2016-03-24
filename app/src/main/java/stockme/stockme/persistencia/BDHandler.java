@@ -499,7 +499,6 @@ public class BDHandler  extends SQLiteOpenHelper {
         return cantidad;
     }
 
-    //TODO este método sobra, hay que usar el de arriba
     public int numArticulosEnLista(String nombre){
         String query = "SELECT COUNT(*) FROM LISTA_ARTICULO WHERE " + ListaArticulo.NOMBRE + " = ?";
 
