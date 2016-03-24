@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 
 public class Util {
     //hay que INCREMENTAR en 1 cada vez que se hace una modificación en la estructura o en contenido inicial
-    private static final int BD_VERSION = 11;
+    private static final int BD_VERSION = 12;
     public static int getBdVersion(){return BD_VERSION;}
 
 

@@ -30,22 +30,70 @@
         android:layout_toEndOf="@+id/listitem_articulos_marca"
         android:layout_marginLeft="3dp" />
 
-    <EditText
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listitem_articulos_tv_precio"
-        android:layout_alignBaseline="@+id/listitem_articulos_superm"
-        android:layout_toEndOf="@+id/listitem_articulos_superm"
         android:hint="Precio"
-        android:layout_marginLeft="3dp"/>
+        android:layout_marginLeft="3dp"
+        android:paddingLeft="5dp"
+        android:layout_alignBottom="@+id/listitem_articulos_cantidad"
+        android:layout_toEndOf="@+id/listitem_articulos_superm" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="euros"
         android:id="@+id/listitem_articulos_moneda"
+        android:layout_marginLeft="3dp"
+        android:layout_alignTop="@+id/listitem_articulos_tv_precio"
+        android:layout_toEndOf="@+id/listitem_articulos_tv_precio" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:id="@+id/listitem_articulos_cantidad"
+        android:textSize="35dp"
         android:layout_alignBottom="@+id/listitem_articulos_superm"
-        android:layout_toEndOf="@+id/listitem_articulos_tv_precio"
-        android:layout_marginLeft="3dp" />
+        android:layout_toEndOf="@+id/listitem_articulos_moneda"
+        android:layout_marginStart="42dp" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listitem_articulos_completar"
+        android:checked="false"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@+id/listitem_articulos_cantidad" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listitem_articulo_id"
+        android:visibility="invisible"
+        android:text="ID"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/listitem_articulos_superm" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listitem_articulos_mas"
+        android:src="@drawable/ic_add_black_18dp"
+        android:background="#00ffffff"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/listitem_articulos_menos" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listitem_articulos_menos"
+        android:src="@drawable/ic_remove_black_18dp"
+        android:background="#00ffffff"
+        android:layout_marginEnd="21dp"
+        android:layout_alignTop="@+id/listitem_articulos_moneda"
+        android:layout_alignEnd="@+id/listitem_articulos_cantidad" />
 
 </RelativeLayout>

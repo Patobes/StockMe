@@ -396,7 +396,7 @@ public class BDHandler  extends SQLiteOpenHelper {
     //LISTAARTICULO
 
     //Obtiene una lista de los articulos en una lista
-    public List<Articulo> obtenerArticulosEnLista(ListaArticulo lista){
+    public List<Articulo> obtenerArticulosEnLista(Lista lista){
 
         ArrayList<Articulo> articulos = new ArrayList();
         String query = "SELECT * FROM LISTA_ARTICULO WHERE " + ListaArticulo.NOMBRE + " =?";
@@ -408,7 +408,6 @@ public class BDHandler  extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 art = obtenerArticulo(cursor.getInt(cursor.getColumnIndex(ListaArticulo.ARTICULO)));
-
                 articulos.add(art);
             } while (cursor.moveToNext());
         }
@@ -476,11 +475,28 @@ public class BDHandler  extends SQLiteOpenHelper {
 
         if(estaArticuloEnLista(listaArticulo.getArticulo(), listaArticulo.getNombre())) {
             SQLiteDatabase db = this.obtenerManejadorEscritura();
-            filaBorrada = db.delete("LISTA_ARTICULO", ListaArticulo.ARTICULO + "=? AND " + ListaArticulo.NOMBRE +"=?", new String[]{Integer.toString(listaArticulo.getArticulo()),listaArticulo.getNombre()});
+            filaBorrada = db.delete("LISTA_ARTICULO", ListaArticulo.ARTICULO + "=? AND " + ListaArticulo.NOMBRE + "=?", new String[]{Integer.toString(listaArticulo.getArticulo()), listaArticulo.getNombre()});
             db.close();
         }
 
         return filaBorrada > 0;
+    }
+
+    //Obtiene la cantidad de un articulo en una lista
+    public int obtenerCantidadArticuloEnLista (int articulo, Lista lista){
+
+        int cantidad = -1;
+        String query = "SELECT CANTIDAD FROM LISTA_ARTICULO WHERE " + ListaArticulo.NOMBRE + " = ? AND " + ListaArticulo.ARTICULO + " = ?";
+
+        SQLiteDatabase lectura = this.obtenerManejadorLectura();
+        Cursor cursor = lectura.rawQuery(query, new String[]{lista.getNombre(),Integer.toString(articulo)});
+
+        if (cursor.moveToFirst()) {
+            cantidad = cursor.getInt(cursor.getColumnIndex(ListaArticulo.CANTIDAD));
+        }
+
+        lectura.close();
+        return cantidad;
     }
 
     //TODO este método sobra, hay que usar el de arriba

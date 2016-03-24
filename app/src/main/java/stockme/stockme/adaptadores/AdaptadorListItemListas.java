@@ -72,10 +72,12 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
                         if(!manejador.eliminarLista(new Lista(lblNombre.getText().toString(),"","","")))
                             Util.mostrarToast(getContext(), "No se ha podido eliminar la lista");
                         manejador.cerrar();
+
                     }
                 };
                 Util.crearMensajeAlerta("¿Quieres eliminar la lista?", borrarListaListener, v.getContext());
 
+                notifyDataSetChanged();
             }
         });
 
