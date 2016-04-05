@@ -1,11 +1,13 @@
 package stockme.stockme;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.List;
@@ -16,6 +18,7 @@ import stockme.stockme.logica.Articulo;
 import stockme.stockme.logica.Lista;
 import stockme.stockme.logica.ListaArticulo;
 import stockme.stockme.persistencia.BDHandler;
+import stockme.stockme.util.Util;
 
 public class ListaDeArticulos extends AppCompatActivity {
     private ListView articulos;
@@ -38,6 +41,15 @@ public class ListaDeArticulos extends AppCompatActivity {
         AdaptadorListItemArticulosLista adaptador = new AdaptadorListItemArticulosLista(this, listaArticulos, lista);
         articulos.setAdapter(adaptador);
 
+        //TODO Esto va pero hay que verlo mejor
+        articulos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Util.mostrarToast(view.getContext(), "Loco");
+
+                return false;
+            }
+        });
 
     }
 

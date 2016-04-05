@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.List;
@@ -31,7 +32,6 @@ public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> {
     private TextView lblCantidad;
     private ImageButton btnMas;
     private ImageButton btnMenos;
-    private CheckBox cbCompletar;
 
 
     public AdaptadorListItemArticulosLista(Context context, List<Articulo> datos, Lista lista) {
@@ -96,25 +96,8 @@ public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> {
         });
 
 
-        //TODO arreglar el checkbox para que se chekee y arreglar la vista para cantidades >10, no dejar q metan <0
-        cbCompletar = (CheckBox)item.findViewById(R.id.listitem_articulos_completar);
-        cbCompletar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BDHandler manejador = new BDHandler(getContext());
 
-                if (!cbCompletar.isChecked()) {
-                    manejador.modificarArticuloEnLista(new ListaArticulo(datos.get(position).getId(), lista.getNombre(), 0));
-                } else {
-                    manejador.modificarArticuloEnLista(new ListaArticulo(datos.get(position).getId(), lista.getNombre(), 1));
-                }
 
-                cbCompletar.setChecked(!cbCompletar.isChecked());
-
-                manejador.cerrar();
-                notifyDataSetChanged();
-            }
-        });
 
         manejador.close();
         return item;
