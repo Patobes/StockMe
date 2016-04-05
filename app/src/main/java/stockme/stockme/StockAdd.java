@@ -3,9 +3,16 @@ package stockme.stockme;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.NumberPicker;
+import android.widget.Toast;
+
+import stockme.stockme.util.Util;
 
 public class StockAdd extends AppCompatActivity {
+    NumberPicker numberPicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,5 +23,11 @@ public class StockAdd extends AppCompatActivity {
         setSupportActionBar(toolbar);
         this.setTitle("Añadir a stock");
 
+        numberPicker = (NumberPicker)findViewById(R.id.numberPicker);
+        numberPicker.setMinValue(1);
+        numberPicker.setMaxValue(6);
+        numberPicker.setWrapSelectorWheel(false);
+        numberPicker.setDisplayedValues(new String[]{"1", "2", "3", "4", "5", "6"});
+        numberPicker.setValue(1);
     }
 }
