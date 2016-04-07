@@ -1,24 +1,32 @@
 package stockme.stockme;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.method.CharacterPickerDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.List;
 
 import stockme.stockme.adaptadores.AdaptadorListItemListas;
+import stockme.stockme.logica.Articulo;
 import stockme.stockme.logica.Lista;
+import stockme.stockme.logica.ListaArticulo;
 import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.Util;
 
@@ -26,6 +34,7 @@ public class Fragment_listas extends Fragment {
     private OnFragmentInteractionListener mListener;
     private ListView listas;
     private Button btn_mas;
+    private String nuevoNombre;
 
 
     public Fragment_listas() {
@@ -58,7 +67,7 @@ public class Fragment_listas extends Fragment {
 
         listas = (ListView)view.findViewById(R.id.fragment_listas_listview);
         //recojo las listas existenes
-        BDHandler manejador = new BDHandler(view.getContext());
+        final BDHandler manejador = new BDHandler(view.getContext());
         List<Lista> listaListas = manejador.obtenerListas();
         //las añado al adaptador
         AdaptadorListItemListas adaptador = new AdaptadorListItemListas(view.getContext(), listaListas);
@@ -79,12 +88,58 @@ public class Fragment_listas extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(parent.getContext(), ListaDeArticulos.class);
-                String nombreLista = ((Lista)parent.getItemAtPosition(position)).getNombre();
+                String nombreLista = ((Lista) parent.getItemAtPosition(position)).getNombre();
                 Util.mostrarToast(parent.getContext(), nombreLista);
                 i.putExtra("NombreLista", nombreLista);
                 startActivity(i);
             }
         });
+
+        listas.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                final Lista lista = ((Lista)parent.getItemAtPosition(position));
+
+                //Diálogo para cambiar nombre
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setTitle("Nuevo nombre");
+
+                final EditText input = new EditText(view.getContext());
+                builder.setView(input);
+
+                //TODO simplificar esto...
+                builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        nuevoNombre = input.getText().toString();
+                        Lista nuevaLista = new Lista(nuevoNombre,lista.getFechaCreacion(),lista.getFechaModificacion(),lista.getSupermercado());
+
+                        manejador.insertarLista(nuevaLista);
+
+                        List<Articulo> articulos = manejador.obtenerArticulosEnLista(lista);
+                        for(Articulo articulo : articulos){
+                            int cantidad = manejador.obtenerCantidadArticuloEnLista(articulo.getId(),lista);
+                            manejador.insertarArticuloEnLista(new ListaArticulo(articulo.getId(),nuevoNombre,cantidad));
+
+                            manejador.eliminarArticuloEnLista(new ListaArticulo(articulo.getId(), lista.getNombre(), cantidad));
+                        }
+
+                        manejador.eliminarLista(lista);
+                    }
+                });
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
+
+                return false;
+            }
+        });
+
         manejador.cerrar();
     }
 

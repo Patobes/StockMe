@@ -40,13 +40,14 @@ public class ListaDeArticulos extends AppCompatActivity {
         List<Articulo> listaArticulos = manejador.obtenerArticulosEnLista(lista);
         AdaptadorListItemArticulosLista adaptador = new AdaptadorListItemArticulosLista(this, listaArticulos, lista);
         articulos.setAdapter(adaptador);
+        manejador.close();
 
-        //TODO Esto va pero hay que verlo mejor
+        //TODO Hacer que cambie el color del background o algo para ver que se ha comprado
         articulos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Util.mostrarToast(view.getContext(), "Loco");
-
+                Articulo articulo = (Articulo) parent.getItemAtPosition(position);
+                Util.mostrarToast(view.getContext(), articulo.getNombre()+" Comprado");
                 return false;
             }
         });
