@@ -347,12 +347,43 @@ public class BDHandler  extends SQLiteOpenHelper {
         return articulo;
     }
 
+    public Articulo obtenerArticulo(String nombre, String marca){
+        Articulo articulo = null;
+        String query = "SELECT 1 FROM ARTICULO WHERE " + Articulo.NOMBRE + " = ? AND " + Articulo.MARCA + " = ?";
+        SQLiteDatabase lectura = this.obtenerManejadorLectura();
+
+        Cursor cursor = lectura.rawQuery(query, new String[]{nombre, marca});
+
+        if(cursor.moveToFirst()){
+            articulo = new Articulo();
+            articulo.setId(cursor.getInt(cursor.getColumnIndex(Articulo.ID)));
+            articulo.setNombre(cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)));
+            articulo.setMarca(cursor.getString(cursor.getColumnIndex(Articulo.MARCA)));
+            articulo.setSupermercado(cursor.getString(cursor.getColumnIndex(Articulo.SUPERMERCADO)));
+            articulo.setPrecio(cursor.getFloat(cursor.getColumnIndex(Articulo.PRECIO)));
+        }
+        lectura.close();
+        return articulo;
+    }
+
     //Comprueba si esta un articulo de id indicado
     public boolean estaArticulo(int id){
         String query = "SELECT * FROM ARTICULO WHERE " + Articulo.ID + " = ?";
 
         SQLiteDatabase lectura = this.obtenerManejadorLectura();
         Cursor cursor = lectura.rawQuery(query, new String[]{Integer.toString(id)});
+
+        boolean ok = cursor.moveToFirst();
+        lectura.close();
+
+        return ok;
+    }
+
+    public boolean estaArticulo(String nombre, String marca){
+        String query = "SELECT * FROM ARTICULO WHERE " + Articulo.NOMBRE + " = ? AND " + Articulo.MARCA + " = ?";
+
+        SQLiteDatabase lectura = this.obtenerManejadorLectura();
+        Cursor cursor = lectura.rawQuery(query, new String[]{nombre, marca});
 
         boolean ok = cursor.moveToFirst();
         lectura.close();
@@ -589,6 +620,11 @@ public class BDHandler  extends SQLiteOpenHelper {
         lectura.close();
 
         return ok;
+    }
+
+    public boolean estaStock(String nombre, String marca){
+        Articulo articulo = this.obtenerArticulo(nombre, marca);
+        return estaStock(articulo.getId());
     }
 
     //Cambia los valores del stock indicado, debe existir previamente
