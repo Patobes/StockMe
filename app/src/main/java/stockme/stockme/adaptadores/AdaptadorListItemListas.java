@@ -17,7 +17,9 @@ import java.util.List;
 import stockme.stockme.ListaDeArticulos;
 import stockme.stockme.Principal;
 import stockme.stockme.R;
+import stockme.stockme.logica.Articulo;
 import stockme.stockme.logica.Lista;
+import stockme.stockme.logica.ListaArticulo;
 import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.Util;
 
@@ -69,14 +71,20 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
                 DialogInterface.OnClickListener borrarListaListener = new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         BDHandler manejador = new BDHandler(getContext());
-                        if(!manejador.eliminarLista(new Lista(datos.get(position).getNombre(),"","","")))
+
+                        //TODO esto debería estar en una transaction pero no se como se hacen
+                        List<Articulo> articulos = manejador.obtenerArticulosEnLista(datos.get(position));
+                        for(Articulo articulo : articulos){
+                            manejador.eliminarArticuloEnLista(new ListaArticulo(articulo.getId(),datos.get(position).getNombre(),0));
+                        }
+
+                        if(!manejador.eliminarLista(datos.get(position)))
                             Util.mostrarToast(getContext(), "No se ha podido eliminar la lista");
 
                         Util.mostrarToast(getContext(), "Lista eliminada");
 
                         manejador.cerrar();
-                        //TODO Esto no actualiza
-                        notifyDataSetChanged();
+                        remove(datos.get(position));
                     }
                 };
                 Util.crearMensajeAlerta("¿Quieres eliminar la lista?", borrarListaListener, v.getContext());
