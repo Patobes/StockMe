@@ -7,8 +7,11 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +27,7 @@ import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.Util;
 
 public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
+    private ListView listas;
     private List<Lista> datos;
     private ImageButton btn_delete;
     private TextView lblNombre;
@@ -31,7 +35,7 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
     private TextView lblFecha;
     private TextView lblNProductos;
     private Lista lista;
-//    private Context context;
+    private String nuevoNombre;
 
     public AdaptadorListItemListas(Context context, List<Lista> datos) {
         super(context, R.layout.listitem_lista, datos);
@@ -90,6 +94,56 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
                 Util.crearMensajeAlerta("¿Quieres eliminar la lista?", borrarListaListener, v.getContext());
 
 
+            }
+        });
+
+        listas = (ListView)parent.findViewById(R.id.fragment_listas_listview);
+        listas.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                final BDHandler manejador = new BDHandler(getContext());
+                final Lista lista = ((Lista) parent.getItemAtPosition(position));
+
+                //Diálogo para cambiar nombre
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setTitle("Nuevo nombre");
+
+                final EditText input = new EditText(view.getContext());
+                builder.setView(input);
+
+                builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        nuevoNombre = input.getText().toString();
+                        Lista nuevaLista = new Lista(nuevoNombre, lista.getFechaCreacion(), lista.getFechaModificacion(), lista.getSupermercado());
+
+                        manejador.insertarLista(nuevaLista);
+
+                        List<Articulo> articulos = manejador.obtenerArticulosEnLista(lista);
+                        for (Articulo articulo : articulos) {
+                            int cantidad = manejador.obtenerCantidadArticuloEnLista(articulo.getId(), lista);
+                            manejador.insertarArticuloEnLista(new ListaArticulo(articulo.getId(), nuevoNombre, cantidad));
+                            manejador.eliminarArticuloEnLista(new ListaArticulo(articulo.getId(), lista.getNombre(), cantidad));
+                        }
+
+                        manejador.eliminarLista(lista);
+                        Util.mostrarToast(getContext(),"Lista renombrada");
+                        remove(lista);
+                        add(nuevaLista);
+
+                    }
+                });
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
+
+                return true;
             }
         });
 

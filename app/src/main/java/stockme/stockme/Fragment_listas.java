@@ -34,7 +34,6 @@ public class Fragment_listas extends Fragment {
     private OnFragmentInteractionListener mListener;
     private ListView listas;
     private Button btn_mas;
-    private String nuevoNombre;
 
 
     public Fragment_listas() {
@@ -92,49 +91,6 @@ public class Fragment_listas extends Fragment {
                 Util.mostrarToast(parent.getContext(), nombreLista);
                 i.putExtra("NombreLista", nombreLista);
                 startActivity(i);
-            }
-        });
-
-        listas.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                final Lista lista = ((Lista)parent.getItemAtPosition(position));
-
-                //Diálogo para cambiar nombre
-                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                builder.setTitle("Nuevo nombre");
-
-                final EditText input = new EditText(view.getContext());
-                builder.setView(input);
-
-                builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        nuevoNombre = input.getText().toString();
-                        Lista nuevaLista = new Lista(nuevoNombre,lista.getFechaCreacion(),lista.getFechaModificacion(),lista.getSupermercado());
-
-                        manejador.insertarLista(nuevaLista);
-
-                        List<Articulo> articulos = manejador.obtenerArticulosEnLista(lista);
-                        for(Articulo articulo : articulos){
-                            int cantidad = manejador.obtenerCantidadArticuloEnLista(articulo.getId(),lista);
-                            manejador.insertarArticuloEnLista(new ListaArticulo(articulo.getId(),nuevoNombre,cantidad));
-                            manejador.eliminarArticuloEnLista(new ListaArticulo(articulo.getId(), lista.getNombre(), cantidad));
-                        }
-
-                        manejador.eliminarLista(lista);
-                    }
-                });
-                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-                builder.show();
-
-                return true;
             }
         });
 

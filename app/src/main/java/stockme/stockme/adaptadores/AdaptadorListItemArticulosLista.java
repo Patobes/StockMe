@@ -2,6 +2,7 @@ package stockme.stockme.adaptadores;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +75,9 @@ public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> {
         lblCantidad = (TextView)item.findViewById(R.id.listitem_articulos_cantidad);
         lblCantidad.setText(Integer.toString(cantidad));
 
+        if (cantidad == 0)
+            item.setBackgroundColor(Color.GREEN);
+
         btnMas = (ImageButton)item.findViewById(R.id.listitem_articulos_mas);
         btnMas.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +96,8 @@ public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> {
             public void onClick(View v) {
                 BDHandler manejador = new BDHandler(getContext());
                 int cantidad = manejador.obtenerCantidadArticuloEnLista(datos.get(position).getId(), lista);
-                manejador.modificarArticuloEnLista(new ListaArticulo(datos.get(position).getId(),lista.getNombre(), cantidad - 1));
+                if (cantidad != 0)
+                    manejador.modificarArticuloEnLista(new ListaArticulo(datos.get(position).getId(),lista.getNombre(), cantidad - 1));
                 manejador.cerrar();
                 notifyDataSetChanged();
             }
