@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="#bbd3f3"
-    android:paddingBottom="5dp"
-    android:paddingTop="5dp"
+    android:background="#ffffff"
     android:clickable="false"
     android:descendantFocusability="blocksDescendants">
 
@@ -27,11 +25,11 @@
         android:text="Supermercado"
         android:id="@+id/listitem_lista_supermercado"
         android:textSize="16sp"
-        android:layout_below="@+id/listitem_lista_nombre"
-        android:layout_toEndOf="@+id/listitem_lista_btn_delete"
         android:clickable="false"
         android:focusable="false"
-        android:focusableInTouchMode="false"/>
+        android:focusableInTouchMode="false"
+        android:layout_below="@+id/listitem_lista_nombre"
+        android:layout_alignStart="@+id/listitem_lista_nombre" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -71,6 +69,7 @@
         android:padding="5dp"
         android:layout_alignBottom="@+id/listitem_lista_supermercado"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:minWidth="30dp" />
 
 </RelativeLayout>
