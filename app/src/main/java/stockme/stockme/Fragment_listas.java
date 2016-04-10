@@ -107,7 +107,6 @@ public class Fragment_listas extends Fragment {
                 final EditText input = new EditText(view.getContext());
                 builder.setView(input);
 
-                //TODO simplificar esto...
                 builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -120,7 +119,6 @@ public class Fragment_listas extends Fragment {
                         for(Articulo articulo : articulos){
                             int cantidad = manejador.obtenerCantidadArticuloEnLista(articulo.getId(),lista);
                             manejador.insertarArticuloEnLista(new ListaArticulo(articulo.getId(),nuevoNombre,cantidad));
-
                             manejador.eliminarArticuloEnLista(new ListaArticulo(articulo.getId(), lista.getNombre(), cantidad));
                         }
 
@@ -136,7 +134,7 @@ public class Fragment_listas extends Fragment {
 
                 builder.show();
 
-                return false;
+                return true;
             }
         });
 

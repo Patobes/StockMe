@@ -33,24 +33,14 @@ public class ListaDeArticulos extends AppCompatActivity {
 
         articulos = (ListView)findViewById(R.id.lista_articulos_lista);
 
-        Lista lista = new Lista(getIntent().getStringExtra("NombreLista"),"","","");
+        final Lista lista = new Lista(getIntent().getStringExtra("NombreLista"),"","","");
         this.setTitle(lista.getNombre());
 
-        BDHandler manejador = new BDHandler(this);
+        final BDHandler manejador = new BDHandler(this);
         List<Articulo> listaArticulos = manejador.obtenerArticulosEnLista(lista);
         AdaptadorListItemArticulosLista adaptador = new AdaptadorListItemArticulosLista(this, listaArticulos, lista);
         articulos.setAdapter(adaptador);
         manejador.close();
-
-        //TODO Hacer que cambie el color del background o algo para ver que se ha comprado
-        articulos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Articulo articulo = (Articulo) parent.getItemAtPosition(position);
-                Util.mostrarToast(view.getContext(), articulo.getNombre()+" Comprado");
-                return false;
-            }
-        });
 
     }
 

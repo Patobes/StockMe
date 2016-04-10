@@ -71,13 +71,17 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
                         BDHandler manejador = new BDHandler(getContext());
                         if(!manejador.eliminarLista(new Lista(datos.get(position).getNombre(),"","","")))
                             Util.mostrarToast(getContext(), "No se ha podido eliminar la lista");
-                        manejador.cerrar();
 
+                        Util.mostrarToast(getContext(), "Lista eliminada");
+
+                        manejador.cerrar();
+                        //TODO Esto no actualiza
+                        notifyDataSetChanged();
                     }
                 };
                 Util.crearMensajeAlerta("¿Quieres eliminar la lista?", borrarListaListener, v.getContext());
 
-                notifyDataSetChanged();
+
             }
         });
 

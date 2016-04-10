@@ -5,10 +5,12 @@ import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -22,6 +24,7 @@ import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.Util;
 
 public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> {
+    private ListView articulos;
     private List<Articulo> datos;
     private Lista lista;
     private Articulo articulo;
@@ -95,11 +98,25 @@ public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> {
             }
         });
 
+        articulos = (ListView)parent.findViewById(R.id.lista_articulos_lista);
 
+        articulos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                BDHandler manejador = new BDHandler(getContext());
 
+                Articulo articulo = (Articulo) parent.getItemAtPosition(position);
+                manejador.modificarArticuloEnLista(new ListaArticulo(articulo.getId(),lista.getNombre(),0));
+                manejador.cerrar();
 
+                Util.mostrarToast(view.getContext(), "Comprado: " + articulo.getNombre());
+                notifyDataSetChanged();
+                return true;
+            }
+        });
 
         manejador.close();
         return item;
     }
+
 }
