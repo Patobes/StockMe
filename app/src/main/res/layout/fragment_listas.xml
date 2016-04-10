@@ -20,7 +20,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
-            android:clickable="false" />
+            android:clickable="false"/>
 
         <Button
             style="?android:attr/buttonStyleSmall"

@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Date;
 import java.util.List;
 
 import stockme.stockme.ListaDeArticulos;
@@ -116,7 +117,7 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         nuevoNombre = input.getText().toString();
-                        Lista nuevaLista = new Lista(nuevoNombre, lista.getFechaCreacion(), lista.getFechaModificacion(), lista.getSupermercado());
+                        Lista nuevaLista = new Lista(nuevoNombre, lista.getFechaCreacion(), Util.diaMesAnyo.format(new Date()), lista.getSupermercado());
 
                         manejador.insertarLista(nuevaLista);
 
