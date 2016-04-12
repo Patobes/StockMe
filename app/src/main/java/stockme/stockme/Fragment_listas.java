@@ -1,5 +1,6 @@
 package stockme.stockme;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -90,7 +91,7 @@ public class Fragment_listas extends Fragment {
                 String nombreLista = ((Lista) parent.getItemAtPosition(position)).getNombre();
                 Util.mostrarToast(parent.getContext(), nombreLista);
                 i.putExtra("NombreLista", nombreLista);
-                startActivity(i);
+                startActivityForResult(i, 1);
             }
         });
 
@@ -129,9 +130,15 @@ public class Fragment_listas extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    //este método recoje los datos obtenidos al añadir elementos a la lista
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if ((requestCode == 1) && (resultCode == Activity.RESULT_OK)){
+            Fragment fragmento = new Fragment_listas();
+            FragmentTransaction ft = getFragmentManager().beginTransaction().replace(R.id.contenido_principal, fragmento);
+            ft.attach(fragmento).commit();
+
+            Util.mostrarToast(getContext(),"hey");
+        }
     }
 }

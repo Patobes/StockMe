@@ -1,5 +1,6 @@
 package stockme.stockme;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -58,16 +59,18 @@ public class ListaAdd extends AppCompatActivity {
                 if (!nombre.matches("")) {
                     String fecha = Util.diaMesAnyo.format(new Date());
 
-                    Spinner spinner = (Spinner)findViewById(R.id.lista_add_spinner_supermercados);
+                    Spinner spinner = (Spinner) findViewById(R.id.lista_add_spinner_supermercados);
                     String supermercado = spinner.getSelectedItem().toString();
 
                     Lista nueva = new Lista(nombre, fecha, fecha, supermercado);
                     BDHandler manejador = new BDHandler(v.getContext());
 
-                    if(!manejador.insertarLista(nueva))
+                    if (!manejador.insertarLista(nueva))
                         Toast.makeText(v.getContext(), "Ya existe la lista '" + nueva.getNombre() + "'", Toast.LENGTH_SHORT).show();
-                    else
+                    else {
+                        setResult(Activity.RESULT_OK);
                         finish();
+                    }
                 } else {
                     CharSequence text = "¡Falta un nombre!";
                     Toast toast = Toast.makeText(context, text, duration);

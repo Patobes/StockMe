@@ -23,7 +23,8 @@
             android:clickable="false"
             android:smoothScrollbar="true"
             android:divider="@android:color/transparent"
-            android:dividerHeight="4dp"/>
+            android:dividerHeight="4dp"
+            android:scrollIndicators="none" />
 
         <Button
             style="?android:attr/buttonStyleSmall"
