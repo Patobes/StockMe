@@ -68,7 +68,10 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
         lblNombre.setText(lista.getNombre());
 
         lblSupermercado = (TextView)item.findViewById(R.id.listitem_lista_supermercado);
-        lblSupermercado.setText(lista.getSupermercado());
+        if(!lista.getSupermercado().equalsIgnoreCase("cualquiera"))
+            lblSupermercado.setText(lista.getSupermercado());
+        else
+            lblSupermercado.setText("");
 
         lblFecha = (TextView)item.findViewById(R.id.listitem_lista_fecha);
         lblFecha.setText(lista.getFechaModificacion());
