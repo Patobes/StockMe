@@ -98,8 +98,6 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
                     }
                 };
                 Util.crearMensajeAlerta("¿Quieres eliminar la lista?", borrarListaListener, v.getContext());
-
-
             }
         });
 
