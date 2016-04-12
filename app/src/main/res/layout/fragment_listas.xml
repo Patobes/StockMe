@@ -21,17 +21,19 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:clickable="false"
-            android:dividerHeight="7dp"
-            android:drawSelectorOnTop="false"
-            android:smoothScrollbar="true" />
+            android:smoothScrollbar="true"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="4dp"/>
 
         <Button
             style="?android:attr/buttonStyleSmall"
+            android:background="@drawable/esquinas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="+"
             android:id="@+id/fragment_listas_btn_mas"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            />
     </RelativeLayout>
 </FrameLayout>

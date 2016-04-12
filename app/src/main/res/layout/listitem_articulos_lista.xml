@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:descendantFocusability="blocksDescendants">
+    android:descendantFocusability="blocksDescendants"
+    android:paddingLeft="10dp">
 
     <TextView
         android:layout_width="wrap_content"
@@ -58,12 +59,11 @@
         android:layout_height="wrap_content"
         android:text="euros"
         android:id="@+id/listitem_articulos_moneda"
-        android:layout_marginLeft="3dp"
-        android:layout_alignTop="@+id/listitem_articulos_tv_precio"
-        android:layout_toEndOf="@+id/listitem_articulos_tv_precio"
         android:clickable="false"
         android:focusable="false"
-        android:focusableInTouchMode="false"/>
+        android:focusableInTouchMode="false"
+        android:layout_alignTop="@+id/listitem_articulos_tv_precio"
+        android:layout_toEndOf="@+id/listitem_articulos_tv_precio" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -71,12 +71,15 @@
         android:text="0"
         android:id="@+id/listitem_articulos_cantidad"
         android:textSize="35dp"
-        android:layout_marginStart="36dp"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/listitem_articulos_moneda"
         android:clickable="false"
         android:focusable="false"
-        android:focusableInTouchMode="false"/>
+        android:focusableInTouchMode="false"
+        android:layout_alignBottom="@+id/listitem_articulos_superm"
+        android:layout_toStartOf="@+id/listitem_articulos_mas"
+        android:minWidth="45dp"
+        android:maxWidth="45dp"
+        android:textAlignment="center"
+        />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -84,12 +87,14 @@
         android:id="@+id/listitem_articulos_mas"
         android:src="@drawable/ic_add_black_18dp"
         android:background="#00ffffff"
-        android:layout_alignParentTop="true"
-        android:layout_alignBottom="@+id/listitem_articulos_superm"
-        android:layout_toEndOf="@+id/listitem_articulos_cantidad"
         android:clickable="false"
         android:focusable="false"
-        android:focusableInTouchMode="false"/>
+        android:focusableInTouchMode="false"
+        android:layout_alignBottom="@+id/listitem_articulos_cantidad"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:minWidth="30dp"
+        android:maxWidth="40dp"/>
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -97,13 +102,13 @@
         android:id="@+id/listitem_articulos_menos"
         android:src="@drawable/ic_remove_black_18dp"
         android:background="#00ffffff"
-        android:layout_marginEnd="20dp"
-        android:layout_alignEnd="@+id/listitem_articulos_cantidad"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/listitem_articulos_moneda"
-        android:layout_alignBottom="@+id/listitem_articulos_cantidad"
         android:clickable="false"
         android:focusable="false"
-        android:focusableInTouchMode="false"/>
+        android:focusableInTouchMode="false"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/listitem_articulos_cantidad"
+        android:layout_alignBottom="@+id/listitem_articulos_cantidad"
+        android:minWidth="30dp"
+        android:maxWidth="40dp"/>
 
 </RelativeLayout>
