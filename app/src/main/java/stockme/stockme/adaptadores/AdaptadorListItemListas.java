@@ -48,6 +48,13 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View item = inflater.inflate(R.layout.listitem_lista, null);
 
+        if ( position % 2 == 1) {
+            item.setBackgroundResource(R.drawable.esquinas_impar);
+        }
+        else {
+            item.setBackgroundResource(R.drawable.esquinas);
+        }
+
         //se crea un elemento Lista que contiene los datos de la fila
         lista = new Lista();
         lista.setNombre(datos.get(position).getNombre());
@@ -61,7 +68,10 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
         lblNombre.setText(lista.getNombre());
 
         lblSupermercado = (TextView)item.findViewById(R.id.listitem_lista_supermercado);
-        lblSupermercado.setText(lista.getSupermercado());
+        if(!lista.getSupermercado().equalsIgnoreCase("cualquiera"))
+            lblSupermercado.setText(lista.getSupermercado());
+        else
+            lblSupermercado.setText("");
 
         lblFecha = (TextView)item.findViewById(R.id.listitem_lista_fecha);
         lblFecha.setText(lista.getFechaModificacion());

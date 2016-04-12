@@ -65,6 +65,8 @@ public class Fragment_listas extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        view.setVerticalScrollBarEnabled(false);
+
         listas = (ListView)view.findViewById(R.id.fragment_listas_listview);
         //recojo las listas existenes
         final BDHandler manejador = new BDHandler(view.getContext());

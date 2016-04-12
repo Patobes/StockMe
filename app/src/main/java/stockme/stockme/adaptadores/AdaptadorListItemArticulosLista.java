@@ -84,7 +84,10 @@ public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> {
             public void onClick(View v) {
                 BDHandler manejador = new BDHandler(getContext());
                 int cantidad = manejador.obtenerCantidadArticuloEnLista(datos.get(position).getId(), lista);
-                manejador.modificarArticuloEnLista(new ListaArticulo(datos.get(position).getId(), lista.getNombre(), cantidad + 1));
+
+                if (cantidad < 99)
+                    manejador.modificarArticuloEnLista(new ListaArticulo(datos.get(position).getId(), lista.getNombre(), cantidad + 1));
+
                 manejador.cerrar();
                 notifyDataSetChanged();
             }
@@ -96,8 +99,10 @@ public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> {
             public void onClick(View v) {
                 BDHandler manejador = new BDHandler(getContext());
                 int cantidad = manejador.obtenerCantidadArticuloEnLista(datos.get(position).getId(), lista);
-                if (cantidad != 0)
+
+                if (cantidad > 0)
                     manejador.modificarArticuloEnLista(new ListaArticulo(datos.get(position).getId(),lista.getNombre(), cantidad - 1));
+
                 manejador.cerrar();
                 notifyDataSetChanged();
             }
