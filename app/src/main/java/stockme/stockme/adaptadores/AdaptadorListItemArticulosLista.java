@@ -76,7 +76,7 @@ public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> {
         lblCantidad.setText(Integer.toString(cantidad));
 
         if (cantidad == 0)
-            item.setBackgroundColor(Color.GREEN);
+            item.setBackgroundColor(Color.parseColor("#D887FF7D"));
 
         btnMas = (ImageButton)item.findViewById(R.id.listitem_articulos_mas);
         btnMas.setOnClickListener(new View.OnClickListener() {
