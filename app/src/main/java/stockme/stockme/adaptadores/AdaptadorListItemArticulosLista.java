@@ -17,8 +17,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
+import com.nhaarman.listviewanimations.itemmanipulation.dragdrop.TouchViewDraggableManager;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.undo.SimpleSwipeUndoAdapter;
+import com.nhaarman.listviewanimations.util.Swappable;
 
 import java.util.List;
 
@@ -30,7 +32,7 @@ import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.SwipeDetector;
 import stockme.stockme.util.Util;
 
-public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> {
+public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> implements Swappable{
     private DynamicListView articulos;
     private List<Articulo> datos;
     private Lista lista;
@@ -48,6 +50,18 @@ public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> {
         super(context, R.layout.listitem_articulos_lista, datos);
         this.datos = datos;
         this.lista = lista;
+    }
+
+    @Override
+    public boolean hasStableIds() {
+        return true;
+    }
+
+    @Override
+    public void swapItems(int i, int i1) {
+        int aux = i;
+        i=i1;
+        i1=aux;
     }
 
     @Override
@@ -193,6 +207,10 @@ public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> {
                     }
                 }
         );
+
+        articulos.enableDragAndDrop();
+        articulos.setDraggableManager(new TouchViewDraggableManager(R.id.listitem_articulos_nombre));
+
 
         manejador.close();
         return item;
