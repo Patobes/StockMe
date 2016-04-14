@@ -1,1 +1,1 @@
-include ':app'
+include ':app', ':nineoldandroids-2.4.0', ':listviewanimations_lib-manipulation_3.1.0', ':listviewanimations_lib-core_3.1.0', ':listviewanimations_lib-core-slh_3.1.0'

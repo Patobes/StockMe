@@ -3,8 +3,11 @@ package stockme.stockme.util;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 
 import java.util.logging.Logger;
+
+import stockme.stockme.R;
 
 public class SwipeDetector implements View.OnTouchListener {
 
