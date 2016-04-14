@@ -73,10 +73,10 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
             holder.btn_delete = (ImageButton)item.findViewById(R.id.listitem_lista_btn_delete);
 
             item.setTag(holder);
-            Log.v("itemListas", "NUEVO ELEMENTO");
+            //Log.v("itemListas", "NUEVO ELEMENTO");
         }else{
             holder = (ViewHolder)item.getTag();
-            Log.v("itemListas", "REUTILIZO ELEMENTO");
+            //Log.v("itemListas", "REUTILIZO ELEMENTO");
         }
 
         //pintar los elementos de forma intercalada
