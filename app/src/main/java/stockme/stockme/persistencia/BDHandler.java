@@ -370,7 +370,7 @@ public class BDHandler  extends SQLiteOpenHelper {
 
     public Articulo obtenerArticulo(String nombre, String marca){
         Articulo articulo = null;
-        String query = "SELECT 1 FROM ARTICULO WHERE " + Articulo.NOMBRE + " = ? AND " + Articulo.MARCA + " = ?";
+        String query = "SELECT * FROM ARTICULO WHERE " + Articulo.NOMBRE + " = ? AND " + Articulo.MARCA + " = ?";
         SQLiteDatabase lectura = this.obtenerManejadorLectura();
 
         Cursor cursor = lectura.rawQuery(query, new String[]{nombre, marca});
@@ -645,7 +645,10 @@ public class BDHandler  extends SQLiteOpenHelper {
 
     public boolean estaStock(String nombre, String marca){
         Articulo articulo = this.obtenerArticulo(nombre, marca);
-        return estaStock(articulo.getId());
+        if(articulo != null)
+            return estaStock(articulo.getId());
+        else
+            return false;
     }
 
     //Cambia los valores del stock indicado, debe existir previamente

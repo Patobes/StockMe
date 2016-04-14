@@ -171,8 +171,24 @@ public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> {
                 new OnDismissCallback() {
                     @Override
                     public void onDismiss(@NonNull final ViewGroup listView, @NonNull final int[] reverseSortedPositions) {
-                        for (int position : reverseSortedPositions) {
-                            remove(datos.get(position));
+                        for (final int position : reverseSortedPositions) {
+                            DialogInterface.OnClickListener borrarArticuloListener = new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    BDHandler manejador = new BDHandler(getContext());
+
+                                    if (!manejador.eliminarArticuloEnLista(new ListaArticulo(datos.get(position).getId(), lista.getNombre(),0)))
+                                        Util.mostrarToast(getContext(), "No se ha podido eliminar el articulo");
+                                    else {
+                                        Util.mostrarToast(getContext(), "Articulo eliminado");
+                                        remove(datos.get(position));
+                                        notifyDataSetChanged();
+                                    }
+
+                                    manejador.cerrar();
+                                }
+                            };
+                            Util.crearMensajeAlerta("¿Eliminar "+ datos.get(position).getNombre() +"?", borrarArticuloListener, getContext());
+
                         }
                     }
                 }
