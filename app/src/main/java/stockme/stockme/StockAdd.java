@@ -14,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import stockme.stockme.util.Preferencias;
@@ -32,8 +33,6 @@ public class StockAdd extends AppCompatActivity {
         setSupportActionBar(toolbar);
         this.setTitle("Añadir a stock");
 
-        Util.mostrarToast(this, "Anterior: " + Preferencias.getPreferenciaString("anterior"));
-
         sp_cantidad = (Spinner)findViewById(R.id.stock_add_sp_cantidad);
         et_cantidad = (EditText)findViewById(R.id.stock_add_et_cantidad);
 
@@ -42,11 +41,12 @@ public class StockAdd extends AppCompatActivity {
         final ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, valores);
         sp_cantidad.setAdapter(adaptador);
 
-        //TODO: mirar cómo se oculta el texto del spinner para que solo salga la flecha y poder seleccionar un número
+        //para el spinner
         sp_cantidad.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 et_cantidad.setText(parent.getItemAtPosition(position).toString());
+                ((TextView)view).setText(null);
             }
 
             @Override

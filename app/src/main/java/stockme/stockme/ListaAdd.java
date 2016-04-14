@@ -39,8 +39,6 @@ public class ListaAdd extends AppCompatActivity {
         setSupportActionBar(toolbar);
         this.setTitle("Crear lista");
 
-        Util.mostrarToast(this, "Anterior: " + Preferencias.getPreferenciaString("anterior"));
-
         BDHandler manejador = new BDHandler(this);
         List<String> supermercados = manejador.obtenerSupermercados();
         Spinner spinner = (Spinner) findViewById(R.id.lista_add_spinner_supermercados);
