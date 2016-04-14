@@ -16,6 +16,7 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import stockme.stockme.util.Preferencias;
 import stockme.stockme.util.Util;
 
 public class StockAdd extends AppCompatActivity {
@@ -30,6 +31,8 @@ public class StockAdd extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         this.setTitle("Añadir a stock");
+
+        Util.mostrarToast(this, "Anterior: " + Preferencias.getPreferenciaString("anterior"));
 
         sp_cantidad = (Spinner)findViewById(R.id.stock_add_sp_cantidad);
         et_cantidad = (EditText)findViewById(R.id.stock_add_et_cantidad);

@@ -24,6 +24,7 @@ import java.util.List;
 import stockme.stockme.logica.Lista;
 import stockme.stockme.logica.Supermercado;
 import stockme.stockme.persistencia.BDHandler;
+import stockme.stockme.util.Preferencias;
 import stockme.stockme.util.Util;
 
 public class ListaAdd extends AppCompatActivity {
@@ -37,6 +38,8 @@ public class ListaAdd extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         this.setTitle("Crear lista");
+
+        Util.mostrarToast(this, "Anterior: " + Preferencias.getPreferenciaString("anterior"));
 
         BDHandler manejador = new BDHandler(this);
         List<String> supermercados = manejador.obtenerSupermercados();

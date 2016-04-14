@@ -16,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import stockme.stockme.persistencia.BDHandler;
+import stockme.stockme.util.Preferencias;
+import stockme.stockme.util.Util;
 
 public class Principal extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Fragment_listas.OnFragmentInteractionListener, Fragment_stock.OnFragmentInteractionListener {
@@ -26,6 +28,11 @@ public class Principal extends AppCompatActivity
         setContentView(R.layout.activity_principal);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //inicialziar preferencias
+        Preferencias.inicializarPreferencias(this);
+        //con esto ya podremos usar los métodos estáticos de Preferencias
+        crearPreferenciasPorDefecto();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -44,6 +51,11 @@ public class Principal extends AppCompatActivity
         this.setTitle("Listas");
 
         navigationView.getMenu().getItem(0).setChecked(true);
+    }
+
+    private void crearPreferenciasPorDefecto() {
+        if(Preferencias.getPreferenciaString("moneda") == null)
+            Preferencias.addPreferencia("moneda", "€");
     }
 
     @Override

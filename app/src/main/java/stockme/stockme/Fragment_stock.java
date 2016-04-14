@@ -17,6 +17,8 @@ import java.util.List;
 import stockme.stockme.adaptadores.AdaptadorListItemStock;
 import stockme.stockme.logica.Stock;
 import stockme.stockme.persistencia.BDHandler;
+import stockme.stockme.util.Preferencias;
+import stockme.stockme.util.Util;
 
 public class Fragment_stock extends Fragment {
     private OnFragmentInteractionListener mListener;
@@ -48,6 +50,7 @@ public class Fragment_stock extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Preferencias.addPreferencia("anterior", "Stock");
 
         stock = (ListView)view.findViewById(R.id.fragment_stock_listview);
         //recojo las listas existenes
