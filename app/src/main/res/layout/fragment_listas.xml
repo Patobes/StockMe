@@ -23,7 +23,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:clickable="false"
-            android:smoothScrollbar="true"
+            android:scrollbars="none"
             android:divider="@android:color/transparent"
             android:dividerHeight="4dp"
             android:scrollIndicators="none"

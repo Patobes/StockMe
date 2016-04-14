@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,18 @@ import stockme.stockme.logica.ListaArticulo;
 import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.Util;
 
+
+
 public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
+    //patrón ViewHolder para optimización de listas
+    private static class ViewHolder{
+        ImageButton btn_delete;
+        TextView lblNombre;
+        TextView lblSupermercado;
+        TextView lblFecha;
+        TextView lblNProductos;
+    }
+
     private ListView listas;
     private List<Lista> datos;
     private ImageButton btn_delete;
@@ -45,9 +57,28 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = LayoutInflater.from(getContext());
-        View item = inflater.inflate(R.layout.listitem_lista, null);
+        //comprobamos si existe una view que podamos reutilizar con el convertView para no tener que inflar de más
+        View item = convertView;
+        ViewHolder holder;
+        if(item == null){
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            item = inflater.inflate(R.layout.listitem_lista, null);
 
+            holder = new ViewHolder();
+            holder.lblNombre = (TextView)item.findViewById(R.id.listitem_lista_nombre);
+            holder.lblSupermercado = (TextView)item.findViewById(R.id.listitem_lista_supermercado);
+            holder.lblFecha = (TextView)item.findViewById(R.id.listitem_lista_fecha);
+            holder.lblNProductos = (TextView)item.findViewById(R.id.listitem_lista_nproductos);
+            holder.btn_delete = (ImageButton)item.findViewById(R.id.listitem_lista_btn_delete);
+
+            item.setTag(holder);
+            Log.v("itemListas", "NUEVO ELEMENTO");
+        }else{
+            holder = (ViewHolder)item.getTag();
+            Log.v("itemListas", "REUTILIZO ELEMENTO");
+        }
+
+        //pintar los elementos de forma intercalada
         if ( position % 2 == 1) {
             item.setBackgroundResource(R.drawable.esquinas_impar);
         }
@@ -64,23 +95,18 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
 
         BDHandler manejador = new BDHandler(getContext());
 
-        lblNombre = (TextView)item.findViewById(R.id.listitem_lista_nombre);
-        lblNombre.setText(lista.getNombre());
+        holder.lblNombre.setText(lista.getNombre());
 
-        lblSupermercado = (TextView)item.findViewById(R.id.listitem_lista_supermercado);
         if(!lista.getSupermercado().equalsIgnoreCase("cualquiera"))
-            lblSupermercado.setText(lista.getSupermercado());
+            holder.lblSupermercado.setText(lista.getSupermercado());
         else
-            lblSupermercado.setText("");
+            holder.lblSupermercado.setText("");
 
-        lblFecha = (TextView)item.findViewById(R.id.listitem_lista_fecha);
-        lblFecha.setText(lista.getFechaModificacion());
+        holder.lblFecha.setText(lista.getFechaModificacion());
 
-        lblNProductos = (TextView)item.findViewById(R.id.listitem_lista_nproductos);
-        lblNProductos.setText(String.valueOf(manejador.numArticulosEnLista(lista.getNombre())));
+        holder.lblNProductos.setText(String.valueOf(manejador.numArticulosEnLista(lista.getNombre())));
 
-        btn_delete = (ImageButton)item.findViewById(R.id.listitem_lista_btn_delete);
-        btn_delete.setOnClickListener(new View.OnClickListener() {
+        holder.btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogInterface.OnClickListener borrarListaListener = new DialogInterface.OnClickListener() {
@@ -98,8 +124,6 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
                     }
                 };
                 Util.crearMensajeAlerta("¿Quieres eliminar la lista?", borrarListaListener, v.getContext());
-
-
             }
         });
 

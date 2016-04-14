@@ -271,42 +271,25 @@ public class BDHandler  extends SQLiteOpenHelper {
 
         return filaBorrada > 0;
     }
-    public boolean eliminarLista(Lista lista, SQLiteDatabase db){
-        int filaBorrada = 0;
-
-        if(estaLista(lista.getNombre())){
-            filaBorrada = db.delete("LISTA", Lista.NOMBRE + "=?", new String[]{lista.getNombre()});
-        }
-
-        return filaBorrada > 0;
-    }
 
     //borrar lista y sus artículos
-    //TODO: terminar el método
     public boolean eliminarListaCascade(Lista lista){
         boolean ok = false;
         SQLiteDatabase db = this.obtenerManejadorEscritura();
         db.beginTransaction();
         try {
             //borrar la lista
-            if(this.eliminarLista(lista, db)) {
-                List<Articulo> articulos = obtenerArticulosEnLista(lista);
-                for(Articulo art: articulos){
-                    eliminarArticuloEnLista(new ListaArticulo(art.getId(), lista.getNombre(), 0), db);
-                }
-                ok = true;
-                db.setTransactionSuccessful();
-                db = null;
-            }
+            db.delete("LISTA", Lista.NOMBRE + "=?", new String[]{lista.getNombre()});
+            db.delete("LISTA_ARTICULO", ListaArticulo.NOMBRE + " = ?", new String[]{lista.getNombre()});
+
+            ok = true;
+            db.setTransactionSuccessful();
         } catch (Exception e){
-            //Error in between database transaction
-            db = null;
             ok = false;
         } finally {
-            if(db != null)
                 db.endTransaction();
+                db.close();
         }
-        db.close();
         return ok;
     }
 
@@ -532,7 +515,7 @@ public class BDHandler  extends SQLiteOpenHelper {
             valores.put(ListaArticulo.NOMBRE, listaArticulo.getNombre());
             valores.put(ListaArticulo.CANTIDAD, listaArticulo.getCantidad());
 
-            filaActu = db.update("LISTA_ARTICULO", valores, ListaArticulo.ARTICULO + "=? AND " + ListaArticulo.NOMBRE +"=?", new String[]{Integer.toString(listaArticulo.getArticulo()),listaArticulo.getNombre()});
+            filaActu = db.update("LISTA_ARTICULO", valores, ListaArticulo.ARTICULO + "=? AND " + ListaArticulo.NOMBRE + "=?", new String[]{Integer.toString(listaArticulo.getArticulo()), listaArticulo.getNombre()});
             db.close();
         }
         return filaActu > 0;
@@ -546,15 +529,6 @@ public class BDHandler  extends SQLiteOpenHelper {
             SQLiteDatabase db = this.obtenerManejadorEscritura();
             filaBorrada = db.delete("LISTA_ARTICULO", ListaArticulo.ARTICULO + "=? AND " + ListaArticulo.NOMBRE + "=?", new String[]{Integer.toString(listaArticulo.getArticulo()), listaArticulo.getNombre()});
             db.close();
-        }
-
-        return filaBorrada > 0;
-    }
-    public boolean eliminarArticuloEnLista(ListaArticulo listaArticulo, SQLiteDatabase db){
-        int filaBorrada = 0;
-
-        if(estaArticuloEnLista(listaArticulo.getArticulo(), listaArticulo.getNombre())) {
-            filaBorrada = db.delete("LISTA_ARTICULO", ListaArticulo.ARTICULO + "=? AND " + ListaArticulo.NOMBRE + "=?", new String[]{Integer.toString(listaArticulo.getArticulo()), listaArticulo.getNombre()});
         }
 
         return filaBorrada > 0;
