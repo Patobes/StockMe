@@ -10,7 +10,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="stockme.stockme.ListaAdd"
-    tools:showIn="@layout/activity_lista_add">
+    tools:showIn="@layout/activity_lista_add"
+    android:background="@color/fondo">
 
     <EditText
         android:layout_width="wrap_content"
@@ -20,18 +21,18 @@
         android:singleLine="true"
         android:hint="Nombre de la lista"
         android:layout_alignParentTop="true"
-        android:layout_alignEnd="@+id/lista_add_btn_cancelar"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/lista_add_tv_supermercado"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="45dp"
         android:textSize="30sp"
         android:text="@string/lista_add_supermercado"
         android:layout_below="@+id/lista_add_et_nombre"
-        android:layout_alignStart="@+id/lista_add_btn_aceptar" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:background="@drawable/esquinas_boton"
@@ -45,7 +46,7 @@
         android:textSize="23sp"
         android:layout_marginLeft="10dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:background="@drawable/esquinas_boton"
@@ -59,7 +60,7 @@
         android:textSize="23sp"
         android:layout_marginRight="10dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentStart="true" />
 
     <Spinner
         android:layout_width="wrap_content"

@@ -138,7 +138,7 @@ public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 if (swipeDetector.swipeDetected()) {
-                    if (swipeDetector.getAction() == SwipeDetector.Action.RL) {
+                    if (swipeDetector.getAction() == SwipeDetector.Action.RL || swipeDetector.getAction() == SwipeDetector.Action.LR) {
 
                         DialogInterface.OnClickListener borrarArticuloListener = new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
