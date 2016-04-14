@@ -8,7 +8,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="stockme.stockme.StockAdd"
-    tools:showIn="@layout/activity_stock_add">
+    tools:showIn="@layout/activity_stock_add"
+    android:background="@color/fondo">
 
     <EditText
         android:layout_width="wrap_content"
