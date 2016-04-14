@@ -58,6 +58,7 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
 
     public View getView(final int position, View convertView, ViewGroup parent) {
         //comprobamos si existe una view que podamos reutilizar con el convertView para no tener que inflar de más
+
         View item = convertView;
         ViewHolder holder;
         if(item == null){

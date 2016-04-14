@@ -51,6 +51,11 @@ public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> {
         View item = inflater.inflate(R.layout.listitem_articulos_lista, null);
         BDHandler manejador = new BDHandler(getContext());
 
+        //pintar los elementos de forma intercalada
+        if ( position % 2 == 1) {
+            item.setBackgroundColor(Color.parseColor("#E9EBEB"));
+        }
+
         //se crea un elemento Articulo que contiene los datos de la fila
         articulo = new Articulo();
         articulo.setId(datos.get(position).getId());
@@ -143,6 +148,7 @@ public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> {
                                     Util.mostrarToast(getContext(), "No se ha podido eliminar el articulo");
                                 else {
                                     Util.mostrarToast(getContext(), "Articulo eliminado");
+                                    notifyDataSetChanged();
                                     remove(datos.get(position));
                                 }
 
