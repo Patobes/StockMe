@@ -4,10 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/StockMe.iml" filepath="$PROJECT_DIR$/StockMe.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/listviewanimations_lib-core-slh_3.1.0/listviewanimations_lib-core-slh_3.1.0.iml" filepath="$PROJECT_DIR$/listviewanimations_lib-core-slh_3.1.0/listviewanimations_lib-core-slh_3.1.0.iml" />
-      <module fileurl="file://$PROJECT_DIR$/listviewanimations_lib-core_3.1.0/listviewanimations_lib-core_3.1.0.iml" filepath="$PROJECT_DIR$/listviewanimations_lib-core_3.1.0/listviewanimations_lib-core_3.1.0.iml" />
-      <module fileurl="file://$PROJECT_DIR$/listviewanimations_lib-manipulation_3.1.0/listviewanimations_lib-manipulation_3.1.0.iml" filepath="$PROJECT_DIR$/listviewanimations_lib-manipulation_3.1.0/listviewanimations_lib-manipulation_3.1.0.iml" />
-      <module fileurl="file://$PROJECT_DIR$/nineoldandroids-2.4.0/nineoldandroids-2.4.0.iml" filepath="$PROJECT_DIR$/nineoldandroids-2.4.0/nineoldandroids-2.4.0.iml" />
     </modules>
   </component>
 </project>

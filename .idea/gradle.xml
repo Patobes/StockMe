@@ -11,20 +11,12 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/listviewanimations_lib-core-slh_3.1.0" />
-            <option value="$PROJECT_DIR$/listviewanimations_lib-core_3.1.0" />
-            <option value="$PROJECT_DIR$/listviewanimations_lib-manipulation_3.1.0" />
-            <option value="$PROJECT_DIR$/nineoldandroids-2.4.0" />
           </set>
         </option>
         <option name="myModules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/listviewanimations_lib-core-slh_3.1.0" />
-            <option value="$PROJECT_DIR$/listviewanimations_lib-core_3.1.0" />
-            <option value="$PROJECT_DIR$/listviewanimations_lib-manipulation_3.1.0" />
-            <option value="$PROJECT_DIR$/nineoldandroids-2.4.0" />
           </set>
         </option>
       </GradleProjectSettings>
