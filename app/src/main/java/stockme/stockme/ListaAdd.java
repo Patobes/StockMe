@@ -3,13 +3,19 @@ package stockme.stockme;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -27,7 +33,8 @@ import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.Preferencias;
 import stockme.stockme.util.Util;
 
-public class ListaAdd extends AppCompatActivity {
+public class ListaAdd extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
+        Fragment_listas.OnFragmentInteractionListener{
     private Button btn_aceptar;
     private Button btn_cancelar;
 
@@ -38,6 +45,15 @@ public class ListaAdd extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         this.setTitle("Crear lista");
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         BDHandler manejador = new BDHandler(this);
         List<String> supermercados = manejador.obtenerSupermercados();
@@ -88,5 +104,40 @@ public class ListaAdd extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        Intent i = new Intent(this, Principal.class);
+
+        if (id == R.id.nav_listas) {
+            i.putExtra("Opcion", "Listas");
+        } else if (id == R.id.nav_stock) {
+            i.putExtra("Opcion", "Stock");
+        } else if (id == R.id.nav_supermercados) {
+            i.putExtra("Opcion", "Supermercados");
+        } else if (id == R.id.nav_ajustes) {
+            i.putExtra("Opcion", "Ajustes");
+        }
+
+//        item.setChecked(true);
+//        getSupportActionBar().setTitle(item.getTitle());
+//
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+
+        startActivity(i);
+
+        //finish();
+
+        return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

@@ -131,5 +131,15 @@ public class Principal extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        Intent i = getIntent();
+        if(i != null) {
+            Bundle extras = i.getExtras();
+            if(extras != null) {
+                String opc = extras.getString("Opcion");
+                //TODO: Aquí habrá que cargar el fragment corresopndiente a la opción elegida
+                if (opc != null)
+                    Util.mostrarToast(this, "He seleccionado: " + opc);
+            }
+        }
     }
 }
