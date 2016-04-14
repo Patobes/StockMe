@@ -3,6 +3,7 @@ package stockme.stockme.adaptadores;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,10 @@ import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
+import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
+import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.undo.SimpleSwipeUndoAdapter;
+
 import java.util.List;
 
 import stockme.stockme.R;
@@ -26,7 +31,7 @@ import stockme.stockme.util.SwipeDetector;
 import stockme.stockme.util.Util;
 
 public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> {
-    private ListView articulos;
+    private DynamicListView articulos;
     private List<Articulo> datos;
     private Lista lista;
     private Articulo articulo;
@@ -114,7 +119,7 @@ public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> {
             }
         });
 
-        articulos = (ListView)parent.findViewById(R.id.lista_articulos_lista);
+        articulos = (DynamicListView)parent.findViewById(R.id.lista_articulos_lista);
 
         articulos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -160,6 +165,18 @@ public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> {
                 }
             }
         });
+
+
+        articulos.enableSwipeToDismiss(
+                new OnDismissCallback() {
+                    @Override
+                    public void onDismiss(@NonNull final ViewGroup listView, @NonNull final int[] reverseSortedPositions) {
+                        for (int position : reverseSortedPositions) {
+                            remove(datos.get(position));
+                        }
+                    }
+                }
+        );
 
         manejador.close();
         return item;
