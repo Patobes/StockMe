@@ -22,6 +22,7 @@ import stockme.stockme.logica.Articulo;
 import stockme.stockme.logica.Lista;
 import stockme.stockme.logica.ListaArticulo;
 import stockme.stockme.persistencia.BDHandler;
+import stockme.stockme.util.SwipeDetector;
 import stockme.stockme.util.Util;
 
 public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> {
@@ -116,12 +117,41 @@ public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> {
                 BDHandler manejador = new BDHandler(getContext());
 
                 Articulo articulo = (Articulo) parent.getItemAtPosition(position);
-                manejador.modificarArticuloEnLista(new ListaArticulo(articulo.getId(),lista.getNombre(),0));
+                manejador.modificarArticuloEnLista(new ListaArticulo(articulo.getId(), lista.getNombre(), 0));
                 manejador.cerrar();
 
                 Util.mostrarToast(view.getContext(), "Comprado: " + articulo.getNombre());
                 notifyDataSetChanged();
                 return true;
+            }
+        });
+
+        final SwipeDetector swipeDetector = new SwipeDetector();
+        articulos.setOnTouchListener(swipeDetector);
+
+        articulos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                if (swipeDetector.swipeDetected()) {
+                    if (swipeDetector.getAction() == SwipeDetector.Action.RL) {
+
+                        DialogInterface.OnClickListener borrarArticuloListener = new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                BDHandler manejador = new BDHandler(getContext());
+
+                                if (!manejador.eliminarArticuloEnLista(new ListaArticulo(datos.get(position).getId(), lista.getNombre(),0)))
+                                    Util.mostrarToast(getContext(), "No se ha podido eliminar el articulo");
+                                else {
+                                    Util.mostrarToast(getContext(), "Articulo eliminado");
+                                    remove(datos.get(position));
+                                }
+
+                                manejador.cerrar();
+                            }
+                        };
+                        Util.crearMensajeAlerta("¿Eliminar "+ datos.get(position).getNombre() +"?", borrarArticuloListener, getContext());
+                    }
+                }
             }
         });
 

@@ -55,7 +55,8 @@
         android:clickable="false"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:text="0" />
+        android:text="0.00"
+        android:singleLine="true" />
 
     <TextView
         android:layout_width="wrap_content"
