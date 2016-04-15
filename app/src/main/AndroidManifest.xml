@@ -13,9 +13,9 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="stockme.stockme.MAINACTIVITY" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -31,7 +31,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="stockme.stockme.Principal" />
         </activity>
-        <activity android:name=".StockAdd"></activity>
+        <activity android:name=".StockAdd" />
+        <activity android:name=".SplashScreenIntro">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
