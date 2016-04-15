@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +16,17 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
+import com.nhaarman.listviewanimations.itemmanipulation.dragdrop.OnItemMovedListener;
 import com.nhaarman.listviewanimations.itemmanipulation.dragdrop.TouchViewDraggableManager;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.undo.SimpleSwipeUndoAdapter;
 import com.nhaarman.listviewanimations.util.Swappable;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import stockme.stockme.R;
@@ -32,7 +37,7 @@ import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.SwipeDetector;
 import stockme.stockme.util.Util;
 
-public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> implements Swappable{
+public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> {
     private DynamicListView articulos;
     private List<Articulo> datos;
     private Lista lista;
@@ -50,18 +55,6 @@ public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> impl
         super(context, R.layout.listitem_articulos_lista, datos);
         this.datos = datos;
         this.lista = lista;
-    }
-
-    @Override
-    public boolean hasStableIds() {
-        return true;
-    }
-
-    @Override
-    public void swapItems(int i, int i1) {
-        int aux = i;
-        i=i1;
-        i1=aux;
     }
 
     @Override
@@ -150,37 +143,6 @@ public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> impl
             }
         });
 
-        final SwipeDetector swipeDetector = new SwipeDetector();
-        articulos.setOnTouchListener(swipeDetector);
-
-        articulos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                if (swipeDetector.swipeDetected()) {
-                    if (swipeDetector.getAction() == SwipeDetector.Action.RL || swipeDetector.getAction() == SwipeDetector.Action.LR) {
-
-                        DialogInterface.OnClickListener borrarArticuloListener = new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                BDHandler manejador = new BDHandler(getContext());
-
-                                if (!manejador.eliminarArticuloEnLista(new ListaArticulo(datos.get(position).getId(), lista.getNombre(),0)))
-                                    Util.mostrarToast(getContext(), "No se ha podido eliminar el articulo");
-                                else {
-                                    Util.mostrarToast(getContext(), "Articulo eliminado");
-                                    notifyDataSetChanged();
-                                    remove(datos.get(position));
-                                }
-
-                                manejador.cerrar();
-                            }
-                        };
-                        Util.crearMensajeAlerta("¿Eliminar "+ datos.get(position).getNombre() +"?", borrarArticuloListener, getContext());
-                    }
-                }
-            }
-        });
-
-
         articulos.enableSwipeToDismiss(
                 new OnDismissCallback() {
                     @Override
@@ -207,10 +169,6 @@ public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> impl
                     }
                 }
         );
-
-        articulos.enableDragAndDrop();
-        articulos.setDraggableManager(new TouchViewDraggableManager(R.id.listitem_articulos_nombre));
-
 
         manejador.close();
         return item;
