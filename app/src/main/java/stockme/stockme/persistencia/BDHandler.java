@@ -110,6 +110,7 @@ public class BDHandler  extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO `ARTICULO` VALUES(1, 'Leche', 'Hacendado', 'Mercadona', 0.60);");
         db.execSQL("INSERT INTO `ARTICULO` VALUES(2, 'Pizza', 'Hacendado', 'Mercadona', 2.60);");
         db.execSQL("INSERT INTO `ARTICULO` VALUES(3, 'Ketchup', 'Heinz', 'Mercadona', 0.60);");
+        db.execSQL("INSERT INTO `ARTICULO` VALUES(4, 'Mostaza', 'Heinz', 'Mercadona', 0.60);");
 
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Cualquiera');");
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Día');");
@@ -124,6 +125,8 @@ public class BDHandler  extends SQLiteOpenHelper {
 
         db.execSQL("INSERT INTO 'LISTA_ARTICULO' VALUES(1,'Lista prueba', 6)");
         db.execSQL("INSERT INTO 'LISTA_ARTICULO' VALUES(2,'Lista prueba', 1)");
+        db.execSQL("INSERT INTO 'LISTA_ARTICULO' VALUES(3,'Lista prueba', 3)");
+        db.execSQL("INSERT INTO 'LISTA_ARTICULO' VALUES(4,'Lista prueba', 5)");
 
         db.execSQL("INSERT INTO 'STOCK' VALUES (1, 2, 4)");
         db.execSQL("INSERT INTO 'STOCK' VALUES (2, 3, 5)");

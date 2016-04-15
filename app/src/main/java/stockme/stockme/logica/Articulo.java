@@ -1,5 +1,7 @@
 package stockme.stockme.logica;
 
+import java.util.Comparator;
+
 /**
  * Created by JuanMiguel on 03/03/2016.
  */
@@ -71,4 +73,6 @@ public class Articulo {
     public void setPrecio(float precio) {
         this.precio = precio;
     }
+
+
 }
