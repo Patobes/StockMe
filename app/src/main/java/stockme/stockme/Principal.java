@@ -1,11 +1,9 @@
 package stockme.stockme;
 
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -21,6 +19,8 @@ import stockme.stockme.util.Util;
 
 public class Principal extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Fragment_listas.OnFragmentInteractionListener, Fragment_stock.OnFragmentInteractionListener {
+
+    private static NavigationView nav_menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,17 +40,20 @@ public class Principal extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        nav_menu = (NavigationView) findViewById(R.id.nav_view);
+        nav_menu.setNavigationItemSelectedListener(this);
 
+        //esto es para obtener la primera instancia de la bd, si no, no se crea la primera vez..
+        //seguro q hay una forma mejor de hacerla pero bueh
         BDHandler handler = new BDHandler(this);
         handler.obtenerArticulos();
+        handler.cerrar();
 
-        Fragment fragmento = new Fragment_listas();
-        getSupportFragmentManager().beginTransaction().replace(R.id.contenido_principal, fragmento).commit();
-        this.setTitle("Listas");
-
-        navigationView.getMenu().getItem(0).setChecked(true);
+//        Fragment fragmento = new Fragment_listas();
+//        getSupportFragmentManager().beginTransaction().replace(R.id.contenido_principal, fragmento).commit();
+//        this.setTitle("Listas");
+//
+//        nav_menu.getMenu().getItem(0).setChecked(true);
     }
 
     private void crearPreferenciasPorDefecto() {
@@ -58,6 +61,8 @@ public class Principal extends AppCompatActivity
             Preferencias.addPreferencia("moneda", "€");
     }
 
+    /*TODO: para la navegabilidad podemos utiliar la traza creada al guardar en Preferencias
+    la activity o fragment anterior. En cada activity implementar este método para que regrese a la anterior*/
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -77,17 +82,12 @@ public class Principal extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()){
+            case R.id.accion_opciones:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -136,10 +136,30 @@ public class Principal extends AppCompatActivity
             Bundle extras = i.getExtras();
             if(extras != null) {
                 String opc = extras.getString("Opcion");
-                //TODO: Aquí habrá que cargar el fragment corresopndiente a la opción elegida
-                if (opc != null)
-                    Util.mostrarToast(this, "He seleccionado: " + opc);
-            }
-        }
+                if (opc != null) {
+                    //Util.mostrarToast(this, "He seleccionado: " + opc);
+                    switch (opc) {
+                        case "Listas":
+                            onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_listas));
+                            break;
+                        case "Stock":
+                            onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_stock));
+                            break;
+                        case "Supermercados":
+                            onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_supermercados));
+                            break;
+                        case "Ajustes":
+                            onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_ajustes));
+                            break;
+                        default:
+                            onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_listas));
+                            break;
+                    }
+                }else
+                    onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_listas));
+            }else
+                onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_listas));
+        }else
+            onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_listas));
     }
 }
