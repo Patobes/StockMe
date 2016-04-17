@@ -2,10 +2,16 @@ package stockme.stockme;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.net.Uri;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,10 +24,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import stockme.stockme.persistencia.BDHandler;
+import stockme.stockme.util.OpcionesMenus;
 import stockme.stockme.util.Preferencias;
 import stockme.stockme.util.Util;
 
-public class StockAdd extends AppCompatActivity {
+public class StockAdd extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
+        Fragment_listas.OnFragmentInteractionListener {
     EditText et_nombre;
     EditText et_marca;
     EditText et_cantidad;
@@ -32,10 +40,19 @@ public class StockAdd extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_add);
-
+//toolbar + navbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        this.setTitle("Añadir a stock");
+        this.setTitle("Añadir stock");
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        //contenido
 
         et_nombre = (EditText)findViewById(R.id.stock_add_et_nombre);
         et_marca = (EditText)findViewById(R.id.stock_add_et_marca);
@@ -116,6 +133,27 @@ public class StockAdd extends AppCompatActivity {
                 et_cantidad.setText("1");
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return OpcionesMenus.onOptionsItemSelected(item, this);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        return OpcionesMenus.onNavigationItemSelected(item, this);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
 

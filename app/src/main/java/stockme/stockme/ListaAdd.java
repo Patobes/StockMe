@@ -25,6 +25,7 @@ import java.util.List;
 
 import stockme.stockme.logica.Lista;
 import stockme.stockme.persistencia.BDHandler;
+import stockme.stockme.util.OpcionesMenus;
 import stockme.stockme.util.Util;
 
 public class ListaAdd extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
@@ -108,42 +109,12 @@ public class ListaAdd extends AppCompatActivity implements NavigationView.OnNavi
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.accion_opciones:
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        return OpcionesMenus.onOptionsItemSelected(item, this);
     }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        Intent i = new Intent(this, Principal.class);
-
-        if (id == R.id.nav_listas) {
-            i.putExtra("Opcion", "Listas");
-        } else if (id == R.id.nav_stock) {
-            i.putExtra("Opcion", "Stock");
-        } else if (id == R.id.nav_supermercados) {
-            i.putExtra("Opcion", "Supermercados");
-        } else if (id == R.id.nav_ajustes) {
-            i.putExtra("Opcion", "Ajustes");
-        }
-
-//        item.setChecked(true);
-//        getSupportActionBar().setTitle(item.getTitle());
-//
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-
-        startActivity(i);
-
-        //finish();
-
-        return true;
+        return OpcionesMenus.onNavigationItemSelected(item, this);
     }
 
     @Override

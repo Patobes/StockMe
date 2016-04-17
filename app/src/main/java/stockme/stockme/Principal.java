@@ -145,6 +145,9 @@ public class Principal extends AppCompatActivity
                         case "Stock":
                             onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_stock));
                             break;
+                        case "Articulos":
+                            onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_articulos));
+                            break;
                         case "Supermercados":
                             onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_supermercados));
                             break;

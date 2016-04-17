@@ -1,5 +1,6 @@
 package stockme.stockme;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,6 +11,7 @@ import android.view.DragEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -30,6 +32,7 @@ import stockme.stockme.util.Util;
 
 public class ListaDeArticulos extends AppCompatActivity{
     private DynamicListView articulos;
+    private Button lista_articulos_btn_mas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,14 @@ public class ListaDeArticulos extends AppCompatActivity{
 
         manejador.close();
 
+        lista_articulos_btn_mas = (Button)findViewById(R.id.lista_articulos_btn_mas);
+        lista_articulos_btn_mas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ListaDeArticulos.this, ArticulosAdd.class);
+                startActivity(i);
+            }
+        });
     }
 
 }
