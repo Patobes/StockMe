@@ -55,7 +55,7 @@ public class ArticulosAdd extends AppCompatActivity implements NavigationView.On
         etPrecio = (EditText)findViewById(R.id.articulos_add_et_precio);
         spTipos = (Spinner)findViewById(R.id.articulos_add_sp_tipos);
 
-        btn_aceptar = (Button)findViewById(R.id.lista_add_btn_aceptar);
+        btn_aceptar = (Button)findViewById(R.id.lista_articulo_add_btn_aceptar);
         btn_aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,7 +90,7 @@ public class ArticulosAdd extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        btn_cancelar = (Button)findViewById(R.id.lista_add_btn_cancelar);
+        btn_cancelar = (Button)findViewById(R.id.lista_articulo_add_btn_cancelar);
         btn_cancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
