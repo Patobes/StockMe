@@ -17,8 +17,8 @@
 
     <!--TODO: Esto se desactiva para poder diseñar bien el el content_articulos_add
     si no, se vería el menú lateral encima. Descomentar el siguiente código al terminar el diseño-->
-    <!--<include-->
-        <!--layout="@layout/menu_lateral"-->
-        <!--/>-->
+    <include
+        layout="@layout/menu_lateral"
+        />
 
 </android.support.v4.widget.DrawerLayout>

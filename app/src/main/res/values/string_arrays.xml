@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tipos_array">
+        <item>Cualquiera</item>
+        <item>Lácteos</item>
+        <item>Frutas</item>
+        <item>Verduras</item>
+        <item>Frutos secos</item>
+        <item>Embutidos</item>
+        <item>Salsas</item>
+        <item>Dulces</item>
+        <item>Pastas</item>
+        <item>Panadería</item>
+        <item>Guarradas</item>
+    </string-array>
+</resources>

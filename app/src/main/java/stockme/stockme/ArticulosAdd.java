@@ -1,9 +1,7 @@
 package stockme.stockme;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,11 +9,17 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 import stockme.stockme.util.OpcionesMenus;
 
 public class ArticulosAdd extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         Fragment_listas.OnFragmentInteractionListener {
+    private EditText etNombre;
+    private EditText etPrecio;
+    private Spinner spTipos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +38,14 @@ public class ArticulosAdd extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         //contenido
+        etNombre = (EditText)findViewById(R.id.articulos_add_et_nombre);
+        etPrecio = (EditText)findViewById(R.id.articulos_add_et_precio);
+        spTipos = (Spinner)findViewById(R.id.articulos_add_sp_tipos);
 
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tipos_array,
+                        android.R.layout.simple_spinner_item);
+
+        spTipos.setAdapter(adapter);
     }
 
     @Override
