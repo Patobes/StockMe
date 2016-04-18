@@ -8,14 +8,16 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 
 public class Util {
+
+    private Util(){}
+
+
     //hay que INCREMENTAR en 1 cada vez que se hace una modificación en la estructura o en contenido inicial
-    private static final int BD_VERSION = 13;
-    public static int getBdVersion(){return BD_VERSION;}
-
-
+    private static int BD_VERSION = 15;
     public static int getBD_VERSION(){
         return BD_VERSION;
     }
+
     public static SimpleDateFormat diaMesAnyo = new SimpleDateFormat("dd/MM/yyyy");
 
 

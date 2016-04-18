@@ -46,7 +46,7 @@ public class Principal extends AppCompatActivity
         //esto es para obtener la primera instancia de la bd, si no, no se crea la primera vez..
         //seguro q hay una forma mejor de hacerla pero bueh
         BDHandler handler = new BDHandler(this);
-        handler.obtenerArticulos();
+        handler.abrir();
         handler.cerrar();
 
 //        Fragment fragmento = new Fragment_listas();

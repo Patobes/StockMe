@@ -18,10 +18,10 @@ import stockme.stockme.logica.Supermercado;
 import stockme.stockme.util.Util;
 
 public class BDHandler  extends SQLiteOpenHelper {
-    private static int bdVersion = Util.getBD_VERSION();
+    //private static int bdVersion = Util.getBD_VERSION();
 
     public BDHandler(Context context) {
-        super(context, "Productos", null, bdVersion);
+        super(context, "Productos", null, Util.getBD_VERSION());
     }
 
     @Override
@@ -120,8 +120,8 @@ public class BDHandler  extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Carrefour');");
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Supersol');");
 
-        db.execSQL("INSERT INTO 'LISTA' VALUES('Lista prueba','HOY','MAÑANA','Día')");
-        db.execSQL("INSERT INTO 'LISTA' VALUES('Lista prueba 2','AYER','TOMORROW','Cualquiera')");
+        db.execSQL("INSERT INTO 'LISTA' VALUES('Lista prueba','18/04/2016','18/04/2016','Día')");
+        db.execSQL("INSERT INTO 'LISTA' VALUES('Lista prueba 2','18/04/2016','18/04/2016','Cualquiera')");
 
         db.execSQL("INSERT INTO 'LISTA_ARTICULO' VALUES(1,'Lista prueba', 6)");
         db.execSQL("INSERT INTO 'LISTA_ARTICULO' VALUES(2,'Lista prueba', 1)");
