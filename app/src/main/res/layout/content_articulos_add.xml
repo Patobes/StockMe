@@ -19,7 +19,8 @@
         android:id="@+id/articulos_add_et_nombre"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:hint="Nombre" />
+        android:hint="Nombre"
+        android:layout_toStartOf="@+id/lista_articulo_add_btn_aceptar" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -45,4 +46,33 @@
         android:layout_alignBottom="@+id/articulos_add_et_nombre"
         android:layout_toEndOf="@+id/articulos_add_et_nombre"
         android:hint="Precio" />
+
+    <Button
+        android:background="@drawable/esquinas_boton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Aceptar"
+        android:textAlignment="center"
+        android:minWidth="140dp"
+        android:maxWidth="140dp"
+        android:id="@+id/lista_articulo_add_btn_aceptar"
+        android:textSize="23sp"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:background="@drawable/esquinas_boton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancelar"
+        android:textAlignment="center"
+        android:minWidth="140dp"
+        android:maxWidth="140dp"
+        android:id="@+id/lista_articulo_add_btn_cancelar"
+        android:textSize="23sp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>
