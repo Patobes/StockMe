@@ -45,6 +45,12 @@ public class ListaDeArticulos extends AppCompatActivity implements NavigationVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         setContentView(R.layout.activity_lista_de_articulos);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -79,6 +85,7 @@ public class ListaDeArticulos extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(ListaDeArticulos.this, ArticulosAdd.class);
+                i.putExtra("NombreLista", lista.getNombre());
                 startActivity(i);
             }
         });

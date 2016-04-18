@@ -34,6 +34,7 @@ public class BDHandler  extends SQLiteOpenHelper {
         ID - INT - PK
         NOMBRE - STRING
         MARCA - STRING
+        TIPO - STRING
         SUPERMERCADO - STRING - FK
         PRECIO - FLOAT
          */
@@ -41,6 +42,7 @@ public class BDHandler  extends SQLiteOpenHelper {
             "`Id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
             "`Nombre` TEXT NOT NULL," +
             "`Marca` TEXT," +
+            "`Tipo` TEXT," +
             "`Supermercado` TEXT NOT NULL," +
             "`Precio` REAL," +
             "FOREIGN KEY(`Supermercado`) REFERENCES `SUPERMERCADO`(`Nombre`)" +
@@ -107,10 +109,10 @@ public class BDHandler  extends SQLiteOpenHelper {
         db.execSQL(listaArticulo);
 
         //ELEMENTOS INICIALES
-        db.execSQL("INSERT INTO `ARTICULO` VALUES(1, 'Leche', 'Hacendado', 'Mercadona', 0.60);");
-        db.execSQL("INSERT INTO `ARTICULO` VALUES(2, 'Pizza', 'Hacendado', 'Mercadona', 2.60);");
-        db.execSQL("INSERT INTO `ARTICULO` VALUES(3, 'Ketchup', 'Heinz', 'Mercadona', 0.60);");
-        db.execSQL("INSERT INTO `ARTICULO` VALUES(4, 'Mostaza', 'Heinz', 'Mercadona', 0.60);");
+        db.execSQL("INSERT INTO `ARTICULO` VALUES(1, 'Leche', 'Hacendado', 'Lácteos','Mercadona', 0.60);");
+        db.execSQL("INSERT INTO `ARTICULO` VALUES(2, 'Pizza', 'Hacendado', 'Congelados','Mercadona', 2.60);");
+        db.execSQL("INSERT INTO `ARTICULO` VALUES(3, 'Ketchup', 'Heinz', 'Salsas','Mercadona', 0.60);");
+        db.execSQL("INSERT INTO `ARTICULO` VALUES(4, 'Mostaza', 'Heinz', 'Salsas','Mercadona', 0.60);");
 
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Cualquiera');");
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Día');");
@@ -313,6 +315,7 @@ public class BDHandler  extends SQLiteOpenHelper {
                 art.setId(cursor.getInt(cursor.getColumnIndex(Articulo.ID)));
                 art.setNombre(cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)));
                 art.setMarca(cursor.getString(cursor.getColumnIndex(Articulo.MARCA)));
+                art.setTipo(cursor.getString(cursor.getColumnIndex(Articulo.TIPO)));
                 art.setSupermercado(cursor.getString(cursor.getColumnIndex(Articulo.SUPERMERCADO)));
                 art.setPrecio(cursor.getFloat(cursor.getColumnIndex(Articulo.PRECIO)));
 
@@ -325,29 +328,58 @@ public class BDHandler  extends SQLiteOpenHelper {
         return lista;
     }
 
-    //Inserta un articulo en la BD, devuelve exito o fracaso
-    public boolean insertarArticulo(Articulo articulo){
+    //Inserta un articulo en la BD, devuelve el id nuevo o null si ya existe
+    public Integer insertarArticulo(Articulo articulo){
+        Integer id = articulo.getId();
 
-        boolean ok = false;
-
-        if(!estaArticulo(articulo.getId())) {
-
+        //si es null significa que no está creado
+        if(id == null) {
             SQLiteDatabase db = this.obtenerManejadorEscritura();
             ContentValues values = new ContentValues();
 
             values.put(Articulo.ID, articulo.getId());
             values.put(Articulo.NOMBRE, articulo.getNombre());
             values.put(Articulo.MARCA, articulo.getMarca());
+            values.put(Articulo.TIPO, articulo.getTipo());
             values.put(Articulo.SUPERMERCADO, articulo.getSupermercado());
             values.put(Articulo.PRECIO, articulo.getPrecio());
 
-            db.insert("ARTICULO", null, values);
-            db.close();
-            ok = true;
-        }
-        return ok;
+            long ident = db.insert("ARTICULO", null, values);
 
+            if (ident != -1) {
+                id = (int) ident;
+                articulo.setId(id);
+            }
+
+            db.close();
+            return id;
+        }else{
+            return null;
+        }
     }
+//    public boolean insertarArticulo(Articulo articulo){
+//
+//        boolean ok = false;
+//
+//        if(!estaArticulo(articulo.getId())) {
+//
+//            SQLiteDatabase db = this.obtenerManejadorEscritura();
+//            ContentValues values = new ContentValues();
+//
+//            values.put(Articulo.ID, articulo.getId());
+//            values.put(Articulo.NOMBRE, articulo.getNombre());
+//            values.put(Articulo.MARCA, articulo.getMarca());
+//            values.put(Articulo.TIPO, articulo.getTipo());
+//            values.put(Articulo.SUPERMERCADO, articulo.getSupermercado());
+//            values.put(Articulo.PRECIO, articulo.getPrecio());
+//
+//            db.insert("ARTICULO", null, values);
+//            db.close();
+//            ok = true;
+//        }
+//        return ok;
+//
+//    }
 
     //Obtiene el articulo con el id indicado
     public Articulo obtenerArticulo(int id){
@@ -364,6 +396,7 @@ public class BDHandler  extends SQLiteOpenHelper {
             articulo.setId(cursor.getInt(cursor.getColumnIndex(Articulo.ID)));
             articulo.setNombre(cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)));
             articulo.setMarca(cursor.getString(cursor.getColumnIndex(Articulo.MARCA)));
+            articulo.setTipo(cursor.getString(cursor.getColumnIndex(Articulo.TIPO)));
             articulo.setSupermercado(cursor.getString(cursor.getColumnIndex(Articulo.SUPERMERCADO)));
             articulo.setPrecio(cursor.getFloat(cursor.getColumnIndex(Articulo.PRECIO)));
         }
@@ -383,6 +416,7 @@ public class BDHandler  extends SQLiteOpenHelper {
             articulo.setId(cursor.getInt(cursor.getColumnIndex(Articulo.ID)));
             articulo.setNombre(cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)));
             articulo.setMarca(cursor.getString(cursor.getColumnIndex(Articulo.MARCA)));
+            articulo.setTipo(cursor.getString(cursor.getColumnIndex(Articulo.TIPO)));
             articulo.setSupermercado(cursor.getString(cursor.getColumnIndex(Articulo.SUPERMERCADO)));
             articulo.setPrecio(cursor.getFloat(cursor.getColumnIndex(Articulo.PRECIO)));
         }
@@ -426,6 +460,7 @@ public class BDHandler  extends SQLiteOpenHelper {
             valores.put(Articulo.ID, articulo.getId());
             valores.put(Articulo.NOMBRE, articulo.getNombre());
             valores.put(Articulo.MARCA, articulo.getMarca());
+            valores.put(Articulo.TIPO, articulo.getTipo());
             valores.put(Articulo.SUPERMERCADO, articulo.getSupermercado());
             valores.put(Articulo.PRECIO, articulo.getPrecio());
 

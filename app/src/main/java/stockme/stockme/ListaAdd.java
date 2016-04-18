@@ -59,6 +59,8 @@ public class ListaAdd extends AppCompatActivity implements NavigationView.OnNavi
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
+        manejador.cerrar();
+
         btn_aceptar = (Button)findViewById(R.id.lista_add_btn_aceptar);
         btn_aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,9 +86,7 @@ public class ListaAdd extends AppCompatActivity implements NavigationView.OnNavi
                         finish();
                     }
                 } else {
-                    CharSequence text = "¡Falta un nombre!";
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
+                    Util.mostrarToast(v.getContext(), "¡Falta un nombre!");
                 }
 
             }
