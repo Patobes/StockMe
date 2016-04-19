@@ -1,5 +1,7 @@
 package stockme.stockme;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.NavigationView;
@@ -8,6 +10,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.InputFilter;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +24,7 @@ import java.util.List;
 import stockme.stockme.logica.Articulo;
 import stockme.stockme.logica.ListaArticulo;
 import stockme.stockme.persistencia.BDHandler;
+import stockme.stockme.util.InputFilterMinMax;
 import stockme.stockme.util.OpcionesMenus;
 import stockme.stockme.util.Util;
 
@@ -30,6 +34,9 @@ public class ArticulosAdd extends AppCompatActivity implements NavigationView.On
     private Spinner spTipos, spSupermercado;
     private Button btnAceptar, btnCancelar;
     String nLista;
+    Articulo articulo;
+    int cantidad;
+    float precio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +59,7 @@ public class ArticulosAdd extends AppCompatActivity implements NavigationView.On
         etPrecio = (EditText)findViewById(R.id.articulos_add_et_precio);
         etMarca = (EditText)findViewById(R.id.articulos_add_et_marca);
         etCantidad = (EditText)findViewById(R.id.articulos_add_et_cantidad);
+        etCantidad.setFilters(new InputFilter[]{ new InputFilterMinMax("1", "99")});
         spTipos = (Spinner)findViewById(R.id.articulos_add_sp_tipos);
         spSupermercado = (Spinner)findViewById(R.id.articulos_add_sp_supermercado);
         btnAceptar = (Button)findViewById(R.id.articulos_add_btn_aceptar);
@@ -62,7 +70,7 @@ public class ArticulosAdd extends AppCompatActivity implements NavigationView.On
 
         spTipos.setAdapter(adapter);
 
-        BDHandler manejador = new BDHandler(this);
+        final BDHandler manejador = new BDHandler(this);
         List<String> supermercados = manejador.obtenerSupermercados();
 
         ArrayAdapter<String> adapterSuperM = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, supermercados);
@@ -84,36 +92,62 @@ public class ArticulosAdd extends AppCompatActivity implements NavigationView.On
             btnAceptar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Articulo articulo = new Articulo();
-                    //TODO: hay que comprobar si ya está en la lista para preguntar si se suma o que
-                    //habrá que crear un métod para ver si hay un artículo en la bd con ese mismo nombre, tipo y supermercado
-
-                    //si NO está en la lista, se añade:
-                    articulo.setId(null);//esto es para que lo añada como nuevo
-                    if(!spTipos.getSelectedItem().toString().equals("Cualquiera"))
-                        articulo.setTipo(spTipos.getSelectedItem().toString());
-                    if(!spSupermercado.getSelectedItem().toString().equals("Cualquiera"))
-                        articulo.setSupermercado(spSupermercado.getSelectedItem().toString());
-                    articulo.setNombre(etNombre.getText().toString());
+                    String nombre, marca, tipo, supermercado;
+                    articulo = new Articulo();
+                    nombre = etNombre.getText().toString();
+                    marca = etMarca.getText().toString();
+                    tipo = spTipos.getSelectedItem().toString();
+                    supermercado = spSupermercado.getSelectedItem().toString();
                     if(!etPrecio.getText().toString().isEmpty())
-                        articulo.setPrecio(Float.parseFloat(etPrecio.getText().toString()));
-                    else
-                        articulo.setPrecio(0.0f);
-                    articulo.setMarca(etMarca.getText().toString());
-                    BDHandler manejador = new BDHandler(v.getContext());
-                    if(manejador.insertarArticulo(articulo) != null)
-                        Util.mostrarToast(v.getContext(), "Añadido artículo");
-                    else
-                        Util.mostrarToast(v.getContext(), "No se ha podido insertar el artículo");
+                        precio = Float.parseFloat(etPrecio.getText().toString());
 
-                    //lo añado a la lista
-                    int nArtic = 0;
+                    final BDHandler manejador2 = new BDHandler(v.getContext());
+                    //intento obtener el artículo correspondiente a estos valores
+                    Articulo artAux = manejador2.obtenerArticulo(nombre, marca, tipo, supermercado);
+                    if(artAux != null){
+                        articulo = artAux;
+                    }else{
+                        //si NO está en la lista, se añade:
+//                    if(!tipo.equals("Cualquiera"))
+//                        articulo.setTipo(tipo);
+//                    if(!supermercado.equals("Cualquiera"))
+//                        articulo.setSupermercado(supermercado);
+                        articulo.setNombre(nombre);
+                        articulo.setPrecio(precio);
+                        articulo.setMarca(marca);
+                        if(manejador2.insertarArticulo(articulo) != null)
+                            Util.mostrarToast(v.getContext(), "Se ha creado un nuevo artículo");
+                        else
+                            Util.mostrarToast(v.getContext(), "No se ha podido crear el artículo");
+                        //TODO: podríamos meter función de autocompletar para los tipos y marcas que ya estén en la bd
+                    }
+
+                    cantidad = 1;
                     if(!etCantidad.getText().toString().isEmpty())
-                        nArtic = Integer.parseInt(etCantidad.getText().toString());
-                    manejador.insertarArticuloEnLista(new ListaArticulo(articulo.getId(), nLista, nArtic));
+                        cantidad = Integer.parseInt(etCantidad.getText().toString());
 
-                    manejador.cerrar();
-                    finish();
+
+                    //una vez tengo un artículo, compruebo si está en la lista
+                    if(manejador2.estaArticuloEnLista(articulo.getId(), nLista)){
+                        DialogInterface.OnClickListener aceptar = new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                if(articulo.getPrecio() != precio){
+                                    articulo.setPrecio(precio);
+                                    manejador2.modificarArticulo(articulo);
+                                    Util.mostrarToast(ArticulosAdd.this, "Precio actualizado");
+                                }
+                                ListaArticulo la = manejador2.obtenerListaArticulo(articulo.getId(), nLista);
+                                manejador2.modificarArticuloEnLista(new ListaArticulo(articulo.getId(), nLista, la.getCantidad() + cantidad));
+                                manejador2.cerrar();
+                                finish();
+                            }
+                        };
+                        Util.crearMensajeAlerta("Ya está el artículo en la lista. ¿Quieres sumar la cantidad?", "Artículo existente",
+                                aceptar, ArticulosAdd.this);
+                    }else{
+                        manejador2.insertarArticuloEnLista(new ListaArticulo(articulo.getId(), nLista, cantidad));
+                    }
+                    manejador2.cerrar();
                 }
             });
         }else{

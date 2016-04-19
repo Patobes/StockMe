@@ -1,0 +1,7 @@
+Pendientes:
+-Corregir la lista de ListaDeArticulos. El botón se desplaza al insertar elemento.
+
+Ideas:
+-Función autocompletar en ArticulosAdd para facilitar la entrada
+-Cambiar el evento onLongClickPressed o como se llame XD de ListaDeArticulos para que, en lugar de borrar el artículo,
+abra una ventana para modificarlo.

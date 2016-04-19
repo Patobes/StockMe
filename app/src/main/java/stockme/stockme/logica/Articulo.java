@@ -21,6 +21,7 @@ public class Articulo {
     public static String PRECIO = "Precio";
 
     public Articulo(){
+        this.id = 0;
         this.nombre = "";
         this.marca = "";
         this.supermercado = "";

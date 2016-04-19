@@ -391,7 +391,6 @@ public class BDHandler  extends SQLiteOpenHelper {
         Cursor cursor = lectura.rawQuery(query, new String[]{Integer.toString(id)});
 
         if(cursor.moveToFirst()){
-
             articulo = new Articulo();
             articulo.setId(cursor.getInt(cursor.getColumnIndex(Articulo.ID)));
             articulo.setNombre(cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)));
@@ -410,6 +409,28 @@ public class BDHandler  extends SQLiteOpenHelper {
         SQLiteDatabase lectura = this.obtenerManejadorLectura();
 
         Cursor cursor = lectura.rawQuery(query, new String[]{nombre, marca, supermercado});
+
+        if(cursor.moveToFirst()){
+            articulo = new Articulo();
+            articulo.setId(cursor.getInt(cursor.getColumnIndex(Articulo.ID)));
+            articulo.setNombre(cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)));
+            articulo.setMarca(cursor.getString(cursor.getColumnIndex(Articulo.MARCA)));
+            articulo.setTipo(cursor.getString(cursor.getColumnIndex(Articulo.TIPO)));
+            articulo.setSupermercado(cursor.getString(cursor.getColumnIndex(Articulo.SUPERMERCADO)));
+            articulo.setPrecio(cursor.getFloat(cursor.getColumnIndex(Articulo.PRECIO)));
+        }
+        lectura.close();
+        return articulo;
+    }
+
+    //devuelve null si no encuentra el artículo
+    public Articulo obtenerArticulo(String nombre, String marca, String tipo, String supermercado){
+        Articulo articulo = null;
+        String query = "SELECT * FROM ARTICULO WHERE " + Articulo.NOMBRE + " = ? AND " + Articulo.MARCA + " = ? AND "
+                + Articulo.TIPO + " = ? AND " + Articulo.SUPERMERCADO + " = ?";
+        SQLiteDatabase lectura = this.obtenerManejadorLectura();
+
+        Cursor cursor = lectura.rawQuery(query, new String[]{nombre, marca, tipo, supermercado});
 
         if(cursor.moveToFirst()){
             articulo = new Articulo();
@@ -505,6 +526,24 @@ public class BDHandler  extends SQLiteOpenHelper {
         Log.d("obtenerArticulosEnLista", articulos.toString());
         db.close();
         return articulos;
+    }
+
+    public ListaArticulo obtenerListaArticulo(int idArticulo, String nombreLista){
+        ListaArticulo la = null;
+
+        String query = "SELECT * FROM LISTA_ARTICULO WHERE " + ListaArticulo.ARTICULO + " = ? AND "
+                + ListaArticulo.NOMBRE + " = ?";
+        SQLiteDatabase db = this.obtenerManejadorLectura();
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(idArticulo), nombreLista});
+        if(cursor.moveToFirst()){
+            la = new ListaArticulo();
+            la.setArticulo(cursor.getInt(cursor.getColumnIndex(ListaArticulo.ARTICULO)));
+            la.setNombre(cursor.getString(cursor.getColumnIndex(ListaArticulo.NOMBRE)));
+            la.setCantidad(cursor.getInt(cursor.getColumnIndex(ListaArticulo.CANTIDAD)));
+        }
+        db.close();
+
+        return la;
     }
 
     //Inserta en la BD la cantidad del articulo en la lista indicados
