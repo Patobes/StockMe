@@ -11,7 +11,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="stockme.stockme.ArticulosAdd"
     tools:showIn="@layout/activity_articulos_add"
-    android:background="@color/fondo">
+    >
 
     <EditText
         android:layout_width="wrap_content"

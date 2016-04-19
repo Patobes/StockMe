@@ -3,7 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#4056ff</color>
-    <color name="fondo">#3074ecff</color>
-    <color name="fondo_splash">#1C8ADB</color>
+    <color name="fondo">#308beefd</color>
+    <color name="fondo_splash">#34a0f1</color>
     <color name="progreso">#e51cdb26</color>
 </resources>
