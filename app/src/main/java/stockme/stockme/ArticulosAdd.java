@@ -107,11 +107,8 @@ public class ArticulosAdd extends AppCompatActivity implements NavigationView.On
                     if(artAux != null){
                         articulo = artAux;
                     }else{
-                        //si NO está en la lista, se añade:
-//                    if(!tipo.equals("Cualquiera"))
-//                        articulo.setTipo(tipo);
-//                    if(!supermercado.equals("Cualquiera"))
-//                        articulo.setSupermercado(supermercado);
+                        articulo.setTipo(tipo);
+                        articulo.setSupermercado(supermercado);
                         articulo.setNombre(nombre);
                         articulo.setPrecio(precio);
                         articulo.setMarca(marca);
@@ -147,7 +144,9 @@ public class ArticulosAdd extends AppCompatActivity implements NavigationView.On
                     }else{
                         manejador2.insertarArticuloEnLista(new ListaArticulo(articulo.getId(), nLista, cantidad));
                     }
+                    manejador.cerrar();
                     manejador2.cerrar();
+                    finish();
                 }
             });
         }else{
