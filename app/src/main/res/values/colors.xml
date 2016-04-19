@@ -6,4 +6,6 @@
     <color name="fondo">#308beefd</color>
     <color name="fondo_splash">#34a0f1</color>
     <color name="progreso">#e51cdb26</color>
+    <color name="carga">#e5b5b6f9</color>
+
 </resources>

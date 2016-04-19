@@ -15,7 +15,7 @@
             android:layout_width="168dp"
             android:layout_height="271dp"
             android:id="@+id/iv_carrito"
-            android:src="@drawable/img_splash_simple"
+            android:src="@drawable/ic_splash"
             android:layout_gravity="center" />
 
         <ProgressBar
