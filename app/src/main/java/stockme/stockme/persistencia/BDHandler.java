@@ -404,12 +404,12 @@ public class BDHandler  extends SQLiteOpenHelper {
         return articulo;
     }
 
-    public Articulo obtenerArticulo(String nombre, String marca){
+    public Articulo obtenerArticulo(String nombre, String marca, String supermercado){
         Articulo articulo = null;
-        String query = "SELECT * FROM ARTICULO WHERE " + Articulo.NOMBRE + " = ? AND " + Articulo.MARCA + " = ?";
+        String query = "SELECT * FROM ARTICULO WHERE " + Articulo.NOMBRE + " = ? AND " + Articulo.MARCA + " = ? AND " + Articulo.SUPERMERCADO + " = ?";
         SQLiteDatabase lectura = this.obtenerManejadorLectura();
 
-        Cursor cursor = lectura.rawQuery(query, new String[]{nombre, marca});
+        Cursor cursor = lectura.rawQuery(query, new String[]{nombre, marca, supermercado});
 
         if(cursor.moveToFirst()){
             articulo = new Articulo();
@@ -437,11 +437,11 @@ public class BDHandler  extends SQLiteOpenHelper {
         return ok;
     }
 
-    public boolean estaArticulo(String nombre, String marca){
-        String query = "SELECT * FROM ARTICULO WHERE " + Articulo.NOMBRE + " = ? AND " + Articulo.MARCA + " = ?";
+    public boolean estaArticulo(String nombre, String marca, String supermercado){
+        String query = "SELECT * FROM ARTICULO WHERE " + Articulo.NOMBRE + " = ? AND " + Articulo.MARCA + " = ? AND " + Articulo.SUPERMERCADO + " = ?";
 
         SQLiteDatabase lectura = this.obtenerManejadorLectura();
-        Cursor cursor = lectura.rawQuery(query, new String[]{nombre, marca});
+        Cursor cursor = lectura.rawQuery(query, new String[]{nombre, marca, supermercado});
 
         boolean ok = cursor.moveToFirst();
         lectura.close();
@@ -681,8 +681,8 @@ public class BDHandler  extends SQLiteOpenHelper {
         return ok;
     }
 
-    public boolean estaStock(String nombre, String marca){
-        Articulo articulo = this.obtenerArticulo(nombre, marca);
+    public boolean estaStock(String nombre, String marca, String supermercado){
+        Articulo articulo = this.obtenerArticulo(nombre, marca, supermercado);
         if(articulo != null)
             return estaStock(articulo.getId());
         else
