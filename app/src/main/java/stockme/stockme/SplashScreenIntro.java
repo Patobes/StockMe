@@ -40,7 +40,6 @@ public class SplashScreenIntro extends AppCompatActivity {
 
         prb_carrito.setMax(duracion / tick);
 
-        //TODO: Elegir un *** color decente xD
         prb_carrito.getProgressDrawable().setColorFilter(Color.parseColor("#e5b5b6f9"), PorterDuff.Mode.SRC_IN);
 
 
