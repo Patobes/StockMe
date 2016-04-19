@@ -29,6 +29,7 @@ public class BDHandler  extends SQLiteOpenHelper {
         insertarIniciales(db);
     }
 
+    //TODO: añadir valores por defecto
     private void insertarIniciales(SQLiteDatabase db) {
         /* TABLA ARTICULO
         ID - INT - PK

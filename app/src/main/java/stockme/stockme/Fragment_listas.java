@@ -141,8 +141,6 @@ public class Fragment_listas extends Fragment {
             Fragment fragmento = new Fragment_listas();
             FragmentTransaction ft = getFragmentManager().beginTransaction().replace(R.id.contenido_principal, fragmento);
             ft.attach(fragmento).commit();
-
-            Util.mostrarToast(getContext(),"hey");
         }
     }
 }
