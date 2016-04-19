@@ -15,4 +15,14 @@
     <string name="lista_add_supermercado">Supermercado:</string>
     <string name="title_activity_lista_de_articulos">ListaDeArticulos</string>
 
+    <string name="Nombre">Nombre</string>
+    <string name="Tipo">Tipo</string>
+    <string name="Precio">Precio</string>
+    <string name="Supermercado">Supermercado</string>
+    <string name="Aceptar">Aceptar</string>
+    <string name="Cancelar">Cancelar</string>
+    <string name="Marca">Marca</string>
+    <string name="Cantidad">Cantidad</string>
+    <string name="Mas">+</string>
+
 </resources>
