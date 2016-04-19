@@ -1,7 +1,13 @@
-Pendientes:
+----------Pendientes:--------------------------------------------------------------
 -Corregir la lista de ListaDeArticulos. El botón se desplaza al insertar elemento.
+-Suma de precio en ListaDeArticulos (quizá renombrar a lista de compra)
+-Poner valore por defecto en la bd
 
-Ideas:
--Función autocompletar en ArticulosAdd para facilitar la entrada
+----------Ideas:-------------------------------------------------------------------
 -Cambiar el evento onLongClickPressed o como se llame XD de ListaDeArticulos para que, en lugar de borrar el artículo,
 abra una ventana para modificarlo.
+-Utilizar setTag() para meter el nº de elementos que tiene un artículo antes de ser borrado ya que si no no podremos
+restablecerlo correctamente restando el precio
+
+----------Realizado recientemente:-------------------------------------------------
+-Autocompletado de marcas

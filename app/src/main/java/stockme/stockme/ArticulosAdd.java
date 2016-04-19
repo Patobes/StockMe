@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -30,7 +31,8 @@ import stockme.stockme.util.Util;
 
 public class ArticulosAdd extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         Fragment_listas.OnFragmentInteractionListener {
-    private EditText etNombre, etPrecio, etMarca, etCantidad;
+    private EditText etNombre, etPrecio, etCantidad;
+    private AutoCompleteTextView atv_marcas;
     private Spinner spTipos, spSupermercado;
     private Button btnAceptar, btnCancelar;
     String nLista;
@@ -57,21 +59,25 @@ public class ArticulosAdd extends AppCompatActivity implements NavigationView.On
         //contenido
         etNombre = (EditText)findViewById(R.id.articulos_add_et_nombre);
         etPrecio = (EditText)findViewById(R.id.articulos_add_et_precio);
-        etMarca = (EditText)findViewById(R.id.articulos_add_et_marca);
         etCantidad = (EditText)findViewById(R.id.articulos_add_et_cantidad);
         etCantidad.setFilters(new InputFilter[]{ new InputFilterMinMax("1", "99")});
         spTipos = (Spinner)findViewById(R.id.articulos_add_sp_tipos);
         spSupermercado = (Spinner)findViewById(R.id.articulos_add_sp_supermercado);
         btnAceptar = (Button)findViewById(R.id.articulos_add_btn_aceptar);
         btnCancelar = (Button)findViewById(R.id.articulos_add_btn_cancelar);
+        atv_marcas = (AutoCompleteTextView)findViewById(R.id.articulos_add_atv_marcas);
+        atv_marcas.setThreshold(1);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tipos_array,
                         android.R.layout.simple_spinner_item);
-
         spTipos.setAdapter(adapter);
 
         final BDHandler manejador = new BDHandler(this);
         List<String> supermercados = manejador.obtenerSupermercados();
+        List<String> marcas = manejador.obtenerMarcas();
+
+        ArrayAdapter<String> adptMarcas = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, marcas);
+        atv_marcas.setAdapter(adptMarcas);
 
         ArrayAdapter<String> adapterSuperM = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, supermercados);
         //adapterSuperM.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -95,7 +101,7 @@ public class ArticulosAdd extends AppCompatActivity implements NavigationView.On
                     String nombre, marca, tipo, supermercado;
                     articulo = new Articulo();
                     nombre = etNombre.getText().toString();
-                    marca = etMarca.getText().toString();
+                    marca = atv_marcas.getText().toString();
                     tipo = spTipos.getSelectedItem().toString();
                     supermercado = spSupermercado.getSelectedItem().toString();
                     if(!etPrecio.getText().toString().isEmpty())

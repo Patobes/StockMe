@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="stockme.stockme.InfoBD">
+
+    <include layout="@layout/layout_toolbar"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/info_btn_borrar"
+            android:layout_alignParentTop="true">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:padding="8dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Artículos (x)"
+                    android:id="@+id/info_tv_articulos"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:textSize="20sp" />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/info_sp_articulos"
+                    android:layout_alignBottom="@+id/info_tv_articulos"
+                    android:layout_toEndOf="@+id/info_tv_articulos" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Stock (x)"
+                    android:id="@+id/info_tv_stock"
+                    android:textSize="20sp"
+                    android:layout_marginTop="40dp"
+                    android:layout_below="@+id/info_tv_articulos"
+                    android:layout_alignStart="@+id/info_tv_articulos" />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/info_sp_stock"
+                    android:layout_alignBottom="@+id/info_tv_stock"
+                    android:layout_toEndOf="@+id/info_tv_stock" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SuperM (x)"
+                    android:id="@+id/info_tv_superm"
+                    android:textSize="20sp"
+                    android:layout_below="@+id/info_tv_stock"
+                    android:layout_alignStart="@+id/info_tv_stock"
+                    android:layout_marginTop="40dp" />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/info_sp_superm"
+                    android:layout_alignBottom="@+id/info_tv_superm"
+                    android:layout_toEndOf="@+id/info_tv_superm" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Listas (x)"
+                    android:id="@+id/info_tv_listas"
+                    android:textSize="20sp"
+                    android:layout_below="@+id/info_tv_superm"
+                    android:layout_alignStart="@+id/info_tv_superm"
+                    android:layout_marginTop="40dp" />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/info_sp_listas"
+                    android:layout_alignBottom="@+id/info_tv_listas"
+                    android:layout_toEndOf="@+id/info_tv_listas" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lista_articulo (x)"
+                    android:id="@+id/info_tv_lista_articulo"
+                    android:textSize="20sp"
+                    android:layout_below="@+id/info_tv_listas"
+                    android:layout_alignStart="@+id/info_tv_listas"
+                    android:layout_marginTop="40dp" />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/info_sp_lista_articulo"
+                    android:layout_alignBottom="@+id/info_tv_lista_articulo"
+                    android:layout_toEndOf="@+id/info_tv_lista_articulo" />
+            </RelativeLayout>
+        </ScrollView>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Borrar bd"
+            android:id="@+id/info_btn_borrar"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
+
+
+</android.support.design.widget.CoordinatorLayout>

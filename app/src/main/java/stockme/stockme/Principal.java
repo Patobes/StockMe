@@ -108,7 +108,7 @@ public class Principal extends AppCompatActivity
         } else if (id == R.id.nav_supermercados) {
 
         } else if (id == R.id.nav_ajustes) {
-
+            startActivity(new Intent(this, InfoBD.class));
         }
 
 

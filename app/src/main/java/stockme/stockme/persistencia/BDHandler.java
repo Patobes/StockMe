@@ -42,10 +42,10 @@ public class BDHandler  extends SQLiteOpenHelper {
         String articulo = "CREATE TABLE `ARTICULO` (" +
             "`Id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
             "`Nombre` TEXT NOT NULL," +
-            "`Marca` TEXT," +
-            "`Tipo` TEXT," +
-            "`Supermercado` TEXT NOT NULL," +
-            "`Precio` REAL," +
+            "`Marca` TEXT ," +
+            "`Tipo` TEXT DEFAULT 'Cualquiera'," +
+            "`Supermercado` TEXT NOT NULL DEFAULT 'Cualquiera'," +
+            "`Precio` REAL DEFAULT 0.0," +
             "FOREIGN KEY(`Supermercado`) REFERENCES `SUPERMERCADO`(`Nombre`)" +
         ")";
         db.execSQL("DROP TABLE IF EXISTS 'ARTICULO';");
@@ -158,6 +158,26 @@ public class BDHandler  extends SQLiteOpenHelper {
     public void cerrar()
     {
         this.close();
+    }
+
+
+    //FUNCIONES EXTRAS
+    public List<String> obtenerMarcas(){
+        ArrayList<String> marcas = new ArrayList<>();
+
+        String query = "SELECT DISTINCT " + Articulo.MARCA + " FROM ARTICULO";
+        SQLiteDatabase db = this.obtenerManejadorLectura();
+        Cursor cursor = db.rawQuery(query, null);
+        if(cursor.moveToFirst()){
+            do{
+                String marca = cursor.getString(0);
+                if(marca != null && !marca.isEmpty())
+                    marcas.add(marca);
+            }while(cursor.moveToNext());
+        }
+        db.close();
+
+        return marcas;
     }
 
 
@@ -506,6 +526,35 @@ public class BDHandler  extends SQLiteOpenHelper {
     }
 
     //LISTAARTICULO
+
+    //Obtiene todas las listas de la BD, devuelve un List<Lista>
+    public List<ListaArticulo> obtenerListaArticulos(){
+        //1. crear lista a devolver
+        ArrayList<ListaArticulo> listas = new ArrayList();
+        String query = "SELECT * FROM LISTA_ARTICULO";
+
+        // 2. obtener un manejador de bd
+        SQLiteDatabase db = this.obtenerManejadorLectura();
+        Cursor cursor = db.rawQuery(query, null);
+
+        // 3. recorrer los elementos y añadirlos a la lista a devolver
+        ListaArticulo la = null;
+        if (cursor.moveToFirst()) {
+            do {
+                la = new ListaArticulo();
+                la.setArticulo(cursor.getInt(cursor.getColumnIndex(ListaArticulo.ARTICULO)));
+                la.setNombre(cursor.getString(cursor.getColumnIndex(ListaArticulo.NOMBRE)));
+                la.setCantidad(cursor.getInt(cursor.getColumnIndex(ListaArticulo.CANTIDAD)));
+                listas.add(la);
+            } while (cursor.moveToNext());
+        }
+
+        Log.d("obtenerListas()", "size: " + listas.size());
+
+        //4. cerrar la referencia a la bd y devolver la lista poblada
+        db.close();
+        return listas;
+    }
 
     //Obtiene una lista de los articulos en una lista
     public List<Articulo> obtenerArticulosEnLista(Lista lista){
