@@ -1,33 +1,24 @@
 package stockme.stockme;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.text.Editable;
-import android.text.InputType;
-import android.text.method.CharacterPickerDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.List;
 
 import stockme.stockme.adaptadores.AdaptadorListItemListas;
-import stockme.stockme.logica.Articulo;
 import stockme.stockme.logica.Lista;
-import stockme.stockme.logica.ListaArticulo;
 import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.Preferencias;
 import stockme.stockme.util.Util;
@@ -91,7 +82,7 @@ public class Fragment_listas extends Fragment {
         listas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(parent.getContext(), ListaDeArticulos.class);
+                Intent i = new Intent(parent.getContext(), ListaCompra.class);
                 String nombreLista = ((Lista) parent.getItemAtPosition(position)).getNombre();
                 Util.mostrarToast(parent.getContext(), nombreLista);
                 i.putExtra("NombreLista", nombreLista);
@@ -138,6 +129,7 @@ public class Fragment_listas extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if ((requestCode == 1) && (resultCode == Activity.RESULT_OK)){
+            //con esto refrescamos el fragment para actualizar la lista... mejora -> usar el onResume()
             Fragment fragmento = new Fragment_listas();
             FragmentTransaction ft = getFragmentManager().beginTransaction().replace(R.id.contenido_principal, fragmento);
             ft.attach(fragmento).commit();

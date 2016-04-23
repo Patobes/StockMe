@@ -4,29 +4,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
-import com.nhaarman.listviewanimations.itemmanipulation.dragdrop.OnItemMovedListener;
-import com.nhaarman.listviewanimations.itemmanipulation.dragdrop.TouchViewDraggableManager;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
-import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.undo.SimpleSwipeUndoAdapter;
-import com.nhaarman.listviewanimations.util.Swappable;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import stockme.stockme.R;
@@ -34,10 +22,9 @@ import stockme.stockme.logica.Articulo;
 import stockme.stockme.logica.Lista;
 import stockme.stockme.logica.ListaArticulo;
 import stockme.stockme.persistencia.BDHandler;
-import stockme.stockme.util.SwipeDetector;
 import stockme.stockme.util.Util;
 
-public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> {
+public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo> {
     private DynamicListView articulos;
     private List<Articulo> datos;
     private Lista lista;
@@ -51,8 +38,8 @@ public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> {
     private ImageButton btnMenos;
 
 
-    public AdaptadorListItemArticulosLista(Context context, List<Articulo> datos, Lista lista) {
-        super(context, R.layout.listitem_articulos_lista, datos);
+    public AdaptadorListItemArticulosListaCompra(Context context, List<Articulo> datos, Lista lista) {
+        super(context, R.layout.listitem_articulos_lista_compra, datos);
         this.datos = datos;
         this.lista = lista;
     }
@@ -60,7 +47,7 @@ public class AdaptadorListItemArticulosLista extends ArrayAdapter<Articulo> {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        View item = inflater.inflate(R.layout.listitem_articulos_lista, null);
+        View item = inflater.inflate(R.layout.listitem_articulos_lista_compra, null);
         BDHandler manejador = new BDHandler(getContext());
 
         //pintar los elementos de forma intercalada

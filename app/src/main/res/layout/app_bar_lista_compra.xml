@@ -9,6 +9,6 @@
 
     <include layout="@layout/layout_toolbar"/>
 
-    <include layout="@layout/content_lista_de_articulos" />
+    <include layout="@layout/content_lista_compra" />
 
 </android.support.design.widget.CoordinatorLayout>

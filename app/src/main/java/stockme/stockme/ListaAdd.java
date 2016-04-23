@@ -65,8 +65,6 @@ public class ListaAdd extends AppCompatActivity implements NavigationView.OnNavi
         btn_aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Context context = getApplicationContext();
-                int duration = Toast.LENGTH_SHORT;
 
                 String nombre = ((EditText) findViewById(R.id.lista_add_et_nombre)).getText().toString();
 
@@ -85,6 +83,7 @@ public class ListaAdd extends AppCompatActivity implements NavigationView.OnNavi
                         setResult(Activity.RESULT_OK);
                         finish();
                     }
+                    manejador.cerrar();
                 } else {
                     Util.mostrarToast(v.getContext(), "¡Falta un nombre!");
                 }

@@ -11,7 +11,7 @@
     tools:openDrawer="start">
 
     <include
-        layout="@layout/app_bar_lista_de_articulos"
+        layout="@layout/app_bar_lista_compra"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
 

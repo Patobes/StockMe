@@ -23,7 +23,7 @@
             android:label="@string/title_activity_lista_add"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ListaDeArticulos"
+            android:name=".ListaCompra"
             android:label="@string/title_activity_lista_de_articulos"
             android:parentActivityName=".Principal"
             android:theme="@style/AppTheme">
