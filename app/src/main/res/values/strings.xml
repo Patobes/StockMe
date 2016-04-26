@@ -24,5 +24,6 @@
     <string name="Marca">Marca</string>
     <string name="Cantidad">Cantidad</string>
     <string name="Mas">+</string>
+    <string name="title_activity_catalogo_articulos">CatalogoArticulos</string>
 
 </resources>

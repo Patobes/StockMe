@@ -48,7 +48,8 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".ArticulosAdd" />
-        <activity android:name=".InfoBD"></activity>
+        <activity android:name=".InfoBD" />
+        <activity android:name=".CatalogoArticulos"></activity>
     </application>
 
 </manifest>
