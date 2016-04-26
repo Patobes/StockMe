@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<navigationModel
+  ns = "http://schemas.android.com?import=com.android.tools.idea.editors.navigation.model.*">
+  <locations  
+    class = "java.util.ArrayList">
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "stockme.stockme.ListaDeArticulos"/>
+      <point      
+        x = "2004"      
+        y = "88"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "stockme.stockme.Principal"/>
+      <point      
+        x = "76"      
+        y = "88"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "stockme.stockme.ListaAdd"/>
+      <point      
+        x = "1056"      
+        y = "72"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "stockme.stockme.StockAdd"/>
+      <point      
+        x = "2972"      
+        y = "104"/>
+    </statePointEntry>
+  </locations>
+</navigationModel>
