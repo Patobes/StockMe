@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="stockme.stockme.Fragment_catalogo_todos"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    >
 
     <LinearLayout
         android:orientation="vertical"
@@ -19,7 +20,8 @@
         android:horizontalSpacing="2dp"
         android:numColumns="auto_fit"
         android:padding="2dp"
-        android:verticalSpacing="2dp">
+        android:verticalSpacing="2dp"
+        >
 
 
         <GridView
@@ -27,7 +29,10 @@
             android:layout_height="wrap_content"
             android:id="@+id/gridView_catalogo_articulos"
             android:nestedScrollingEnabled="false"
-            android:numColumns="2" />
+            android:numColumns="2"
+            android:horizontalSpacing="1dp"
+            android:verticalSpacing="1dp"
+            android:background="#c7e8fd" />
     </LinearLayout>
 
 </FrameLayout>
