@@ -11,28 +11,21 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ListView;
 
 import java.util.List;
 
 import stockme.stockme.adaptadores.AdaptadorGridItemCatalogo;
-import stockme.stockme.adaptadores.AdaptadorListItemListas;
 import stockme.stockme.logica.Articulo;
-import stockme.stockme.logica.Lista;
 import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.Preferencias;
-import stockme.stockme.util.Util;
 
 
-
-public class Fragment_catalogo_todos extends Fragment {
+public class Fragment_catalogo_tipos extends Fragment {
     private OnFragmentInteractionListener mListener;
     private GridView articulos;
 
-    public Fragment_catalogo_todos() {
+    public Fragment_catalogo_tipos() {
         // Required empty public constructor
     }
 
@@ -61,10 +54,13 @@ public class Fragment_catalogo_todos extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Preferencias.addPreferencia("anterior", "Listas");
 
-        articulos = (GridView)view.findViewById(R.id.gridView_catalogo_articulos);
+        articulos = (GridView) view.findViewById(R.id.gridView_catalogo_articulos_tipos);
 
         final BDHandler manejador = new BDHandler(view.getContext());
+        //TODO List<Articulo> listaArticulos = manejador.obtenerArticulosPorTipo("tipo");
+
         List<Articulo> listaArticulos = manejador.obtenerArticulos();
+
         final AdaptadorGridItemCatalogo adaptador = new AdaptadorGridItemCatalogo(view.getContext(), listaArticulos);
         articulos.setAdapter(adaptador);
 

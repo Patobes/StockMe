@@ -18,7 +18,7 @@ import android.widget.GridView;
 import stockme.stockme.util.OpcionesMenus;
 
 public class CatalogoArticulos extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
-        Fragment_listas.OnFragmentInteractionListener, Fragment_catalogo_todos.OnFragmentInteractionListener {
+        Fragment_listas.OnFragmentInteractionListener, Fragment_catalogo_todos.OnFragmentInteractionListener, Fragment_catalogo_tipos.OnFragmentInteractionListener {
     FragmentPagerAdapter adapterViewPager;
     private GridView articulos;
 
@@ -100,7 +100,7 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
                 case 3:
                     return new Fragment_catalogo_todos();
                 default:
-                    return null;
+                    return new Fragment_catalogo_todos();
             }
         }
 
