@@ -1,7 +1,6 @@
 ----------Pendientes:--------------------------------------------------------------
--Corregir la lista de ListaDeArticulos. El botón se desplaza al insertar elemento.
+-Revisar comoprtamiento si no se insertan campos en artículos_add
 -Suma de precio en ListaDeArticulos (quizá renombrar a lista de compra)
--Poner valore por defecto en la bd
 
 ----------Ideas:-------------------------------------------------------------------
 -Cambiar el evento onLongClickPressed o como se llame XD de ListaDeArticulos para que, en lugar de borrar el artículo,
@@ -12,3 +11,5 @@ restablecerlo correctamente restando el precio
 ----------Realizado recientemente:-------------------------------------------------
 -Autocompletado de marcas
 -Vista de bd
+-Corregir la lista de ListaDeArticulos. El botón se desplaza al insertar elemento.
+-Poner valore por defecto en la bd

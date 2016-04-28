@@ -180,6 +180,24 @@ public class BDHandler  extends SQLiteOpenHelper {
         return marcas;
     }
 
+//    public float obtenerPrecioTotal(){
+//        float precio = 0.0f;
+//
+//        String query = "SELECT " + Articulo.MARCA + " FROM ARTICULO";
+//        SQLiteDatabase db = this.obtenerManejadorLectura();
+//        Cursor cursor = db.rawQuery(query, null);
+//        if(cursor.moveToFirst()){
+//            do{
+//                String marca = cursor.getString(0);
+//                if(marca != null && !marca.isEmpty())
+//                    marcas.add(marca);
+//            }while(cursor.moveToNext());
+//        }
+//        db.close();
+//
+//        return precio;
+//    }
+
 
 
     //LISTAS
