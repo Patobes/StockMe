@@ -109,6 +109,7 @@ public class ArticulosAdd extends AppCompatActivity implements NavigationView.On
 
                     final BDHandler manejador2 = new BDHandler(v.getContext());
                     //intento obtener el artículo correspondiente a estos valores
+                    //Esto es articulo complejo (con super y precio)
                     Articulo artAux = manejador2.obtenerArticulo(nombre, marca, tipo, supermercado);
                     if(artAux != null){
                         articulo = artAux;

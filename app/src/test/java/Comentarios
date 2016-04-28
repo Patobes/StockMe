@@ -20,3 +20,5 @@ restablecerlo correctamente restando el precio
 - Todos los modificarObject(Object) -> añadir variante modificarParametro(Object, Parametro) ->modificar solo el parametro correspondiente del objeto correspondiente
 - LISTA_ARTICULO === LISTA_ARTICULO_SUPERMERCADO (el articulo que aparece aqui es del tipo ArticuloSupermercado, con precio y super asociado)
 - Metodos de Articulo_supermercado:: Sustituir/duplicar los que reciben parametro 'int articulo' por 'string nombre, string marca'
+
+- Javas que fallan: ArticulosAdd, InfoBD, StockAdd

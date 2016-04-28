@@ -97,14 +97,14 @@ public class StockAdd extends AppCompatActivity implements NavigationView.OnNavi
                     Util.mostrarToast(getApplicationContext(), "Introduce una cantidad mayor que 0!");
                 } else {
                     BDHandler manejador = new BDHandler(v.getContext());
-                    if(manejador.estaStock(nombre, marca, supermercado)) {
+                    if(manejador.estaStock(nombre, marca)) {
                         DialogInterface.OnClickListener sumarCantidad = new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
 
                                 BDHandler manejador = new BDHandler(getApplicationContext());
-                                Articulo articulo = manejador.obtenerArticulo(nombre, marca, supermercado);
-                                Stock stock = manejador.obtenerStocks(articulo);
-                                stock.setCanitdad(stock.getCanitdad() + cantidad);
+                                Articulo articulo = manejador.obtenerArticulo(nombre, marca);
+                                Stock stock = manejador.obtenerStock(articulo);
+                                stock.setCantidad(stock.getCanitdad() + cantidad);
                                 manejador.modificarStock(stock);
                                 Util.mostrarToast(getApplicationContext(), cantidad + " unidades añadidas!");
                                 manejador.cerrar();
@@ -114,12 +114,10 @@ public class StockAdd extends AppCompatActivity implements NavigationView.OnNavi
                         String mensaje = "El articulo que has introducido ya está en Stock\r\n¿Deseas añadir " + cantidad + " unidades al Stock?";
                         Util.crearMensajeAlerta(mensaje, sumarCantidad, v.getContext());
 
-                    } else if(manejador.estaArticulo(nombre, marca, supermercado)) {
+                    } else if(manejador.estaArticulo(nombre, marca)) {
                         //Esta rama funciona bien
-                        Articulo articulo = manejador.obtenerArticulo(nombre, marca, supermercado);
-                        Stock stock = new Stock();
-                        stock.setArticulo(articulo.getId());
-                        stock.setCanitdad(cantidad);
+                        Articulo articulo = manejador.obtenerArticulo(nombre, marca);
+                        Stock stock = new Stock(articulo.getId(), 0, cantidad);
                         if(manejador.insertarStock(stock)){
                             Util.mostrarToast(getApplicationContext(), "Articulo añadido!");
                         } else {
@@ -131,13 +129,12 @@ public class StockAdd extends AppCompatActivity implements NavigationView.OnNavi
                         Articulo articulo = new Articulo();
                         articulo.setNombre(nombre);
                         articulo.setMarca(marca);
-                        articulo.setSupermercado(supermercado);
                         //funciona la primera vez que se ejecuta -- las demas falla en este paso
                         if(manejador.insertarArticulo(articulo) != null) {
                             Articulo articulo1 = manejador.obtenerArticulo(nombre, marca, supermercado);
                             Stock stock = new Stock();
                             stock.setArticulo(articulo1.getId());
-                            stock.setCanitdad(cantidad);
+                            stock.setCantidad(cantidad);
                             if (manejador.insertarStock(stock)) {
                                 Util.mostrarToast(getApplicationContext(), "Articulo añadido!");
                             } else {

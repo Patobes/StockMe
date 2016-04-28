@@ -42,7 +42,7 @@ public class Stock {
         return canitdad;
     }
 
-    public void setCanitdad(int canitdad) {
+    public void setCantidad(int canitdad) {
         this.canitdad = canitdad;
     }
 }
