@@ -5,7 +5,9 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +19,7 @@ import stockme.stockme.logica.Articulo;
 public class AdaptadorGridItemCatalogo extends BaseAdapter {
     private Context context;
     private List<Articulo> datos;
+    private GridView articulos;
 
     public AdaptadorGridItemCatalogo(Context context, List<Articulo> articulos) {
         this.context = context;
@@ -39,7 +42,7 @@ public class AdaptadorGridItemCatalogo extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View view, ViewGroup viewGroup) {
+    public View getView(int position, View view, final ViewGroup viewGroup) {
 
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context
@@ -50,8 +53,15 @@ public class AdaptadorGridItemCatalogo extends BaseAdapter {
         TextView nombre = (TextView) view.findViewById(R.id.catalogo_art_nombre);
         nombre.setText(datos.get(position).getNombre());
 
+        articulos = (GridView) viewGroup.findViewById(R.id.gridView_catalogo_articulos);
 
+        articulos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Articulo articulo = (Articulo) parent.getItemAtPosition(position);
 
+            }
+        });
 
         return view;
     }
