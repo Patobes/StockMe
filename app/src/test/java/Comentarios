@@ -12,3 +12,11 @@ restablecerlo correctamente restando el precio
 ----------Realizado recientemente:-------------------------------------------------
 -Autocompletado de marcas
 -Vista de bd
+
+
+----------Testear en BDHandler:----------------------------------------------------
+- public Integer insertarArticulos(String nombre, String marca) -> Ver si el values.put funciona bien si no pongo todos los parametros (linea 433)
+- public List<String> obtenerSupermercados()    cambiarlo por       public List<Supermercado> obtenerSupermercados()
+- Todos los modificarObject(Object) -> añadir variante modificarParametro(Object, Parametro) ->modificar solo el parametro correspondiente del objeto correspondiente
+- LISTA_ARTICULO === LISTA_ARTICULO_SUPERMERCADO (el articulo que aparece aqui es del tipo ArticuloSupermercado, con precio y super asociado)
+- Metodos de Articulo_supermercado:: Sustituir/duplicar los que reciben parametro 'int articulo' por 'string nombre, string marca'

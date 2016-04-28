@@ -19,7 +19,7 @@ public class Articulo {
         this.marca = "";
     }
 
-    public Articulo(Integer id, String nombre, String marca, String supermercado, float precio) {
+    public Articulo(Integer id, String nombre, String marca, String supermercado) {
         this.id = id;
         this.nombre = nombre;
         this.marca = marca;

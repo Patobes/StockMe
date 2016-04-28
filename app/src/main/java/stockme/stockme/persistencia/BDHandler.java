@@ -10,6 +10,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import stockme.stockme.logica.ArticuloSupermercado;
 import stockme.stockme.logica.Lista;
 import stockme.stockme.logica.Articulo;
 import stockme.stockme.logica.ListaArticulo;
@@ -201,39 +202,29 @@ public class BDHandler  extends SQLiteOpenHelper {
 
 
     /*
-    GET
-    EXIST
-    INSERT
-    SET
-    DELETE
-    ------------------
-    ARTICULO
-    SUPERMERCADO
-    ARTICULO_SUPERMERCADO (ARTICULO Y SUPER)
     LISTA
     LISTA_ARTICULO_SUPERMERCADO (LISTA, SUPER, ARTICULO_SUPERMERCADO)
     STOCK (ARTICULO)
      */
 
+    //ARTICULO (ID, NOMBRE, MARCA, TIPO)
 
     //ARTICULO - GET
 
     //Obtiene todos los articulos de la BD, devuelve un List<Articulo>
     public List<Articulo> obtenerArticulos(){
-        ArrayList<Articulo> lista = new ArrayList();
+        ArrayList<Articulo> lista = new ArrayList<Articulo>();
         String query = "SELECT * FROM ARTICULO";
 
         SQLiteDatabase db = this.obtenerManejadorLectura();
         Cursor cursor = db.rawQuery(query, null);
 
-        Articulo art = null;
         if (cursor.moveToFirst()) {
             do {
-                art = new Articulo();
-                art.setId(cursor.getInt(cursor.getColumnIndex(Articulo.ID)));
-                art.setNombre(cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)));
-                art.setMarca(cursor.getString(cursor.getColumnIndex(Articulo.MARCA)));
-                art.setTipo(cursor.getString(cursor.getColumnIndex(Articulo.TIPO)));
+                Articulo art = new Articulo(cursor.getInt(cursor.getColumnIndex(Articulo.ID)),
+                        cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)),
+                        cursor.getString(cursor.getColumnIndex(Articulo.MARCA)),
+                        cursor.getString(cursor.getColumnIndex(Articulo.TIPO)));
 
                 lista.add(art);
             } while (cursor.moveToNext());
@@ -246,20 +237,17 @@ public class BDHandler  extends SQLiteOpenHelper {
 
     //Obtiene el articulo con el id indicado
     public Articulo obtenerArticulo(int id){
-
         Articulo articulo = null;
-        String query = "SELECT * FROM ARTICULO WHERE "+Articulo.ID + " = ?";
+        String query = "SELECT * FROM ARTICULO WHERE " + Articulo.ID + " = ?";
         SQLiteDatabase lectura = this.obtenerManejadorLectura();
 
         Cursor cursor = lectura.rawQuery(query, new String[]{Integer.toString(id)});
 
         if(cursor.moveToFirst()){
-            //Poner parametros dentro del constructor?
-            articulo = new Articulo();
-            articulo.setId(cursor.getInt(cursor.getColumnIndex(Articulo.ID)));
-            articulo.setNombre(cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)));
-            articulo.setMarca(cursor.getString(cursor.getColumnIndex(Articulo.MARCA)));
-            articulo.setTipo(cursor.getString(cursor.getColumnIndex(Articulo.TIPO)));
+            articulo = new Articulo(cursor.getInt(cursor.getColumnIndex(Articulo.ID)),
+                    cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)),
+                    cursor.getString(cursor.getColumnIndex(Articulo.MARCA)),
+                    cursor.getString(cursor.getColumnIndex(Articulo.TIPO)));
         }
         lectura.close();
         return articulo;
@@ -273,11 +261,10 @@ public class BDHandler  extends SQLiteOpenHelper {
         Cursor cursor = lectura.rawQuery(query, new String[]{nombre, marca});
 
         if(cursor.moveToFirst()){
-            articulo = new Articulo();
-            articulo.setId(cursor.getInt(cursor.getColumnIndex(Articulo.ID)));
-            articulo.setNombre(cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)));
-            articulo.setMarca(cursor.getString(cursor.getColumnIndex(Articulo.MARCA)));
-            articulo.setTipo(cursor.getString(cursor.getColumnIndex(Articulo.TIPO)));
+            articulo = new Articulo(cursor.getInt(cursor.getColumnIndex(Articulo.ID)),
+                    cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)),
+                    cursor.getString(cursor.getColumnIndex(Articulo.MARCA)),
+                    cursor.getString(cursor.getColumnIndex(Articulo.TIPO)));
         }
         lectura.close();
         return articulo;
@@ -292,11 +279,10 @@ public class BDHandler  extends SQLiteOpenHelper {
         Cursor cursor = lectura.rawQuery(query, new String[]{nombre, marca, tipo});
 
         if(cursor.moveToFirst()){
-            articulo = new Articulo();
-            articulo.setId(cursor.getInt(cursor.getColumnIndex(Articulo.ID)));
-            articulo.setNombre(cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)));
-            articulo.setMarca(cursor.getString(cursor.getColumnIndex(Articulo.MARCA)));
-            articulo.setTipo(cursor.getString(cursor.getColumnIndex(Articulo.TIPO)));
+            articulo = new Articulo(cursor.getInt(cursor.getColumnIndex(Articulo.ID)),
+                    cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)),
+                    cursor.getString(cursor.getColumnIndex(Articulo.MARCA)),
+                    cursor.getString(cursor.getColumnIndex(Articulo.TIPO)));
         }
         lectura.close();
         return articulo;
@@ -313,11 +299,11 @@ public class BDHandler  extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()){
             do{
-                Articulo articulo = new Articulo();
-                articulo.setId(cursor.getInt(cursor.getColumnIndex(Articulo.ID)));
-                articulo.setNombre(cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)));
-                articulo.setMarca(cursor.getString(cursor.getColumnIndex(Articulo.MARCA)));
-                articulo.setTipo(cursor.getString(cursor.getColumnIndex(Articulo.TIPO)));
+                Articulo articulo = new Articulo(cursor.getInt(cursor.getColumnIndex(Articulo.ID)),
+                        cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)),
+                        cursor.getString(cursor.getColumnIndex(Articulo.MARCA)),
+                        cursor.getString(cursor.getColumnIndex(Articulo.TIPO)));
+
                 articulos.add(articulo);
             }while(cursor.moveToNext());
         }
@@ -336,11 +322,11 @@ public class BDHandler  extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()){
             do{
-                Articulo articulo = new Articulo();
-                articulo.setId(cursor.getInt(cursor.getColumnIndex(Articulo.ID)));
-                articulo.setNombre(cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)));
-                articulo.setMarca(cursor.getString(cursor.getColumnIndex(Articulo.MARCA)));
-                articulo.setTipo(cursor.getString(cursor.getColumnIndex(Articulo.TIPO)));
+                Articulo articulo = new Articulo(cursor.getInt(cursor.getColumnIndex(Articulo.ID)),
+                        cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)),
+                        cursor.getString(cursor.getColumnIndex(Articulo.MARCA)),
+                        cursor.getString(cursor.getColumnIndex(Articulo.TIPO)));
+
                 articulos.add(articulo);
             }while(cursor.moveToNext());
         }
@@ -359,11 +345,11 @@ public class BDHandler  extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()){
             do{
-                Articulo articulo = new Articulo();
-                articulo.setId(cursor.getInt(cursor.getColumnIndex(Articulo.ID)));
-                articulo.setNombre(cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)));
-                articulo.setMarca(cursor.getString(cursor.getColumnIndex(Articulo.MARCA)));
-                articulo.setTipo(cursor.getString(cursor.getColumnIndex(Articulo.TIPO)));
+                Articulo articulo = new Articulo(cursor.getInt(cursor.getColumnIndex(Articulo.ID)),
+                        cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)),
+                        cursor.getString(cursor.getColumnIndex(Articulo.MARCA)),
+                        cursor.getString(cursor.getColumnIndex(Articulo.TIPO)));
+
                 articulos.add(articulo);
             }while(cursor.moveToNext());
         }
@@ -384,10 +370,10 @@ public class BDHandler  extends SQLiteOpenHelper {
 
     //ARTICULO - INSERT
 
-    //Inserta un articulo en la BD, devuelve el id nuevo o null si ya existe
+    //devuelve el id del articulo insertado o -1 si no se ha podido insertar
     public Integer insertarArticulo(Articulo articulo){
         if(estaArticulo(articulo.getNombre(), articulo.getMarca()))
-            return null;
+            return -1;
         else{
             SQLiteDatabase db = this.obtenerManejadorEscritura();
             ContentValues values = new ContentValues();
@@ -433,7 +419,6 @@ public class BDHandler  extends SQLiteOpenHelper {
         }*/
     }
 
-    //devuelve el id del articulo insertado o -1 si no se ha podido insertar
     public Integer insertarArticulos(String nombre, String marca){
         if(estaArticulo(nombre, marca))
             return -1;
@@ -469,7 +454,7 @@ public class BDHandler  extends SQLiteOpenHelper {
         return (int)ident;
     }
 
-    //ARTICULO - SET
+    //ARTICULO - UPDATE
 
     //Cambia los valores del articulo indicado, debe existir previamente
     public boolean modificarArticulo(Articulo articulo){
@@ -498,7 +483,7 @@ public class BDHandler  extends SQLiteOpenHelper {
 
         if(estaArticulo(articulo.getId())){
             SQLiteDatabase db = this.obtenerManejadorEscritura();
-            filaBorrada = db.delete("ARTICULO", Articulo.ID + "=?", new String[]{Integer.toString(articulo.getId())});
+            filaBorrada = db.delete("ARTICULO", Articulo.ID + " = ?", new String[]{Integer.toString(articulo.getId())});
             db.close();
         }
 
@@ -517,6 +502,8 @@ public class BDHandler  extends SQLiteOpenHelper {
     }
 
     //-------------------------------------------------------------------------------------------
+
+    //SUPERMERCADO (NOMBRE)
 
     //SUPERMERCADO - GET
 
@@ -546,7 +533,7 @@ public class BDHandler  extends SQLiteOpenHelper {
     //la lista de strings en vez de objetos supermercado
     /*
     public List<Supermercado> obtenerSupermercados(){
-        ArrayList<Supermercado> supermercados = new ArrayList();
+        ArrayList<Supermercado> supermercados = new ArrayList<Supermercado>();
         String query = "SELECT * FROM SUPERMERCADO";
 
         SQLiteDatabase db = this.obtenerManejadorLectura();
@@ -583,19 +570,579 @@ public class BDHandler  extends SQLiteOpenHelper {
 
     //SUPERMERCADO - EXIST
 
-    public boolean existeSupermercado(String nombre){
+    public boolean estaSupermercado(String nombre){
         return obtenerSupermercado(nombre) != null;
     }
 
     //SUPERMERCADO - INSERT
 
+    public boolean insertarSupermercado(Supermercado supermercado) {
+        return insertarSupermercado(supermercado.getNombre());
+    }
 
+    public boolean insertarSupermercado(String nombre){
+        if (estaSupermercado(nombre))
+            return false;
+        else {
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+            ContentValues values = new ContentValues();
+
+            values.put(Supermercado.NOMBRE, nombre);
+
+            long ident = db.insert("SUPERMERCADO", null, values);
+
+            db.close();
+            return ident != -1;
+        }
+    }
 
     //SUPERMERCADO - SET
 
+    //Cambia el nombre del objeto Supermercado por el nuevo nombre (el de tipo String)
+    public boolean modificarSupermercado(Supermercado supermercado, String nombre){
+        int filaActu = 0;
+        if(estaSupermercado(supermercado.getNombre())){
 
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+
+            ContentValues valores = new ContentValues();
+            valores.put(Supermercado.NOMBRE, nombre);
+
+            filaActu = db.update("SUPERMERCADO", valores, Supermercado.NOMBRE + "=?", new String[]{supermercado.getNombre()});
+            db.close();
+        }
+        return filaActu > 0;
+    }
 
     //SUPERMERCADO - DELETE
+
+    public boolean eliminarSupermercado(Supermercado supermercado){
+        int filaBorrada = 0;
+
+        if(estaSupermercado(supermercado.getNombre())){
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+            filaBorrada = db.delete("SUPERMERCADP", Supermercado.NOMBRE + "=?", new String[]{supermercado.getNombre()});
+            db.close();
+        }
+
+        return filaBorrada > 0;
+    }
+
+    public boolean eliminarSupermercado(String nombre){
+        int filaBorrada = 0;
+
+        if(estaSupermercado(nombre)){
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+            filaBorrada = db.delete("SUPERMERCADP", Supermercado.NOMBRE + "=?", new String[]{nombre});
+            db.close();
+        }
+        return filaBorrada> 0;
+    }
+
+    //-------------------------------------------------------------------------------------------
+
+    //ARTICULO_SUPERMERCADO (ID, ARTICULO - FK(ARTICULO), SUPERMERCADO - FK(SUPERMERCADO), PRECIO)
+
+    ///Añadir metodos de busqueda por parametros de claves foraneas (int idArticulo --> getId(String nombre, String marca))
+
+    //ARTICULO_SUPERMERCADO - GET
+
+    public List<ArticuloSupermercado> obtenerArticulosSupermercado(){
+        ArrayList<ArticuloSupermercado> lista = new ArrayList<ArticuloSupermercado>();
+        String query = "SELECT * FROM ARTICULO_SUPERMERCADO";
+
+        SQLiteDatabase db = this.obtenerManejadorLectura();
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                ArticuloSupermercado art = new ArticuloSupermercado(cursor.getInt(cursor.getColumnIndex(ArticuloSupermercado.ID)),
+                        cursor.getInt(cursor.getColumnIndex(ArticuloSupermercado.ARTICULO)),
+                        cursor.getString(cursor.getColumnIndex(ArticuloSupermercado.SUPERMERCADO)),
+                        cursor.getFloat(cursor.getColumnIndex(ArticuloSupermercado.PRECIO)));
+
+                lista.add(art);
+            } while (cursor.moveToNext());
+        }
+
+        Log.d("obtenerArticulos()", lista.toString());
+        db.close();
+        return lista;
+    }
+
+    public ArticuloSupermercado obtenerArticuloSupermercado(int id){
+        ArticuloSupermercado articulo = null;
+        String query = "SELECT * FROM ARTICULO_SUPERMERCADO WHERE " + ArticuloSupermercado.ID + " = ?";
+        SQLiteDatabase lectura = this.obtenerManejadorLectura();
+
+        Cursor cursor = lectura.rawQuery(query, new String[]{Integer.toString(id)});
+
+        if(cursor.moveToFirst()){
+            //Poner parametros dentro del constructor?
+            articulo = new ArticuloSupermercado(cursor.getInt(cursor.getColumnIndex(ArticuloSupermercado.ID)),
+                    cursor.getInt(cursor.getColumnIndex(ArticuloSupermercado.ARTICULO)),
+                    cursor.getString(cursor.getColumnIndex(ArticuloSupermercado.SUPERMERCADO)),
+                    cursor.getFloat(cursor.getColumnIndex(ArticuloSupermercado.PRECIO)));
+        }
+        lectura.close();
+        return articulo;
+    }
+
+    public ArticuloSupermercado obtenerArticuloSupermercado(int idArticulo, String supermercado){
+        ArticuloSupermercado articulo = null;
+        String query = "SELECT * FROM ARTICULO_SUPERMERCADO WHERE " + ArticuloSupermercado.ARTICULO + " = ? AND " + ArticuloSupermercado.SUPERMERCADO + " = ?";
+        SQLiteDatabase lectura = this.obtenerManejadorLectura();
+
+        Cursor cursor = lectura.rawQuery(query, new String[]{Integer.toString(idArticulo), supermercado});
+
+        if(cursor.moveToFirst()){
+            articulo = new ArticuloSupermercado(cursor.getInt(cursor.getColumnIndex(ArticuloSupermercado.ID)),
+                    cursor.getInt(cursor.getColumnIndex(ArticuloSupermercado.ARTICULO)),
+                    cursor.getString(cursor.getColumnIndex(ArticuloSupermercado.SUPERMERCADO)),
+                    cursor.getFloat(cursor.getColumnIndex(ArticuloSupermercado.PRECIO)));
+        }
+        lectura.close();
+        return articulo;
+    }
+
+    public ArticuloSupermercado obtenerArticuloSupermercado(int idArticulo, String supermercado, float precio){
+        ArticuloSupermercado articulo = null;
+        String query = "SELECT * FROM ARTICULO_SUPERMERCADO WHERE " + ArticuloSupermercado.ARTICULO + " = ? AND " + ArticuloSupermercado.SUPERMERCADO + " = ? AND "
+                + ArticuloSupermercado.PRECIO + " = ?";
+        SQLiteDatabase lectura = this.obtenerManejadorLectura();
+
+        Cursor cursor = lectura.rawQuery(query, new String[]{Integer.toString(idArticulo), supermercado, Float.toString(precio)});
+
+        if(cursor.moveToFirst()){
+            articulo = new ArticuloSupermercado(cursor.getInt(cursor.getColumnIndex(ArticuloSupermercado.ID)),
+                    cursor.getInt(cursor.getColumnIndex(ArticuloSupermercado.ARTICULO)),
+                    cursor.getString(cursor.getColumnIndex(ArticuloSupermercado.SUPERMERCADO)),
+                    cursor.getFloat(cursor.getColumnIndex(ArticuloSupermercado.PRECIO)));
+        }
+        lectura.close();
+        return articulo;
+    }
+
+    public List<ArticuloSupermercado> obtenerArticulosSupermercadoPorArticulo(int articulo){
+        ArrayList<ArticuloSupermercado> lista = new ArrayList<ArticuloSupermercado>();
+        String query = "SELECT * FROM ARTICULO_SUPERMERCADO WHERE " + ArticuloSupermercado.ARTICULO + " = ?";
+
+        SQLiteDatabase db = this.obtenerManejadorLectura();
+        Cursor cursor = db.rawQuery(query, new String[]{Integer.toString(articulo)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                ArticuloSupermercado art = new ArticuloSupermercado(cursor.getInt(cursor.getColumnIndex(ArticuloSupermercado.ID)),
+                        cursor.getInt(cursor.getColumnIndex(ArticuloSupermercado.ARTICULO)),
+                        cursor.getString(cursor.getColumnIndex(ArticuloSupermercado.SUPERMERCADO)),
+                        cursor.getFloat(cursor.getColumnIndex(ArticuloSupermercado.PRECIO)));
+
+                lista.add(art);
+            } while (cursor.moveToNext());
+        }
+        db.close();
+        return lista;
+    }
+
+    public List<ArticuloSupermercado> obtenerArticulosSupermercadoPorSupermercado(String supermercado){
+        ArrayList<ArticuloSupermercado> lista = new ArrayList<ArticuloSupermercado>();
+        String query = "SELECT * FROM ARTICULO_SUPERMERCADO WHERE " + ArticuloSupermercado.SUPERMERCADO + " = ?";
+
+        SQLiteDatabase db = this.obtenerManejadorLectura();
+        Cursor cursor = db.rawQuery(query, new String[]{supermercado});
+
+        if (cursor.moveToFirst()) {
+            do {
+                ArticuloSupermercado art = new ArticuloSupermercado(cursor.getInt(cursor.getColumnIndex(ArticuloSupermercado.ID)),
+                        cursor.getInt(cursor.getColumnIndex(ArticuloSupermercado.ARTICULO)),
+                        cursor.getString(cursor.getColumnIndex(ArticuloSupermercado.SUPERMERCADO)),
+                        cursor.getFloat(cursor.getColumnIndex(ArticuloSupermercado.PRECIO)));
+
+                lista.add(art);
+            } while (cursor.moveToNext());
+        }
+        db.close();
+        return lista;
+    }
+
+    public List<ArticuloSupermercado> obtenerArticulosSupermercadoPorPrecioIgual(float precio){
+        ArrayList<ArticuloSupermercado> lista = new ArrayList<ArticuloSupermercado>();
+        String query = "SELECT * FROM ARTICULO_SUPERMERCADO WHERE " + ArticuloSupermercado.PRECIO + " = ?";
+
+        SQLiteDatabase db = this.obtenerManejadorLectura();
+        Cursor cursor = db.rawQuery(query, new String[]{Float.toString(precio)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                ArticuloSupermercado art = new ArticuloSupermercado(cursor.getInt(cursor.getColumnIndex(ArticuloSupermercado.ID)),
+                        cursor.getInt(cursor.getColumnIndex(ArticuloSupermercado.ARTICULO)),
+                        cursor.getString(cursor.getColumnIndex(ArticuloSupermercado.SUPERMERCADO)),
+                        cursor.getFloat(cursor.getColumnIndex(ArticuloSupermercado.PRECIO)));
+
+                lista.add(art);
+            } while (cursor.moveToNext());
+        }
+        db.close();
+        return lista;
+    }
+
+    public List<ArticuloSupermercado> obtenerArticulosSupermercadoPorPrecioMenor(float precio){
+        ArrayList<ArticuloSupermercado> lista = new ArrayList<ArticuloSupermercado>();
+        String query = "SELECT * FROM ARTICULO_SUPERMERCADO WHERE " + ArticuloSupermercado.PRECIO + " < ?";
+
+        SQLiteDatabase db = this.obtenerManejadorLectura();
+        Cursor cursor = db.rawQuery(query, new String[]{Float.toString(precio)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                ArticuloSupermercado art = new ArticuloSupermercado(cursor.getInt(cursor.getColumnIndex(ArticuloSupermercado.ID)),
+                        cursor.getInt(cursor.getColumnIndex(ArticuloSupermercado.ARTICULO)),
+                        cursor.getString(cursor.getColumnIndex(ArticuloSupermercado.SUPERMERCADO)),
+                        cursor.getFloat(cursor.getColumnIndex(ArticuloSupermercado.PRECIO)));
+
+                lista.add(art);
+            } while (cursor.moveToNext());
+        }
+        db.close();
+        return lista;
+    }
+
+    public List<ArticuloSupermercado> obtenerArticulosSupermercadoPorPrecioMayor(float precio){
+        ArrayList<ArticuloSupermercado> lista = new ArrayList<ArticuloSupermercado>();
+        String query = "SELECT * FROM ARTICULO_SUPERMERCADO WHERE " + ArticuloSupermercado.PRECIO + " > ?";
+
+        SQLiteDatabase db = this.obtenerManejadorLectura();
+        Cursor cursor = db.rawQuery(query, new String[]{Float.toString(precio)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                ArticuloSupermercado art = new ArticuloSupermercado(cursor.getInt(cursor.getColumnIndex(ArticuloSupermercado.ID)),
+                        cursor.getInt(cursor.getColumnIndex(ArticuloSupermercado.ARTICULO)),
+                        cursor.getString(cursor.getColumnIndex(ArticuloSupermercado.SUPERMERCADO)),
+                        cursor.getFloat(cursor.getColumnIndex(ArticuloSupermercado.PRECIO)));
+
+                lista.add(art);
+            } while (cursor.moveToNext());
+        }
+        db.close();
+        return lista;
+    }
+
+    public List<ArticuloSupermercado> obtenerArticulosSupermercadoPorPrecioEntre(float precio1, float precio2){
+        ArrayList<ArticuloSupermercado> lista = new ArrayList<ArticuloSupermercado>();
+        String query = "SELECT * FROM ARTICULO_SUPERMERCADO WHERE " + ArticuloSupermercado.PRECIO + " > ? AND " + ArticuloSupermercado.PRECIO + " < ?";
+
+        float minimo = precio1, maximo = precio2;
+        if(precio2 < precio1)
+            minimo = precio2; maximo = precio1;
+        SQLiteDatabase db = this.obtenerManejadorLectura();
+        Cursor cursor = db.rawQuery(query, new String[]{Float.toString(minimo), Float.toString(maximo)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                ArticuloSupermercado art = new ArticuloSupermercado(cursor.getInt(cursor.getColumnIndex(ArticuloSupermercado.ID)),
+                        cursor.getInt(cursor.getColumnIndex(ArticuloSupermercado.ARTICULO)),
+                        cursor.getString(cursor.getColumnIndex(ArticuloSupermercado.SUPERMERCADO)),
+                        cursor.getFloat(cursor.getColumnIndex(ArticuloSupermercado.PRECIO)));
+
+                lista.add(art);
+            } while (cursor.moveToNext());
+        }
+        db.close();
+        return lista;
+    }
+
+    //ARTICULO_SUPERMERCADO - EXIST
+
+    public boolean estaArticuloSupermercado(int id){
+        return obtenerArticuloSupermercado(id) != null;
+    }
+
+    public boolean estaArticuloSupermercado(int articulo, String supermercado){
+        return obtenerArticuloSupermercado(articulo, supermercado) != null;
+    }
+
+    //ARTICULO_SUPERMERCADO - INSERT
+
+    public Integer insertarArticuloSupermercado(ArticuloSupermercado articuloSupermercado){
+        if(estaArticuloSupermercado(articuloSupermercado.getArticulo(), articuloSupermercado.getSupermercado()))
+            return -1;
+        else{
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+            ContentValues values = new ContentValues();
+
+            values.put(ArticuloSupermercado.ID, articuloSupermercado.getId());
+            values.put(ArticuloSupermercado.ARTICULO, articuloSupermercado.getArticulo());
+            values.put(ArticuloSupermercado.SUPERMERCADO, articuloSupermercado.getSupermercado());
+            values.put(ArticuloSupermercado.PRECIO, articuloSupermercado.getPrecio());
+
+            long ident = db.insert("ARTICULO_SUPERMERCADO", null, values);
+
+            if (ident != -1) {
+                articuloSupermercado.setId((int)ident);
+            }
+
+            db.close();
+            return (int)ident;
+        }
+    }
+
+    public Integer insertarArticuloSupermercado(int articulo, String supermercado){
+        if(estaArticuloSupermercado(articulo, supermercado))
+            return -1;
+        else{
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+            ContentValues values = new ContentValues();
+
+            //values.put(Articulo.ID, (Integer)null);
+            values.put(ArticuloSupermercado.ARTICULO, articulo);
+            values.put(ArticuloSupermercado.SUPERMERCADO, supermercado);
+            //values.put(Articulo.TIPO, "Cualquiera");
+
+            long ident = db.insert("ARTICULO_SUPERMERCADO", null, values);
+
+            db.close();
+            return (int)ident;
+        }
+    }
+
+    public Integer insertarArticuloSupermercado(int articulo, String supermercado, float precio){
+        if(estaArticuloSupermercado(articulo, supermercado))
+            return -1;
+        else{
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+            ContentValues values = new ContentValues();
+
+            //values.put(Articulo.ID, (Integer)null);
+            values.put(ArticuloSupermercado.ARTICULO, articulo);
+            values.put(ArticuloSupermercado.SUPERMERCADO, supermercado);
+            values.put(ArticuloSupermercado.PRECIO, precio);
+
+            long ident = db.insert("ARTICULO_SUPERMERCADO", null, values);
+
+            db.close();
+            return (int)ident;
+        }
+    }
+
+    //ARTICULO_SUPERMERCADO - UPDATE
+
+    public boolean modificarArticuloSupermercado(ArticuloSupermercado articuloSupermercado){
+        int filaActu = 0;
+        if(estaArticuloSupermercado(articuloSupermercado.getId())){
+
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+
+            ContentValues valores = new ContentValues();
+            valores.put(ArticuloSupermercado.ID, articuloSupermercado.getId());
+            valores.put(ArticuloSupermercado.ARTICULO, articuloSupermercado.getArticulo());
+            valores.put(ArticuloSupermercado.SUPERMERCADO, articuloSupermercado.getSupermercado());
+            valores.put(ArticuloSupermercado.PRECIO, articuloSupermercado.getPrecio());
+
+            filaActu = db.update("ARTICULO_SUPERMERCADO", valores, ArticuloSupermercado.ID + " = ?", new String[]{Integer.toString(articuloSupermercado.getId())});
+            db.close();
+        }
+        return filaActu > 0;
+    }
+
+    //ARTICULO_SUPERMERCADO - DELETE
+
+    public boolean eliminarArticuloSupermercado(ArticuloSupermercado articuloSupermercado){
+        int filaBorrada = 0;
+
+        if(estaArticuloSupermercado(articuloSupermercado.getId())){
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+            filaBorrada = db.delete("ARTICULO_SUPERMERCADO", ArticuloSupermercado.ID + " = ?", new String[]{Integer.toString(articuloSupermercado.getId())});
+            db.close();
+        }
+
+        return filaBorrada > 0;
+    }
+
+    public boolean eliminarArticuloSupermercado(int articulo, String supermercado){
+        int filaBorrada = 0;
+
+        if(estaArticuloSupermercado(articulo, supermercado)){
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+            filaBorrada = db.delete("ARTICULO_SUPERMERCADO", ArticuloSupermercado.ARTICULO + " = ? AND " + ArticuloSupermercado.SUPERMERCADO + " = ?",
+                    new String[]{Integer.toString(articulo), supermercado});
+            db.close();
+        }
+
+        return filaBorrada > 0;
+    }
+
+    //-------------------------------------------------------------------------------------------
+
+    //LISTA (NOMBRE, FECHACREACION, FECHAMODIFICACION, SUPERMERCADO - FK(SUPERMERCADO))
+
+    //LISTA - GET
+
+    //LISTA - EXIST
+
+    //LISTA - INSERT
+
+    //LISTA - UPDATE
+
+    //LISTA - DELETE
+
+    //-------------------------------------------------------------------------------------------
+
+    //LISTA_ARTICULO (ARTICULO - FK(ARTICULO_SUPERMERCADO), NOMBRE - FK(LISTA), CANTIDAD)
+
+    //LISTA_ARTICULO - GET
+
+    //LISTA_ARTICULO - EXIST
+
+    //LISTA_ARTICULO - INSERT
+
+    //LISTA_ARTICULO - UPDATE
+
+    //LISTA_ARTICULO - DELETE
+
+    //-------------------------------------------------------------------------------------------
+
+    //STOCK (ARTICULO - FK(ARTICULO), MINIMO, CANTIDAD)
+
+    //STOCK - GET
+
+    public List<Stock> obtenerStocks(){
+        ArrayList<Stock> lista = new ArrayList<Stock>();
+        String query = "SELECT * FROM STOCK";
+
+        SQLiteDatabase db = this.obtenerManejadorLectura();
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Stock stock = new Stock(cursor.getInt(cursor.getColumnIndex(Stock.ARTICULO)),
+                        cursor.getInt(cursor.getColumnIndex(Stock.CANTIDAD)),
+                        cursor.getInt(cursor.getColumnIndex(Stock.MINIMO)));
+
+                lista.add(stock);
+            } while (cursor.moveToNext());
+        }
+
+        Log.d("obtenerStocks", lista.toString());
+        db.close();
+        return lista;
+    }
+
+    public Stock obtenerStock(int articulo){
+        Stock stock = null;
+        String query = "SELECT * FROM STOCK WHERE " + Stock.ARTICULO + " = ?";
+        SQLiteDatabase lectura = this.obtenerManejadorLectura();
+
+        Cursor cursor = lectura.rawQuery(query, new String[]{Integer.toString(articulo)});
+
+        if(cursor.moveToFirst()){
+            stock = new Stock(cursor.getInt(cursor.getColumnIndex(Stock.ARTICULO)),
+                    cursor.getInt(cursor.getColumnIndex(Stock.CANTIDAD)),
+                    cursor.getInt(cursor.getColumnIndex(Stock.MINIMO)));
+        }
+        lectura.close();
+        return stock;
+    }
+
+    public Stock obtenerStock(String nombre, String marca){
+        return obtenerStock(obtenerArticulo(nombre, marca).getId());
+    }
+
+    /*
+    public List<Stock> obtenerStockPorMinimo[Menor, Mayor, Igual, Entre](int minimo)
+    public List<Stock> obtenerStockPorCantidad[Menor, Mayor, Igual, Entre](int cantidad)
+     */
+
+    //STOCK - EXIST
+
+    public boolean estaStock(int id){
+        return obtenerStock(id) != null;
+    }
+
+    public boolean estaStock(String nombre, String marca){
+        return obtenerStock(nombre, marca) != null;
+    }
+
+    //STOCK - INSERT
+
+    //este esta mal
+    public boolean insertarStock(Stock stock){
+        boolean ok = false;
+
+        if(!estaStock(stock.getArticulo())) {
+
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+            ContentValues values = new ContentValues();
+
+            values.put(Stock.ARTICULO, stock.getArticulo());
+            values.put(Stock.CANTIDAD, stock.getCanitdad());
+            values.put(Stock.MINIMO, stock.getMinimo());
+
+            db.insert("STOCK", null, values);
+            db.close();
+            ok = true;
+        }
+        return ok;
+
+    }
+
+    //STOCK - UPDATE
+
+    //revisar este
+    public boolean modificarStock(Stock stock){
+        int filaActu = 0;
+        if(estaStock(stock.getArticulo())){
+
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+
+            ContentValues valores = new ContentValues();
+            valores.put(Stock.ARTICULO, stock.getArticulo());
+            valores.put(Stock.CANTIDAD, stock.getCanitdad());
+            valores.put(Stock.MINIMO, stock.getMinimo());
+
+            filaActu = db.update("STOCK", valores, Stock.ARTICULO + "=?", new String[]{Integer.toString(stock.getArticulo())});
+            db.close();
+        }
+        return filaActu > 0;
+    }
+
+    //STOCK - DELETE
+
+    public boolean eliminarStock(Stock stock){
+        int filaBorrada = 0;
+
+        if(estaStock(stock.getArticulo())){
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+            filaBorrada = db.delete("STOCK", Stock.ARTICULO + " = ?", new String[]{Integer.toString(stock.getArticulo())});
+            db.close();
+        }
+
+        return filaBorrada > 0;
+    }
+
+    public boolean eliminarStock(int id){
+        int filaBorrada = 0;
+
+        if(estaStock(id)){
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+            filaBorrada = db.delete("STOCK", Stock.ARTICULO + " = ?", new String[]{Integer.toString(id)});
+            db.close();
+        }
+
+        return filaBorrada > 0;
+    }
+
+    public boolean eliminarStock(String nombre, String marca){
+        int filaBorrada = 0;
+
+        if(estaStock(nombre, marca)){
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+            filaBorrada = db.delete("STOCK", Stock.ARTICULO + " = ?", new String[]{Integer.toString(obtenerArticulo(nombre, marca).getId())});
+            db.close();
+        }
+
+        return filaBorrada > 0;
+    }
 
     //-------------------------------------------------------------------------------------------
 
@@ -906,125 +1453,5 @@ public class BDHandler  extends SQLiteOpenHelper {
         cursor.moveToFirst();
         lectura.close();
         return cursor.getInt(0);
-    }
-
-    //STOCK
-
-    //Obtiene un List<Stock> con todos los Stock
-    public List<Stock> obtenerStocks(){
-        ArrayList<Stock> lista = new ArrayList();
-        String query = "SELECT * FROM STOCK";
-
-        SQLiteDatabase db = this.obtenerManejadorLectura();
-        Cursor cursor = db.rawQuery(query, null);
-
-        Stock stock = null;
-        if (cursor.moveToFirst()) {
-            do {
-                stock = new Stock();
-                stock.setArticulo(cursor.getInt(cursor.getColumnIndex(Stock.ARTICULO)));
-                stock.setCanitdad(cursor.getInt(cursor.getColumnIndex(Stock.CANTIDAD)));
-                stock.setMinimo(cursor.getInt(cursor.getColumnIndex(Stock.MINIMO)));
-                lista.add(stock);
-            } while (cursor.moveToNext());
-        }
-
-        Log.d("obtenerStocks", lista.toString());
-        db.close();
-        return lista;
-    }
-
-    //Inserta un Stock en la BD, devuelve exito o fracaso
-    public boolean insertarStock(Stock stock){
-
-        boolean ok = false;
-
-        if(!estaStock(stock.getArticulo())) {
-
-            SQLiteDatabase db = this.obtenerManejadorEscritura();
-            ContentValues values = new ContentValues();
-
-            values.put(Stock.ARTICULO, stock.getArticulo());
-            values.put(Stock.CANTIDAD, stock.getCanitdad());
-            values.put(Stock.MINIMO, stock.getMinimo());
-
-            db.insert("STOCK", null, values);
-            db.close();
-            ok = true;
-        }
-        return ok;
-
-    }
-
-    //Obtiene el Stock del articulo indicado
-    public Stock obtenerStocks(Articulo articulo){
-
-        Stock stock = null;
-        String query = "SELECT * FROM STOCK WHERE "+ Stock.ARTICULO + " = ?";
-        SQLiteDatabase lectura = this.obtenerManejadorLectura();
-
-        Cursor cursor = lectura.rawQuery(query, new String[]{Integer.toString(articulo.getId())});
-
-        if(cursor.moveToFirst()){
-
-            stock = new Stock();
-            stock.setArticulo(cursor.getInt(cursor.getColumnIndex(Stock.ARTICULO)));
-            stock.setCanitdad(cursor.getInt(cursor.getColumnIndex(Stock.CANTIDAD)));
-            stock.setMinimo(cursor.getInt(cursor.getColumnIndex(Stock.MINIMO)));
-        }
-        lectura.close();
-        return stock;
-    }
-
-    //Comprueba si esta en stock un id de articulo indicado
-    public boolean estaStock(int id){
-        String query = "SELECT * FROM STOCK WHERE " + Stock.ARTICULO + " = ?";
-
-        SQLiteDatabase lectura = this.obtenerManejadorLectura();
-        Cursor cursor = lectura.rawQuery(query, new String[]{Integer.toString(id)});
-
-        boolean ok = cursor.moveToFirst();
-        lectura.close();
-
-        return ok;
-    }
-
-    public boolean estaStock(String nombre, String marca, String supermercado){
-        Articulo articulo = this.obtenerArticulo(nombre, marca, supermercado);
-        if(articulo != null)
-            return estaStock(articulo.getId());
-        else
-            return false;
-    }
-
-    //Cambia los valores del stock indicado, debe existir previamente
-    public boolean modificarStock(Stock stock){
-        int filaActu = 0;
-        if(estaStock(stock.getArticulo())){
-
-            SQLiteDatabase db = this.obtenerManejadorEscritura();
-
-            ContentValues valores = new ContentValues();
-            valores.put(Stock.ARTICULO, stock.getArticulo());
-            valores.put(Stock.CANTIDAD, stock.getCanitdad());
-            valores.put(Stock.MINIMO, stock.getMinimo());
-
-            filaActu = db.update("STOCK", valores, Stock.ARTICULO + "=?", new String[]{Integer.toString(stock.getArticulo())});
-            db.close();
-        }
-        return filaActu > 0;
-    }
-
-    //Elimina el Stock indicado, debe existir previamente
-    public boolean eliminarStock(Stock stock){
-        int filaBorrada = 0;
-
-        if(estaStock(stock.getArticulo())){
-            SQLiteDatabase db = this.obtenerManejadorEscritura();
-            filaBorrada = db.delete("STOCK", Stock.ARTICULO + "=?", new String[]{Integer.toString(stock.getArticulo())});
-            db.close();
-        }
-
-        return filaBorrada > 0;
     }
 }
