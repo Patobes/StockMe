@@ -40,12 +40,29 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Articulos_Super (x)"
+                    android:id="@+id/info_tv_articulos_super"
+                    android:textSize="20sp"
+                    android:layout_below="@+id/info_tv_articulos"
+                    android:layout_alignStart="@+id/info_tv_articulos"
+                    android:layout_marginTop="40dp" />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/info_sp_articulos_super"
+                    android:layout_alignBottom="@+id/info_tv_articulos_super"
+                    android:layout_toEndOf="@+id/info_tv_articulos_super" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="Stock (x)"
                     android:id="@+id/info_tv_stock"
                     android:textSize="20sp"
                     android:layout_marginTop="40dp"
-                    android:layout_below="@+id/info_tv_articulos"
-                    android:layout_alignStart="@+id/info_tv_articulos" />
+                    android:layout_below="@+id/info_tv_articulos_super"
+                    android:layout_alignStart="@+id/info_tv_articulos_super" />
 
                 <Spinner
                     android:layout_width="wrap_content"

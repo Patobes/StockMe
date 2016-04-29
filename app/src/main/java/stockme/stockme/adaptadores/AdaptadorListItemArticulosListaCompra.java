@@ -19,16 +19,18 @@ import java.util.List;
 
 import stockme.stockme.R;
 import stockme.stockme.logica.Articulo;
+import stockme.stockme.logica.ArticuloSupermercado;
 import stockme.stockme.logica.Lista;
 import stockme.stockme.logica.ListaArticulo;
 import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.Util;
 
-public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo> {
+public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<ArticuloSupermercado> {
     private DynamicListView articulos;
-    private List<Articulo> datos;
+    private List<ArticuloSupermercado> datos;
     private Lista lista;
     private Articulo articulo;
+    private ArticuloSupermercado articuloSupermercado;
     private TextView lblNombre;
     private TextView lblSupermercado;
     private TextView lblMarca;
@@ -38,7 +40,7 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
     private ImageButton btnMenos;
 
 
-    public AdaptadorListItemArticulosListaCompra(Context context, List<Articulo> datos, Lista lista) {
+    public AdaptadorListItemArticulosListaCompra(Context context, List<ArticuloSupermercado> datos, Lista lista) {
         super(context, R.layout.listitem_articulos_lista_compra, datos);
         this.datos = datos;
         this.lista = lista;
@@ -55,13 +57,9 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
             item.setBackgroundColor(Color.parseColor("#E9EBEB"));
         }
 
-        //se crea un elemento Articulo que contiene los datos de la fila
-        articulo = new Articulo();
-        articulo.setId(datos.get(position).getId());
-        articulo.setNombre(datos.get(position).getNombre());
-        articulo.setPrecio(datos.get(position).getPrecio());
-        articulo.setSupermercado(datos.get(position).getSupermercado());
-        articulo.setMarca(datos.get(position).getMarca());
+        //se crea un elemento ArticuloSupermercado que contiene los datos de la fila
+        articuloSupermercado = manejador.obtenerArticuloSupermercado(datos.get(position).getId());
+        articulo = manejador.obtenerArticulo(articuloSupermercado.getArticulo());
 
         lblNombre = (TextView)item.findViewById(R.id.listitem_articulos_nombre);
         lblNombre.setText(articulo.getNombre());
@@ -70,12 +68,12 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
         lblMarca.setText(articulo.getMarca());
 
         lblSupermercado = (TextView)item.findViewById(R.id.listitem_articulos_superm);
-        lblSupermercado.setText(articulo.getSupermercado());
+        lblSupermercado.setText(articuloSupermercado.getSupermercado());
 
         lblPrecio = (TextView)item.findViewById(R.id.listitem_articulos_tv_precio);
-        lblPrecio.setText(Float.toString(articulo.getPrecio()));
+        lblPrecio.setText(Float.toString(articuloSupermercado.getPrecio()));
 
-        int cantidad = manejador.obtenerCantidadArticuloEnLista(articulo.getId(), lista);
+        int cantidad = manejador.obtenerCantidadArticuloEnLista(articuloSupermercado.getId(), lista);
 
         lblCantidad = (TextView)item.findViewById(R.id.listitem_articulos_cantidad);
         lblCantidad.setText(Integer.toString(cantidad));
@@ -120,9 +118,11 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 BDHandler manejador = new BDHandler(getContext());
 
-                Articulo articulo = (Articulo) parent.getItemAtPosition(position);
-                manejador.modificarArticuloEnLista(new ListaArticulo(articulo.getId(), lista.getNombre(), 0));
+                ArticuloSupermercado articuloSuper = (ArticuloSupermercado) parent.getItemAtPosition(position);
+                manejador.modificarArticuloEnLista(new ListaArticulo(articuloSuper.getId(), lista.getNombre(), 0));
                 manejador.cerrar();
+
+                Articulo articulo = manejador.obtenerArticulo(articuloSuper.getId());
 
                 Util.mostrarToast(view.getContext(), "Comprado: " + articulo.getNombre());
                 notifyDataSetChanged();
@@ -150,7 +150,7 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
                                     manejador.cerrar();
                                 }
                             };
-                            Util.crearMensajeAlerta("¿Eliminar "+ datos.get(position).getNombre() +"?", borrarArticuloListener, getContext());
+                            Util.crearMensajeAlerta("¿Eliminar "+ articulo.getNombre() +"?", borrarArticuloListener, getContext());
 
                         }
                     }

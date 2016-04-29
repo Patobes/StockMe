@@ -19,10 +19,11 @@ public class Articulo {
         this.marca = "";
     }
 
-    public Articulo(Integer id, String nombre, String marca, String supermercado) {
+    public Articulo(Integer id, String nombre, String marca, String tipo) {
         this.id = id;
         this.nombre = nombre;
         this.marca = marca;
+        this.tipo = tipo;
     }
 
     public Integer getId() {

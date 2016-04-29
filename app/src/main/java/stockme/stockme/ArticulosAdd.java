@@ -23,6 +23,7 @@ import android.widget.Spinner;
 import java.util.List;
 
 import stockme.stockme.logica.Articulo;
+import stockme.stockme.logica.ArticuloSupermercado;
 import stockme.stockme.logica.ListaArticulo;
 import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.InputFilterMinMax;
@@ -36,7 +37,7 @@ public class ArticulosAdd extends AppCompatActivity implements NavigationView.On
     private Spinner spTipos, spSupermercado;
     private Button btnAceptar, btnCancelar;
     String nLista;
-    Articulo articulo;
+    ArticuloSupermercado articulo;
     int cantidad;
     float precio;
 
@@ -99,7 +100,7 @@ public class ArticulosAdd extends AppCompatActivity implements NavigationView.On
                 @Override
                 public void onClick(View v) {
                     String nombre, marca, tipo, supermercado;
-                    articulo = new Articulo();
+                    articulo = new ArticuloSupermercado();
                     nombre = etNombre.getText().toString();
                     marca = atv_marcas.getText().toString();
                     tipo = spTipos.getSelectedItem().toString();
@@ -109,11 +110,17 @@ public class ArticulosAdd extends AppCompatActivity implements NavigationView.On
 
                     final BDHandler manejador2 = new BDHandler(v.getContext());
                     //intento obtener el artículo correspondiente a estos valores
-                    //Esto es articulo complejo (con super y precio)
-                    Articulo artAux = manejador2.obtenerArticulo(nombre, marca, tipo, supermercado);
-                    if(artAux != null){
-                        articulo = artAux;
-                    }else{
+                    ArticuloSupermercado artAux = manejador2.obtenerArticuloSupermercado(nombre, marca, tipo, supermercado);
+                    if(artAux == null){
+                        if(manejador2.insertarArticuloSupermercado(nombre, marca, tipo, supermercado, precio) != -1) {
+                            artAux = manejador2.obtenerArticuloSupermercado(nombre, marca, tipo, supermercado);
+                            Util.mostrarToast(v.getContext(), "Se ha creado un nuevo artículo");
+                        }
+                        else {
+                            Util.mostrarToast(v.getContext(), "No se ha podido crear el artículo");
+                            //Aqui deberia acabarse la actividad, pues ni hay articulo en la BBDD ni se ha podido crear (el articulo es null)
+                        }
+                        /*
                         articulo.setTipo(tipo);
                         articulo.setSupermercado(supermercado);
                         articulo.setNombre(nombre);
@@ -122,34 +129,37 @@ public class ArticulosAdd extends AppCompatActivity implements NavigationView.On
                         if(manejador2.insertarArticulo(articulo) != null)
                             Util.mostrarToast(v.getContext(), "Se ha creado un nuevo artículo");
                         else
-                            Util.mostrarToast(v.getContext(), "No se ha podido crear el artículo");
+                            Util.mostrarToast(v.getContext(), "No se ha podido crear el artículo");*/
                         //TODO: podríamos meter función de autocompletar para los tipos y marcas que ya estén en la bd
                     }
+                    articulo = artAux;
 
                     cantidad = 1;
                     if(!etCantidad.getText().toString().isEmpty())
                         cantidad = Integer.parseInt(etCantidad.getText().toString());
 
-
-                    //una vez tengo un artículo, compruebo si está en la lista
-                    if(manejador2.estaArticuloEnLista(articulo.getId(), nLista)){
-                        DialogInterface.OnClickListener aceptar = new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                if(articulo.getPrecio() != precio){
-                                    articulo.setPrecio(precio);
-                                    manejador2.modificarArticulo(articulo);
-                                    Util.mostrarToast(ArticulosAdd.this, "Precio actualizado");
+                    if(articulo != null) {
+                        //una vez tengo un artículo, compruebo si está en la lista
+                        if (manejador2.estaArticuloEnLista(articulo.getId(), nLista)) {
+                            DialogInterface.OnClickListener aceptar = new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (articulo.getPrecio() != precio) {
+                                        articulo.setPrecio(precio);
+                                        manejador2.modificarArticuloSupermercado(articulo);
+                                        //manejador2.modificarArticuloSupermercadoPrecio(articulo, precio);
+                                        Util.mostrarToast(ArticulosAdd.this, "Precio actualizado");
+                                    }
+                                    ListaArticulo la = manejador2.obtenerListaArticulo(articulo.getId(), nLista);
+                                    manejador2.modificarArticuloEnLista(new ListaArticulo(articulo.getId(), nLista, la.getCantidad() + cantidad));
+                                    manejador2.cerrar();
+                                    finish();
                                 }
-                                ListaArticulo la = manejador2.obtenerListaArticulo(articulo.getId(), nLista);
-                                manejador2.modificarArticuloEnLista(new ListaArticulo(articulo.getId(), nLista, la.getCantidad() + cantidad));
-                                manejador2.cerrar();
-                                finish();
-                            }
-                        };
-                        Util.crearMensajeAlerta("Ya está el artículo en la lista. ¿Quieres sumar la cantidad?", "Artículo existente",
-                                aceptar, ArticulosAdd.this);
-                    }else{
-                        manejador2.insertarArticuloEnLista(new ListaArticulo(articulo.getId(), nLista, cantidad));
+                            };
+                            Util.crearMensajeAlerta("Ya está el artículo en la lista. ¿Quieres sumar la cantidad?", "Artículo existente",
+                                    aceptar, ArticulosAdd.this);
+                        } else {
+                            manejador2.insertarArticuloEnLista(new ListaArticulo(articulo.getId(), nLista, cantidad));
+                        }
                     }
                     manejador.cerrar();
                     manejador2.cerrar();

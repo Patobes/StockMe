@@ -18,6 +18,7 @@ import java.util.List;
 
 import stockme.stockme.R;
 import stockme.stockme.logica.Articulo;
+import stockme.stockme.logica.ArticuloSupermercado;
 import stockme.stockme.logica.Lista;
 import stockme.stockme.logica.ListaArticulo;
 import stockme.stockme.persistencia.BDHandler;
@@ -146,8 +147,8 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
 
                         manejador.insertarLista(nuevaLista);
 
-                        List<Articulo> articulos = manejador.obtenerArticulosEnLista(lista);
-                        for (Articulo articulo : articulos) {
+                        List<ArticuloSupermercado> articulos = manejador.obtenerArticulosEnLista(lista);
+                        for (ArticuloSupermercado articulo : articulos) {
                             int cantidad = manejador.obtenerCantidadArticuloEnLista(articulo.getId(), lista);
                             manejador.insertarArticuloEnLista(new ListaArticulo(articulo.getId(), nuevoNombre, cantidad));
                             manejador.eliminarArticuloEnLista(new ListaArticulo(articulo.getId(), lista.getNombre(), cantidad));
@@ -157,6 +158,9 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
                         Util.mostrarToast(getContext(), "Lista renombrada");
                         remove(lista);
                         add(nuevaLista);
+                        /*
+                        nuevoNombre = input.getText().toString();
+                        manejador.modificarListaNombre(lista, nuevoNombre);*/
 
                     }
                 });

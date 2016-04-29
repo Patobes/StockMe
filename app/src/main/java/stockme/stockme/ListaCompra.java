@@ -20,6 +20,7 @@ import java.util.List;
 
 import stockme.stockme.adaptadores.AdaptadorListItemArticulosListaCompra;
 import stockme.stockme.logica.Articulo;
+import stockme.stockme.logica.ArticuloSupermercado;
 import stockme.stockme.logica.Lista;
 import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.OpcionesMenus;
@@ -61,7 +62,7 @@ public class ListaCompra extends AppCompatActivity implements NavigationView.OnN
         this.setTitle(lista.getNombre());
 
         final BDHandler manejador = new BDHandler(this);
-        List<Articulo> listaArticulos = manejador.obtenerArticulosEnLista(lista);
+        List<ArticuloSupermercado> listaArticulos = manejador.obtenerArticulosEnLista(lista);
         final AdaptadorListItemArticulosListaCompra adaptador = new AdaptadorListItemArticulosListaCompra(this, listaArticulos, lista);
         articulos.setAdapter(adaptador);
 

@@ -42,7 +42,7 @@ public class BDHandler  extends SQLiteOpenHelper {
                 "`Id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
                 "`Nombre` TEXT NOT NULL," +
                 "`Marca` TEXT," +
-                "`Tipo` TEXT DEFAULT 'Cualquiera'," +
+                "`Tipo` TEXT DEFAULT 'Cualquiera'" +
                 ")";
         db.execSQL("DROP TABLE IF EXISTS 'ARTICULO';");
         db.execSQL(articulo);
@@ -407,7 +407,7 @@ public class BDHandler  extends SQLiteOpenHelper {
         }*/
     }
 
-    public Integer insertarArticulos(String nombre, String marca){
+    public Integer insertarArticulo(String nombre, String marca){
         if(estaArticulo(nombre, marca))
             return -1;
             //return null;
@@ -631,15 +631,7 @@ public class BDHandler  extends SQLiteOpenHelper {
     //SUPERMERCADO - DELETE
 
     public boolean eliminarSupermercado(Supermercado supermercado){
-        int filaBorrada = 0;
-
-        if(estaSupermercado(supermercado.getNombre())){
-            SQLiteDatabase db = this.obtenerManejadorEscritura();
-            filaBorrada = db.delete("SUPERMERCADP", Supermercado.NOMBRE + "=?", new String[]{supermercado.getNombre()});
-            db.close();
-        }
-
-        return filaBorrada > 0;
+        return eliminarSupermercado(supermercado.getNombre());
     }
 
     public boolean eliminarSupermercado(String nombre){
@@ -738,11 +730,19 @@ public class BDHandler  extends SQLiteOpenHelper {
     }
 
     public ArticuloSupermercado obtenerArticuloSupermercado(String nombre, String marca, String supermercado){
-        return obtenerArticuloSupermercado(obtenerArticulo(nombre, marca).getId(), supermercado);
+        Articulo art = obtenerArticulo(nombre, marca);
+        if(art != null)
+            return obtenerArticuloSupermercado(art.getId(), supermercado);
+        else
+            return null;
     }
 
     public ArticuloSupermercado obtenerArticuloSupermercado(String nombre, String marca, String tipo, String supermercado){
-        return obtenerArticuloSupermercado(obtenerArticulo(nombre, marca, tipo).getId(), supermercado);
+        Articulo art = obtenerArticulo(nombre, marca, tipo);
+        if(art != null)
+            return obtenerArticuloSupermercado(art.getId(), supermercado);
+        else
+            return null;
     }
 
     public List<ArticuloSupermercado> obtenerArticulosSupermercadoPorArticulo(int articulo){
@@ -764,6 +764,14 @@ public class BDHandler  extends SQLiteOpenHelper {
         }
         db.close();
         return lista;
+    }
+
+    public List<ArticuloSupermercado> obtenerArticulosSupermercadoPorArticulo(String nombre, String marca){
+        Articulo art = obtenerArticulo(nombre, marca);
+        if(art != null)
+            return obtenerArticulosSupermercadoPorArticulo(art.getId());
+        else
+            return null;
     }
 
     public List<ArticuloSupermercado> obtenerArticulosSupermercadoPorSupermercado(String supermercado){
@@ -884,6 +892,10 @@ public class BDHandler  extends SQLiteOpenHelper {
         return obtenerArticuloSupermercado(articulo, supermercado) != null;
     }
 
+    public boolean estaArticuloSupermercado(String nombre, String marca, String supermercado){
+        return obtenerArticuloSupermercado(nombre, marca, supermercado) != null;
+    }
+
     //ARTICULO_SUPERMERCADO - INSERT
 
     public Integer insertarArticuloSupermercado(ArticuloSupermercado articuloSupermercado){
@@ -928,6 +940,34 @@ public class BDHandler  extends SQLiteOpenHelper {
         }
     }
 
+    public Integer insertarArticuloSupermercado(String nombre, String marca, String supermercado){
+        Articulo art = obtenerArticulo(nombre, marca);
+        if(art == null){
+            int id = insertarArticulo(nombre, marca);
+            if (id != -1)
+                return insertarArticuloSupermercado(id, supermercado);
+            else
+                return -1;
+        }
+        else{
+            return insertarArticuloSupermercado(art.getId(), supermercado);
+        }
+    }
+
+    public Integer insertarArticuloSupermercado(String nombre, String marca, String tipo, String supermercado){
+        Articulo art = obtenerArticulo(nombre, marca, tipo);
+        if(art == null){
+            int id = insertarArticulo(nombre, marca, tipo);
+            if (id != -1)
+                return insertarArticuloSupermercado(id, supermercado);
+            else
+                return -1;
+        }
+        else{
+            return insertarArticuloSupermercado(art.getId(), supermercado);
+        }
+    }
+
     public Integer insertarArticuloSupermercado(int articulo, String supermercado, float precio){
         if(estaArticuloSupermercado(articulo, supermercado))
             return -1;
@@ -947,8 +987,33 @@ public class BDHandler  extends SQLiteOpenHelper {
         }
     }
 
-    //insertarArticuloSupermercado(string nombre, string marca, string tipo, string supermercado, float precio)
-    //metodo para que al llamar a insertar articulo complejo haga primero la insercion del articulo simple
+    public Integer insertarArticuloSupermercado(String nombre, String marca, String supermercado, float precio){
+        Articulo art = obtenerArticulo(nombre, marca);
+        if(art == null){
+            int id = insertarArticulo(nombre, marca);
+            if (id != -1)
+                return insertarArticuloSupermercado(id, supermercado, precio);
+            else
+                return -1;
+        }
+        else{
+            return insertarArticuloSupermercado(art.getId(), supermercado, precio);
+        }
+    }
+
+    public Integer insertarArticuloSupermercado(String nombre, String marca, String tipo, String supermercado, float precio){
+        Articulo art = obtenerArticulo(nombre, marca, tipo);
+        if(art == null){
+            int id = insertarArticulo(nombre, marca, tipo);
+            if (id != -1)
+                return insertarArticuloSupermercado(id, supermercado, precio);
+            else
+                return -1;
+        }
+        else{
+            return insertarArticuloSupermercado(art.getId(), supermercado, precio);
+        }
+    }
 
     //ARTICULO_SUPERMERCADO - UPDATE
 
@@ -1095,8 +1160,8 @@ public class BDHandler  extends SQLiteOpenHelper {
         return ok;
     }
 
+    //Para los siguientes metodos necesito saber como se construyen las fechas
     //public boolean insertarLista(String nombre){}
-
     //public boolean insertarLista(String nombre, String supermercado){}
 
     //LISTA - UPDATE
@@ -1284,12 +1349,12 @@ public class BDHandler  extends SQLiteOpenHelper {
         return la;
     }
 
-    public List<Articulo> obtenerArticulosEnLista(Lista lista){
+    public List<ArticuloSupermercado> obtenerArticulosEnLista(Lista lista){
         return obtenerArticulosEnLista(lista.getNombre());
     }
 
-    public List<Articulo> obtenerArticulosEnLista(String nombre){
-        ArrayList<Articulo> articulos = new ArrayList();
+    public List<ArticuloSupermercado> obtenerArticulosEnLista(String nombre){
+        ArrayList<ArticuloSupermercado> articulos = new ArrayList();
         String query = "SELECT * FROM LISTA_ARTICULO WHERE " + ListaArticulo.NOMBRE + " = ?";
 
         SQLiteDatabase db = this.obtenerManejadorLectura();
@@ -1297,7 +1362,7 @@ public class BDHandler  extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                Articulo art = obtenerArticulo(cursor.getInt(cursor.getColumnIndex(ListaArticulo.ARTICULO)));
+                ArticuloSupermercado art = obtenerArticuloSupermercado(cursor.getInt(cursor.getColumnIndex(ListaArticulo.ARTICULO)));
                 articulos.add(art);
             } while (cursor.moveToNext());
         }
@@ -1498,7 +1563,11 @@ public class BDHandler  extends SQLiteOpenHelper {
     }
 
     public Stock obtenerStock(String nombre, String marca){
-        return obtenerStock(obtenerArticulo(nombre, marca).getId());
+        Articulo art = obtenerArticulo(nombre, marca);
+        if(art != null)
+            return obtenerStock(art.getId());
+        else
+            return null;
     }
 
     public Stock obtenerStock(Articulo articulo){
@@ -1517,7 +1586,11 @@ public class BDHandler  extends SQLiteOpenHelper {
     }
 
     public boolean estaStock(String nombre, String marca){
-        return obtenerStock(nombre, marca) != null;
+        Articulo art = obtenerArticulo(nombre, marca);
+        if(art != null)
+            return estaStock(art.getId());
+        else
+            return false;
     }
 
     //STOCK - INSERT
@@ -1539,7 +1612,53 @@ public class BDHandler  extends SQLiteOpenHelper {
             ok = true;
         }
         return ok;
+    }
 
+    public boolean insertarStock(int articulo, int minimo, int cantidad){
+        if(!estaStock(articulo)) {
+
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+            ContentValues values = new ContentValues();
+
+            values.put(Stock.ARTICULO, articulo);
+            values.put(Stock.CANTIDAD, cantidad);
+            values.put(Stock.MINIMO, minimo);
+
+            db.insert("STOCK", null, values);
+            db.close();
+            return true;
+        }
+        else
+            return false;
+    }
+
+    public boolean insertarStock(String nombre, String marca, int minimo, int cantidad){
+        Articulo art = obtenerArticulo(nombre, marca);
+        if(art != null) {
+            if (!estaStock(art.getId())) {
+
+                SQLiteDatabase db = this.obtenerManejadorEscritura();
+                ContentValues values = new ContentValues();
+
+                values.put(Stock.ARTICULO, art.getId());
+                values.put(Stock.CANTIDAD, cantidad);
+                values.put(Stock.MINIMO, minimo);
+
+                db.insert("STOCK", null, values);
+                db.close();
+                return true;
+            }
+            else
+                return false;
+        }
+        else{
+            int id = insertarArticulo(nombre, marca);
+            if(id != -1)
+                return insertarStock(id, minimo, cantidad);
+            else
+                return false;
+
+        }
     }
 
     //STOCK - UPDATE

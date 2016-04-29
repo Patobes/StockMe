@@ -36,7 +36,7 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
 
         stock = new Stock();
         stock.setArticulo(datos.get(position).getArticulo());
-        stock.setCanitdad(datos.get(position).getCanitdad());
+        stock.setCantidad(datos.get(position).getCanitdad());
         stock.setMinimo(datos.get(position).getMinimo());
 
         BDHandler manejador = new BDHandler(getContext());

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import stockme.stockme.logica.Articulo;
+import stockme.stockme.logica.ArticuloSupermercado;
 import stockme.stockme.logica.Lista;
 import stockme.stockme.logica.ListaArticulo;
 import stockme.stockme.logica.Stock;
@@ -20,8 +21,8 @@ import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.Util;
 
 public class InfoBD extends AppCompatActivity {
-    private TextView tv_articulos, tv_superm, tv_stock, tv_listas, tv_lista_articulo;
-    private Spinner sp_articulos, sp_superm, sp_stock, sp_listas, sp_lista_articulos;
+    private TextView tv_articulos, tv_articulos_super, tv_superm, tv_stock, tv_listas, tv_lista_articulo;
+    private Spinner sp_articulos, sp_articulos_super, sp_superm, sp_stock, sp_listas, sp_lista_articulos;
     private Button btn_borrar;
 
     @Override
@@ -33,11 +34,13 @@ public class InfoBD extends AppCompatActivity {
 
 
         tv_articulos = (TextView)findViewById(R.id.info_tv_articulos);
+        tv_articulos_super = (TextView)findViewById(R.id.info_tv_articulos_super);
         tv_stock = (TextView)findViewById(R.id.info_tv_stock);
         tv_superm = (TextView)findViewById(R.id.info_tv_superm);
         tv_listas = (TextView)findViewById(R.id.info_tv_listas);
         tv_lista_articulo = (TextView)findViewById(R.id.info_tv_lista_articulo);
         sp_articulos = (Spinner)findViewById(R.id.info_sp_articulos);
+        sp_articulos_super = (Spinner)findViewById(R.id.info_sp_articulos_super);
         sp_stock = (Spinner)findViewById(R.id.info_sp_stock);
         sp_superm = (Spinner)findViewById(R.id.info_sp_superm);
         sp_listas = (Spinner)findViewById(R.id.info_sp_listas);
@@ -59,15 +62,20 @@ public class InfoBD extends AppCompatActivity {
     private void rellenarContenido(){
         BDHandler manejador = new BDHandler(this);
         List<Articulo> listaArticulos = manejador.obtenerArticulos();
+        List<ArticuloSupermercado> listaArticulosSupermercado = manejador.obtenerArticulosSupermercado();
         List<Stock> listaStocks = manejador.obtenerStocks();
         List<String> supermercados = manejador.obtenerSupermercados();
         List<Lista> listaListas = manejador.obtenerListas();
-        List<ListaArticulo> listaListaArt = manejador.obtenerListaArticulos();
+        List<ListaArticulo> listaListaArt = manejador.obtenerListasArticulos();
         manejador.cerrar();
 
         List<String> articulos = new ArrayList<>();
         for(Articulo art: listaArticulos){
-            articulos.add(art.getId() + ", " + art.getNombre() + ", " + art.getSupermercado());
+            articulos.add(art.getId() + ", " + art.getNombre() + ", " + art.getMarca() + ", " + art.getTipo());
+        }
+        List<String> articulosSupermercado = new ArrayList<>();
+        for(ArticuloSupermercado artSm: listaArticulosSupermercado){
+            articulosSupermercado.add(artSm.getId() + ", " + artSm.getArticulo() + ", " + artSm.getSupermercado() + ", " + artSm.getPrecio());
         }
         List<String> stocks = new ArrayList<>();
         for(Stock stock: listaStocks){
@@ -83,12 +91,14 @@ public class InfoBD extends AppCompatActivity {
         }
 
         tv_articulos.setText("Artículos (" + articulos.size() + "):");
+        tv_articulos_super.setText("Artículos Supermercado (" + articulosSupermercado.size() + "):");
         tv_stock.setText("Stock (" + stocks.size() + "):");
         tv_superm.setText("SuperM (" + supermercados.size() + "):");
         tv_listas.setText("Listas (" + listas.size() + "):");
         tv_lista_articulo.setText("Lista_articulo (" + listasArticulos.size() + "):");
 
         sp_articulos.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, articulos));
+        sp_articulos_super.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, articulosSupermercado));
         sp_stock.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, stocks));
         sp_superm.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, supermercados));
         sp_listas.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listas));
