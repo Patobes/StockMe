@@ -180,23 +180,21 @@ public class BDHandler  extends SQLiteOpenHelper {
         return marcas;
     }
 
-//    public float obtenerPrecioTotal(){
-//        float precio = 0.0f;
-//
-//        String query = "SELECT " + Articulo.MARCA + " FROM ARTICULO";
-//        SQLiteDatabase db = this.obtenerManejadorLectura();
-//        Cursor cursor = db.rawQuery(query, null);
-//        if(cursor.moveToFirst()){
-//            do{
-//                String marca = cursor.getString(0);
-//                if(marca != null && !marca.isEmpty())
-//                    marcas.add(marca);
-//            }while(cursor.moveToNext());
-//        }
-//        db.close();
-//
-//        return precio;
-//    }
+    public float obtenerPrecioTotal(String lista){
+        float precio = 0.0f;
+
+        String query = "select SUM(a.Precio * la.Cantidad) as 'Total' from Articulo as a " +
+                " join Lista_Articulo as la on a.id = la.articulo" +
+                " where la.Nombre = ?;";
+        SQLiteDatabase db = this.obtenerManejadorLectura();
+        Cursor cursor = db.rawQuery(query, new String[]{lista});
+        if(cursor.moveToFirst()){
+            precio = cursor.getFloat(0);
+        }
+        db.close();
+
+        return precio;
+    }
 
 
 

@@ -1,15 +1,16 @@
 ----------Pendientes:--------------------------------------------------------------
--Revisar comoprtamiento si no se insertan campos en artículos_add
--Suma de precio en ListaDeArticulos (quizá renombrar a lista de compra)
+-Navegación..., pregunta cuando se va a cerrar la app
+-Modificar elementos de la lista de la compra como el precio de un artículo
 
 ----------Ideas:-------------------------------------------------------------------
+-En ArticulosAdd, que se preseleccione el supermercado si la lista tiene uno elegido (no es "cualquiera")
 -Cambiar el evento onLongClickPressed o como se llame XD de ListaDeArticulos para que, en lugar de borrar el artículo,
 abra una ventana para modificarlo.
--Utilizar setTag() para meter el nº de elementos que tiene un artículo antes de ser borrado ya que si no no podremos
-restablecerlo correctamente restando el precio
 
 ----------Realizado recientemente:-------------------------------------------------
 -Autocompletado de marcas
 -Vista de bd
 -Corregir la lista de ListaDeArticulos. El botón se desplaza al insertar elemento.
 -Poner valore por defecto en la bd
+-Revisar comoprtamiento si no se insertan campos en artículos_add
+-Suma de precio en ListaDeArticulos (quizá renombrar a lista de compra)

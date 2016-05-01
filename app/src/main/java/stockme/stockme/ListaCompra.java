@@ -12,7 +12,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
 
@@ -27,7 +28,10 @@ import stockme.stockme.util.OpcionesMenus;
 public class ListaCompra extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         Fragment_listas.OnFragmentInteractionListener{
     private DynamicListView articulos;
-    private Button lista_articulos_btn_mas;
+    private Button lista_compra_btn_mas;
+    private ImageButton ibtn_reset;
+    private TextView tv_precio_total;
+    private TextView tv_precio_compra;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,28 +51,44 @@ public class ListaCompra extends AppCompatActivity implements NavigationView.OnN
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //las instancias tmb deberían hacerse una sola vez
+        articulos = (DynamicListView)findViewById(R.id.lista_compra_lista);
+        lista_compra_btn_mas = (Button)findViewById(R.id.lista_compra_btn_mas);
+        ibtn_reset = (ImageButton)findViewById(R.id.lista_compra_btn_reset);
+        tv_precio_total = (TextView)findViewById(R.id.lista_compra_tv_precio_total);
+        tv_precio_compra = (TextView)findViewById(R.id.lista_compra_tv_precio_compra);
+
+        ibtn_reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AdaptadorListItemArticulosListaCompra.resetCostes();
+                tv_precio_compra.setText("0.0");
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-
         //contenido
-        articulos = (DynamicListView)findViewById(R.id.lista_articulos_lista);
-
         final Lista lista = new Lista(getIntent().getStringExtra("NombreLista"),"","","");
         this.setTitle(lista.getNombre());
 
         final BDHandler manejador = new BDHandler(this);
         List<Articulo> listaArticulos = manejador.obtenerArticulosEnLista(lista);
         final AdaptadorListItemArticulosListaCompra adaptador = new AdaptadorListItemArticulosListaCompra(this, listaArticulos, lista);
-        articulos.setAdapter(adaptador);
 
+
+        tv_precio_total.setText(String.valueOf(manejador.obtenerPrecioTotal(lista.getNombre())));
+
+        AdaptadorListItemArticulosListaCompra.setTv_precio_total(tv_precio_total);
+        AdaptadorListItemArticulosListaCompra.setTv_precio_compra(tv_precio_compra);
+
+        articulos.setAdapter(adaptador);
         manejador.close();
 
-        lista_articulos_btn_mas = (Button)findViewById(R.id.lista_articulos_btn_mas);
-        lista_articulos_btn_mas.setOnClickListener(new View.OnClickListener() {
+        lista_compra_btn_mas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(ListaCompra.this, ArticulosAdd.class);

@@ -13,57 +13,111 @@
     tools:showIn="@layout/app_bar_lista_compra">
 
     <com.nhaarman.listviewanimations.itemmanipulation.DynamicListView
+        android:id="@+id/lista_compra_lista"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/lista_articulos_lista"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true" />
     <!--<ListView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/lista_articulos_lista"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:layout_alignParentStart="true"-->
-        <!--android:layout_alignParentEnd="true" />-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:id="@+id/lista_articulos_lista"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_alignParentEnd="true" />-->
 
     <Button
-            style="?android:attr/buttonStyleSmall"
-            android:background="@drawable/esquinas_boton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Mas"
-            android:textSize="25sp"
-            android:id="@+id/lista_articulos_btn_mas"
+        android:id="@+id/lista_compra_btn_mas"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/esquinas_boton"
+        android:text="@string/Mas"
+        android:textSize="25sp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical|center_horizontal"
-        android:background="@drawable/esquinas_boton"
-        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/lista_compra_btn_mas"
         android:layout_centerHorizontal="true"
-        android:layout_alignTop="@+id/lista_articulos_btn_mas"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:background="@drawable/esquinas_boton"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:id="@+id/linearLayout">
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0.0"
-            android:id="@+id/lista_compra_tv_vista_precio"
-            android:textSize="30dp" />
+            android:layout_centerHorizontal="true"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="horizontal">
 
-        <TextView
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="A pagar: "
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/lista_compra_tv_precio_compra"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.0"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/lista_compra_tv_simb_moneda2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="€"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="€"
-            android:id="@+id/lista_compra_tv_simb_moneda"
-            android:textSize="30dp" />
+            android:layout_centerHorizontal="true"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total: "
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/lista_compra_tv_precio_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.0"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/lista_compra_tv_simb_moneda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="€"
+                android:textSize="30dp" />
+        </LinearLayout>
     </LinearLayout>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/esquinas_boton"
+        android:src="@drawable/ic_action_reset_precio"
+        android:id="@+id/lista_compra_btn_reset"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/lista_compra_btn_mas"
+        android:layout_alignBottom="@+id/linearLayout" />
 
 </RelativeLayout>
