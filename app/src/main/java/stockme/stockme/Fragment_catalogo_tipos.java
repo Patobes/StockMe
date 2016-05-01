@@ -13,10 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import stockme.stockme.adaptadores.AdaptadorGridItemCatalogo;
+import stockme.stockme.adaptadores.AdaptadorGridItemCatalogoTipos;
 import stockme.stockme.logica.Articulo;
+import stockme.stockme.logica.ListaArticulo;
 import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.Preferencias;
 
@@ -24,6 +27,7 @@ import stockme.stockme.util.Preferencias;
 public class Fragment_catalogo_tipos extends Fragment {
     private OnFragmentInteractionListener mListener;
     private GridView articulos;
+    List<Articulo> listaArticulos;
 
     public Fragment_catalogo_tipos() {
         // Required empty public constructor
@@ -40,7 +44,7 @@ public class Fragment_catalogo_tipos extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_catalogo_todos, container, false);
+        return inflater.inflate(R.layout.fragment_catalogo_tipos, container, false);
     }
 
     public void onButtonPressed(Uri uri) {
@@ -54,14 +58,19 @@ public class Fragment_catalogo_tipos extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Preferencias.addPreferencia("anterior", "Listas");
 
+        listaArticulos = new ArrayList<Articulo>();
         articulos = (GridView) view.findViewById(R.id.gridView_catalogo_articulos_tipos);
 
         final BDHandler manejador = new BDHandler(view.getContext());
-        //TODO List<Articulo> listaArticulos = manejador.obtenerArticulosPorTipo("tipo");
 
-        List<Articulo> listaArticulos = manejador.obtenerArticulos();
+        String[] tipos = getResources().getStringArray(R.array.tipos_array);
 
-        final AdaptadorGridItemCatalogo adaptador = new AdaptadorGridItemCatalogo(view.getContext(), listaArticulos);
+        for(String tipo : tipos){
+            listaArticulos.addAll(manejador.obtenerArticulosPorTipo(tipo));
+
+        }
+
+        final AdaptadorGridItemCatalogoTipos adaptador = new AdaptadorGridItemCatalogoTipos(view.getContext(), listaArticulos);
         articulos.setAdapter(adaptador);
 
         manejador.cerrar();

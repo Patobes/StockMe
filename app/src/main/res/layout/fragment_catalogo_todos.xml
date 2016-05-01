@@ -7,7 +7,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     >
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,7 +15,7 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        android:id="@+id/LinearLayout"
+        android:id="@+id/RelativeLayout"
         android:columnWidth="120dp"
         android:horizontalSpacing="2dp"
         android:numColumns="auto_fit"
@@ -33,6 +33,18 @@
             android:horizontalSpacing="1dp"
             android:verticalSpacing="1dp"
             android:background="#c7e8fd" />
-    </LinearLayout>
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:background="@drawable/esquinas_boton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+"
+            android:textSize="25dp"
+            android:id="@+id/fragment_catalogo_btn_mas"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
 
 </FrameLayout>

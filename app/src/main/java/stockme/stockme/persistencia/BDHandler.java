@@ -462,6 +462,33 @@ public class BDHandler  extends SQLiteOpenHelper {
         return articulo;
     }
 
+    public List<Articulo> obtenerArticulosPorTipo(String tipo){
+
+        ArrayList<Articulo> articulos = new ArrayList();
+        String query = "SELECT * FROM ARTICULO WHERE " + Articulo.TIPO + " = ?";
+
+        SQLiteDatabase db = this.obtenerManejadorLectura();
+        Cursor cursor = db.rawQuery(query, new String[]{tipo});
+
+        Articulo art = null;
+        if (cursor.moveToFirst()) {
+            do {
+                art = new Articulo();
+                art.setId(cursor.getInt(cursor.getColumnIndex(Articulo.ID)));
+                art.setMarca(cursor.getString(cursor.getColumnIndex(Articulo.MARCA)));
+                art.setNombre(cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)));
+                art.setPrecio(cursor.getFloat(cursor.getColumnIndex(Articulo.PRECIO)));
+                art.setSupermercado(cursor.getString(cursor.getColumnIndex(Articulo.SUPERMERCADO)));
+                art.setTipo(cursor.getString(cursor.getColumnIndex(Articulo.TIPO)));
+
+                articulos.add(art);
+            } while (cursor.moveToNext());
+        }
+
+        db.close();
+        return articulos;
+    }
+
     //devuelve null si no encuentra el artículo
     public Articulo obtenerArticulo(String nombre, String marca, String tipo, String supermercado){
         Articulo articulo = null;

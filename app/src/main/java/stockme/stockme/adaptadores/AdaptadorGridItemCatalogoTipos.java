@@ -16,12 +16,12 @@ import java.util.List;
 import stockme.stockme.R;
 import stockme.stockme.logica.Articulo;
 
-public class AdaptadorGridItemCatalogo extends BaseAdapter {
+public class AdaptadorGridItemCatalogoTipos extends BaseAdapter {
     private Context context;
     private List<Articulo> datos;
     private GridView articulos;
 
-    public AdaptadorGridItemCatalogo(Context context, List<Articulo> articulos) {
+    public AdaptadorGridItemCatalogoTipos(Context context, List<Articulo> articulos) {
         this.context = context;
         this.datos = articulos;
     }
@@ -56,7 +56,7 @@ public class AdaptadorGridItemCatalogo extends BaseAdapter {
         TextView tipo = (TextView) view.findViewById(R.id.catalogo_art_tipo);
         tipo.setText(datos.get(position).getTipo());
 
-        articulos = (GridView) viewGroup.findViewById(R.id.gridView_catalogo_articulos);
+        articulos = (GridView) viewGroup.findViewById(R.id.gridView_catalogo_articulos_tipos);
 
         articulos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

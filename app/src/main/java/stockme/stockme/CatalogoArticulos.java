@@ -94,7 +94,7 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
                 case 0:
                     return new Fragment_catalogo_todos();
                 case 1:
-                    return new Fragment_catalogo_todos();
+                    return new Fragment_catalogo_tipos();
                 case 2:
                     return new Fragment_catalogo_todos();
                 case 3:
