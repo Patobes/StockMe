@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
@@ -87,22 +88,24 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
     public static void resetCostes(){
         costes.clear();
     }
+
     private static Float getTotalCostes(){
         Float total = 0.0f;
         for(Float f: costes.values())
             total += f;
-        return roundTwoDecimals(total);
+        return round(total, 2);
+//        return roundTwoDecimals(total);
     }
 
-//    public static float round(float d, int decimalPlace) {
-//        BigDecimal bd = new BigDecimal(Float.toString(d));
-//        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
-//        return bd.floatValue();
-//    }
-    static float roundTwoDecimals(float d) {
-        DecimalFormat twoDForm = new DecimalFormat("#.##");
-        return Float.valueOf(twoDForm.format(d));
+    public static float round(float d, int decimalPlace) {
+        BigDecimal bd = new BigDecimal(Float.toString(d));
+        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+        return bd.floatValue();
     }
+//    static float roundTwoDecimals(float d) {
+//        DecimalFormat twoDForm = new DecimalFormat("#.##");
+//        return Float.valueOf(twoDForm.format(d));
+//    }
     /////////////
 
     public AdaptadorListItemArticulosListaCompra(Context context, List<Articulo> datos, Lista lista) {
