@@ -79,6 +79,15 @@ public class Fragment_catalogo_todos extends Fragment {
             }
         });
 
+        articulos = (GridView) view.findViewById(R.id.gridView_catalogo_articulos);
+
+        articulos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Articulo articulo = (Articulo) parent.getItemAtPosition(position);
+                mListener.onArticuloSeleccionado(articulo);
+            }
+        });
         manejador.cerrar();
     }
 
@@ -112,6 +121,7 @@ public class Fragment_catalogo_todos extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+        void onArticuloSeleccionado(Articulo articulo);
     }
 
 }

@@ -1,5 +1,6 @@
 package stockme.stockme;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -15,12 +16,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
 
+import stockme.stockme.logica.Articulo;
 import stockme.stockme.util.OpcionesMenus;
+import stockme.stockme.util.Util;
 
 public class CatalogoArticulos extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         Fragment_listas.OnFragmentInteractionListener, Fragment_catalogo_todos.OnFragmentInteractionListener, Fragment_catalogo_tipos.OnFragmentInteractionListener {
     FragmentPagerAdapter adapterViewPager;
     private GridView articulos;
+    private String vieneDe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +79,7 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
 
     public static class MyPagerAdapter extends FragmentPagerAdapter {
         //Número de páginas
-        private static int NUM_ITEMS = 4;
+        private static int NUM_ITEMS = 2;
 
         public MyPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
@@ -95,10 +99,6 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
                     return new Fragment_catalogo_todos();
                 case 1:
                     return new Fragment_catalogo_tipos();
-                case 2:
-                    return new Fragment_catalogo_todos();
-                case 3:
-                    return new Fragment_catalogo_todos();
                 default:
                     return new Fragment_catalogo_todos();
             }
@@ -112,10 +112,6 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
                     return "Todos";
                 case 1:
                     return "Tipos";
-                case 2:
-                    return "Supermercado";
-                case 3:
-                    return "Marca";
                 default:
                     return "";
             }
@@ -123,4 +119,12 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
 
     }
 
+    @Override
+    public void onArticuloSeleccionado(Articulo articulo) {
+
+        Intent i = new Intent();
+        i.putExtra("Articulo",articulo);
+        setResult(1,i);
+        finish();
+    }
 }

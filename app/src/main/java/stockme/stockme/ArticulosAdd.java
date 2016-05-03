@@ -25,6 +25,7 @@ import java.util.List;
 
 import stockme.stockme.logica.Articulo;
 import stockme.stockme.logica.ArticuloSupermercado;
+import stockme.stockme.logica.Lista;
 import stockme.stockme.logica.ListaArticulo;
 import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.InputFilterMinMax;
@@ -36,7 +37,7 @@ public class ArticulosAdd extends AppCompatActivity implements NavigationView.On
     private EditText etNombre, etPrecio, etCantidad;
     private AutoCompleteTextView atv_marcas;
     private Spinner spTipos, spSupermercado;
-    private Button btnAceptar, btnCancelar;
+    private Button btnAceptar, btnCancelar, btnCatalogo;
     String nLista;
     ArticuloSupermercado articulo;
     int cantidad;
@@ -67,6 +68,7 @@ public class ArticulosAdd extends AppCompatActivity implements NavigationView.On
         spSupermercado = (Spinner)findViewById(R.id.articulos_add_sp_supermercado);
         btnAceptar = (Button)findViewById(R.id.articulos_add_btn_aceptar);
         btnCancelar = (Button)findViewById(R.id.articulos_add_btn_cancelar);
+        btnCatalogo = (Button)findViewById(R.id.articulos_add_btn_catalogo);
         atv_marcas = (AutoCompleteTextView)findViewById(R.id.articulos_add_atv_marcas);
         atv_marcas.setThreshold(1);
         if(etNombre.requestFocus());
@@ -91,6 +93,15 @@ public class ArticulosAdd extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        btnCatalogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(v.getContext(), CatalogoArticulos.class);
+                i.putExtra("vieneDe", "articulosAdd");
+                startActivityForResult(i, 1);
             }
         });
 
@@ -126,6 +137,7 @@ public class ArticulosAdd extends AppCompatActivity implements NavigationView.On
                                     Util.mostrarToast(v.getContext(), "Se ha creado un nuevo artículo");
                                 } else {
                                     Util.mostrarToast(v.getContext(), "No se ha podido crear el artículo");
+                                    finish();
                                     //Aqui deberia acabarse la actividad, pues ni hay articulo en la BBDD ni se ha podido crear (el articulo es null)
                                 }
                                 /*
@@ -212,6 +224,19 @@ public class ArticulosAdd extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode==1){
+            Articulo articulo = data.getExtras().getParcelable("Articulo");
+            etNombre.setText(articulo.getNombre());
+            atv_marcas.setText(articulo.getMarca());
+            //spTipos.setSelection(sptipos.getarticulo.getTipo());
+        }
 
     }
 }

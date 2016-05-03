@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import stockme.stockme.logica.Articulo;
 import stockme.stockme.logica.ListaArticulo;
 import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.Preferencias;
+import stockme.stockme.util.Util;
 
 
 public class Fragment_catalogo_tipos extends Fragment {
@@ -73,6 +75,20 @@ public class Fragment_catalogo_tipos extends Fragment {
         final AdaptadorGridItemCatalogoTipos adaptador = new AdaptadorGridItemCatalogoTipos(view.getContext(), listaArticulos);
         articulos.setAdapter(adaptador);
 
+        articulos = (GridView) view.findViewById(R.id.gridView_catalogo_articulos_tipos);
+
+        articulos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Articulo articulo = (Articulo) parent.getItemAtPosition(position);
+
+                // TODO arreglar esto
+                Util.mostrarToast(view.getContext(),articulo.getNombre());
+                mListener.onArticuloSeleccionado(articulo);
+
+            }
+        });
+
         manejador.cerrar();
     }
 
@@ -106,6 +122,7 @@ public class Fragment_catalogo_tipos extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+        void onArticuloSeleccionado(Articulo articulo);
     }
 
 }

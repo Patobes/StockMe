@@ -1,9 +1,12 @@
 package stockme.stockme.logica;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by JuanMiguel on 03/03/2016.
  */
-public class Articulo {
+public class Articulo implements Parcelable{
     private Integer id;
     private String nombre;
     private String marca;
@@ -25,6 +28,24 @@ public class Articulo {
         this.marca = marca;
         this.tipo = tipo;
     }
+
+    protected Articulo(Parcel in) {
+        nombre = in.readString();
+        marca = in.readString();
+        tipo = in.readString();
+    }
+
+    public static final Creator<Articulo> CREATOR = new Creator<Articulo>() {
+        @Override
+        public Articulo createFromParcel(Parcel in) {
+            return new Articulo(in);
+        }
+
+        @Override
+        public Articulo[] newArray(int size) {
+            return new Articulo[size];
+        }
+    };
 
     public Integer getId() {
         return id;
@@ -58,4 +79,15 @@ public class Articulo {
         this.tipo = tipo;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(nombre);
+        dest.writeString(marca);
+        dest.writeString(tipo);
+    }
 }

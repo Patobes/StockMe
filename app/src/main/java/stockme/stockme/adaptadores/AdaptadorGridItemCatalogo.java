@@ -15,6 +15,7 @@ import java.util.List;
 
 import stockme.stockme.R;
 import stockme.stockme.logica.Articulo;
+import stockme.stockme.util.Util;
 
 public class AdaptadorGridItemCatalogo extends BaseAdapter {
     private Context context;
@@ -56,15 +57,7 @@ public class AdaptadorGridItemCatalogo extends BaseAdapter {
         TextView tipo = (TextView) view.findViewById(R.id.catalogo_art_tipo);
         tipo.setText(datos.get(position).getTipo());
 
-        articulos = (GridView) viewGroup.findViewById(R.id.gridView_catalogo_articulos);
 
-        articulos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Articulo articulo = (Articulo) parent.getItemAtPosition(position);
-
-            }
-        });
 
         return view;
     }
