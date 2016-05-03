@@ -1,24 +1,30 @@
 ----------Pendientes:--------------------------------------------------------------
--Corregir la lista de ListaDeArticulos. El botón se desplaza al insertar elemento.
--Suma de precio en ListaDeArticulos (quizá renombrar a lista de compra)
--Poner valore por defecto en la bd
+-Navegación..., pregunta cuando se va a cerrar la app
+-Modificar elementos de la lista de la compra como el precio de un artículo
 
 ----------Ideas:-------------------------------------------------------------------
+-En ArticulosAdd, que se preseleccione el supermercado si la lista tiene uno elegido (no es "cualquiera")
 -Cambiar el evento onLongClickPressed o como se llame XD de ListaDeArticulos para que, en lugar de borrar el artículo,
 abra una ventana para modificarlo.
--Utilizar setTag() para meter el nº de elementos que tiene un artículo antes de ser borrado ya que si no no podremos
-restablecerlo correctamente restando el precio
 
 ----------Realizado recientemente:-------------------------------------------------
 -Autocompletado de marcas
 -Vista de bd
 
+---------Tobes/Jaun Rama master---------------------------------------------------
+-Corregir la lista de ListaDeArticulos. El botón se desplaza al insertar elemento.
+-Poner valore por defecto en la bd
+-Revisar comoprtamiento si no se insertan campos en artículos_add
+-Suma de precio en ListaDeArticulos (quizá renombrar a lista de compra)
 
-----------Testear en BDHandler:----------------------------------------------------
+
+
+---------Paris BDHandler---------------
 - public Integer insertarArticulos(String nombre, String marca) -> Ver si el values.put funciona bien si no pongo todos los parametros (linea 433)
 - public List<String> obtenerSupermercados()    cambiarlo por       public List<Supermercado> obtenerSupermercados()
 - Todos los modificarObject(Object) -> añadir variante modificarParametro(Object, Parametro) ->modificar solo el parametro correspondiente del objeto correspondiente
 - LISTA_ARTICULO === LISTA_ARTICULO_SUPERMERCADO (el articulo que aparece aqui es del tipo ArticuloSupermercado, con precio y super asociado)
 - Metodos de Articulo_supermercado:: Sustituir/duplicar los que reciben parametro 'int articulo' por 'string nombre, string marca'
 
-- Javas que fallan: ArticulosAdd, InfoBD, StockAdd
+----------Stock--------------
+- Revisarlo entero, para adaptarlo a la nueva BBDD y al nuevo estilo general de la app

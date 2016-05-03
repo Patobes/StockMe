@@ -15,7 +15,11 @@ import android.widget.TextView;
 import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import stockme.stockme.R;
 import stockme.stockme.logica.Articulo;
@@ -39,6 +43,72 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
     private ImageButton btnMas;
     private ImageButton btnMenos;
 
+    //////atributos static para gestionar el precio. Necesario al no pertenecer los controles a esta vista
+    private static TextView tv_precio_total;
+    private static TextView tv_precio_compra;
+    private static Map<Integer, Float> costes = new TreeMap<>();
+
+    public static TextView getTv_precio_total() {
+        return tv_precio_total;
+    }
+    public static void setTv_precio_total(TextView tv_precio_total) {
+        AdaptadorListItemArticulosListaCompra.tv_precio_total = tv_precio_total;
+    }
+
+    private void actualizarPrecioTotal(){
+        BDHandler manejador = new BDHandler(getContext());
+        tv_precio_total.setText(String.valueOf(manejador.obtenerPrecioTotal(lista.getNombre())));
+        manejador.cerrar();
+    }
+
+    public static TextView getTv_precio_compra() {
+        return tv_precio_total;
+    }
+    public static void setTv_precio_compra(TextView tv_precio_compra) {
+        AdaptadorListItemArticulosListaCompra.tv_precio_compra = tv_precio_compra;
+    }
+
+    private void actualizarPrecioCompra(){
+        tv_precio_compra.setText(String.valueOf(getTotalCostes()));
+    }
+
+    private static void addCoste(Integer id, Float coste){
+        if(isCoste(id)) {
+            costes.put(id, getCoste(id) + coste);//actualiza su valor
+        }else
+            costes.put(id, coste);
+    }
+    private static void delCoste(Integer id){
+        costes.remove(id);
+    }
+    private static Float getCoste(Integer id){
+        return costes.get(id);
+    }
+    private static boolean isCoste(Integer id){
+        return costes.containsKey(id);
+    }
+    public static void resetCostes(){
+        costes.clear();
+    }
+
+    private static Float getTotalCostes(){
+        Float total = 0.0f;
+        for(Float f: costes.values())
+            total += f;
+        return round(total, 2);
+//        return roundTwoDecimals(total);
+    }
+
+    public static float round(float d, int decimalPlace) {
+        BigDecimal bd = new BigDecimal(Float.toString(d));
+        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+        return bd.floatValue();
+    }
+//    static float roundTwoDecimals(float d) {
+//        DecimalFormat twoDForm = new DecimalFormat("#.##");
+//        return Float.valueOf(twoDForm.format(d));
+//    }
+    /////////////
 
     public AdaptadorListItemArticulosListaCompra(Context context, List<ArticuloSupermercado> datos, Lista lista) {
         super(context, R.layout.listitem_articulos_lista_compra, datos);
@@ -86,12 +156,18 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
             @Override
             public void onClick(View v) {
                 BDHandler manejador = new BDHandler(getContext());
-                int cantidad = manejador.obtenerCantidadArticuloEnLista(datos.get(position).getId(), lista);
+                int idArticulo = datos.get(position).getId();
+                int cantidad = manejador.obtenerCantidadArticuloEnLista(idArticulo, lista);
 
-                if (cantidad < 99)
-                    manejador.modificarArticuloEnLista(new ListaArticulo(datos.get(position).getId(), lista.getNombre(), cantidad + 1));
+                if (cantidad < 99) {
+                    manejador.modificarArticuloEnLista(new ListaArticulo(idArticulo, lista.getNombre(), cantidad + 1));
+                    if(isCoste(idArticulo))
+                        delCoste(idArticulo);
+                }
 
                 manejador.cerrar();
+                actualizarPrecioCompra();
+                actualizarPrecioTotal();
                 notifyDataSetChanged();
             }
         });
@@ -101,17 +177,22 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
             @Override
             public void onClick(View v) {
                 BDHandler manejador = new BDHandler(getContext());
-                int cantidad = manejador.obtenerCantidadArticuloEnLista(datos.get(position).getId(), lista);
+                int idArticulo = datos.get(position).getId();
+                int cantidad = manejador.obtenerCantidadArticuloEnLista(idArticulo, lista);
 
-                if (cantidad > 0)
-                    manejador.modificarArticuloEnLista(new ListaArticulo(datos.get(position).getId(),lista.getNombre(), cantidad - 1));
+                if (cantidad > 0) {
+                    manejador.modificarArticuloEnLista(new ListaArticulo(idArticulo, lista.getNombre(), cantidad - 1));
+                    addCoste(idArticulo, datos.get(position).getPrecio());
+                }
 
                 manejador.cerrar();
+                actualizarPrecioTotal();
+                actualizarPrecioCompra();
                 notifyDataSetChanged();
             }
         });
 
-        articulos = (DynamicListView)parent.findViewById(R.id.lista_articulos_lista);
+        articulos = (DynamicListView)parent.findViewById(R.id.lista_compra_lista);
 
         articulos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -120,11 +201,15 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
 
                 ArticuloSupermercado articuloSuper = (ArticuloSupermercado) parent.getItemAtPosition(position);
                 manejador.modificarArticuloEnLista(new ListaArticulo(articuloSuper.getId(), lista.getNombre(), 0));
-                manejador.cerrar();
 
                 Articulo articulo = manejador.obtenerArticulo(articuloSuper.getId());
 
                 Util.mostrarToast(view.getContext(), "Comprado: " + articulo.getNombre());
+                actualizarPrecioTotal();
+                addCoste(articulo.getId(), articuloSuper.getPrecio() * manejador.numArticulosEnLista(lista.getNombre()));
+                manejador.cerrar();
+
+                actualizarPrecioCompra();
                 notifyDataSetChanged();
                 return true;
             }
@@ -144,6 +229,7 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
                                     else {
                                         Util.mostrarToast(getContext(), "Articulo eliminado");
                                         remove(datos.get(position));
+                                        actualizarPrecioTotal();
                                         notifyDataSetChanged();
                                     }
 

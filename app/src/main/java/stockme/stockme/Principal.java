@@ -105,6 +105,10 @@ public class Principal extends AppCompatActivity
         } else if (id == R.id.nav_stock) {
             fragmento = new Fragment_stock();
             fragTransact = true;
+        } else if (id == R.id.nav_articulos) {
+            item.setChecked(true);
+            startActivity(new Intent(this, CatalogoArticulos.class));
+            finish();
         } else if (id == R.id.nav_supermercados) {
 
         } else if (id == R.id.nav_ajustes) {

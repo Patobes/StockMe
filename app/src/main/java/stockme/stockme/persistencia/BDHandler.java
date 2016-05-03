@@ -201,7 +201,21 @@ public class BDHandler  extends SQLiteOpenHelper {
         return marcas;
     }
 
-    //-------------------------------------------------------------------------------------------
+    public float obtenerPrecioTotal(String lista){
+        float precio = 0.0f;
+
+        String query = "select SUM(a.Precio * la.Cantidad) as 'Total' from ARTICULO_SUPERMERCADO as a " +
+                " join LISTA_ARTICULO as la on a.id = la.articulo" +
+                " where la.Nombre = ?;";
+        SQLiteDatabase db = this.obtenerManejadorLectura();
+        Cursor cursor = db.rawQuery(query, new String[]{lista});
+        if(cursor.moveToFirst()){
+            precio = cursor.getFloat(0);
+        }
+        db.close();
+
+        return precio;
+    }
 
     //ARTICULO (ID, NOMBRE, MARCA, TIPO)
 
@@ -412,8 +426,6 @@ public class BDHandler  extends SQLiteOpenHelper {
         db.close();
         return (int)ident;
     }
-
-    //ARTICULO - UPDATE
 
     public boolean modificarArticulo(Articulo articulo){
         int filaActu = 0;
@@ -1568,8 +1580,6 @@ public class BDHandler  extends SQLiteOpenHelper {
             SQLiteDatabase db = this.obtenerManejadorEscritura();
 
             ContentValues valores = new ContentValues();
-            valores.put(ListaArticulo.ARTICULO, listaArticulo.getArticulo());
-            valores.put(ListaArticulo.NOMBRE, listaArticulo.getNombre());
             valores.put(ListaArticulo.CANTIDAD, cantidad);
 
             filaActu = db.update("LISTA_ARTICULO", valores, ListaArticulo.ARTICULO + " = ? AND " + ListaArticulo.NOMBRE + " = ?", new String[]{Integer.toString(listaArticulo.getArticulo()), listaArticulo.getNombre()});
