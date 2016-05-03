@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import stockme.stockme.logica.ArticuloSupermercado;
@@ -99,7 +100,7 @@ public class BDHandler  extends SQLiteOpenHelper {
                 "`Nombre` TEXT NOT NULL," +
                 "`FechaCreacion` TEXT NOT NULL," +
                 "`FechaModificacion` TEXT NOT NULL," +
-                "`Supermercado` TEXT NOT NULL," +
+                "`Supermercado` TEXT NOT NULL DEFAULT 'Cualquiera'," +
                 "PRIMARY KEY(Nombre)," +
                 "FOREIGN KEY(`Supermercado`) REFERENCES ARTICULO(Nombre)" +
                 ")";
@@ -366,7 +367,6 @@ public class BDHandler  extends SQLiteOpenHelper {
             SQLiteDatabase db = this.obtenerManejadorEscritura();
             ContentValues values = new ContentValues();
 
-            values.put(Articulo.ID, articulo.getId());
             values.put(Articulo.NOMBRE, articulo.getNombre());
             values.put(Articulo.MARCA, articulo.getMarca());
             values.put(Articulo.TIPO, articulo.getTipo());
@@ -380,45 +380,17 @@ public class BDHandler  extends SQLiteOpenHelper {
             db.close();
             return (int)ident;
         }
-        /*
-        Integer id = articulo.getId();
-
-        //si es null significa que no está creado
-        if(id == null) {
-            SQLiteDatabase db = this.obtenerManejadorEscritura();
-            ContentValues values = new ContentValues();
-
-            values.put(Articulo.ID, articulo.getId());
-            values.put(Articulo.NOMBRE, articulo.getNombre());
-            values.put(Articulo.MARCA, articulo.getMarca());
-            values.put(Articulo.TIPO, articulo.getTipo());
-
-            long ident = db.insert("ARTICULO", null, values);
-
-            if (ident != -1) {
-                id = (int) ident;
-                articulo.setId(id);
-            }
-
-            db.close();
-            return id;
-        }else{
-            return null;
-        }*/
     }
 
     public Integer insertarArticulo(String nombre, String marca){
         if(estaArticulo(nombre, marca))
             return -1;
-            //return null;
         else{
             SQLiteDatabase db = this.obtenerManejadorEscritura();
             ContentValues values = new ContentValues();
 
-            //values.put(Articulo.ID, (Integer)null);
             values.put(Articulo.NOMBRE, nombre);
             values.put(Articulo.MARCA, marca);
-            //values.put(Articulo.TIPO, "Cualquiera");
 
             long ident = db.insert("ARTICULO", null, values);
 
@@ -431,7 +403,6 @@ public class BDHandler  extends SQLiteOpenHelper {
         SQLiteDatabase db = this.obtenerManejadorEscritura();
         ContentValues values = new ContentValues();
 
-        //values.put(Articulo.ID, (Integer)null);
         values.put(Articulo.NOMBRE, nombre);
         values.put(Articulo.MARCA, marca);
         values.put(Articulo.TIPO, tipo);
@@ -451,7 +422,6 @@ public class BDHandler  extends SQLiteOpenHelper {
             SQLiteDatabase db = this.obtenerManejadorEscritura();
 
             ContentValues valores = new ContentValues();
-            valores.put(Articulo.ID, articulo.getId());
             valores.put(Articulo.NOMBRE, articulo.getNombre());
             valores.put(Articulo.MARCA, articulo.getMarca());
             valores.put(Articulo.TIPO, articulo.getTipo());
@@ -469,10 +439,7 @@ public class BDHandler  extends SQLiteOpenHelper {
             SQLiteDatabase db = this.obtenerManejadorEscritura();
 
             ContentValues valores = new ContentValues();
-            valores.put(Articulo.ID, articulo.getId());
             valores.put(Articulo.NOMBRE, nombre);
-            valores.put(Articulo.MARCA, articulo.getMarca());
-            valores.put(Articulo.TIPO, articulo.getTipo());
 
             filaActu = db.update("ARTICULO", valores, Articulo.ID + " = ?", new String[]{Integer.toString(articulo.getId())});
             db.close();
@@ -487,10 +454,7 @@ public class BDHandler  extends SQLiteOpenHelper {
             SQLiteDatabase db = this.obtenerManejadorEscritura();
 
             ContentValues valores = new ContentValues();
-            valores.put(Articulo.ID, articulo.getId());
-            valores.put(Articulo.NOMBRE, articulo.getNombre());
             valores.put(Articulo.MARCA, marca);
-            valores.put(Articulo.TIPO, articulo.getTipo());
 
             filaActu = db.update("ARTICULO", valores, Articulo.ID + " = ?", new String[]{Integer.toString(articulo.getId())});
             db.close();
@@ -505,9 +469,6 @@ public class BDHandler  extends SQLiteOpenHelper {
             SQLiteDatabase db = this.obtenerManejadorEscritura();
 
             ContentValues valores = new ContentValues();
-            valores.put(Articulo.ID, articulo.getId());
-            valores.put(Articulo.NOMBRE, articulo.getNombre());
-            valores.put(Articulo.MARCA, articulo.getMarca());
             valores.put(Articulo.TIPO, tipo);
 
             filaActu = db.update("ARTICULO", valores, Articulo.ID + " = ?", new String[]{Integer.toString(articulo.getId())});
@@ -517,6 +478,8 @@ public class BDHandler  extends SQLiteOpenHelper {
     }
 
     //ARTICULO - DELETE
+
+    //Borrar en cascada de otras tablas?
 
     public boolean eliminarArticulo(Articulo articulo){
         int filaBorrada = 0;
@@ -539,6 +502,30 @@ public class BDHandler  extends SQLiteOpenHelper {
             db.close();
         }
         return filaBorrada> 0;
+    }
+
+    public boolean eliminarArticuloCascade(Articulo articulo){
+        boolean ok = false;
+        if(estaArticulo(articulo.getId())){
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+            db.beginTransaction();
+            try{
+                db.delete("ARTICULO", Articulo.ID + " = ?", new String[]{Integer.toString(articulo.getId())});
+                db.delete("STOCK", Stock.ARTICULO + " = ?", new String[]{Integer.toString(articulo.getId())});
+                List<ArticuloSupermercado> articulosSupermercado = this.obtenerArticulosSupermercadoPorArticulo(articulo.getId());
+                for (ArticuloSupermercado articuloSupermercado: articulosSupermercado) {
+                    db.delete("LISTA_ARTICULO", ListaArticulo.ARTICULO + " = ?", new String[]{Integer.toString(articuloSupermercado.getId())});
+                }
+                db.delete("ARTICULO_SUPERMERCADO", ArticuloSupermercado.ARTICULO + " = ?", new String[]{Integer.toString(articulo.getId())});
+
+            } catch (Exception e){
+                ok = false;
+            } finally {
+                db.endTransaction();
+                db.close();
+            }
+        }
+        return ok;
     }
 
     //-------------------------------------------------------------------------------------------
@@ -644,6 +631,8 @@ public class BDHandler  extends SQLiteOpenHelper {
         }
         return filaBorrada> 0;
     }
+
+    //public boolean eliminarSupermercadoCascade(){}
 
     //-------------------------------------------------------------------------------------------
 
@@ -928,10 +917,8 @@ public class BDHandler  extends SQLiteOpenHelper {
             SQLiteDatabase db = this.obtenerManejadorEscritura();
             ContentValues values = new ContentValues();
 
-            //values.put(Articulo.ID, (Integer)null);
             values.put(ArticuloSupermercado.ARTICULO, articulo);
             values.put(ArticuloSupermercado.SUPERMERCADO, supermercado);
-            //values.put(Articulo.TIPO, "Cualquiera");
 
             long ident = db.insert("ARTICULO_SUPERMERCADO", null, values);
 
@@ -975,7 +962,6 @@ public class BDHandler  extends SQLiteOpenHelper {
             SQLiteDatabase db = this.obtenerManejadorEscritura();
             ContentValues values = new ContentValues();
 
-            //values.put(Articulo.ID, (Integer)null);
             values.put(ArticuloSupermercado.ARTICULO, articulo);
             values.put(ArticuloSupermercado.SUPERMERCADO, supermercado);
             values.put(ArticuloSupermercado.PRECIO, precio);
@@ -1035,7 +1021,50 @@ public class BDHandler  extends SQLiteOpenHelper {
         return filaActu > 0;
     }
 
-    //faltan los modificarArticuloSupermercado[Articulo/Supermercado/Precio]
+    public boolean modificarArticuloSupermercadoArticulo(ArticuloSupermercado articuloSupermercado, int articulo){
+        int filaActu = 0;
+        if(estaArticuloSupermercado(articuloSupermercado.getId())){
+
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+
+            ContentValues valores = new ContentValues();
+            valores.put(ArticuloSupermercado.ARTICULO, articulo);
+
+            filaActu = db.update("ARTICULO_SUPERMERCADO", valores, ArticuloSupermercado.ID + " = ?", new String[]{Integer.toString(articuloSupermercado.getId())});
+            db.close();
+        }
+        return filaActu > 0;
+    }
+
+    public boolean modificarArticuloSupermercadoSupermercado(ArticuloSupermercado articuloSupermercado, String supermercado){
+        int filaActu = 0;
+        if(estaArticuloSupermercado(articuloSupermercado.getId())){
+
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+
+            ContentValues valores = new ContentValues();
+            valores.put(ArticuloSupermercado.SUPERMERCADO, supermercado);
+
+            filaActu = db.update("ARTICULO_SUPERMERCADO", valores, ArticuloSupermercado.ID + " = ?", new String[]{Integer.toString(articuloSupermercado.getId())});
+            db.close();
+        }
+        return filaActu > 0;
+    }
+
+    public boolean modificarArticuloSupermercadoPrecio(ArticuloSupermercado articuloSupermercado, float precio){
+        int filaActu = 0;
+        if(estaArticuloSupermercado(articuloSupermercado.getId())){
+
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+
+            ContentValues valores = new ContentValues();
+            valores.put(ArticuloSupermercado.PRECIO, precio);
+
+            filaActu = db.update("ARTICULO_SUPERMERCADO", valores, ArticuloSupermercado.ID + " = ?", new String[]{Integer.toString(articuloSupermercado.getId())});
+            db.close();
+        }
+        return filaActu > 0;
+    }
 
     //ARTICULO_SUPERMERCADO - DELETE
 
@@ -1062,6 +1091,38 @@ public class BDHandler  extends SQLiteOpenHelper {
         }
 
         return filaBorrada > 0;
+    }
+
+    public boolean eliminarArticuloSupermercado(String nombre, String marca, String supermercado){
+        int filaBorrada = 0;
+
+        if(estaArticuloSupermercado(nombre, marca, supermercado)){
+            Articulo articulo = this.obtenerArticulo(nombre, marca);
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+            filaBorrada = db.delete("ARTICULO_SUPERMERCADO", ArticuloSupermercado.ARTICULO + " = ? AND " + ArticuloSupermercado.SUPERMERCADO + " = ?",
+                    new String[]{Integer.toString(articulo.getId()), supermercado});
+            db.close();
+        }
+
+        return filaBorrada > 0;
+    }
+
+    public boolean eliminarArticuloSupermercadoCascade(ArticuloSupermercado articuloSupermercado){
+        boolean ok = false;
+        if(estaArticuloSupermercado(articuloSupermercado.getId())){
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+            db.beginTransaction();
+            try{
+                db.delete("LISTA_ARTICULO", ListaArticulo.ARTICULO + " = ?", new String[]{Integer.toString(articuloSupermercado.getId())});
+                db.delete("ARTICULO_SUPERMERCADO", ArticuloSupermercado.ID + " = ?", new String[]{Integer.toString(articuloSupermercado.getId())});
+            } catch (Exception e){
+                ok = false;
+            } finally {
+                db.endTransaction();
+                db.close();
+            }
+        }
+        return ok;
     }
 
     //-------------------------------------------------------------------------------------------
@@ -1160,9 +1221,46 @@ public class BDHandler  extends SQLiteOpenHelper {
         return ok;
     }
 
-    //Para los siguientes metodos necesito saber como se construyen las fechas
-    //public boolean insertarLista(String nombre){}
-    //public boolean insertarLista(String nombre, String supermercado){}
+    public boolean insertarLista(String nombre){
+        String fecha = Util.diaMesAnyo.format(new Date());
+        boolean ok = false;
+
+        if(!estaLista(nombre)) {
+
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+            ContentValues values = new ContentValues();
+
+            values.put(Lista.NOMBRE, nombre);
+            values.put(Lista.FECHA_CREACION, fecha);
+            values.put(Lista.FECHA_MODIFICACION, fecha);
+
+            db.insert("LISTA", null, values);
+            db.close();
+            ok = true;
+        }
+        return ok;
+    }
+
+    public boolean insertarLista(String nombre, String supermercado){
+        String fecha = Util.diaMesAnyo.format(new Date());
+        boolean ok = false;
+
+        if(!estaLista(nombre)) {
+
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+            ContentValues values = new ContentValues();
+
+            values.put(Lista.NOMBRE, nombre);
+            values.put(Lista.FECHA_CREACION, fecha);
+            values.put(Lista.FECHA_MODIFICACION, fecha);
+            values.put(Lista.SUPERMERCADO, supermercado);
+
+            db.insert("LISTA", null, values);
+            db.close();
+            ok = true;
+        }
+        return ok;
+    }
 
     //LISTA - UPDATE
 
@@ -1192,9 +1290,6 @@ public class BDHandler  extends SQLiteOpenHelper {
 
             ContentValues valores = new ContentValues();
             valores.put(Lista.NOMBRE, nombre);
-            valores.put(Lista.FECHA_CREACION, lista.getFechaCreacion());
-            valores.put(Lista.FECHA_MODIFICACION, lista.getFechaModificacion());
-            valores.put(Lista.SUPERMERCADO, lista.getSupermercado());
 
             filaActu = db.update("LISTA", valores, Lista.NOMBRE + " = ?", new String[]{lista.getNombre()});
             db.close();
@@ -1209,10 +1304,7 @@ public class BDHandler  extends SQLiteOpenHelper {
             SQLiteDatabase db = this.obtenerManejadorEscritura();
 
             ContentValues valores = new ContentValues();
-            valores.put(Lista.NOMBRE, lista.getNombre());
             valores.put(Lista.FECHA_CREACION, fechaCreacion);
-            valores.put(Lista.FECHA_MODIFICACION, lista.getFechaModificacion());
-            valores.put(Lista.SUPERMERCADO, lista.getSupermercado());
 
             filaActu = db.update("LISTA", valores, Lista.NOMBRE + " = ?", new String[]{lista.getNombre()});
             db.close();
@@ -1227,10 +1319,7 @@ public class BDHandler  extends SQLiteOpenHelper {
             SQLiteDatabase db = this.obtenerManejadorEscritura();
 
             ContentValues valores = new ContentValues();
-            valores.put(Lista.NOMBRE, lista.getNombre());
-            valores.put(Lista.FECHA_CREACION, lista.getFechaCreacion());
             valores.put(Lista.FECHA_MODIFICACION, fechaModificacion);
-            valores.put(Lista.SUPERMERCADO, lista.getSupermercado());
 
             filaActu = db.update("LISTA", valores, Lista.NOMBRE + " = ?", new String[]{lista.getNombre()});
             db.close();
@@ -1245,9 +1334,6 @@ public class BDHandler  extends SQLiteOpenHelper {
             SQLiteDatabase db = this.obtenerManejadorEscritura();
 
             ContentValues valores = new ContentValues();
-            valores.put(Lista.NOMBRE, lista.getNombre());
-            valores.put(Lista.FECHA_CREACION, lista.getFechaCreacion());
-            valores.put(Lista.FECHA_MODIFICACION, lista.getFechaModificacion());
             valores.put(Lista.SUPERMERCADO, supermercado);
 
             filaActu = db.update("LISTA", valores, Lista.NOMBRE + " = ?", new String[]{lista.getNombre()});
@@ -1574,11 +1660,6 @@ public class BDHandler  extends SQLiteOpenHelper {
         return obtenerStock(articulo.getId());
     }
 
-    /*
-    public List<Stock> obtenerStockPorMinimo[Menor, Mayor, Igual, Entre](int minimo)
-    public List<Stock> obtenerStockPorCantidad[Menor, Mayor, Igual, Entre](int cantidad)
-     */
-
     //STOCK - EXIST
 
     public boolean estaStock(int id){
@@ -1661,6 +1742,35 @@ public class BDHandler  extends SQLiteOpenHelper {
         }
     }
 
+    public boolean insertarStock(String nombre, String marca, String tipo, int minimo, int cantidad){
+        Articulo art = obtenerArticulo(nombre, marca, tipo);
+        if(art != null) {
+            if (!estaStock(art.getId())) {
+
+                SQLiteDatabase db = this.obtenerManejadorEscritura();
+                ContentValues values = new ContentValues();
+
+                values.put(Stock.ARTICULO, art.getId());
+                values.put(Stock.CANTIDAD, cantidad);
+                values.put(Stock.MINIMO, minimo);
+
+                db.insert("STOCK", null, values);
+                db.close();
+                return true;
+            }
+            else
+                return false;
+        }
+        else{
+            int id = insertarArticulo(nombre, marca, tipo);
+            if(id != -1)
+                return insertarStock(id, minimo, cantidad);
+            else
+                return false;
+
+        }
+    }
+
     //STOCK - UPDATE
 
     public boolean modificarStock(Stock stock){
@@ -1673,6 +1783,36 @@ public class BDHandler  extends SQLiteOpenHelper {
             valores.put(Stock.ARTICULO, stock.getArticulo());
             valores.put(Stock.CANTIDAD, stock.getCanitdad());
             valores.put(Stock.MINIMO, stock.getMinimo());
+
+            filaActu = db.update("STOCK", valores, Stock.ARTICULO + "=?", new String[]{Integer.toString(stock.getArticulo())});
+            db.close();
+        }
+        return filaActu > 0;
+    }
+
+    public boolean modificarStockCantidad(Stock stock, int cantidad){
+        int filaActu = 0;
+        if(estaStock(stock.getArticulo())){
+
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+
+            ContentValues valores = new ContentValues();
+            valores.put(Stock.CANTIDAD, cantidad);
+
+            filaActu = db.update("STOCK", valores, Stock.ARTICULO + "=?", new String[]{Integer.toString(stock.getArticulo())});
+            db.close();
+        }
+        return filaActu > 0;
+    }
+
+    public boolean modificarStockMinimo(Stock stock, int minimo){
+        int filaActu = 0;
+        if(estaStock(stock.getArticulo())){
+
+            SQLiteDatabase db = this.obtenerManejadorEscritura();
+
+            ContentValues valores = new ContentValues();
+            valores.put(Stock.MINIMO, minimo);
 
             filaActu = db.update("STOCK", valores, Stock.ARTICULO + "=?", new String[]{Integer.toString(stock.getArticulo())});
             db.close();
