@@ -1,14 +1,19 @@
 package stockme.stockme.adaptadores;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -16,7 +21,7 @@ import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -42,6 +47,10 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
     private TextView lblCantidad;
     private ImageButton btnMas;
     private ImageButton btnMenos;
+    private CheckBox cbComprado;
+
+    //para el diálogo
+    EditText input;
 
     //////atributos static para gestionar el precio. Necesario al no pertenecer los controles a esta vista
     private static TextView tv_precio_total;
@@ -57,7 +66,7 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
 
     private void actualizarPrecioTotal(){
         BDHandler manejador = new BDHandler(getContext());
-        tv_precio_total.setText(String.valueOf(manejador.obtenerPrecioTotal(lista.getNombre())));
+        tv_precio_total.setText(String.valueOf(round(manejador.obtenerPrecioTotal(lista.getNombre()), 2)));
         manejador.cerrar();
     }
 
@@ -148,8 +157,41 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
         lblCantidad = (TextView)item.findViewById(R.id.listitem_articulos_cantidad);
         lblCantidad.setText(Integer.toString(cantidad));
 
-        if (cantidad == 0)
+        cbComprado = (CheckBox)item.findViewById(R.id.listitem_articulos_cb_comprado);
+        cbComprado.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BDHandler manejador = new BDHandler(getContext());
+                int idArticulo = datos.get(position).getId();
+                ArticuloSupermercado articuloSuper = manejador.obtenerArticuloSupermercado(idArticulo);
+                CheckBox cb = (CheckBox)v;
+                if(cb.isChecked()){
+                    ListaArticulo la = manejador.obtenerListaArticulo(articuloSuper.getId(), lista.getNombre());
+                    int numArt = la.getCantidad();
+
+                    manejador.modificarArticuloEnLista(new ListaArticulo(articuloSuper.getId(), lista.getNombre(), 0));
+
+                    Articulo articulo = manejador.obtenerArticulo(articuloSuper.getArticulo());
+
+                    Util.mostrarToast(getContext(), "Comprado: " + articulo.getNombre());
+
+                    addCoste(articulo.getId(), articuloSuper.getPrecio() * numArt);
+                }else{
+                    manejador.modificarArticuloEnLista(new ListaArticulo(articuloSuper.getId(), lista.getNombre(), 1));
+                    if(isCoste(idArticulo))
+                        delCoste(idArticulo);
+                }
+                manejador.cerrar();
+                actualizarPrecioCompra();
+                actualizarPrecioTotal();
+                notifyDataSetChanged();
+            }
+        });
+
+        if (cantidad == 0) {
             item.setBackgroundColor(Color.parseColor("#D887FF7D"));
+            cbComprado.setChecked(true);
+        }
 
         btnMas = (ImageButton)item.findViewById(R.id.listitem_articulos_mas);
         btnMas.setOnClickListener(new View.OnClickListener() {
@@ -184,33 +226,78 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
                     manejador.modificarArticuloEnLista(new ListaArticulo(idArticulo, lista.getNombre(), cantidad - 1));
                     addCoste(idArticulo, datos.get(position).getPrecio());
                 }
-
                 manejador.cerrar();
                 actualizarPrecioTotal();
                 actualizarPrecioCompra();
                 notifyDataSetChanged();
             }
         });
+//        cbComprado.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if(isChecked){
+//                    BDHandler manejador = new BDHandler(getContext());
+//                    int idArticulo = datos.get(position).getId();
+//                    ArticuloSupermercado articuloSuper = manejador.obtenerArticuloSupermercado(idArticulo);
+//                    manejador.modificarArticuloEnLista(new ListaArticulo(articuloSuper.getId(), lista.getNombre(), 0));
+//
+//                    Articulo articulo = manejador.obtenerArticulo(articuloSuper.getId());
+//
+//                    Util.mostrarToast(getContext(), "Comprado: " + articulo.getNombre());
+//                    actualizarPrecioTotal();
+//                    addCoste(articulo.getId(), articuloSuper.getPrecio() * manejador.numArticulosEnLista(lista.getNombre()));
+//                    manejador.cerrar();
+//
+//                    actualizarPrecioCompra();
+//                    notifyDataSetChanged();
+//                }
+//            }
+//        });
+        //cbComprado.setChecked(cbComprado.isChecked());
 
         articulos = (DynamicListView)parent.findViewById(R.id.lista_compra_lista);
 
         articulos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                BDHandler manejador = new BDHandler(getContext());
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int pos, long id) {
+                final BDHandler manejador = new BDHandler(getContext());
+                final ArticuloSupermercado articulo = ((ArticuloSupermercado) parent.getItemAtPosition(pos));
 
-                ArticuloSupermercado articuloSuper = (ArticuloSupermercado) parent.getItemAtPosition(position);
-                manejador.modificarArticuloEnLista(new ListaArticulo(articuloSuper.getId(), lista.getNombre(), 0));
+                //Diálogo para cambiar el precio
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setTitle("Nuevo precio");
 
-                Articulo articulo = manejador.obtenerArticulo(articuloSuper.getId());
+                input = new EditText(view.getContext());
+                input.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);//TODO: poner que acepte solo números (android:inputType="numberDecimal")
+                builder.setView(input);
 
-                Util.mostrarToast(view.getContext(), "Comprado: " + articulo.getNombre());
-                actualizarPrecioTotal();
-                addCoste(articulo.getId(), articuloSuper.getPrecio() * manejador.numArticulosEnLista(lista.getNombre()));
+                builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String nPrecio = input.getText().toString();
+                        float precio = 0;
+                        if(!nPrecio.isEmpty()){
+                            precio = Float.parseFloat(nPrecio);
+                        }
+                        manejador.modificarArticuloSupermercadoPrecio(articulo, precio);
+                        datos.get(pos).setPrecio(precio);
+                        actualizarPrecioTotal();
+                        actualizarPrecioCompra();
+                        notifyDataSetChanged();
+                    }
+                });
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
+
                 manejador.cerrar();
 
-                actualizarPrecioCompra();
-                notifyDataSetChanged();
                 return true;
             }
         });

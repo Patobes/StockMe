@@ -19,7 +19,7 @@ import stockme.stockme.logica.Stock;
 import stockme.stockme.logica.Supermercado;
 import stockme.stockme.util.Util;
 
-public class BDHandler  extends SQLiteOpenHelper {
+public class BDHandler extends SQLiteOpenHelper {
     //private static int bdVersion = Util.getBD_VERSION();
 
     public BDHandler(Context context) {
@@ -161,47 +161,43 @@ public class BDHandler  extends SQLiteOpenHelper {
         insertarIniciales(db);
     }
 
-    public SQLiteDatabase obtenerManejadorLectura()
-    {
+    public SQLiteDatabase obtenerManejadorLectura() {
         return this.getReadableDatabase();
     }
 
-    public SQLiteDatabase obtenerManejadorEscritura()
-    {
+    public SQLiteDatabase obtenerManejadorEscritura() {
         return this.getWritableDatabase();
     }
 
-    public void abrir()
-    {
+    public void abrir() {
         this.getWritableDatabase();
     }
 
-    public void cerrar()
-    {
+    public void cerrar() {
         this.close();
     }
 
 
     //FUNCIONES EXTRAS
-    public List<String> obtenerMarcas(){
+    public List<String> obtenerMarcas() {
         ArrayList<String> marcas = new ArrayList<>();
 
         String query = "SELECT DISTINCT " + Articulo.MARCA + " FROM ARTICULO";
         SQLiteDatabase db = this.obtenerManejadorLectura();
         Cursor cursor = db.rawQuery(query, null);
-        if(cursor.moveToFirst()){
-            do{
+        if (cursor.moveToFirst()) {
+            do {
                 String marca = cursor.getString(0);
-                if(marca != null && !marca.isEmpty())
+                if (marca != null && !marca.isEmpty())
                     marcas.add(marca);
-            }while(cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
         db.close();
 
         return marcas;
     }
 
-    public float obtenerPrecioTotal(String lista){
+    public float obtenerPrecioTotal(String lista) {
         float precio = 0.0f;
 
         String query = "select SUM(a.Precio * la.Cantidad) as 'Total' from ARTICULO_SUPERMERCADO as a " +
@@ -209,7 +205,7 @@ public class BDHandler  extends SQLiteOpenHelper {
                 " where la.Nombre = ?;";
         SQLiteDatabase db = this.obtenerManejadorLectura();
         Cursor cursor = db.rawQuery(query, new String[]{lista});
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             precio = cursor.getFloat(0);
         }
         db.close();
@@ -221,7 +217,7 @@ public class BDHandler  extends SQLiteOpenHelper {
 
     //ARTICULO - GET
 
-    public List<Articulo> obtenerArticulos(){
+    public List<Articulo> obtenerArticulos() {
         ArrayList<Articulo> lista = new ArrayList<Articulo>();
         String query = "SELECT * FROM ARTICULO";
 
@@ -244,14 +240,14 @@ public class BDHandler  extends SQLiteOpenHelper {
         return lista;
     }
 
-    public Articulo obtenerArticulo(int id){
+    public Articulo obtenerArticulo(int id) {
         Articulo articulo = null;
         String query = "SELECT * FROM ARTICULO WHERE " + Articulo.ID + " = ?";
         SQLiteDatabase lectura = this.obtenerManejadorLectura();
 
         Cursor cursor = lectura.rawQuery(query, new String[]{Integer.toString(id)});
 
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             articulo = new Articulo(cursor.getInt(cursor.getColumnIndex(Articulo.ID)),
                     cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)),
                     cursor.getString(cursor.getColumnIndex(Articulo.MARCA)),
@@ -261,14 +257,14 @@ public class BDHandler  extends SQLiteOpenHelper {
         return articulo;
     }
 
-    public Articulo obtenerArticulo(String nombre, String marca){
+    public Articulo obtenerArticulo(String nombre, String marca) {
         Articulo articulo = null;
         String query = "SELECT * FROM ARTICULO WHERE " + Articulo.NOMBRE + " = ? AND " + Articulo.MARCA + " = ?";
         SQLiteDatabase lectura = this.obtenerManejadorLectura();
 
         Cursor cursor = lectura.rawQuery(query, new String[]{nombre, marca});
 
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             articulo = new Articulo(cursor.getInt(cursor.getColumnIndex(Articulo.ID)),
                     cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)),
                     cursor.getString(cursor.getColumnIndex(Articulo.MARCA)),
@@ -864,8 +860,10 @@ public class BDHandler  extends SQLiteOpenHelper {
         String query = "SELECT * FROM ARTICULO_SUPERMERCADO WHERE " + ArticuloSupermercado.PRECIO + " > ? AND " + ArticuloSupermercado.PRECIO + " < ?";
 
         float minimo = precio1, maximo = precio2;
-        if(precio2 < precio1)
-            minimo = precio2; maximo = precio1;
+        if(precio2 < precio1) {
+            minimo = precio2;
+            maximo = precio1;
+        }
         SQLiteDatabase db = this.obtenerManejadorLectura();
         Cursor cursor = db.rawQuery(query, new String[]{Float.toString(minimo), Float.toString(maximo)});
 
@@ -961,8 +959,7 @@ public class BDHandler  extends SQLiteOpenHelper {
                 return insertarArticuloSupermercado(id, supermercado);
             else
                 return -1;
-        }
-        else{
+        } else {
             return insertarArticuloSupermercado(art.getId(), supermercado);
         }
     }
@@ -993,8 +990,7 @@ public class BDHandler  extends SQLiteOpenHelper {
                 return insertarArticuloSupermercado(id, supermercado, precio);
             else
                 return -1;
-        }
-        else{
+        } else {
             return insertarArticuloSupermercado(art.getId(), supermercado, precio);
         }
     }
@@ -1007,8 +1003,7 @@ public class BDHandler  extends SQLiteOpenHelper {
                 return insertarArticuloSupermercado(id, supermercado, precio);
             else
                 return -1;
-        }
-        else{
+        } else {
             return insertarArticuloSupermercado(art.getId(), supermercado, precio);
         }
     }
@@ -1738,11 +1733,9 @@ public class BDHandler  extends SQLiteOpenHelper {
                 db.insert("STOCK", null, values);
                 db.close();
                 return true;
-            }
-            else
+            } else
                 return false;
-        }
-        else{
+        } else {
             int id = insertarArticulo(nombre, marca);
             if(id != -1)
                 return insertarStock(id, cantidad, minimo);
@@ -1767,11 +1760,9 @@ public class BDHandler  extends SQLiteOpenHelper {
                 db.insert("STOCK", null, values);
                 db.close();
                 return true;
-            }
-            else
+            } else
                 return false;
-        }
-        else{
+        } else {
             int id = insertarArticulo(nombre, marca, tipo);
             if(id != -1)
                 return insertarStock(id, cantidad, minimo);

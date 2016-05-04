@@ -1,6 +1,6 @@
 ----------Pendientes:--------------------------------------------------------------
 -Navegación..., pregunta cuando se va a cerrar la app
--Modificar elementos de la lista de la compra como el precio de un artículo
+-Cambiar comportamiento lista compra para usar los checkboxes
 
 ----------Ideas:-------------------------------------------------------------------
 -En ArticulosAdd, que se preseleccione el supermercado si la lista tiene uno elegido (no es "cualquiera")
@@ -10,6 +10,7 @@ abra una ventana para modificarlo.
 ----------Realizado recientemente:-------------------------------------------------
 -Autocompletado de marcas
 -Vista de bd
+-Modificar elementos de la lista de la compra como el precio de un artículo
 
 ---------Tobes/Jaun Rama master---------------------------------------------------
 -Corregir la lista de ListaDeArticulos. El botón se desplaza al insertar elemento.

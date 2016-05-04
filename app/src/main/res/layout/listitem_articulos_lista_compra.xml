@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:descendantFocusability="blocksDescendants"
-    android:paddingLeft="10dp">
+    android:descendantFocusability="blocksDescendants">
 
     <TextView
         android:layout_width="wrap_content"
@@ -11,11 +10,11 @@
         android:text="Nombre"
         android:id="@+id/listitem_articulos_nombre"
         android:textSize="20sp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
         android:clickable="false"
         android:focusable="false"
-        android:focusableInTouchMode="false"/>
+        android:focusableInTouchMode="false"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/listitem_articulos_cb_comprado" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -41,7 +40,7 @@
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:layout_below="@+id/listitem_articulos_nombre"
-        android:layout_alignParentStart="true" />
+        android:layout_toEndOf="@+id/listitem_articulos_cb_comprado" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -114,5 +113,15 @@
         android:layout_alignBottom="@+id/listitem_articulos_cantidad"
         android:minWidth="30dp"
         android:maxWidth="40dp"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listitem_articulos_cb_comprado"
+        android:checked="false"
+        android:layout_alignTop="@+id/listitem_articulos_marca"
+        android:layout_alignParentStart="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
 
 </RelativeLayout>

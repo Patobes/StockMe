@@ -66,6 +66,8 @@ public class ListaCompra extends AppCompatActivity implements NavigationView.OnN
                 tv_precio_compra.setText("0.0");
             }
         });
+
+        AdaptadorListItemArticulosListaCompra.resetCostes();
     }
 
     @Override
@@ -81,7 +83,7 @@ public class ListaCompra extends AppCompatActivity implements NavigationView.OnN
         final AdaptadorListItemArticulosListaCompra adaptador = new AdaptadorListItemArticulosListaCompra(this, listaArticulos, lista);
 
 
-        tv_precio_total.setText(String.valueOf(manejador.obtenerPrecioTotal(lista.getNombre())));
+        tv_precio_total.setText(String.valueOf(AdaptadorListItemArticulosListaCompra.round(manejador.obtenerPrecioTotal(lista.getNombre()), 2)));
 
         AdaptadorListItemArticulosListaCompra.setTv_precio_total(tv_precio_total);
         AdaptadorListItemArticulosListaCompra.setTv_precio_compra(tv_precio_compra);
