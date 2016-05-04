@@ -3,23 +3,23 @@ package stockme.stockme.logica;
 
 public class Stock {
     private int articulo;
+    private int cantidad;
     private int minimo;
-    private int canitdad;
 
     public static String ARTICULO = "Articulo";
-    public static String MINIMO = "Minimo";
     public static String CANTIDAD = "Cantidad";
+    public static String MINIMO = "Minimo";
 
     public Stock(){
         articulo = 0;
+        cantidad = 0;
         minimo = 0;
-        canitdad = 0;
     }
 
-    public Stock(int articulo, int minimo, int canitdad) {
+    public Stock(int articulo, int cantidad, int minimo) {
         this.articulo = articulo;
+        this.cantidad = cantidad;
         this.minimo = minimo;
-        this.canitdad = canitdad;
     }
 
     public int getArticulo() {
@@ -38,11 +38,11 @@ public class Stock {
         this.minimo = minimo;
     }
 
-    public int getCanitdad() {
-        return canitdad;
+    public int getCantidad() {
+        return cantidad;
     }
 
-    public void setCantidad(int canitdad) {
-        this.canitdad = canitdad;
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
 }

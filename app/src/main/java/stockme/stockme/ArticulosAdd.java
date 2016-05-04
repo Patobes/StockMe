@@ -186,7 +186,7 @@ public class ArticulosAdd extends AppCompatActivity implements NavigationView.On
                             }
 
                         } else {
-                            Util.mostrarToast(v.getContext(), "Debes intertar un nombre");
+                            Util.mostrarToast(v.getContext(), "Debes insertar un nombre");
                             manejador.cerrar();
                             manejador2.cerrar();
                         }
@@ -235,8 +235,11 @@ public class ArticulosAdd extends AppCompatActivity implements NavigationView.On
             Articulo articulo = data.getExtras().getParcelable("Articulo");
             etNombre.setText(articulo.getNombre());
             atv_marcas.setText(articulo.getMarca());
-            //spTipos.setSelection(sptipos.getarticulo.getTipo());
+            for (int i = 0; i < spTipos.getCount(); i++){
+                String tipo = (String)spTipos.getItemAtPosition(i);
+                if (tipo.compareTo(articulo.getTipo()) == 0)
+                    spTipos.setSelection(i);
+            }
         }
-
     }
 }

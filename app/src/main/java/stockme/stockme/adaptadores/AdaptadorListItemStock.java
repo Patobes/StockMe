@@ -34,10 +34,9 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View item = inflater.inflate(R.layout.listitem_stock, null);
 
-        stock = new Stock();
-        stock.setArticulo(datos.get(position).getArticulo());
-        stock.setCantidad(datos.get(position).getCanitdad());
-        stock.setMinimo(datos.get(position).getMinimo());
+        stock = new Stock(datos.get(position).getArticulo(),
+                datos.get(position).getCantidad(),
+                datos.get(position).getMinimo());
 
         BDHandler manejador = new BDHandler(getContext());
 
@@ -46,7 +45,7 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
         lblNombre.setText(manejador.obtenerArticulo(stock.getArticulo()).getNombre());
 
         lblCantidad = (TextView)item.findViewById(R.id.listitem_stock_cantidad);
-        lblCantidad.setText(String.valueOf(stock.getCanitdad()));
+        lblCantidad.setText(String.valueOf(stock.getCantidad()));
 
         lblMarca = (TextView)item.findViewById(R.id.listitem_stock_marca);
         lblMarca.setText(manejador.obtenerArticulo(stock.getArticulo()).getMarca());

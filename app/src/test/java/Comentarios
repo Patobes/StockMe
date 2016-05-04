@@ -28,3 +28,12 @@ abra una ventana para modificarlo.
 
 ----------Stock--------------
 - Revisarlo entero, para adaptarlo a la nueva BBDD y al nuevo estilo general de la app
+
+- Añadir a Stock con los parametros de la nueva BBDD (formulario similar al de lista_articulo), añadir boton que llame
+	a actividad de catalogo para seleccionar articulo ya existente.
+
+- Sumar/Restar cantidad de articulos (-1/+1) <-- Hacerlo con deslizamiento de dedo (de izq a dch y al reves)
+- Eliminar de Stock permanentemente
+- Poner a 0
+- Añadir automaticamente cuando la cantidad sea menor que el minimo establecido --> Que pregunte a que lista añadir
+- Mejorar la forma en que se muestran los elementos del Stock

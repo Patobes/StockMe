@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -15,10 +14,8 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
 
-    <!--TODO: Esto se desactiva para poder diseñar bien el el content_articulos_add
-    si no, se vería el menú lateral encima. Descomentar el siguiente código al terminar el diseño-->
     <include
-    layout="@layout/menu_lateral"
-    />
+        layout="@layout/menu_lateral"
+        />
 
 </android.support.v4.widget.DrawerLayout>

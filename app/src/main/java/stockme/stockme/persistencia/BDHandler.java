@@ -82,8 +82,8 @@ public class BDHandler  extends SQLiteOpenHelper {
          */
         String stock = "CREATE TABLE `STOCK` (" +
                 "`Articulo` INTEGER NOT NULL," +
+                "`Cantidad` INTEGER NOT NULL DEFAULT 1," +
                 "`Minimo` INTEGER NOT NULL DEFAULT 0," +
-                "`Cantidad` INTEGER NOT NULL DEFAULT 0," +
                 "PRIMARY KEY(Articulo)," +
                 "FOREIGN KEY(`Articulo`) REFERENCES `ARTICULO`(`Id`)" +
                 ")";
@@ -152,8 +152,8 @@ public class BDHandler  extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO 'LISTA_ARTICULO' VALUES(3,'Lista prueba', 3)");
         db.execSQL("INSERT INTO 'LISTA_ARTICULO' VALUES(4,'Lista prueba', 5)");
 
-        db.execSQL("INSERT INTO 'STOCK' VALUES (1, 1, 4)");
-        db.execSQL("INSERT INTO 'STOCK' VALUES (2, 1, 5)");
+        db.execSQL("INSERT INTO 'STOCK' VALUES (1, 4, 1)");
+        db.execSQL("INSERT INTO 'STOCK' VALUES (2, 5, 0)");
     }
 
     @Override
@@ -1695,7 +1695,7 @@ public class BDHandler  extends SQLiteOpenHelper {
             ContentValues values = new ContentValues();
 
             values.put(Stock.ARTICULO, stock.getArticulo());
-            values.put(Stock.CANTIDAD, stock.getCanitdad());
+            values.put(Stock.CANTIDAD, stock.getCantidad());
             values.put(Stock.MINIMO, stock.getMinimo());
 
             db.insert("STOCK", null, values);
@@ -1705,7 +1705,7 @@ public class BDHandler  extends SQLiteOpenHelper {
         return ok;
     }
 
-    public boolean insertarStock(int articulo, int minimo, int cantidad){
+    public boolean insertarStock(int articulo, int cantidad, int minimo){
         if(!estaStock(articulo)) {
 
             SQLiteDatabase db = this.obtenerManejadorEscritura();
@@ -1723,7 +1723,7 @@ public class BDHandler  extends SQLiteOpenHelper {
             return false;
     }
 
-    public boolean insertarStock(String nombre, String marca, int minimo, int cantidad){
+    public boolean insertarStock(String nombre, String marca, int cantidad, int minimo){
         Articulo art = obtenerArticulo(nombre, marca);
         if(art != null) {
             if (!estaStock(art.getId())) {
@@ -1745,14 +1745,14 @@ public class BDHandler  extends SQLiteOpenHelper {
         else{
             int id = insertarArticulo(nombre, marca);
             if(id != -1)
-                return insertarStock(id, minimo, cantidad);
+                return insertarStock(id, cantidad, minimo);
             else
                 return false;
 
         }
     }
 
-    public boolean insertarStock(String nombre, String marca, String tipo, int minimo, int cantidad){
+    public boolean insertarStock(String nombre, String marca, String tipo, int cantidad, int minimo){
         Articulo art = obtenerArticulo(nombre, marca, tipo);
         if(art != null) {
             if (!estaStock(art.getId())) {
@@ -1774,7 +1774,7 @@ public class BDHandler  extends SQLiteOpenHelper {
         else{
             int id = insertarArticulo(nombre, marca, tipo);
             if(id != -1)
-                return insertarStock(id, minimo, cantidad);
+                return insertarStock(id, cantidad, minimo);
             else
                 return false;
 
@@ -1791,7 +1791,7 @@ public class BDHandler  extends SQLiteOpenHelper {
 
             ContentValues valores = new ContentValues();
             valores.put(Stock.ARTICULO, stock.getArticulo());
-            valores.put(Stock.CANTIDAD, stock.getCanitdad());
+            valores.put(Stock.CANTIDAD, stock.getCantidad());
             valores.put(Stock.MINIMO, stock.getMinimo());
 
             filaActu = db.update("STOCK", valores, Stock.ARTICULO + "=?", new String[]{Integer.toString(stock.getArticulo())});

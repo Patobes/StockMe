@@ -79,7 +79,7 @@ public class InfoBD extends AppCompatActivity {
         }
         List<String> stocks = new ArrayList<>();
         for(Stock stock: listaStocks){
-            stocks.add("Art: " + stock.getArticulo() + ", x" + stock.getCanitdad());
+            stocks.add("Art: " + stock.getArticulo() + ", x" + stock.getCantidad());
         }
         List<String> listas = new ArrayList<>();
         for(Lista l: listaListas){
