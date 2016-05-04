@@ -188,6 +188,8 @@ public class StockAdd extends AppCompatActivity implements NavigationView.OnNavi
         manejador.cerrar();
     }
 
+    //TODO: hay que controlar que al añadir el artículo al stock vuelve a la principal y carga la lista
+    //debería cargar stock
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

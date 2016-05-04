@@ -9,6 +9,7 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -19,6 +20,8 @@ import android.widget.TextView;
 
 import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
+
+import org.w3c.dom.Text;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -50,7 +53,7 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
     private CheckBox cbComprado;
 
     //para el diálogo
-    EditText input;
+    View vistaPrecio;
 
     //////atributos static para gestionar el precio. Necesario al no pertenecer los controles a esta vista
     private static TextView tv_precio_total;
@@ -264,15 +267,50 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
                 final ArticuloSupermercado articulo = ((ArticuloSupermercado) parent.getItemAtPosition(pos));
 
                 //Diálogo para cambiar el precio
-                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                builder.setTitle("Nuevo precio");
+//                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+//                builder.setTitle("Nuevo precio");
+//
+//                input = new EditText(view.getContext());
+//                input.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);//TODO: poner que acepte solo números (android:inputType="numberDecimal")
+//                builder.setView(input);
+//
+//                builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+//
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        String nPrecio = input.getText().toString();
+//                        float precio = 0;
+//                        if(!nPrecio.isEmpty()){
+//                            precio = Float.parseFloat(nPrecio);
+//                        }
+//                        manejador.modificarArticuloSupermercadoPrecio(articulo, precio);
+//                        datos.get(pos).setPrecio(precio);
+//                        actualizarPrecioTotal();
+//                        actualizarPrecioCompra();
+//                        notifyDataSetChanged();
+//                    }
+//                });
+//                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.cancel();
+//                    }
+//                });
+//
+//                builder.show();
 
-                input = new EditText(view.getContext());
-                input.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);//TODO: poner que acepte solo números (android:inputType="numberDecimal")
-                builder.setView(input);
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+
+                builder.setTitle("Nuevo precio");
+                vistaPrecio = LayoutInflater.from(view.getContext()).inflate(R.layout.dialogo_cambiar_precio, parent,false);
+                builder.setView(vistaPrecio);
+
+                final TextView txActual = (TextView)vistaPrecio.findViewById(R.id.dialogo_cambiar_precio_tv_actual);
+                final EditText input = (EditText)vistaPrecio.findViewById(R.id.dialogo_cambiar_precio_et_precio);
+
+                txActual.setText("Actual: " + String.valueOf(round(datos.get(pos).getPrecio(), 2)) + " €");
 
                 builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String nPrecio = input.getText().toString();
@@ -294,7 +332,9 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
                     }
                 });
 
-                builder.show();
+                AlertDialog ad = builder.show();
+                if(input.requestFocus())
+                    ad.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
                 manejador.cerrar();
 
