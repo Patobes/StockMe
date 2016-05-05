@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ import stockme.stockme.util.Util;
 public class Fragment_catalogo_tipos extends Fragment {
     private OnFragmentInteractionListener mListener;
     private GridView articulos;
+    private Button aniadir;
     List<Articulo> listaArticulos;
 
     public Fragment_catalogo_tipos() {
@@ -75,6 +77,17 @@ public class Fragment_catalogo_tipos extends Fragment {
         final AdaptadorGridItemCatalogoTipos adaptador = new AdaptadorGridItemCatalogoTipos(view.getContext(), listaArticulos);
         articulos.setAdapter(adaptador);
 
+        aniadir = (Button) view.findViewById(R.id.fragment_catalogo_btn_mas);
+
+        aniadir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(v.getContext(), ArticuloSimpleAdd.class);
+                startActivityForResult(i,1);
+            }
+        });
+
+
         articulos = (GridView) view.findViewById(R.id.gridView_catalogo_articulos_tipos);
 
         articulos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -107,6 +120,13 @@ public class Fragment_catalogo_tipos extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if ((requestCode == 1) && (resultCode == Activity.RESULT_OK)){
+            //TODO actualizar al volver
+        }
+    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

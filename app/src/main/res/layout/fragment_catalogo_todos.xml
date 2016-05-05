@@ -31,8 +31,7 @@
             android:nestedScrollingEnabled="false"
             android:numColumns="2"
             android:horizontalSpacing="1dp"
-            android:verticalSpacing="1dp"
-            android:background="#c7e8fd" />
+            android:verticalSpacing="1dp" />
 
         <Button
             style="?android:attr/buttonStyleSmall"

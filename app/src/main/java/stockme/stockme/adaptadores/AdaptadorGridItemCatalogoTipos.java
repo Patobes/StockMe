@@ -20,7 +20,6 @@ import stockme.stockme.logica.Articulo;
 public class AdaptadorGridItemCatalogoTipos extends BaseAdapter {
     private Context context;
     private List<Articulo> datos;
-    private GridView articulos;
 
     public AdaptadorGridItemCatalogoTipos(Context context, List<Articulo> articulos) {
         this.context = context;
@@ -53,6 +52,9 @@ public class AdaptadorGridItemCatalogoTipos extends BaseAdapter {
 
         TextView nombre = (TextView) view.findViewById(R.id.catalogo_art_nombre);
         nombre.setText(datos.get(position).getNombre());
+
+        TextView marca = (TextView) view.findViewById(R.id.catalogo_art_marca);
+        marca.setText(datos.get(position).getMarca());
 
         String tipo = datos.get(position).getTipo();
 

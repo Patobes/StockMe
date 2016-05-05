@@ -69,15 +69,15 @@ public class Fragment_catalogo_todos extends Fragment {
         final AdaptadorGridItemCatalogo adaptador = new AdaptadorGridItemCatalogo(view.getContext(), listaArticulos);
         articulos.setAdapter(adaptador);
 
-       /* aniadir = (Button) view.findViewById(R.id.fragment_catalogo_btn_mas);
+        aniadir = (Button) view.findViewById(R.id.fragment_catalogo_btn_mas);
 
         aniadir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), ArticulosAdd.class);
-                startActivityForResult(i, 1);
+                Intent i = new Intent(v.getContext(), ArticuloSimpleAdd.class);
+                startActivityForResult(i,1);
             }
-        });*/
+        });
 
         articulos = (GridView) view.findViewById(R.id.gridView_catalogo_articulos);
 
@@ -107,6 +107,14 @@ public class Fragment_catalogo_todos extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if ((requestCode == 1) && (resultCode == Activity.RESULT_OK)){
+            //TODO actualizar al volver
+        }
     }
 
     /**
