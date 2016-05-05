@@ -56,7 +56,7 @@ public class Fragment_listas extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Preferencias.addPreferencia("anterior", "Listas");
+        Preferencias.setPreferencia("anterior", "fragListas");
 
         view.setVerticalScrollBarEnabled(false);
 

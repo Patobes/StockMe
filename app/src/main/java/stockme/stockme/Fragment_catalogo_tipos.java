@@ -60,7 +60,6 @@ public class Fragment_catalogo_tipos extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Preferencias.addPreferencia("anterior", "Listas");
 
         listaArticulos = new ArrayList<Articulo>();
         articulos = (GridView) view.findViewById(R.id.gridView_catalogo_articulos_tipos);

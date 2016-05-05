@@ -60,7 +60,6 @@ public class Fragment_catalogo_todos extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Preferencias.addPreferencia("anterior", "Listas");
 
         articulos = (GridView)view.findViewById(R.id.gridView_catalogo_articulos);
 

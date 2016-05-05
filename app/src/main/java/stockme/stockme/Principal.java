@@ -1,5 +1,6 @@
 package stockme.stockme;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import stockme.stockme.persistencia.BDHandler;
+import stockme.stockme.util.OpcionesMenus;
 import stockme.stockme.util.Preferencias;
 import stockme.stockme.util.Util;
 
@@ -57,20 +59,15 @@ public class Principal extends AppCompatActivity
     }
 
     private void crearPreferenciasPorDefecto() {
-        if(Preferencias.getPreferenciaString("moneda") == null)
-            Preferencias.addPreferencia("moneda", "€");
+        Preferencias.setPreferencia("moneda", Util.moneda);
+        Preferencias.setPreferencia("anterior", "Listas");
     }
 
     /*TODO: para la navegabilidad podemos utiliar la traza creada al guardar en Preferencias
     la activity o fragment anterior. En cada activity implementar este método para que regrese a la anterior*/
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        OpcionesMenus.onBackPressed(this);
     }
 
     @Override
@@ -106,7 +103,6 @@ public class Principal extends AppCompatActivity
             fragmento = new Fragment_stock();
             fragTransact = true;
         } else if (id == R.id.nav_articulos) {
-            item.setChecked(true);
             startActivity(new Intent(this, CatalogoArticulos.class));
             finish();
         } else if (id == R.id.nav_supermercados) {
