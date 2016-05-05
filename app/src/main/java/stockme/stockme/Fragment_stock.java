@@ -52,7 +52,7 @@ public class Fragment_stock extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Preferencias.addPreferencia("anterior", "Stock");
+        Preferencias.setPreferencia("anterior", "fragStock");
 
         lv_stock = (ListView) view.findViewById(R.id.fragment_stock_listview);
         //recojo las listas existenes

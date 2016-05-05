@@ -35,6 +35,7 @@ import stockme.stockme.logica.ArticuloSupermercado;
 import stockme.stockme.logica.Lista;
 import stockme.stockme.logica.ListaArticulo;
 import stockme.stockme.persistencia.BDHandler;
+import stockme.stockme.util.Preferencias;
 import stockme.stockme.util.Util;
 
 public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<ArticuloSupermercado> {
@@ -266,39 +267,6 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
                 final BDHandler manejador = new BDHandler(getContext());
                 final ArticuloSupermercado articulo = ((ArticuloSupermercado) parent.getItemAtPosition(pos));
 
-                //Diálogo para cambiar el precio
-//                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-//                builder.setTitle("Nuevo precio");
-//
-//                input = new EditText(view.getContext());
-//                input.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);//TODO: poner que acepte solo números (android:inputType="numberDecimal")
-//                builder.setView(input);
-//
-//                builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-//
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        String nPrecio = input.getText().toString();
-//                        float precio = 0;
-//                        if(!nPrecio.isEmpty()){
-//                            precio = Float.parseFloat(nPrecio);
-//                        }
-//                        manejador.modificarArticuloSupermercadoPrecio(articulo, precio);
-//                        datos.get(pos).setPrecio(precio);
-//                        actualizarPrecioTotal();
-//                        actualizarPrecioCompra();
-//                        notifyDataSetChanged();
-//                    }
-//                });
-//                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        dialog.cancel();
-//                    }
-//                });
-//
-//                builder.show();
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
 
                 builder.setTitle("Nuevo precio");
@@ -308,7 +276,7 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
                 final TextView txActual = (TextView)vistaPrecio.findViewById(R.id.dialogo_cambiar_precio_tv_actual);
                 final EditText input = (EditText)vistaPrecio.findViewById(R.id.dialogo_cambiar_precio_et_precio);
 
-                txActual.setText("Actual: " + String.valueOf(round(datos.get(pos).getPrecio(), 2)) + " €");
+                txActual.setText("Actual: " + String.valueOf(round(datos.get(pos).getPrecio(), 2)) + " " + Preferencias.getPreferenciaString("moneda"));
 
                 builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     @Override

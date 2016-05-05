@@ -1,5 +1,6 @@
 package stockme.stockme;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,18 +20,22 @@ import android.widget.GridView;
 
 import stockme.stockme.logica.Articulo;
 import stockme.stockme.util.OpcionesMenus;
+import stockme.stockme.util.Preferencias;
 import stockme.stockme.util.Util;
 
 public class CatalogoArticulos extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         Fragment_listas.OnFragmentInteractionListener, Fragment_catalogo_todos.OnFragmentInteractionListener, Fragment_catalogo_tipos.OnFragmentInteractionListener {
     FragmentPagerAdapter adapterViewPager;
     private GridView articulos;
-    private String vieneDe;
+    private static String vieneDe;
+
+    private static NavigationView nav_menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catalogo_articulos);
+        Preferencias.setPreferencia("anterior", "Artículos");
 
         ViewPager vpPager = (ViewPager) findViewById(R.id.pager_catalogo);
         MyPagerAdapter adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
@@ -44,10 +50,19 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
 
+        nav_menu = (NavigationView) findViewById(R.id.nav_view);
+        nav_menu.setNavigationItemSelectedListener(this);
 
+        Intent i = getIntent();
+        vieneDe = "";
+        if (i != null){
+            if (i.getExtras() != null){
+                vieneDe = i.getExtras().getString("vieneDe");
+            }
+        }
+
+        nav_menu.getMenu().getItem(2).setChecked(true);
     }
 
     @Override
@@ -122,9 +137,17 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
     @Override
     public void onArticuloSeleccionado(Articulo articulo) {
 
-        Intent i = new Intent();
-        i.putExtra("Articulo",articulo);
-        setResult(1,i);
-        finish();
+        if(vieneDe.equals("articulosAdd")){
+            Intent i = new Intent();
+            i.putExtra("Articulo",articulo);
+            setResult(1,i);
+            finish();
+
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        OpcionesMenus.onBackPressed(this);
     }
 }

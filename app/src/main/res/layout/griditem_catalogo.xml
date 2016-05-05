@@ -13,15 +13,27 @@
         android:padding="16dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         android:textColor="@android:color/black"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:text="Nombre" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/catalogo_art_tipo"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
+        android:textAlignment="center"
+        android:text="Tipo"
+        android:gravity="top|left|bottom"
         android:layout_below="@+id/catalogo_art_nombre"
-        android:layout_alignParentEnd="true" />
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Marca"
+        android:id="@+id/catalogo_art_marca"
+        android:gravity="top|bottom|right"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/catalogo_art_tipo" />
 
 </RelativeLayout>

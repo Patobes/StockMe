@@ -60,7 +60,6 @@ public class Fragment_catalogo_todos extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Preferencias.addPreferencia("anterior", "Listas");
 
         articulos = (GridView)view.findViewById(R.id.gridView_catalogo_articulos);
 
@@ -74,8 +73,8 @@ public class Fragment_catalogo_todos extends Fragment {
         aniadir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), ArticulosAdd.class);
-                startActivityForResult(i, 1);
+                Intent i = new Intent(v.getContext(), ArticuloSimpleAdd.class);
+                startActivityForResult(i,1);
             }
         });
 
@@ -107,6 +106,14 @@ public class Fragment_catalogo_todos extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if ((requestCode == 1) && (resultCode == Activity.RESULT_OK)){
+            //TODO actualizar al volver
+        }
     }
 
     /**

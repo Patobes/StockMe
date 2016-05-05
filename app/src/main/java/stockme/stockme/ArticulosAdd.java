@@ -50,7 +50,7 @@ public class ArticulosAdd extends AppCompatActivity implements NavigationView.On
         //toolbar + navbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        this.setTitle("Crear lista");
+        this.setTitle("Añadir artículo");
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -71,8 +71,8 @@ public class ArticulosAdd extends AppCompatActivity implements NavigationView.On
         btnCatalogo = (Button)findViewById(R.id.articulos_add_btn_catalogo);
         atv_marcas = (AutoCompleteTextView)findViewById(R.id.articulos_add_atv_marcas);
         atv_marcas.setThreshold(1);
-        if(etNombre.requestFocus());
-            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        /*if(etNombre.requestFocus());
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);*/
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tipos_array,
                         android.R.layout.simple_spinner_item);

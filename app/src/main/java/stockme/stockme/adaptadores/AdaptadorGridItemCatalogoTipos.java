@@ -2,6 +2,7 @@ package stockme.stockme.adaptadores;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,6 @@ import stockme.stockme.logica.Articulo;
 public class AdaptadorGridItemCatalogoTipos extends BaseAdapter {
     private Context context;
     private List<Articulo> datos;
-    private GridView articulos;
 
     public AdaptadorGridItemCatalogoTipos(Context context, List<Articulo> articulos) {
         this.context = context;
@@ -53,18 +53,37 @@ public class AdaptadorGridItemCatalogoTipos extends BaseAdapter {
         TextView nombre = (TextView) view.findViewById(R.id.catalogo_art_nombre);
         nombre.setText(datos.get(position).getNombre());
 
-        TextView tipo = (TextView) view.findViewById(R.id.catalogo_art_tipo);
-        tipo.setText(datos.get(position).getTipo());
+        TextView marca = (TextView) view.findViewById(R.id.catalogo_art_marca);
+        marca.setText(datos.get(position).getMarca());
 
-        articulos = (GridView) viewGroup.findViewById(R.id.gridView_catalogo_articulos_tipos);
+        String tipo = datos.get(position).getTipo();
 
-        articulos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Articulo articulo = (Articulo) parent.getItemAtPosition(position);
+        TextView tv_tipo = (TextView) view.findViewById(R.id.catalogo_art_tipo);
+        tv_tipo.setText(datos.get(position).getTipo());
 
-            }
-        });
+        if(tipo.equals("Congelados")){
+            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Congelados));
+        }else if(tipo.equals("Dulces")){
+            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Dulces));
+        }else if(tipo.equals("Embutidos")){
+            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Embutidos));
+        }else if(tipo.equals("Frutas")){
+            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Frutas));
+        }else if(tipo.equals("Frutos secos")){
+            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Frutos_secos));
+        }else if(tipo.equals("Lácteos")){
+            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Lácteos));
+        }else if(tipo.equals("Panadería")){
+            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Panadería));
+        }else if(tipo.equals("Pastas")){
+            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Pastas));
+        }else if(tipo.equals("Salsas")){
+            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Salsas));
+        }else if(tipo.equals("Verduras")){
+            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Verduras));
+        }else{
+            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Cualquiera));
+        }
 
         return view;
     }
