@@ -26,8 +26,6 @@ public class OpcionesMenus {
             i.putExtra("Opcion", "Stock");
         } else if (id == R.id.nav_articulos) {
             i.putExtra("Opcion", "Articulos");
-        } else if (id == R.id.nav_supermercados) {
-            i.putExtra("Opcion", "Supermercados");
         } else if (id == R.id.nav_ajustes) {
             i.putExtra("Opcion", "Ajustes");
         }
@@ -44,15 +42,15 @@ public class OpcionesMenus {
         return true;
     }
 
-    public static boolean onOptionsItemSelected(MenuItem item, Activity activity) {
-        switch (item.getItemId()){
-            case R.id.accion_opciones:
-                return true;
-            default:
-                return true;
-                //return super.onOptionsItemSelected(item);
-        }
-    }
+//    public static boolean onOptionsItemSelected(MenuItem item, Activity activity) {
+//        switch (item.getItemId()){
+//            case R.id.accion_opciones:
+//                return true;
+//            default:
+//                return true;
+//                //return super.onOptionsItemSelected(item);
+//        }
+//    }
 
     public static void onBackPressed(final Activity activity){
         //TODO: debería comprobar si hay un "vieneDe"

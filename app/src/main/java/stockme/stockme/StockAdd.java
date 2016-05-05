@@ -191,16 +191,16 @@ public class StockAdd extends AppCompatActivity implements NavigationView.OnNavi
     //TODO: hay que controlar que al añadir el artículo al stock vuelve a la principal y carga la lista
     //debería cargar stock
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return OpcionesMenus.onOptionsItemSelected(item, this);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        return true;
+//    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        return OpcionesMenus.onOptionsItemSelected(item, this);
+//    }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {

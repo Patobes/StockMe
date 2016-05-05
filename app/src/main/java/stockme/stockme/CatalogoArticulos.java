@@ -37,10 +37,6 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
         setContentView(R.layout.activity_catalogo_articulos);
         Preferencias.setPreferencia("anterior", "Artículos");
 
-        ViewPager vpPager = (ViewPager) findViewById(R.id.pager_catalogo);
-        MyPagerAdapter adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
-        vpPager.setAdapter(adapterViewPager);
-
         //toolbar + navbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -65,17 +61,17 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
         nav_menu.getMenu().getItem(2).setChecked(true);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return OpcionesMenus.onOptionsItemSelected(item, this);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        return OpcionesMenus.onOptionsItemSelected(item, this);
+//    }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -90,6 +86,10 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
     @Override
     protected void onResume() {
         super.onResume();
+        ViewPager vpPager = (ViewPager) findViewById(R.id.pager_catalogo);
+        MyPagerAdapter adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
+        vpPager.setAdapter(adapterViewPager);
+
     }
 
     public static class MyPagerAdapter extends FragmentPagerAdapter {

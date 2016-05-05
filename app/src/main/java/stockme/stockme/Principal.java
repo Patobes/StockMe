@@ -70,22 +70,22 @@ public class Principal extends AppCompatActivity
         OpcionesMenus.onBackPressed(this);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.accion_opciones:
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()){
+//            case R.id.accion_opciones:
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -105,8 +105,6 @@ public class Principal extends AppCompatActivity
         } else if (id == R.id.nav_articulos) {
             startActivity(new Intent(this, CatalogoArticulos.class));
             finish();
-        } else if (id == R.id.nav_supermercados) {
-
         } else if (id == R.id.nav_ajustes) {
             startActivity(new Intent(this, InfoBD.class));
         }
@@ -147,9 +145,6 @@ public class Principal extends AppCompatActivity
                             break;
                         case "Articulos":
                             onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_articulos));
-                            break;
-                        case "Supermercados":
-                            onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_supermercados));
                             break;
                         case "Ajustes":
                             onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_ajustes));
