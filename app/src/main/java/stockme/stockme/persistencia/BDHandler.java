@@ -42,7 +42,7 @@ public class BDHandler extends SQLiteOpenHelper {
         String articulo = "CREATE TABLE `ARTICULO` (" +
                 "`Id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
                 "`Nombre` TEXT NOT NULL," +
-                "`Marca` TEXT," +
+                "`Marca` TEXT DEFAULT 'Cualquiera'," +
                 "`Tipo` TEXT DEFAULT 'Cualquiera'" +
                 ")";
         db.execSQL("DROP TABLE IF EXISTS 'ARTICULO';");
