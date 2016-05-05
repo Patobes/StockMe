@@ -2,6 +2,7 @@ package stockme.stockme.adaptadores;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,15 +57,41 @@ public class AdaptadorGridItemCatalogoTipos extends BaseAdapter {
         TextView tipo = (TextView) view.findViewById(R.id.catalogo_art_tipo);
         tipo.setText(datos.get(position).getTipo());
 
-        articulos = (GridView) viewGroup.findViewById(R.id.gridView_catalogo_articulos_tipos);
-
-        articulos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Articulo articulo = (Articulo) parent.getItemAtPosition(position);
-
+        switch (datos.get(position).getTipo()){
+            case "Cualquiera":{
+                view.setBackgroundColor(ContextCompat.getColor(context, R.color.Cualquiera));
             }
-        });
+            case "Congelados":{
+                view.setBackgroundColor(ContextCompat.getColor(context, R.color.Congelados));
+            }
+            case "Dulces":{
+                view.setBackgroundColor(ContextCompat.getColor(context, R.color.Dulces));
+            }
+            case "Embutidos":{
+                view.setBackgroundColor(ContextCompat.getColor(context, R.color.Embutidos));
+            }
+            case "Frutas":{
+                view.setBackgroundColor(ContextCompat.getColor(context, R.color.Frutas));
+            }
+            case "Frutos secos":{
+                view.setBackgroundColor(ContextCompat.getColor(context, R.color.Frutos_secos));
+            }
+            case "Lácteos":{
+                view.setBackgroundColor(ContextCompat.getColor(context, R.color.Lácteos));
+            }
+            case "Panadería":{
+                view.setBackgroundColor(ContextCompat.getColor(context, R.color.Panadería));
+            }
+            case "Pastas":{
+                view.setBackgroundColor(ContextCompat.getColor(context, R.color.Pastas));
+            }
+            case "Salsas":{
+                view.setBackgroundColor(ContextCompat.getColor(context, R.color.Salsas));
+            }
+            case "Verduras":{
+                view.setBackgroundColor(ContextCompat.getColor(context, R.color.Verduras));
+            }
+        }
 
         return view;
     }

@@ -24,7 +24,7 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
         Fragment_listas.OnFragmentInteractionListener, Fragment_catalogo_todos.OnFragmentInteractionListener, Fragment_catalogo_tipos.OnFragmentInteractionListener {
     FragmentPagerAdapter adapterViewPager;
     private GridView articulos;
-    private String vieneDe;
+    private static String vieneDe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +47,13 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
         final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        Intent i = getIntent();
+        vieneDe = "";
+        if (i != null){
+            if (i.getExtras() != null){
+                vieneDe = i.getExtras().getString("vieneDe");
+            }
+        }
 
     }
 
@@ -122,9 +129,12 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
     @Override
     public void onArticuloSeleccionado(Articulo articulo) {
 
-        Intent i = new Intent();
-        i.putExtra("Articulo",articulo);
-        setResult(1,i);
-        finish();
+        if(vieneDe.equals("articulosAdd")){
+            Intent i = new Intent();
+            i.putExtra("Articulo",articulo);
+            setResult(1,i);
+            finish();
+
+        }
     }
 }

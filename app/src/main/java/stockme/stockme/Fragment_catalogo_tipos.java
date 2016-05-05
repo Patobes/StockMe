@@ -81,9 +81,6 @@ public class Fragment_catalogo_tipos extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Articulo articulo = (Articulo) parent.getItemAtPosition(position);
-
-                // TODO arreglar esto
-                Util.mostrarToast(view.getContext(),articulo.getNombre());
                 mListener.onArticuloSeleccionado(articulo);
 
             }
