@@ -16,6 +16,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.GridView;
 
 import stockme.stockme.logica.Articulo;
@@ -28,6 +30,7 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
     FragmentPagerAdapter adapterViewPager;
     private GridView articulos;
     private static String vieneDe;
+    private Button aniadir;
 
     private static NavigationView nav_menu;
 
@@ -59,6 +62,17 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
         }
 
         nav_menu.getMenu().getItem(2).setChecked(true);
+
+
+        aniadir = (Button) findViewById(R.id.fragment_catalogo_btn_mas);
+
+        aniadir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(v.getContext(), ArticuloSimpleAdd.class);
+                startActivityForResult(i,1);
+            }
+        });
     }
 
 //    @Override

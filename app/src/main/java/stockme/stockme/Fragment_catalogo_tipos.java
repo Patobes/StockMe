@@ -30,7 +30,6 @@ import stockme.stockme.util.Util;
 public class Fragment_catalogo_tipos extends Fragment {
     private OnFragmentInteractionListener mListener;
     private GridView articulos;
-    private Button aniadir;
     List<Articulo> listaArticulos;
 
     public Fragment_catalogo_tipos() {
@@ -75,17 +74,6 @@ public class Fragment_catalogo_tipos extends Fragment {
 
         final AdaptadorGridItemCatalogoTipos adaptador = new AdaptadorGridItemCatalogoTipos(view.getContext(), listaArticulos);
         articulos.setAdapter(adaptador);
-
-        aniadir = (Button) view.findViewById(R.id.fragment_catalogo_btn_mas);
-
-        aniadir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), ArticuloSimpleAdd.class);
-                startActivityForResult(i,1);
-            }
-        });
-
 
         articulos = (GridView) view.findViewById(R.id.gridView_catalogo_articulos_tipos);
 
