@@ -20,6 +20,8 @@ public class Util {
 
     public static SimpleDateFormat diaMesAnyo = new SimpleDateFormat("dd/MM/yyyy");
 
+    public static String moneda = "€";
+
 
     //método para crear un mensaje de Diálogo. Los listener pasados por parámetro se crean de la siguiente forma:
     /*

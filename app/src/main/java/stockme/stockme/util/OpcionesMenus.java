@@ -2,6 +2,7 @@ package stockme.stockme.util;
 
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -37,7 +38,8 @@ public class OpcionesMenus {
         activity.startActivity(i);
 
         //TODO: Finalizar la activity cuando se vaya a una opción? Esto impide que se vuelva con el botón de "atrás"
-        //finish();
+        //debería comprobar si hay un "vieneDe"
+        activity.finish();
 
         return true;
     }
@@ -49,6 +51,22 @@ public class OpcionesMenus {
             default:
                 return true;
                 //return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public static void onBackPressed(final Activity activity){
+        //TODO: debería comprobar si hay un "vieneDe"
+        DrawerLayout drawer = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            //super.onBackPressed();
+            Util.crearMensajeAlerta("¿Seguro que quieres salir?", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    activity.finish();
+                }
+            }, activity);
         }
     }
 }
