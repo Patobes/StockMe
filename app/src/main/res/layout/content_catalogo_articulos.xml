@@ -39,6 +39,7 @@
         android:layout_height="wrap_content"
         android:text="+"
         android:textSize="25dp"
+        android:layout_marginBottom="5dp"
         android:id="@+id/fragment_catalogo_btn_mas"
         android:layout_alignParentBottom="true"
         android:layout_alignEnd="@+id/contenido_catalogo_tab" />
