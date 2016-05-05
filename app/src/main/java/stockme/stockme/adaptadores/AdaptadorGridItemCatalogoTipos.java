@@ -62,27 +62,27 @@ public class AdaptadorGridItemCatalogoTipos extends BaseAdapter {
         tv_tipo.setText(datos.get(position).getTipo());
 
         if(tipo.equals("Congelados")){
-            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Congelados));
+            view.setBackgroundResource(R.drawable.esquinas_congelados);
         }else if(tipo.equals("Dulces")){
-            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Dulces));
+            view.setBackgroundResource(R.drawable.esquinas_dulces);
         }else if(tipo.equals("Embutidos")){
-            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Embutidos));
+            view.setBackgroundResource(R.drawable.esquinas_embutidos);
         }else if(tipo.equals("Frutas")){
-            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Frutas));
+            view.setBackgroundResource(R.drawable.esquinas_frutas);
         }else if(tipo.equals("Frutos secos")){
-            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Frutos_secos));
+            view.setBackgroundResource(R.drawable.esquinas_frutos_secos);
         }else if(tipo.equals("Lácteos")){
-            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Lácteos));
+            view.setBackgroundResource(R.drawable.esquinas_lacteos);
         }else if(tipo.equals("Panadería")){
-            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Panadería));
+            view.setBackgroundResource(R.drawable.esquinas_panaderia);
         }else if(tipo.equals("Pastas")){
-            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Pastas));
+            view.setBackgroundResource(R.drawable.esquinas_pastas);
         }else if(tipo.equals("Salsas")){
-            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Salsas));
+            view.setBackgroundResource(R.drawable.esquinas_salsas);
         }else if(tipo.equals("Verduras")){
-            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Verduras));
+            view.setBackgroundResource(R.drawable.esquinas_verduras);
         }else{
-            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Cualquiera));
+            view.setBackgroundResource(R.drawable.esquinas);
         }
 
         return view;

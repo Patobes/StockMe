@@ -8,6 +8,8 @@
     <color name="progreso">#e51cdb26</color>
     <color name="carga">#e5b5b6f9</color>
 
+    <color name="borde">#d8006aff</color>
+
     <color name="Cualquiera">#ffffff</color>
     <color name="Congelados">#58d7f9ff</color>
     <color name="Dulces">#52ffdedd</color>
@@ -18,5 +20,5 @@
     <color name="Panadería">#3a9b5648</color>
     <color name="Pastas">#43fffad2</color>
     <color name="Salsas">#6efcc066</color>
-    <color name="Verduras">#41afc1a3</color>
+    <color name="Verduras">#786ac62d</color>
 </resources>
