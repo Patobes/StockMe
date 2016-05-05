@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -22,8 +23,9 @@ import stockme.stockme.util.Util;
 
 public class Fragment_stock extends Fragment {
     private OnFragmentInteractionListener mListener;
-    private ListView stock;
-    private Button btnMas;
+    private ListView lv_stock;
+    private Button bt_añadir;
+    AdaptadorListItemStock adaptador;
 
     public Fragment_stock() {
         // Required empty public constructor
@@ -52,18 +54,17 @@ public class Fragment_stock extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Preferencias.addPreferencia("anterior", "Stock");
 
-        stock = (ListView)view.findViewById(R.id.fragment_stock_listview);
+        lv_stock = (ListView) view.findViewById(R.id.fragment_stock_listview);
         //recojo las listas existenes
         BDHandler manejador = new BDHandler(view.getContext());
         List<Stock> listaArticulos = manejador.obtenerStocks();
         //las añado al adaptador
-        AdaptadorListItemStock adaptador = new AdaptadorListItemStock(view.getContext(), listaArticulos);
+        adaptador = new AdaptadorListItemStock(view.getContext(), listaArticulos);
         //asigno el adaptador a la list view
-        stock.setAdapter(adaptador);
+        lv_stock.setAdapter(adaptador);
 
-        //Click sobre el boton +
-        btnMas = (Button)view.findViewById(R.id.fragment_stock_button);
-        btnMas.setOnClickListener(new View.OnClickListener() {
+        bt_añadir = (Button) view.findViewById(R.id.fragment_stock_button);
+        bt_añadir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(), StockAdd.class);

@@ -1,51 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Nombre Articulo"
         android:id="@+id/listitem_stock_nombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:paddingLeft="5dp"
-        android:paddingTop="5dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="x"
-        android:id="@+id/listitem_stock_x"
+        android:layout_marginLeft="10dp"
+        android:text="Nombre"
+        android:textSize="20sp"
         android:paddingLeft="5dp"
         android:paddingTop="5dp"
-        android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/listitem_stock_cantidad" />
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Cantidad"
-        android:id="@+id/listitem_stock_cantidad"
-        android:paddingLeft="5dp"
-        android:paddingTop="5dp"
-        android:layout_alignParentTop="true"
-        android:numeric="integer"
-        android:inputType="number"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="25dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Marca"
         android:id="@+id/listitem_stock_marca"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/listitem_stock_nombre"
+        android:layout_alignTop="@+id/listitem_stock_nombre"
+        android:layout_alignBottom="@+id/listitem_stock_nombre"
+        android:layout_alignBaseline="@+id/listitem_stock_nombre"
+        android:layout_marginLeft="3dp"
+        android:text="Marca"
+        android:paddingLeft="20dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
+
+    <TextView
+        android:id="@+id/listitem_stock_minimo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/listitem_stock_nombre"
-        android:layout_alignParentStart="true"
-        android:paddingLeft="5dp" />
+        android:layout_alignStart="@+id/listitem_stock_nombre"
+        android:text="Minimo"
+        android:paddingLeft="5dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
+
+    <TextView
+        android:id="@+id/listitem_stock_tv_minimo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/listitem_stock_minimo"
+        android:layout_alignTop="@+id/listitem_stock_minimo"
+        android:layout_alignBottom="@+id/listitem_stock_minimo"
+        android:layout_alignBaseline="@+id/listitem_stock_minimo"
+        android:hint="Precio"
+        android:layout_marginLeft="3dp"
+        android:paddingLeft="5dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:text="0"
+        android:singleLine="true" />
+
+    <ImageButton
+        android:id="@+id/listitem_stock_mas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignBottom="@+id/listitem_stock_minimo"
+        android:minWidth="30dp"
+        android:maxWidth="40dp"
+        android:src="@drawable/ic_add_black_18dp"
+        android:background="#00ffffff"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
+
+    <TextView
+        android:id="@+id/listitem_stock_cantidad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@+id/listitem_stock_mas"
+        android:layout_alignTop="@+id/listitem_stock_mas"
+        android:layout_alignBottom="@+id/listitem_stock_mas"
+        android:minWidth="45dp"
+        android:maxWidth="45dp"
+        android:paddingTop="3dp"
+        android:text="0"
+        android:textSize="35dp"
+        android:textAlignment="center"
+        android:inputType="number"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
+
+    <ImageButton
+        android:id="@+id/listitem_stock_menos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@+id/listitem_stock_cantidad"
+        android:layout_alignTop="@+id/listitem_stock_mas"
+        android:layout_alignBottom="@+id/listitem_stock_mas"
+        android:minWidth="30dp"
+        android:maxWidth="40dp"
+        android:src="@drawable/ic_remove_black_18dp"
+        android:background="#00ffffff"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
 
 </RelativeLayout>
