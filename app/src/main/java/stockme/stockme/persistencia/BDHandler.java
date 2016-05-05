@@ -217,6 +217,29 @@ public class BDHandler extends SQLiteOpenHelper {
 
     //ARTICULO - GET
 
+    public List<Articulo> obtenerArticulosConQuerySearch(String querySearch){
+        ArrayList<Articulo> lista = new ArrayList<Articulo>();
+        String query = "SELECT * FROM ARTICULO WHERE NOMBRE LIKE ?";
+
+        SQLiteDatabase db = this.obtenerManejadorLectura();
+        Cursor cursor = db.rawQuery(query, new String[]{"%" + querySearch + "%"});
+
+        if (cursor.moveToFirst()) {
+            do {
+                Articulo art = new Articulo(cursor.getInt(cursor.getColumnIndex(Articulo.ID)),
+                        cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)),
+                        cursor.getString(cursor.getColumnIndex(Articulo.MARCA)),
+                        cursor.getString(cursor.getColumnIndex(Articulo.TIPO)));
+
+                lista.add(art);
+            } while (cursor.moveToNext());
+        }
+
+        Log.d("obtenerArticulos()", lista.toString());
+        db.close();
+        return lista;
+    }
+
     public List<Articulo> obtenerArticulos() {
         ArrayList<Articulo> lista = new ArrayList<Articulo>();
         String query = "SELECT * FROM ARTICULO";
@@ -321,6 +344,28 @@ public class BDHandler extends SQLiteOpenHelper {
         SQLiteDatabase lectura = this.obtenerManejadorLectura();
 
         Cursor cursor = lectura.rawQuery(query, new String[]{marca});
+
+        if(cursor.moveToFirst()){
+            do{
+                Articulo articulo = new Articulo(cursor.getInt(cursor.getColumnIndex(Articulo.ID)),
+                        cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)),
+                        cursor.getString(cursor.getColumnIndex(Articulo.MARCA)),
+                        cursor.getString(cursor.getColumnIndex(Articulo.TIPO)));
+
+                articulos.add(articulo);
+            }while(cursor.moveToNext());
+        }
+        lectura.close();
+        return articulos;
+    }
+
+    public List<Articulo> obtenerArticulosPorTipoYQuerySearch(String tipo, String querySearch){
+        ArrayList<Articulo> articulos = new ArrayList<Articulo>();
+
+        String query = "SELECT * FROM ARTICULO WHERE " + Articulo.TIPO + " = ? AND NOMBRE LIKE ?";
+        SQLiteDatabase lectura = this.obtenerManejadorLectura();
+
+        Cursor cursor = lectura.rawQuery(query, new String[]{tipo, "%"+querySearch+"%"});
 
         if(cursor.moveToFirst()){
             do{

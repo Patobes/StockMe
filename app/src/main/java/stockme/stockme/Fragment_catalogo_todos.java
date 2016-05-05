@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import stockme.stockme.adaptadores.AdaptadorGridItemCatalogo;
@@ -31,6 +32,12 @@ import stockme.stockme.util.Util;
 public class Fragment_catalogo_todos extends Fragment {
     private OnFragmentInteractionListener mListener;
     private GridView articulos;
+
+    private String querySeacrh;
+
+    public void setQuerySearch(String querySeacrh){
+        this.querySeacrh = querySeacrh;
+    }
 
     public Fragment_catalogo_todos() {
         // Required empty public constructor
@@ -63,7 +70,13 @@ public class Fragment_catalogo_todos extends Fragment {
         articulos = (GridView)view.findViewById(R.id.gridView_catalogo_articulos);
 
         final BDHandler manejador = new BDHandler(view.getContext());
-        List<Articulo> listaArticulos = manejador.obtenerArticulos();
+        List<Articulo> listaArticulos = new ArrayList<>();
+
+        if(querySeacrh != null)
+            listaArticulos = manejador.obtenerArticulosConQuerySearch(querySeacrh);
+        else
+            listaArticulos = manejador.obtenerArticulos();
+
         final AdaptadorGridItemCatalogo adaptador = new AdaptadorGridItemCatalogo(view.getContext(), listaArticulos);
         articulos.setAdapter(adaptador);
 

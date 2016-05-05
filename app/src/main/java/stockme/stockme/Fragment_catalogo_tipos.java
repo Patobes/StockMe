@@ -32,6 +32,12 @@ public class Fragment_catalogo_tipos extends Fragment {
     private GridView articulos;
     List<Articulo> listaArticulos;
 
+    private String querySeacrh;
+
+    public void setQuerySearch(String querySeacrh){
+        this.querySeacrh = querySeacrh;
+    }
+
     public Fragment_catalogo_tipos() {
         // Required empty public constructor
     }
@@ -68,9 +74,13 @@ public class Fragment_catalogo_tipos extends Fragment {
         String[] tipos = getResources().getStringArray(R.array.tipos_array);
 
         for(String tipo : tipos){
-            listaArticulos.addAll(manejador.obtenerArticulosPorTipo(tipo));
-
+            if(querySeacrh != null){
+                listaArticulos.addAll(manejador.obtenerArticulosPorTipoYQuerySearch(tipo, querySeacrh));
+            }else
+                listaArticulos.addAll(manejador.obtenerArticulosPorTipo(tipo));
         }
+
+
 
         final AdaptadorGridItemCatalogoTipos adaptador = new AdaptadorGridItemCatalogoTipos(view.getContext(), listaArticulos);
         articulos.setAdapter(adaptador);

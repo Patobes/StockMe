@@ -44,5 +44,15 @@
         android:layout_alignParentBottom="true"
         android:layout_alignEnd="@+id/contenido_catalogo_tab" />
 
+    <ImageButton
+        style="?android:attr/buttonStyleSmall"
+        android:background="@drawable/esquinas_boton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_action_reset_precio"
+        android:id="@+id/fragment_catalogo_btn_reset_search"
+        android:layout_alignTop="@+id/fragment_catalogo_btn_mas"
+        android:layout_alignParentStart="true" />
+
 
 </RelativeLayout>

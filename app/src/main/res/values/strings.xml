@@ -26,4 +26,9 @@
     <string name="Mas">+</string>
     <string name="title_activity_catalogo_articulos">CatalogoArticulos</string>
 
+
+    <string name="search_result">Resultado de búsqueda</string>
+    <string name="search_hint">Buscar...</string>
+    <string name="menu_search">Buscar</string>
+
 </resources>
