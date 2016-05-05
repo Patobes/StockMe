@@ -54,43 +54,33 @@ public class AdaptadorGridItemCatalogoTipos extends BaseAdapter {
         TextView nombre = (TextView) view.findViewById(R.id.catalogo_art_nombre);
         nombre.setText(datos.get(position).getNombre());
 
-        TextView tipo = (TextView) view.findViewById(R.id.catalogo_art_tipo);
-        tipo.setText(datos.get(position).getTipo());
+        String tipo = datos.get(position).getTipo();
 
-        switch (datos.get(position).getTipo()){
-            case "Cualquiera":{
-                view.setBackgroundColor(ContextCompat.getColor(context, R.color.Cualquiera));
-            }
-            case "Congelados":{
-                view.setBackgroundColor(ContextCompat.getColor(context, R.color.Congelados));
-            }
-            case "Dulces":{
-                view.setBackgroundColor(ContextCompat.getColor(context, R.color.Dulces));
-            }
-            case "Embutidos":{
-                view.setBackgroundColor(ContextCompat.getColor(context, R.color.Embutidos));
-            }
-            case "Frutas":{
-                view.setBackgroundColor(ContextCompat.getColor(context, R.color.Frutas));
-            }
-            case "Frutos secos":{
-                view.setBackgroundColor(ContextCompat.getColor(context, R.color.Frutos_secos));
-            }
-            case "Lácteos":{
-                view.setBackgroundColor(ContextCompat.getColor(context, R.color.Lácteos));
-            }
-            case "Panadería":{
-                view.setBackgroundColor(ContextCompat.getColor(context, R.color.Panadería));
-            }
-            case "Pastas":{
-                view.setBackgroundColor(ContextCompat.getColor(context, R.color.Pastas));
-            }
-            case "Salsas":{
-                view.setBackgroundColor(ContextCompat.getColor(context, R.color.Salsas));
-            }
-            case "Verduras":{
-                view.setBackgroundColor(ContextCompat.getColor(context, R.color.Verduras));
-            }
+        TextView tv_tipo = (TextView) view.findViewById(R.id.catalogo_art_tipo);
+        tv_tipo.setText(datos.get(position).getTipo());
+
+        if(tipo.equals("Congelados")){
+            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Congelados));
+        }else if(tipo.equals("Dulces")){
+            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Dulces));
+        }else if(tipo.equals("Embutidos")){
+            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Embutidos));
+        }else if(tipo.equals("Frutas")){
+            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Frutas));
+        }else if(tipo.equals("Frutos secos")){
+            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Frutos_secos));
+        }else if(tipo.equals("Lácteos")){
+            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Lácteos));
+        }else if(tipo.equals("Panadería")){
+            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Panadería));
+        }else if(tipo.equals("Pastas")){
+            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Pastas));
+        }else if(tipo.equals("Salsas")){
+            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Salsas));
+        }else if(tipo.equals("Verduras")){
+            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Verduras));
+        }else{
+            view.setBackgroundColor(ContextCompat.getColor(context, R.color.Cualquiera));
         }
 
         return view;
