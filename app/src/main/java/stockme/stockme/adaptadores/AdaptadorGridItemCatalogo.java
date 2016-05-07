@@ -1,13 +1,16 @@
 package stockme.stockme.adaptadores;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,11 +18,13 @@ import java.util.List;
 
 import stockme.stockme.R;
 import stockme.stockme.logica.Articulo;
+import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.Util;
 
 public class AdaptadorGridItemCatalogo extends BaseAdapter {
     private Context context;
     private List<Articulo> datos;
+    private ImageButton borrar;
 
     public AdaptadorGridItemCatalogo(Context context, List<Articulo> articulos) {
         this.context = context;
@@ -42,7 +47,7 @@ public class AdaptadorGridItemCatalogo extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View view, final ViewGroup viewGroup) {
+    public View getView(final int position, View view, final ViewGroup viewGroup) {
 
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context
@@ -59,7 +64,28 @@ public class AdaptadorGridItemCatalogo extends BaseAdapter {
         TextView tipo = (TextView) view.findViewById(R.id.catalogo_art_tipo);
         tipo.setText(datos.get(position).getTipo());
 
+        borrar = (ImageButton) view.findViewById(R.id.catalogo_borrar);
 
+        borrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                DialogInterface.OnClickListener borrarArticuloListener = new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        BDHandler manejador = new BDHandler(v.getContext());
+
+                        if (!manejador.eliminarArticulo(datos.get(position)))
+                            Util.mostrarToast(v.getContext(), "No se ha podido eliminar el artículo");
+                        else {
+                            Util.mostrarToast(v.getContext(), "Artículo eliminado");
+                            datos.remove(position);
+                        }
+
+                        manejador.cerrar();
+                    }
+                };
+                Util.crearMensajeAlerta("¿Quieres eliminar el artículo?", borrarArticuloListener, v.getContext());
+            }
+        });
 
         return view;
     }
