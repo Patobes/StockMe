@@ -78,6 +78,7 @@ public class AdaptadorGridItemCatalogo extends BaseAdapter {
                         else {
                             Util.mostrarToast(v.getContext(), "Artículo eliminado");
                             datos.remove(position);
+                            notifyDataSetChanged();
                         }
 
                         manejador.cerrar();
