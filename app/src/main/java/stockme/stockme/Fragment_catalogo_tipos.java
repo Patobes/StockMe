@@ -7,24 +7,18 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import stockme.stockme.adaptadores.AdaptadorGridItemCatalogo;
-import stockme.stockme.adaptadores.AdaptadorGridItemCatalogoTipos;
 import stockme.stockme.logica.Articulo;
-import stockme.stockme.logica.ListaArticulo;
 import stockme.stockme.persistencia.BDHandler;
-import stockme.stockme.util.Preferencias;
-import stockme.stockme.util.Util;
 
 
 public class Fragment_catalogo_tipos extends Fragment {
@@ -82,7 +76,7 @@ public class Fragment_catalogo_tipos extends Fragment {
 
 
 
-        final AdaptadorGridItemCatalogoTipos adaptador = new AdaptadorGridItemCatalogoTipos(view.getContext(), listaArticulos);
+        final AdaptadorGridItemCatalogo adaptador = new AdaptadorGridItemCatalogo(view.getContext(), listaArticulos, true);
         articulos.setAdapter(adaptador);
 
         articulos = (GridView) view.findViewById(R.id.gridView_catalogo_articulos_tipos);

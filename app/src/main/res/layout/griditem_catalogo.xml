@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:background="@drawable/esquinas">
+    android:background="@drawable/esquinas"
+    android:descendantFocusability="blocksDescendants">
 
     <TextView
         android:id="@+id/catalogo_art_nombre"
@@ -14,7 +15,11 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         android:textColor="@android:color/black"
         android:textAlignment="center"
-        android:text="Nombre" />
+        android:text="Nombre"
+
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -24,7 +29,11 @@
         android:text="Tipo"
         android:gravity="top|left|bottom"
         android:layout_below="@+id/catalogo_art_nombre"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -34,7 +43,11 @@
         android:gravity="top|bottom|right"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/catalogo_art_tipo" />
+        android:layout_below="@+id/catalogo_art_tipo"
+
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -45,6 +58,10 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_alignBottom="@+id/catalogo_art_nombre"
-        android:tint="#4c4c4c" />
+        android:tint="#4c4c4c"
+
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
 
 </RelativeLayout>

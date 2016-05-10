@@ -77,7 +77,7 @@ public class Fragment_catalogo_todos extends Fragment {
         else
             listaArticulos = manejador.obtenerArticulos();
 
-        final AdaptadorGridItemCatalogo adaptador = new AdaptadorGridItemCatalogo(view.getContext(), listaArticulos);
+        final AdaptadorGridItemCatalogo adaptador = new AdaptadorGridItemCatalogo(view.getContext(), listaArticulos, false);
         articulos.setAdapter(adaptador);
 
         articulos = (GridView) view.findViewById(R.id.gridView_catalogo_articulos);
