@@ -13,7 +13,7 @@ public class Util {
 
 
     //hay que INCREMENTAR en 1 cada vez que se hace una modificación en la estructura o en contenido inicial
-    private static int BD_VERSION = 26;
+    private static int BD_VERSION = 27;
     public static int getBD_VERSION(){
         return BD_VERSION;
     }

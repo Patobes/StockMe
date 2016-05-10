@@ -30,7 +30,9 @@
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:layout_below="@+id/listitem_lista_nombre"
-        android:layout_alignStart="@+id/listitem_lista_nombre" />
+        android:layout_alignStart="@+id/listitem_lista_nombre"
+        android:ellipsize="end"
+        android:maxLines="1"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -43,14 +45,17 @@
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:layout_alignTop="@+id/listitem_lista_supermercado"
-        android:layout_toEndOf="@+id/listitem_lista_supermercado" />
+        android:layout_toRightOf="@+id/listitem_lista_supermercado"
+        android:layout_alignRight="@+id/listitem_lista_nproductos"
+        android:ellipsize="end"
+        android:maxLines="1"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
         android:id="@+id/listitem_lista_nproductos"
-        android:textSize="30dp"
+        android:textSize="35dp"
         android:clickable="false"
         android:focusable="false"
         android:focusableInTouchMode="false"
