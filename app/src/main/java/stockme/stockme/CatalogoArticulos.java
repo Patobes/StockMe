@@ -212,6 +212,7 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
     @Override
     protected void onNewIntent(Intent intent) {
         handleIntent(intent);
+        finish();
     }
 
     private void handleIntent(Intent intent) {

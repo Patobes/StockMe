@@ -63,7 +63,8 @@ public class Fragment_listas extends Fragment {
         listas = (ListView)view.findViewById(R.id.fragment_listas_listview);
         //recojo las listas existenes
         final BDHandler manejador = new BDHandler(view.getContext());
-        List<Lista> listaListas = manejador.obtenerListas();
+//        List<Lista> listaListas = manejador.obtenerListas();
+        List<Lista> listaListas = manejador.obtenerListasOrdenadas(Lista.FECHA_MODIFICACION);
         //las añado al adaptador
         AdaptadorListItemListas adaptador = new AdaptadorListItemListas(view.getContext(), listaListas);
         //asigno el adaptador a la list view

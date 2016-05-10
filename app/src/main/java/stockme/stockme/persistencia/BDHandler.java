@@ -132,6 +132,7 @@ public class BDHandler extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Cualquiera');");
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Día');");
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Mercadona');");
+        db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('SuperUltraHiperMercadona');");
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Eroski');");
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Simply');");
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Carrefour');");
@@ -1183,12 +1184,19 @@ public class BDHandler extends SQLiteOpenHelper {
 
     //LISTA - GET
 
-    public List<Lista> obtenerListas(){
+    public List<Lista> obtenerListasOrdenadas(String orderBy){
         ArrayList<Lista> listas = new ArrayList<Lista>();
         String query = "SELECT * FROM LISTA";
 
+        String []args = null;
+
+        if(orderBy != null) {
+            args = new String[]{orderBy};
+            query += " ORDER BY ?, Nombre ASC";
+        }
+
         SQLiteDatabase db = this.obtenerManejadorLectura();
-        Cursor cursor = db.rawQuery(query, null);
+        Cursor cursor = db.rawQuery(query, args);
 
         if (cursor.moveToFirst()) {
             do {
@@ -1205,6 +1213,10 @@ public class BDHandler extends SQLiteOpenHelper {
 
         db.close();
         return listas;
+    }
+
+    public List<Lista> obtenerListas(){
+        return obtenerListasOrdenadas(null);
     }
 
     public Lista obtenerLista(String nombre){
