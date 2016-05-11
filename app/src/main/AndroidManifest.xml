@@ -21,7 +21,12 @@
         <activity
             android:name=".ListaAdd"
             android:label="@string/title_activity_lista_add"
-            android:theme="@style/AppTheme" />
+            android:parentActivityName=".Principal"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="stockme.stockme.Principal" />
+        </activity>
         <activity
             android:name=".ListaCompra"
             android:label="@string/title_activity_lista_de_articulos"
@@ -31,7 +36,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="stockme.stockme.Principal" />
         </activity>
-        <activity android:name=".StockAdd" />
+        <activity
+            android:name=".StockAdd"
+            android:parentActivityName=".Principal">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="stockme.stockme.Principal" />
+        </activity>
         <activity android:name=".SplashScreenIntro">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,19 +58,49 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".ArticulosAdd" />
-        <activity android:name=".InfoBD" />
-        <activity android:name=".CatalogoArticulos" >
+        <activity
+            android:name=".ArticulosAdd"
+            android:parentActivityName=".ListaCompra">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="stockme.stockme.ListaCompra" />
+        </activity>
+        <activity
+            android:name=".InfoBD"
+            android:parentActivityName=".Principal">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="stockme.stockme.Principal" />
+        </activity>
+        <activity android:name=".CatalogoArticulos">
+
             <!-- to identify this activity as "searchable" -->
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-        <activity android:name=".ArticuloSimpleAdd"></activity>
+        <activity
+            android:name=".ArticuloSimpleAdd"
+            android:parentActivityName=".CatalogoArticulos">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="stockme.stockme.CatalogoArticulos" />
+        </activity>
+        <activity
+            android:name=".AjustesPrueba"
+            android:label="@string/title_activity_ajustes_prueba"
+            android:parentActivityName=".Principal"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="stockme.stockme.Principal" />
+        </activity>
     </application>
 
 </manifest>

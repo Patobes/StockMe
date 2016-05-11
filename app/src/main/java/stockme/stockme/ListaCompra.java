@@ -68,6 +68,9 @@ public class ListaCompra extends AppCompatActivity implements NavigationView.OnN
         });
 
         AdaptadorListItemArticulosListaCompra.resetCostes();
+
+        //para flecha de atrás de navegación
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
