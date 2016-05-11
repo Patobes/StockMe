@@ -28,8 +28,7 @@ import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.OpcionesMenus;
 import stockme.stockme.util.Util;
 
-public class ListaAdd extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
-        Fragment_listas.OnFragmentInteractionListener{
+public class ListaAdd extends AppCompatActivity implements Fragment_listas.OnFragmentInteractionListener{
     private Button btn_aceptar;
     private Button btn_cancelar;
 
@@ -41,14 +40,8 @@ public class ListaAdd extends AppCompatActivity implements NavigationView.OnNavi
         setSupportActionBar(toolbar);
         this.setTitle("Crear lista");
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        //para flecha de atrás de navegación
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         BDHandler manejador = new BDHandler(this);
         List<String> supermercados = manejador.obtenerSupermercados();
@@ -98,22 +91,6 @@ public class ListaAdd extends AppCompatActivity implements NavigationView.OnNavi
                 finish();
             }
         });
-    }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        return OpcionesMenus.onOptionsItemSelected(item, this);
-//    }
-
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        return OpcionesMenus.onNavigationItemSelected(item, this);
     }
 
     @Override
