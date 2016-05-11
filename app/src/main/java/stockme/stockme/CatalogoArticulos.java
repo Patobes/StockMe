@@ -39,6 +39,8 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
 
     private static NavigationView nav_menu;
 
+    //TODO: corregir la *** navegación y comportamiento de la opción de búsqueda
+    //si no se puede... a tomar por saco y borrarla
     private static String querySearch;
 
     @Override
