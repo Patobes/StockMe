@@ -94,12 +94,15 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
             public void onClick(View v) {
                 BDHandler manejador = new BDHandler(getContext());
                 Stock stock1 = manejador.obtenerStock(datos.get(position).getArticulo());
-                int cantidad = stock1.getCantidad() + 1;
-                if(stock1.getCantidad() < 99)
+                if (stock1.getCantidad() < 99) {
+                    int cantidad = stock1.getCantidad() + 1;
                     manejador.modificarStockCantidad(stock1, cantidad);
-                manejador.cerrar();
-                datos.get(position).setCantidad(cantidad);
-                notifyDataSetChanged();
+                    datos.get(position).setCantidad(cantidad);
+                    manejador.cerrar();
+                    notifyDataSetChanged();
+                } else {
+                    manejador.cerrar();
+                }
             }
         });
 
@@ -108,12 +111,15 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
             public void onClick(View v) {
                 BDHandler manejador = new BDHandler(getContext());
                 Stock stock1 = manejador.obtenerStock(datos.get(position).getArticulo());
-                int cantidad = stock1.getCantidad() - 1;
-                if (stock1.getCantidad() > 0)
+                if (stock1.getCantidad() > 0) {
+                    int cantidad = stock1.getCantidad() - 1;
                     manejador.modificarStockCantidad(stock1, cantidad);
-                manejador.cerrar();
-                datos.get(position).setCantidad(cantidad);
-                notifyDataSetChanged();
+                    datos.get(position).setCantidad(cantidad);
+                    manejador.cerrar();
+                    notifyDataSetChanged();
+                } else {
+                    manejador.cerrar();
+                }
             }
         });
 
