@@ -5,6 +5,7 @@
 -En ArticulosAdd, que se preseleccione el supermercado si la lista tiene uno elegido (no es "cualquiera")
 -Cambiar el evento onLongClickPressed o como se llame XD de ListaDeArticulos para que, en lugar de borrar el artículo,
 abra una ventana para modificarlo.
+-Crear una actividad auxiliar para la búsqueda y gestionar el restulado mediante onActivityResult
 
 ----------Realizado recientemente:-------------------------------------------------
 -Autocompletado de marcas

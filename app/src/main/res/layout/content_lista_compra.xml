@@ -10,7 +10,7 @@
     android:paddingTop="8dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ListaCompra"
-    tools:showIn="@layout/app_bar_lista_compra">
+    tools:showIn="@layout/activity_lista_compra">
 
     <com.nhaarman.listviewanimations.itemmanipulation.DynamicListView
         android:id="@+id/lista_compra_lista"

@@ -22,6 +22,8 @@ public class Util {
 
     public static String moneda = "€";
 
+    public static String vieneDe = "Principal";
+
 
     //método para crear un mensaje de Diálogo. Los listener pasados por parámetro se crean de la siguiente forma:
     /*

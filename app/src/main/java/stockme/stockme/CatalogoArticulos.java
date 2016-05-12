@@ -34,12 +34,13 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
         Fragment_listas.OnFragmentInteractionListener, Fragment_catalogo_todos.OnFragmentInteractionListener, Fragment_catalogo_tipos.OnFragmentInteractionListener {
     FragmentPagerAdapter adapterViewPager;
     private GridView articulos;
-    private static String vieneDe;
     private Button aniadir;
     private ImageButton btn_reset;
 
     private static NavigationView nav_menu;
 
+    //TODO: corregir la *** navegación y comportamiento de la opción de búsqueda
+    //si no se puede... a tomar por saco y borrarla
     private static String querySearch;
 
     @Override
@@ -64,10 +65,11 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
         querySearch = null;//para resetear la búsqueda al entrar en Artículos
 
         Intent i = getIntent();
-        vieneDe = "";
         if (i != null){
             if (i.getExtras() != null){
-                vieneDe = i.getExtras().getString("vieneDe");
+                String viene = i.getExtras().getString("vieneDe");
+                if(viene != null)
+                    Util.vieneDe = viene;
             }
         }
 
@@ -194,13 +196,13 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
 
     @Override
     public void onArticuloSeleccionado(Articulo articulo) {
-
-        if(vieneDe.equals("articulosAdd") || vieneDe.equals("stockAdd")){
+        if(Util.vieneDe.equals("articulosAdd") || Util.vieneDe.equals("stockAdd")){
             Intent i = new Intent();
             i.putExtra("Articulo",articulo);
             setResult(1,i);
             finish();
-
+        }else{
+            Util.mostrarToast(this, "No encuentro el articulosAdd");
         }
     }
 

@@ -26,13 +26,16 @@ import stockme.stockme.logica.Lista;
 import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.OpcionesMenus;
 
-public class ListaCompra extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
+public class ListaCompra extends AppCompatActivity implements /*NavigationView.OnNavigationItemSelectedListener,*/
         Fragment_listas.OnFragmentInteractionListener{
     private DynamicListView articulos;
     private Button lista_compra_btn_mas;
     private ImageButton ibtn_reset;
     private TextView tv_precio_total;
     private TextView tv_precio_compra;
+
+    private Lista lista;
+    private static String nombreLista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +46,8 @@ public class ListaCompra extends AppCompatActivity implements NavigationView.OnN
 
         toolbar.setTitle("Artículos");
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        //para flecha de atrás de navegación
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //las instancias tmb deberían hacerse una sola vez
         articulos = (DynamicListView)findViewById(R.id.lista_compra_lista);
@@ -70,12 +67,29 @@ public class ListaCompra extends AppCompatActivity implements NavigationView.OnN
         AdaptadorListItemArticulosListaCompra.resetCostes();
     }
 
+//    @Override
+//    protected void onStop(){
+//        super.onStop();
+//        if(lista == null || nombreLista == null) {
+//            lista = new Lista(getIntent().getStringExtra("NombreLista"), "", "", "");
+//            nombreLista = lista.getNombre();
+//        }
+//    }
+
     @Override
     protected void onResume() {
         super.onResume();
 
         //contenido
-        final Lista lista = new Lista(getIntent().getStringExtra("NombreLista"),"","","");
+        //controlo con el atributo estático ya que al implementar el botón de arriba (flecha)
+        //se llama de nuevo la activity, no solo se cierra, por lo que getIntent() no obtenría el
+        //extra NombreLista al volver de ArticulosAdd
+        if(nombreLista == null){
+            lista = new Lista(getIntent().getStringExtra("NombreLista"),"","","");
+            nombreLista = lista.getNombre();
+        }else{
+            lista = new Lista(nombreLista, "", "", "");
+        }
         this.setTitle(lista.getNombre());
 
         final BDHandler manejador = new BDHandler(this);
@@ -99,22 +113,6 @@ public class ListaCompra extends AppCompatActivity implements NavigationView.OnN
                 startActivity(i);
             }
         });
-    }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        return OpcionesMenus.onOptionsItemSelected(item, this);
-//    }
-
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        return OpcionesMenus.onNavigationItemSelected(item, this);
     }
 
     @Override
