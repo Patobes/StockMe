@@ -195,7 +195,7 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
     @Override
     public void onArticuloSeleccionado(Articulo articulo) {
 
-        if(vieneDe.equals("articulosAdd")){
+        if(vieneDe.equals("articulosAdd") || vieneDe.equals("stockAdd")){
             Intent i = new Intent();
             i.putExtra("Articulo",articulo);
             setResult(1,i);

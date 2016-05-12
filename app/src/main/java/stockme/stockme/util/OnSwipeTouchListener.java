@@ -29,6 +29,10 @@ public class OnSwipeTouchListener implements View.OnTouchListener {
     public void onLongClick(){
     }
 
+    public boolean onDoubleClick(){
+        return true;
+    }
+
     public boolean onTouch(View v, MotionEvent event) {
         return gestureDetector.onTouchEvent(event);
     }
@@ -60,6 +64,11 @@ public class OnSwipeTouchListener implements View.OnTouchListener {
         @Override
         public void onLongPress(MotionEvent e) {
             onLongClick();
+        }
+
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+            return onDoubleClick();
         }
     }
 }

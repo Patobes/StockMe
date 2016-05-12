@@ -19,22 +19,8 @@ abra una ventana para modificarlo.
 -Suma de precio en ListaDeArticulos (quizá renombrar a lista de compra)
 
 
-
----------Paris BDHandler---------------
-- public Integer insertarArticulos(String nombre, String marca) -> Ver si el values.put funciona bien si no pongo todos los parametros (linea 433)
-- public List<String> obtenerSupermercados()    cambiarlo por       public List<Supermercado> obtenerSupermercados()
-- Todos los modificarObject(Object) -> añadir variante modificarParametro(Object, Parametro) ->modificar solo el parametro correspondiente del objeto correspondiente
-- LISTA_ARTICULO === LISTA_ARTICULO_SUPERMERCADO (el articulo que aparece aqui es del tipo ArticuloSupermercado, con precio y super asociado)
-- Metodos de Articulo_supermercado:: Sustituir/duplicar los que reciben parametro 'int articulo' por 'string nombre, string marca'
-
 ----------Stock--------------
-- Revisarlo entero, para adaptarlo a la nueva BBDD y al nuevo estilo general de la app
-
-- Añadir a Stock con los parametros de la nueva BBDD (formulario similar al de lista_articulo), añadir boton que llame
-	a actividad de catalogo para seleccionar articulo ya existente.
-
-- Sumar/Restar cantidad de articulos (-1/+1) <-- Hacerlo con deslizamiento de dedo (de izq a dch y al reves)
-- Eliminar de Stock permanentemente
-- Poner a 0
-- Añadir automaticamente cuando la cantidad sea menor que el minimo establecido --> Que pregunte a que lista añadir
-- Mejorar la forma en que se muestran los elementos del Stock
+- Darle estilo acorde al diseño de toda la app (+-)
+- if(cantidad == 0) {DialogInterface(¿conservar o eliminar del Stock?)}
+- if(cantidad < minimo) {DialogInterface(¿añadir a lista de la compra/a qué lista de la compra desea añadirlo?)}
+- Cambiar color de fondo segun estado [0<cantidad<minimo | 0<=minimo<cantidad | 0 == cantidad == minimo | etc] | [esta en lista de compra o no]
