@@ -21,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,7 +44,8 @@ public class StockAdd extends AppCompatActivity implements Fragment_listas.OnFra
     private Spinner sp_cantidad;
     private EditText et_minimo;
     private Spinner sp_minimo;
-    private Button bt_añadir, bt_aceptar, bt_cancelar;
+    private Button bt_añadir;
+    private ImageButton bt_aceptar;
     Stock stock;
     int cantidad;
     int minimo;
@@ -72,8 +74,7 @@ public class StockAdd extends AppCompatActivity implements Fragment_listas.OnFra
         et_minimo = (EditText)findViewById(R.id.stock_add_et_minimo);
         sp_minimo = (Spinner)findViewById(R.id.stock_add_sp_minimo);
         bt_añadir = (Button)findViewById(R.id.stock_add_bt_añadir);
-        bt_aceptar = (Button)findViewById(R.id.stock_add_bt_aceptar);
-        bt_cancelar = (Button)findViewById(R.id.stock_add_bt_cancelar);
+        bt_aceptar = (ImageButton)findViewById(R.id.stock_add_bt_aceptar);
 
         //Propiedades del contenido
         final BDHandler manejador = new BDHandler(this);
@@ -92,13 +93,6 @@ public class StockAdd extends AppCompatActivity implements Fragment_listas.OnFra
         sp_cantidad.setAdapter(adapter_cantidad);
         et_minimo.setFilters(new InputFilter[]{new InputFilterMinMax("0", "10")});
         sp_minimo.setAdapter(adapter_minimo);
-
-        bt_cancelar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         bt_añadir.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import stockme.stockme.logica.Articulo;
@@ -22,7 +23,7 @@ import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.Util;
 
 public class ArticuloSimpleAdd extends AppCompatActivity {
-    private Button btnAceptar, btnCancelar;
+    private ImageButton btnAceptar;
     private EditText etNombre;
     private AutoCompleteTextView atv_marcas;
     private Spinner spTipos;
@@ -45,20 +46,11 @@ public class ArticuloSimpleAdd extends AppCompatActivity {
         spTipos = (Spinner)findViewById(R.id.articulo_simple_add_sp_tipos);
         atv_marcas = (AutoCompleteTextView)findViewById(R.id.articulo_simple_add_atv_marcas);
         atv_marcas.setThreshold(1);
-        btnAceptar = (Button)findViewById(R.id.articulo_simple_add_btn_aceptar);
-        btnCancelar = (Button)findViewById(R.id.articulo_simple_add_btn_cancelar);
+        btnAceptar = (ImageButton)findViewById(R.id.articulo_simple_add_btn_aceptar);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tipos_array,
                 android.R.layout.simple_spinner_item);
         spTipos.setAdapter(adapter);
-
-        btnCancelar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
 
         btnAceptar.setOnClickListener(new View.OnClickListener() {
             @Override

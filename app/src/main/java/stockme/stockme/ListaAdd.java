@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -29,8 +30,7 @@ import stockme.stockme.util.OpcionesMenus;
 import stockme.stockme.util.Util;
 
 public class ListaAdd extends AppCompatActivity implements Fragment_listas.OnFragmentInteractionListener{
-    private Button btn_aceptar;
-    private Button btn_cancelar;
+    private ImageButton btn_aceptar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class ListaAdd extends AppCompatActivity implements Fragment_listas.OnFra
 
         manejador.cerrar();
 
-        btn_aceptar = (Button)findViewById(R.id.lista_add_btn_aceptar);
+        btn_aceptar = (ImageButton)findViewById(R.id.lista_add_btn_aceptar);
         btn_aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,13 +85,6 @@ public class ListaAdd extends AppCompatActivity implements Fragment_listas.OnFra
             }
         });
 
-        btn_cancelar = (Button)findViewById(R.id.lista_add_btn_cancelar);
-        btn_cancelar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
     @Override

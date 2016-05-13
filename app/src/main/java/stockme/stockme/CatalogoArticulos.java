@@ -305,6 +305,10 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
             }
         }
 
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
+        }
     }
 
     @Override

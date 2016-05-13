@@ -3,6 +3,7 @@ package stockme.stockme.adaptadores;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.Image;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import stockme.stockme.CatalogoArticulos;
 import stockme.stockme.R;
 import stockme.stockme.logica.Articulo;
 import stockme.stockme.logica.ArticuloSupermercado;
@@ -92,6 +94,7 @@ public class AdaptadorGridItemCatalogo extends BaseAdapter {
                             Util.mostrarToast(v.getContext(), "Artículo eliminado");
                             datos.remove(position);
                             notifyDataSetChanged();
+
                         }
 
                         manejador.cerrar();

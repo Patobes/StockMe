@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import java.util.List;
@@ -36,7 +37,8 @@ public class ArticulosAdd extends AppCompatActivity implements Fragment_listas.O
     private EditText etNombre, etPrecio, etCantidad;
     private AutoCompleteTextView atv_marcas;
     private Spinner spTipos, spSupermercado;
-    private Button btnAceptar, btnCancelar, btnCatalogo;
+    private Button btnCatalogo;
+    private ImageButton btnAceptar;
     String nLista;
     ArticuloSupermercado articulo;
     int cantidad;
@@ -61,8 +63,7 @@ public class ArticulosAdd extends AppCompatActivity implements Fragment_listas.O
         etCantidad.setFilters(new InputFilter[]{ new InputFilterMinMax("1", "99")});
         spTipos = (Spinner)findViewById(R.id.articulos_add_sp_tipos);
         spSupermercado = (Spinner)findViewById(R.id.articulos_add_sp_supermercado);
-        btnAceptar = (Button)findViewById(R.id.articulos_add_btn_aceptar);
-        btnCancelar = (Button)findViewById(R.id.articulos_add_btn_cancelar);
+        btnAceptar = (ImageButton)findViewById(R.id.articulos_add_btn_aceptar);
         btnCatalogo = (Button)findViewById(R.id.articulos_add_btn_catalogo);
         atv_marcas = (AutoCompleteTextView)findViewById(R.id.articulos_add_atv_marcas);
         atv_marcas.setThreshold(1);
@@ -83,13 +84,6 @@ public class ArticulosAdd extends AppCompatActivity implements Fragment_listas.O
         ArrayAdapter<String> adapterSuperM = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, supermercados);
         //adapterSuperM.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spSupermercado.setAdapter(adapterSuperM);
-
-        btnCancelar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         btnCatalogo.setOnClickListener(new View.OnClickListener() {
             @Override

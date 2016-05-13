@@ -134,30 +134,19 @@
         android:textAlignment="center"
         android:background="@drawable/esquinas_boton" />
 
-    <Button
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:minWidth="60dp"
+        android:maxWidth="60dp"
+        android:minHeight="60dp"
+        android:maxHeight="60dp"
         android:id="@+id/stock_add_bt_aceptar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:minWidth="140dp"
-        android:maxWidth="140dp"
-        android:text="@string/Aceptar"
         android:textSize="23sp"
-        android:textAlignment="center"
-        android:background="@drawable/esquinas_boton" />
-
-    <Button
-        android:id="@+id/stock_add_bt_cancelar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/ic_done_black_24dp"
+        android:background="@drawable/esquinas_boton"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:minWidth="140dp"
-        android:maxWidth="140dp"
-        android:text="@string/Cancelar"
-        android:textSize="23sp"
-        android:textAlignment="center"
-        android:background="@drawable/esquinas_boton" />
-
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>
