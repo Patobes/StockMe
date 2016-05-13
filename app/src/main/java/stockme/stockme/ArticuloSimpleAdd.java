@@ -80,13 +80,12 @@ public class ArticuloSimpleAdd extends AppCompatActivity {
                     if (artAux == null) {
                         if (manejador.insertarArticulo(nombre, marca, tipo) != -1) {
                             Util.mostrarToast(v.getContext(), "Se ha creado un nuevo artículo");
-                            manejador.cerrar();
-                            finish();
                         } else {
                             Util.mostrarToast(v.getContext(), "No se ha podido crear el artículo");
-                            manejador.cerrar();
-                            finish();
                         }
+                        manejador.cerrar();
+                        finish();
+                        overridePendingTransition(R.anim.right_in, R.anim.right_out);
                     }else{
                         Util.mostrarToast(v.getContext(), "Ya existe el artículo");
                         manejador.cerrar();

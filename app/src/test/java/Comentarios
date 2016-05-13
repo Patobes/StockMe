@@ -3,7 +3,7 @@
              al volver de ArticuloSimpleAdd (llamado desde Fragment_catalogo_tipos) vuelve al Fragment_catalogo_todos
 -Navegacion: al llamar a Catalogo desde StockAdd o desde ArticulosAdd y darle a volver te dice si quieres cerrar la app
 
--Crash: Principal->Stock->StockAdd->AñadirDesdeCatalogo->Cancelar (volver atras)->Catalogo->Click en articulo cualquiera
+-Depurar las listas añadiendo patrones ViewHolder, etc...
 
 ----------Ideas:-------------------------------------------------------------------
 en los Fragments se puede usar getActivity() para trabajar sobre el padre

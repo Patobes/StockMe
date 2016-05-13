@@ -106,6 +106,7 @@ public class StockAdd extends AppCompatActivity implements Fragment_listas.OnFra
                 Intent i = new Intent(v.getContext(), CatalogoArticulos.class);
                 i.putExtra("vieneDe", "stockAdd");
                 startActivityForResult(i, 1);
+                overridePendingTransition(R.anim.left_in, R.anim.left_out);
             }
         });
 
@@ -136,6 +137,7 @@ public class StockAdd extends AppCompatActivity implements Fragment_listas.OnFra
                                 manejador.cerrar();
                                 manejador1.cerrar();
                                 finish();
+                                overridePendingTransition(R.anim.right_in, R.anim.right_out);
                             }
                         };
                         String mensaje = "El articulo que has introducido ya está en Stock\r\n¿Deseas añadir " + cantidad + " unidades al Stock?";
@@ -149,6 +151,7 @@ public class StockAdd extends AppCompatActivity implements Fragment_listas.OnFra
                         manejador.cerrar();
                         manejador1.cerrar();
                         finish();
+                        overridePendingTransition(R.anim.right_in, R.anim.right_out);
                     }
                 }
             }

@@ -97,6 +97,7 @@ public class ArticulosAdd extends AppCompatActivity implements Fragment_listas.O
                 Intent i = new Intent(v.getContext(), CatalogoArticulos.class);
                 i.putExtra("vieneDe", "articulosAdd");
                 startActivityForResult(i, 1);
+                overridePendingTransition(R.anim.left_in, R.anim.left_out);
             }
         });
 
@@ -133,6 +134,7 @@ public class ArticulosAdd extends AppCompatActivity implements Fragment_listas.O
                                 } else {
                                     Util.mostrarToast(v.getContext(), "No se ha podido crear el artículo");
                                     finish();
+                                    overridePendingTransition(R.anim.right_in, R.anim.right_out);
                                     //Aqui deberia acabarse la actividad, pues ni hay articulo en la BBDD ni se ha podido crear (el articulo es null)
                                 }
                                 /*
@@ -168,6 +170,7 @@ public class ArticulosAdd extends AppCompatActivity implements Fragment_listas.O
                                             manejador.cerrar();
                                             manejador2.cerrar();
                                             finish();
+                                            overridePendingTransition(R.anim.right_in, R.anim.right_out);
                                         }
                                     };
                                     Util.crearMensajeAlerta("Ya está el artículo en la lista. ¿Quieres sumar la cantidad?", "Artículo existente",
@@ -177,6 +180,7 @@ public class ArticulosAdd extends AppCompatActivity implements Fragment_listas.O
                                     manejador.cerrar();
                                     manejador2.cerrar();
                                     finish();
+                                    overridePendingTransition(R.anim.right_in, R.anim.right_out);
                                 }
                             }
 

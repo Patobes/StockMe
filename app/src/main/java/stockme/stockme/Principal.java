@@ -130,6 +130,7 @@ public class Principal extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        Util.vieneDe = "Listas";//esto es para resetear la navegacion
         Intent i = getIntent();
         if(i != null) {
             Bundle extras = i.getExtras();

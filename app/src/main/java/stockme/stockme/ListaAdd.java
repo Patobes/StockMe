@@ -75,6 +75,7 @@ public class ListaAdd extends AppCompatActivity implements Fragment_listas.OnFra
                     else {
                         setResult(Activity.RESULT_OK);
                         finish();
+                        overridePendingTransition(R.anim.right_in, R.anim.right_out);
                     }
                     manejador.cerrar();
                 } else {

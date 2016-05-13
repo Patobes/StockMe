@@ -54,7 +54,7 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catalogo_articulos);
-        Preferencias.setPreferencia("anterior", "Artículos");
+//        Preferencias.setPreferencia("anterior", "Artículos");
 
         //toolbar + navbar
         View vToolbar = findViewById(R.id.toolbar_catalog);
@@ -162,8 +162,9 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
                     imm.hideSoftInputFromWindow(etBusqueda.getWindowToken(), 0);
                 }
                 return true;
-            case R.id.home:
+            case android.R.id.home:
                 finish();
+                overridePendingTransition(R.anim.right_in, R.anim.right_out);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -172,7 +173,7 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        if (Util.vieneDe.equals("articulosAdd") || Util.vieneDe.equals("stockAdd")) {
+        if (!Util.vieneDe.equals("articulosAdd") && !Util.vieneDe.equals("stockAdd")) {
             int id = item.getItemId();
 
             if(id != R.id.nav_articulos) {
@@ -215,15 +216,22 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
         super.onResume();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle;
         nav_menu = (NavigationView) findViewById(R.id.nav_view);
         if(Util.vieneDe.equals("articulosAdd") || Util.vieneDe.equals("stockAdd")){
-            drawer.setDrawerListener(null);
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+//            toggle = new ActionBarDrawerToggle(
+//                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//            toggle.setDrawerIndicatorEnabled(false);
+//            getSupportActionBar().setHomeButtonEnabled(true);
             nav_menu.setNavigationItemSelectedListener(null);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }else {
+            toggle = new ActionBarDrawerToggle(
+                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//            toggle.setDrawerIndicatorEnabled(true);
             drawer.setDrawerListener(toggle);
+//            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             toggle.syncState();
 
             nav_menu.setNavigationItemSelectedListener(this);
@@ -254,6 +262,7 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
         public int getCount() {
             return NUM_ITEMS;
         }
+
 
         // Crear el fragment a devolver en cada página
         @Override
@@ -305,6 +314,7 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
             i.putExtra("Articulo",articulo);
             setResult(1,i);
             finish();
+            overridePendingTransition(R.anim.right_in, R.anim.right_out);
         }
     }
 
@@ -312,6 +322,7 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
     public void onBackPressed() {
         if(Util.vieneDe.equals("articulosAdd") || Util.vieneDe.equals("stockAdd")){
             finish();
+            overridePendingTransition(R.anim.right_in, R.anim.right_out);
         }else
             OpcionesMenus.onBackPressed(this);
     }
