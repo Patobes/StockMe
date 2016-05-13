@@ -56,7 +56,7 @@ public class Fragment_listas extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Preferencias.setPreferencia("anterior", "fragListas");
+        Preferencias.setPreferencia("anterior", "Listas");
 
         view.setVerticalScrollBarEnabled(false);
 
@@ -76,6 +76,7 @@ public class Fragment_listas extends Fragment {
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(), ListaAdd.class);
                 startActivityForResult(i, 1);
+                getActivity().overridePendingTransition(R.anim.left_in, R.anim.left_out);
             }
         });
 
@@ -88,6 +89,7 @@ public class Fragment_listas extends Fragment {
                 Util.mostrarToast(parent.getContext(), nombreLista);
                 i.putExtra("NombreLista", nombreLista);
                 startActivityForResult(i, 1);
+                getActivity().overridePendingTransition(R.anim.left_in, R.anim.left_out);
             }
         });
 

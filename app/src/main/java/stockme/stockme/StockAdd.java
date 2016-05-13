@@ -61,6 +61,8 @@ public class StockAdd extends AppCompatActivity implements Fragment_listas.OnFra
         //para flecha de atrás de navegación
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+//        getSupportActionBar().setHomeButtonEnabled(true);
+
         //Contenido
         et_nombre = (EditText)findViewById(R.id.stock_add_et_nombre);
         atv_marca = (AutoCompleteTextView) findViewById(R.id.stock_add_atv_marca);
@@ -188,6 +190,44 @@ public class StockAdd extends AppCompatActivity implements Fragment_listas.OnFra
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem menuItem) {
+//        switch (menuItem.getItemId()) {
+//            case android.R.id.home:
+//                // ProjectsActivity is my 'home' activity
+//                startActivityAfterCleanup(Principal.class);
+//                return true;
+//        }
+//        return (super.onOptionsItemSelected(menuItem));
+//    }
+//
+//    private void startActivityAfterCleanup(Class<?> cls) {
+//        //if (projectsDao != null) projectsDao.close();
+//        Intent intent = new Intent(getApplicationContext(), cls);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        startActivity(intent);
+//        finish();
+//    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            overridePendingTransition(R.anim.right_in, R.anim.right_out);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.right_in, R.anim.right_out);
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

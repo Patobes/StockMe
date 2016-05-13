@@ -15,32 +15,31 @@ import stockme.stockme.R;
 public class OpcionesMenus {
     public OpcionesMenus(){}
 
-    public static boolean onNavigationItemSelected(MenuItem item, Activity activity){
-        int id = item.getItemId();
-
-        Intent i = new Intent(activity, Principal.class);
-
-        if (id == R.id.nav_listas) {
-            i.putExtra("Opcion", "Listas");
-        } else if (id == R.id.nav_stock) {
-            i.putExtra("Opcion", "Stock");
-        } else if (id == R.id.nav_articulos) {
-            i.putExtra("Opcion", "Articulos");
-        } else if (id == R.id.nav_ajustes) {
-            i.putExtra("Opcion", "Ajustes");
-        }
+//    public static boolean onNavigationItemSelected(MenuItem item, Activity activity){
+//        int id = item.getItemId();
 //
-        DrawerLayout drawer = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+//        Intent i = new Intent(activity, Principal.class);
+//
+//        if (id == R.id.nav_listas) {
+//            i.putExtra("Opcion", "Listas");
+//        } else if (id == R.id.nav_stock) {
+//            i.putExtra("Opcion", "Stock");
+//        } else if (id == R.id.nav_articulos) {
+//            i.putExtra("Opcion", "Articulos");
+//        } else if (id == R.id.nav_ajustes) {
+//            i.putExtra("Opcion", "Ajustes");
+//        }
+////
+//        DrawerLayout drawer = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
+//        drawer.closeDrawer(GravityCompat.START);
+//
+//        activity.startActivity(i);
+//        activity.overridePendingTransition(0, 0);
 
-        activity.startActivity(i);
-
-        //TODO: Finalizar la activity cuando se vaya a una opción? Esto impide que se vuelva con el botón de "atrás"
-        //debería comprobar si hay un "vieneDe"
-        activity.finish();
-
-        return true;
-    }
+//        activity.finish();
+//
+//        return true;
+//    }
 
 //    public static boolean onOptionsItemSelected(MenuItem item, Activity activity) {
 //        switch (item.getItemId()){

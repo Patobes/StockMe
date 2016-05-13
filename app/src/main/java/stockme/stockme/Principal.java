@@ -104,6 +104,7 @@ public class Principal extends AppCompatActivity
             fragTransact = true;
         } else if (id == R.id.nav_articulos) {
             startActivity(new Intent(this, CatalogoArticulos.class));
+            overridePendingTransition(0, 0);
             finish();
         } else if (id == R.id.nav_ajustes) {
             startActivity(new Intent(this, InfoBD.class));
@@ -155,8 +156,29 @@ public class Principal extends AppCompatActivity
                     }
                 }else
                     onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_listas));
-            }else
-                onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_listas));
+            }else {
+                String anterior = Preferencias.getPreferenciaString("anterior");
+                if(anterior != null){
+                    switch (anterior) {
+                        case "Listas":
+                            onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_listas));
+                            break;
+                        case "Stock":
+                            onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_stock));
+                            break;
+                        case "Articulos":
+                            onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_articulos));
+                            break;
+                        case "Ajustes":
+                            onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_ajustes));
+                            break;
+                        default:
+                            onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_listas));
+                            break;
+                    }
+                }else
+                    onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_listas));
+            }
         }else
             onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_listas));
     }

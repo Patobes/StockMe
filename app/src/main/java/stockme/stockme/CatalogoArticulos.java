@@ -10,6 +10,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -17,13 +18,18 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import stockme.stockme.logica.Articulo;
 import stockme.stockme.util.OpcionesMenus;
@@ -32,16 +38,17 @@ import stockme.stockme.util.Util;
 
 public class CatalogoArticulos extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         Fragment_listas.OnFragmentInteractionListener, Fragment_catalogo_todos.OnFragmentInteractionListener, Fragment_catalogo_tipos.OnFragmentInteractionListener {
-    FragmentPagerAdapter adapterViewPager;
     private GridView articulos;
     private Button aniadir;
     private ImageButton btn_reset;
+    private EditText etBusqueda;
+
+    private ViewPager vpPager;
+    private MyPagerAdapter adapterViewPager;
+
+    private Toolbar toolbar;
 
     private static NavigationView nav_menu;
-
-    //TODO: corregir la *** navegación y comportamiento de la opción de búsqueda
-    //si no se puede... a tomar por saco y borrarla
-    private static String querySearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,19 +57,33 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
         Preferencias.setPreferencia("anterior", "Artículos");
 
         //toolbar + navbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        View vToolbar = findViewById(R.id.toolbar_catalog);
+
+        vpPager = (ViewPager) findViewById(R.id.pager_catalogo);
+
+        etBusqueda = (EditText) vToolbar.findViewById(R.id.et_busqueda);
+        etBusqueda.setVisibility(View.GONE);
+        etBusqueda.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                realizarBusqueda(event, false);
+                return true;
+            }
+        });
+//        etBusqueda.setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                if(event.getAction() == KeyEvent.ACTION_UP)
+//                    Util.mostrarToast(getApplicationContext(), ((EditText)v).getText().toString());
+//                return false;
+//            }
+//        });
+
+        toolbar = (Toolbar) vToolbar;
         setSupportActionBar(toolbar);
         this.setTitle("Catálogo");
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
 
-        nav_menu = (NavigationView) findViewById(R.id.nav_view);
-        nav_menu.setNavigationItemSelectedListener(this);
-
-        querySearch = null;//para resetear la búsqueda al entrar en Artículos
+//        querySearch = null;//para resetear la búsqueda al entrar en Artículos
 
         Intent i = getIntent();
         if (i != null){
@@ -73,7 +94,6 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
             }
         }
 
-        nav_menu.getMenu().getItem(2).setChecked(true);
 
 
         aniadir = (Button) findViewById(R.id.fragment_catalogo_btn_mas);
@@ -83,6 +103,7 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(), ArticuloSimpleAdd.class);
                 startActivityForResult(i,1);
+                overridePendingTransition(R.anim.left_in, R.anim.left_out);
             }
         });
 
@@ -90,38 +111,98 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
         btn_reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(CatalogoArticulos.this, CatalogoArticulos.class);
-                i.setAction(Intent.ACTION_SEARCH);
-                startActivity(i);
-                finish();
+                realizarBusqueda(null, true);
             }
         });
 
-        handleIntent(getIntent());
+        //handleIntent(getIntent());
+    }
+
+    private void realizarBusqueda(KeyEvent event, boolean reset) {
+        if(event != null && event.getAction() == KeyEvent.ACTION_UP) {
+            String texto = etBusqueda.getText().toString();
+            texto = texto != null && !texto.isEmpty() ? texto : null;
+            adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
+            adapterViewPager.setQuerySearch(texto);
+            vpPager.setAdapter(adapterViewPager);
+            //etBusqueda.setText("");
+        }
+        if(reset){
+            adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
+            adapterViewPager.setQuerySearch(null);
+            vpPager.setAdapter(adapterViewPager);
+            etBusqueda.setText("");
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_search, menu);
-        SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
-                (SearchView) menu.findItem(R.id.menu_search).getActionView();
-        searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(getComponentName()));
-
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_search, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                if(etBusqueda.getVisibility() == View.GONE) {
+                    etBusqueda.setVisibility(View.VISIBLE);
+                    item.setIcon(R.drawable.ic_action_cancel_dark);
+                    etBusqueda.requestFocus();
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(findViewById(R.id.et_busqueda), 0);
+                }
+                else {
+                    etBusqueda.setVisibility(View.GONE);
+                    item.setIcon(R.drawable.ic_action_search_dark);
+                    etBusqueda.setText(null);
+                    realizarBusqueda(new KeyEvent(KeyEvent.ACTION_UP, 0), false);
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(etBusqueda.getWindowToken(), 0);
+                }
+                return true;
+            case R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        return OpcionesMenus.onNavigationItemSelected(item, this);
+        if (Util.vieneDe.equals("articulosAdd") || Util.vieneDe.equals("stockAdd")) {
+            int id = item.getItemId();
+
+            if(id != R.id.nav_articulos) {
+                Intent i = new Intent(this, Principal.class);
+
+                if (id == R.id.nav_listas) {
+                    i.putExtra("Opcion", "Listas");
+                } else if (id == R.id.nav_stock) {
+                    i.putExtra("Opcion", "Stock");
+                } else if (id == R.id.nav_ajustes) {
+                    i.putExtra("Opcion", "Ajustes");
+                }
+    //
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+
+                startActivity(i);
+                overridePendingTransition(0, 0);
+
+                finish();
+            }else{
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                if (drawer.isDrawerOpen(GravityCompat.START)) {
+                    drawer.closeDrawer(GravityCompat.START);
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -132,14 +213,37 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
     @Override
     protected void onResume() {
         super.onResume();
-        ViewPager vpPager = (ViewPager) findViewById(R.id.pager_catalogo);
-        MyPagerAdapter adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        nav_menu = (NavigationView) findViewById(R.id.nav_view);
+        if(Util.vieneDe.equals("articulosAdd") || Util.vieneDe.equals("stockAdd")){
+            drawer.setDrawerListener(null);
+            nav_menu.setNavigationItemSelectedListener(null);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }else {
+            drawer.setDrawerListener(toggle);
+            toggle.syncState();
+
+            nav_menu.setNavigationItemSelectedListener(this);
+
+            nav_menu.getMenu().getItem(2).setChecked(true);
+        }
+
+        adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
         vpPager.setAdapter(adapterViewPager);
     }
 
-    public static class MyPagerAdapter extends FragmentPagerAdapter {
+    //TODO: quizá crear dos clases, la básica y la de búsqueda
+    public static class MyPagerAdapter extends FragmentStatePagerAdapter {
         //Número de páginas
         private static int NUM_ITEMS = 2;
+
+        private String querySearch;
+        public void setQuerySearch(String querySearch){
+            this.querySearch = querySearch;
+        }
 
         public MyPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
@@ -201,28 +305,29 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
             i.putExtra("Articulo",articulo);
             setResult(1,i);
             finish();
-        }else{
-            Util.mostrarToast(this, "No encuentro el articulosAdd");
         }
     }
 
     @Override
     public void onBackPressed() {
-        OpcionesMenus.onBackPressed(this);
+        if(Util.vieneDe.equals("articulosAdd") || Util.vieneDe.equals("stockAdd")){
+            finish();
+        }else
+            OpcionesMenus.onBackPressed(this);
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        handleIntent(intent);
-        finish();
-    }
-
-    private void handleIntent(Intent intent) {
-        String accion = intent.getAction();
-        if (Intent.ACTION_SEARCH.equals(accion)) {
-            querySearch = intent.getStringExtra(SearchManager.QUERY);
-            if(querySearch != null && querySearch.isEmpty())
-                querySearch = null;
-        }
-    }
+//    @Override
+//    protected void onNewIntent(Intent intent) {
+//        handleIntent(intent);
+//        finish();
+//    }
+//
+//    private void handleIntent(Intent intent) {
+//        String accion = intent.getAction();
+//        if (Intent.ACTION_SEARCH.equals(accion)) {
+//            querySearch = intent.getStringExtra(SearchManager.QUERY);
+//            if(querySearch != null && querySearch.isEmpty())
+//                querySearch = null;
+//        }
+//    }
 }

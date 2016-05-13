@@ -1,5 +1,4 @@
 ----------Pendientes:--------------------------------------------------------------
--Navegación..., pregunta cuando se va a cerrar la app
 -Navegacion: al volver de StockAdd regresa a Listas en vez de a Stock;
              al volver de ArticuloSimpleAdd (llamado desde Fragment_catalogo_tipos) vuelve al Fragment_catalogo_todos
 -Navegacion: al llamar a Catalogo desde StockAdd o desde ArticulosAdd y darle a volver te dice si quieres cerrar la app
@@ -7,10 +6,7 @@
 -Crash: Principal->Stock->StockAdd->AñadirDesdeCatalogo->Cancelar (volver atras)->Catalogo->Click en articulo cualquiera
 
 ----------Ideas:-------------------------------------------------------------------
--En ArticulosAdd, que se preseleccione el supermercado si la lista tiene uno elegido (no es "cualquiera")
--Cambiar el evento onLongClickPressed o como se llame XD de ListaDeArticulos para que, en lugar de borrar el artículo,
-abra una ventana para modificarlo.
--Crear una actividad auxiliar para la búsqueda y gestionar el restulado mediante onActivityResult
+en los Fragments se puede usar getActivity() para trabajar sobre el padre
 
 ----------Realizado recientemente:-------------------------------------------------
 -Autocompletado de marcas

@@ -111,6 +111,7 @@ public class ListaCompra extends AppCompatActivity implements /*NavigationView.O
                 Intent i = new Intent(ListaCompra.this, ArticulosAdd.class);
                 i.putExtra("NombreLista", lista.getNombre());
                 startActivity(i);
+                overridePendingTransition(R.anim.left_in, R.anim.left_out);
             }
         });
     }
@@ -120,4 +121,20 @@ public class ListaCompra extends AppCompatActivity implements /*NavigationView.O
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            overridePendingTransition(R.anim.right_in, R.anim.right_out);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.right_in, R.anim.right_out);
+    }
 }
