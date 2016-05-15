@@ -1736,6 +1736,25 @@ public class BDHandler extends SQLiteOpenHelper {
             return false;
     }
 
+    public boolean estaStockEnListaCompra(Stock stock){
+        return estaStockEnListaCompra(stock.getArticulo());
+    }
+
+    public boolean estaStockEnListaCompra(int articulo){
+        List<Lista> listas = obtenerListas();
+        List<ArticuloSupermercado> articulosSupermercado = new ArrayList<>();
+        for (Lista lista:
+             listas) {
+            articulosSupermercado.addAll(obtenerArticulosEnLista(lista));
+        }
+        for (ArticuloSupermercado as:
+             articulosSupermercado) {
+            if (as.getArticulo() == articulo)
+                return true;
+        }
+        return false;
+    }
+
     //STOCK - INSERT
 
     public boolean insertarStock(Stock stock){

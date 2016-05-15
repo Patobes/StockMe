@@ -48,9 +48,25 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
         LayoutInflater inflater = LayoutInflater.from(getContext());
         final View item = inflater.inflate(R.layout.listitem_stock, null);
 
+        final BDHandler manejador = new BDHandler(getContext());
+
         stock = new Stock(datos.get(position).getArticulo(),
                 datos.get(position).getCantidad(),
                 datos.get(position).getMinimo());
+
+        int cantidad = stock.getCantidad();
+        int minimo = stock.getMinimo();
+        boolean pendiente = false;
+        pendiente = manejador.estaStockEnListaCompra(stock);
+
+        if(cantidad > minimo)
+            item.setBackgroundResource(R.drawable.esquinas_stock_verde);
+        else if(pendiente)
+            item.setBackgroundResource(R.drawable.esquinas_stock_amarillo);
+        else if(cantidad == 0)
+            item.setBackgroundResource(R.drawable.esquinas_stock_rojo);
+        else
+            item.setBackgroundResource(R.drawable.esquinas_stock_naranja);
 
         ib_borrar = (ImageButton)item.findViewById(R.id.listitem_stock_bt_delete);
         tv_nombre = (TextView)item.findViewById(R.id.listitem_stock_nombre);
@@ -59,8 +75,6 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
         tv_minimo = (TextView)item.findViewById(R.id.listitem_stock_tv_minimo);
         ib_mas = (ImageButton) item.findViewById(R.id.listitem_stock_mas);
         ib_menos = (ImageButton) item.findViewById(R.id.listitem_stock_menos);
-
-        final BDHandler manejador = new BDHandler(getContext());
 
         tv_nombre.setText(manejador.obtenerArticulo(stock.getArticulo()).getNombre());
         tv_marca.setText(manejador.obtenerArticulo(stock.getArticulo()).getMarca());

@@ -22,4 +22,10 @@
     <color name="Salsas">#6efcc066</color>
     <color name="Verduras">#786ac62d</color>
     <color name="black">#000000</color>
+
+    <color name="stock_verde">#00FF00</color>
+    <color name="stock_amarillo">#FFFF00</color>
+    <color name="stock_naranja1">#FF8000</color>
+    <color name="stock_naranja2">#FFA420</color>
+    <color name="stock_rojo">#FF0000</color>
 </resources>
