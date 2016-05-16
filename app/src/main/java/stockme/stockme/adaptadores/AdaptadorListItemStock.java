@@ -127,6 +127,58 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
                 Stock stock1 = manejador.obtenerStock(datos.get(position).getArticulo());
                 if (stock1.getCantidad() > 0) {
                     int cantidad = stock1.getCantidad() - 1;
+                    int minimo = stock1.getMinimo();
+                    if(cantidad == 0){
+                        DialogInterface.OnClickListener borrarStockListener = new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                BDHandler manejador = new BDHandler(getContext());
+                                if (!manejador.eliminarStock(datos.get(position).getArticulo()))
+                                    Util.mostrarToast(getContext(), "No se ha podido quitar el articulo");
+                                else {
+                                    Util.mostrarToast(getContext(), "Articulo quitado del Stock");
+                                    remove(datos.get(position));
+                                    notifyDataSetChanged();
+                                }
+
+                                manejador.cerrar();
+                            }
+                        };
+                        DialogInterface.OnClickListener cancelar = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        };
+                        String nombre = manejador.obtenerArticulo(datos.get(position).getArticulo()).getNombre();
+                        String marca = manejador.obtenerArticulo(datos.get(position).getArticulo()).getMarca();
+                        Util.crearMensajeAlerta("¿Conservar " + nombre + " " + marca + " en el Stock?", nombre + " " + marca + " agotado", "Eliminar", "Conservar", borrarStockListener, cancelar, getContext());
+                    }
+                    else if(cantidad == minimo)
+                        Util.mostrarToast(getContext(), manejador.obtenerArticulo(datos.get(position).getArticulo()).getNombre() + " " +
+                                manejador.obtenerArticulo(datos.get(position).getArticulo()).getMarca() + " ha alcanzado el mínimo establecido");
+                    else if(cantidad < minimo){
+                        DialogInterface.OnClickListener añadirStockListaListener = new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //Llamar a una actividad (vista) con un spinner con las listas de la compra o posibilidad de una nueva
+                                //y que aparezca la cantidad que queremos añadir y el precio y super (como llamar al ArticuloListaAdd pero eligiendo tmbn la lista)
+                                //Comprobar que no esté ya en lista (boolean pendiente usado para colear -- fondo amarillo)
+
+//                                BDHandler manejador = new BDHandler(getContext());
+//                                if (!manejador.eliminarStock(datos.get(position).getArticulo()))
+//                                    Util.mostrarToast(getContext(), "No se ha podido quitar el articulo");
+//                                else {
+//                                    Util.mostrarToast(getContext(), "Articulo quitado del Stock");
+//                                    remove(datos.get(position));
+//                                    notifyDataSetChanged();
+//                                }
+//
+//                                manejador.cerrar();
+                            }
+                        };
+                        String nombre = manejador.obtenerArticulo(datos.get(position).getArticulo()).getNombre();
+                        String marca = manejador.obtenerArticulo(datos.get(position).getArticulo()).getMarca();
+                        Util.crearMensajeAlerta("¿Añadir " + nombre + " " + marca + " a una lista de la compra?", nombre + " " + marca + " bajo mínimos", añadirStockListaListener, getContext());
+                    }
                     manejador.modificarStockCantidad(stock1, cantidad);
                     datos.get(position).setCantidad(cantidad);
                     manejador.cerrar();
@@ -148,22 +200,7 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
             }
             @Override
             public boolean onDoubleClick(){
-                DialogInterface.OnClickListener borrarStockListener = new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        BDHandler manejador = new BDHandler(getContext());
-                        if (!manejador.eliminarStock(datos.get(position).getArticulo()))
-                            Util.mostrarToast(getContext(), "No se ha podido quitar el articulo");
-                        else {
-                            Util.mostrarToast(getContext(), "Articulo quitado del Stock");
-                            remove(datos.get(position));
-                            notifyDataSetChanged();
-                        }
-
-                        manejador.cerrar();
-                    }
-                };
-                Util.crearMensajeAlerta("¿Quitar " + manejador.obtenerArticulo(datos.get(position).getArticulo()).getNombre() + " " +
-                        manejador.obtenerArticulo(datos.get(position).getArticulo()).getMarca() + " del Stock?", borrarStockListener, getContext());
+                ib_borrar.performClick();
                 return true;
             }
             @Override

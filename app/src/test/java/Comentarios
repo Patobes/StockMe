@@ -22,7 +22,8 @@ en los Fragments se puede usar getActivity() para trabajar sobre el padre
 
 
 ----------Stock--------------
-- Darle estilo acorde al diseño de toda la app (+-)
-- if(cantidad == 0) {DialogInterface(¿conservar o eliminar del Stock?)}
 - if(cantidad < minimo) {DialogInterface(¿añadir a lista de la compra/a qué lista de la compra desea añadirlo?)}
-- Cambiar color de fondo segun estado [0<cantidad<minimo | 0<=minimo<cantidad | 0 == cantidad == minimo | etc] | [esta en lista de compra o no]
+
+--------A Preguntar---------
+- Cuando entramos en vistas para añadir articulos tanto a listas como a stock, poner el boton de 'añadir desde catalogo' a la izquierda del tick
+  en vez de arriba, porque queda btt mal
