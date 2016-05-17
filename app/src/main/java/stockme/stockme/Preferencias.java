@@ -1,6 +1,8 @@
 package stockme.stockme;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -9,14 +11,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.MenuItem;
+
+import java.util.Locale;
 
 import stockme.stockme.util.OpcionesMenus;
 import stockme.stockme.util.Util;
 
-/**
- * Created by Juanmi on 17/05/2016.
- */
 public class Preferencias extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private static NavigationView nav_menu;
 
@@ -83,5 +85,19 @@ public class Preferencias extends AppCompatActivity implements NavigationView.On
         } else {
             return false;
         }
+    }
+
+    public void setLocale(String lang) {
+
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
+
+        Intent refresh = new Intent(this, Preferencias.class);
+        startActivity(refresh);
+        finish();
     }
 }

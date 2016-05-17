@@ -115,7 +115,7 @@
 
     <string name="Otros">Otros</string>
     <string name="Dulces">Dulces</string>
-    <string name="Drogeria">Drogería</string>
+    <string name="Drogeria">Droguería</string>
     <string name="Mascotas">Mascotas</string>
     <string name="Congelados">Congelados</string>
     <string name="Farmacia">Farmacia</string>
@@ -177,7 +177,7 @@
     <string name="Todos">Todos</string>
     <string name="Tipos">Tipos</string>
     <string name="Crear_lista">Crear lista</string>
-    <string name="Ya_existe_la_lista">Ya existe la lista: </string>
+    <string name="Ya_existe_la_lista">"Ya existe la lista: "</string>
     <string name="Añadir_stock">Añadir Stock</string>
 
     <string name="Articulo_añadido">Artículo añadido</string>
