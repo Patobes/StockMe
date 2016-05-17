@@ -193,5 +193,12 @@
     <string name="No">No</string>
     <string name="Confirmacion">Confirmación</string>
 
+    <string name="Selecciona_el_idioma">Selecciona el idioma</string>
+    <string name="Selecciona_la_moneda">Selecciona la moneda</string>
+    <string name="Selecciona_el_orden">Selecciona el orden</string>
+    <string name="Idioma">Idioma</string>
+    <string name="Moneda">Moneda</string>
+    <string name="Orden_de_las_listas">Orden de las listas</string>
+
 
 </resources>

@@ -2,24 +2,24 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
     <ListPreference
-            android:key="idioma"
-            android:title="Idioma"
-            android:summary="Selecciona el idioma"
-            android:dialogTitle="Seleccionar idioma"
+        android:dialogTitle="@string/Selecciona_el_idioma"
             android:entries="@array/idioma"
-            android:entryValues="@array/codidioma" />
+        android:entryValues="@array/codidioma"
+        android:key="idioma"
+        android:summary="@string/Selecciona_el_idioma"
+        android:title="@string/Idioma" />
     <ListPreference
-        android:key="moneda"
-        android:title="Moneda"
-        android:summary="Selecciona la moneda"
-        android:dialogTitle="Seleccionar moneda"
+        android:dialogTitle="@string/Selecciona_la_moneda"
         android:entries="@array/moneda"
-        android:entryValues="@array/codmoneda" />
+        android:entryValues="@array/codmoneda"
+        android:key="moneda"
+        android:summary="@string/Selecciona_la_moneda"
+        android:title="@string/Moneda" />
     <ListPreference
-        android:key="orden_listas"
-        android:title="Orden de las listas"
-        android:summary="Selecciona el orden"
-        android:dialogTitle="Seleccionar orden"
+        android:dialogTitle="@string/Selecciona_el_orden"
         android:entries="@array/orden"
-        android:entryValues="@array/codorden" />
+        android:entryValues="@array/codorden"
+        android:key="orden_listas"
+        android:summary="@string/Selecciona_el_orden"
+        android:title="@string/Orden_de_las_listas" />
 </PreferenceScreen>
