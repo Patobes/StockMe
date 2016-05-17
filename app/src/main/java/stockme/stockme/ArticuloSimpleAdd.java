@@ -1,24 +1,17 @@
 package stockme.stockme;
 
-import android.content.DialogInterface;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import stockme.stockme.logica.Articulo;
-import stockme.stockme.logica.ArticuloSupermercado;
-import stockme.stockme.logica.ListaArticulo;
 import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.Util;
 
@@ -35,7 +28,7 @@ public class ArticuloSimpleAdd extends AppCompatActivity {
         //toolbar + navbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        this.setTitle("Añadir artículo");
+        this.setTitle(getResources().getString(R.string.Añadir_articulo));
 
         //para flecha de atrás de navegación
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -71,20 +64,20 @@ public class ArticuloSimpleAdd extends AppCompatActivity {
 
                     if (artAux == null) {
                         if (manejador.insertarArticulo(nombre, marca, tipo) != -1) {
-                            Util.mostrarToast(v.getContext(), "Se ha creado un nuevo artículo");
+                            Util.mostrarToast(v.getContext(), getResources().getString(R.string.Se_ha_creado_un_nuevo_articulo));
                         } else {
-                            Util.mostrarToast(v.getContext(), "No se ha podido crear el artículo");
+                            Util.mostrarToast(v.getContext(), getResources().getString(R.string.No_se_ha_podido_crear_articulo));
                         }
                         manejador.cerrar();
                         finish();
                         overridePendingTransition(R.anim.right_in, R.anim.right_out);
                     }else{
-                        Util.mostrarToast(v.getContext(), "Ya existe el artículo");
+                        Util.mostrarToast(v.getContext(), getResources().getString(R.string.Ya_existe));
                         manejador.cerrar();
                     }
 
                 } else {
-                    Util.mostrarToast(v.getContext(), "Debes insertar un nombre");
+                    Util.mostrarToast(v.getContext(), getResources().getString(R.string.Debes_insertar_nombre));
                 }
 
             }

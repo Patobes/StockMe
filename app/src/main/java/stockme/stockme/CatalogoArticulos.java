@@ -63,18 +63,10 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
                 return true;
             }
         });
-//        etBusqueda.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if(event.getAction() == KeyEvent.ACTION_UP)
-//                    Util.mostrarToast(getApplicationContext(), ((EditText)v).getText().toString());
-//                return false;
-//            }
-//        });
 
         toolbar = (Toolbar) vToolbar;
         setSupportActionBar(toolbar);
-        this.setTitle("Catálogo");
+        this.setTitle(getResources().getString(R.string.Catalogo));
 
 //        querySearch = null;//para resetear la búsqueda al entrar en Artículos
 
@@ -115,7 +107,7 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
         if(event != null && event.getAction() == KeyEvent.ACTION_UP) {
             String texto = etBusqueda.getText().toString();
             texto = texto != null && !texto.isEmpty() ? texto : null;
-            adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
+            adapterViewPager = new MyPagerAdapter(getSupportFragmentManager(), this);
             adapterViewPager.setQuerySearch(texto);
             vpPager.setAdapter(adapterViewPager);
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -123,7 +115,7 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
             //etBusqueda.setText("");
         }
         if(reset){
-            adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
+            adapterViewPager = new MyPagerAdapter(getSupportFragmentManager(), this);
             adapterViewPager.setQuerySearch(null);
             vpPager.setAdapter(adapterViewPager);
             etBusqueda.setText("");
@@ -183,7 +175,7 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
                 } else if (id == R.id.nav_stock) {
                     i.putExtra("Opcion", "Stock");
                 }
-    //
+
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
 
@@ -217,10 +209,7 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
         nav_menu = (NavigationView) findViewById(R.id.nav_view);
         if(Util.vieneDe.equals("articulosAdd") || Util.vieneDe.equals("stockAdd")){
             drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-//            toggle = new ActionBarDrawerToggle(
-//                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-//            toggle.setDrawerIndicatorEnabled(false);
-//            getSupportActionBar().setHomeButtonEnabled(true);
+
             nav_menu.setNavigationItemSelectedListener(null);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }else {
@@ -236,22 +225,23 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
             nav_menu.getMenu().getItem(2).setChecked(true);
         }
 
-        adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
+        adapterViewPager = new MyPagerAdapter(getSupportFragmentManager(), this);
         vpPager.setAdapter(adapterViewPager);
     }
 
-    //TODO: quizá crear dos clases, la básica y la de búsqueda
     public static class MyPagerAdapter extends FragmentStatePagerAdapter {
         //Número de páginas
         private static int NUM_ITEMS = 2;
+        private Context context;
 
         private String querySearch;
         public void setQuerySearch(String querySearch){
             this.querySearch = querySearch;
         }
 
-        public MyPagerAdapter(FragmentManager fragmentManager) {
+        public MyPagerAdapter(FragmentManager fragmentManager, Context context) {
             super(fragmentManager);
+            this.context = context;
         }
 
         // Devolver el total de páginas
@@ -294,9 +284,9 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Todos";
+                    return context.getResources().getString(R.string.Todos);
                 case 1:
-                    return "Tipos";
+                    return context.getResources().getString(R.string.Tipos);
                 default:
                     return "";
             }
@@ -328,18 +318,4 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
             OpcionesMenus.onBackPressed(this);
     }
 
-//    @Override
-//    protected void onNewIntent(Intent intent) {
-//        handleIntent(intent);
-//        finish();
-//    }
-//
-//    private void handleIntent(Intent intent) {
-//        String accion = intent.getAction();
-//        if (Intent.ACTION_SEARCH.equals(accion)) {
-//            querySearch = intent.getStringExtra(SearchManager.QUERY);
-//            if(querySearch != null && querySearch.isEmpty())
-//                querySearch = null;
-//        }
-//    }
 }

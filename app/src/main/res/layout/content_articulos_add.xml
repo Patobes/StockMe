@@ -106,7 +106,7 @@
         android:background="@drawable/esquinas_boton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Añadir desde catálogo"
+        android:text="@string/Añadir_desde_catalogo"
         android:textAlignment="center"
         android:minWidth="140dp"
         android:maxWidth="160dp"
@@ -123,6 +123,6 @@
         android:layout_below="@+id/articulos_add_et_nombre"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:hint="Marcas"
+        android:hint="@string/Marcas"
         android:textAlignment="center" />
 </RelativeLayout>

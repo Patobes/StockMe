@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nombre"
+        android:text="@string/Nombre"
         android:id="@+id/listitem_articulos_nombre"
         android:textSize="20sp"
         android:clickable="false"
@@ -19,7 +19,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Marca"
+        android:text="@string/Marca"
         android:id="@+id/listitem_articulos_marca"
         android:layout_marginLeft="3dp"
         android:clickable="false"
@@ -33,7 +33,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Supermercado"
+        android:text="@string/Supermercado"
         android:id="@+id/listitem_articulos_superm"
         android:layout_marginLeft="3dp"
         android:clickable="false"
@@ -46,7 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listitem_articulos_tv_precio"
-        android:hint="Precio"
+        android:hint="@string/Precio"
         android:layout_marginLeft="3dp"
         android:paddingLeft="5dp"
         android:layout_alignBottom="@+id/listitem_articulos_cantidad"

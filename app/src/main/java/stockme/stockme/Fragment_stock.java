@@ -18,6 +18,7 @@ import stockme.stockme.adaptadores.AdaptadorListItemStock;
 import stockme.stockme.logica.Stock;
 import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.Configuracion;
+import stockme.stockme.util.Preferencias;
 
 public class Fragment_stock extends Fragment {
     private OnFragmentInteractionListener mListener;

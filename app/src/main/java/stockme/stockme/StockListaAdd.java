@@ -1,7 +1,5 @@
 package stockme.stockme;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,23 +13,17 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import stockme.stockme.logica.Articulo;
 import stockme.stockme.logica.ArticuloSupermercado;
 import stockme.stockme.logica.Lista;
-import stockme.stockme.logica.ListaArticulo;
 import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.InputFilterMinMax;
 import stockme.stockme.util.Util;
 
-/**
- * Created by paris on 17/05/2016.
- */
 public class StockListaAdd extends AppCompatActivity implements Fragment_listas.OnFragmentInteractionListener{
     private EditText et_lista;
     private Spinner sp_lista;
@@ -52,7 +44,7 @@ public class StockListaAdd extends AppCompatActivity implements Fragment_listas.
         //Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        this.setTitle("Añadir Stock a Lista");
+        this.setTitle(getResources().getString(R.string.Añadir_stock_a_lista));
 
         //para flecha de atrás de navegación
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -91,9 +83,10 @@ public class StockListaAdd extends AppCompatActivity implements Fragment_listas.
             @Override
             public void onClick(View v) {
 
+                BDHandler manejador1 = new BDHandler(getApplicationContext());
                 String lista, supermercado;
                 int id_articulo = (Integer) getIntent().getExtras().get("IdArticuloSimple");
-                Articulo articulo = manejador.obtenerArticulo(id_articulo);
+                Articulo articulo = manejador1.obtenerArticulo(id_articulo);
                 lista = et_lista.getText().toString();
                 supermercado = et_super.getText().toString();
 
@@ -103,13 +96,15 @@ public class StockListaAdd extends AppCompatActivity implements Fragment_listas.
                 if (precio >= 0) {
 
                     //intento obtener el artículo correspondiente a estos valores
-                    ArticuloSupermercado artAux = manejador.obtenerArticuloSupermercado(id_articulo, supermercado);
+                    ArticuloSupermercado artAux = manejador1.obtenerArticuloSupermercado(id_articulo, supermercado);
                     if (artAux == null) {
-                        if (manejador.insertarArticuloSupermercado(id_articulo, supermercado, precio) != -1) {
-                            artAux = manejador.obtenerArticuloSupermercado(id_articulo, supermercado);
-                            Util.mostrarToast(v.getContext(), "Se ha creado un nuevo artículo");
+                        if (manejador1.insertarArticuloSupermercado(id_articulo, supermercado, precio) != -1) {
+                            artAux = manejador1.obtenerArticuloSupermercado(id_articulo, supermercado);
+                            Util.mostrarToast(v.getContext(), getResources().getString(R.string.Se_ha_creado_un_nuevo_articulo));
                         } else {
-                            Util.mostrarToast(v.getContext(), "No se ha podido crear el artículo");
+                            Util.mostrarToast(v.getContext(), getResources().getString(R.string.No_se_ha_podido_crear_articulo));
+                            manejador1.close();
+                            manejador.close();
                             finish();
                             overridePendingTransition(R.anim.right_in, R.anim.right_out);
                         }
@@ -121,55 +116,22 @@ public class StockListaAdd extends AppCompatActivity implements Fragment_listas.
                         cantidad = Integer.parseInt(et_cantidad.getText().toString());
 
                     if (articulo != null) {
-                        manejador.insertarArticuloEnLista(new ListaArticulo(id_articulo, lista, cantidad));
+                        if (manejador1.estaLista(lista))
+                            manejador1.insertarArticuloEnLista(id_articulo, lista, cantidad);
+                        else{
+                            if (manejador1.insertarLista(lista, supermercado))
+                                manejador1.insertarArticuloEnLista(id_articulo, lista, cantidad);
+                        }
+                        manejador1.cerrar();
                         manejador.cerrar();
                         finish();
                         overridePendingTransition(R.anim.right_in, R.anim.right_out);
                     }
 
                 } else {
-                    Util.mostrarToast(v.getContext(), "El precio debe ser mayor o igual a 0");
+                    Util.mostrarToast(v.getContext(), getResources().getString(R.string.El_precio_mayor_cero));
                     manejador.cerrar();
                 }
-
-                ///////////////
-                /*
-                String nombre = et_nombre.getText().toString();
-                String marca = atv_marca.getText().toString();
-                String tipo = sp_tipo.getSelectedItem().toString();
-                cantidad = Integer.parseInt(et_cantidad.getText().toString());
-                minimo = Integer.parseInt(et_minimo.getText().toString());
-
-                if (cantidad == 0) {
-                    Util.mostrarToast(getApplicationContext(), "Introduce una cantidad mayor que 0!");
-                } else {
-                    final BDHandler manejador1 = new BDHandler(v.getContext());
-                    if(manejador1.estaStock(nombre, marca)) {
-                        stock = manejador1.obtenerStock(nombre, marca);
-                        DialogInterface.OnClickListener sumarCantidad = new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                manejador1.modificarStockCantidad(stock, stock.getCantidad() + cantidad);
-                                Util.mostrarToast(getApplicationContext(), cantidad + " unidades añadidas!");
-                                manejador.cerrar();
-                                manejador1.cerrar();
-                                finish();
-                                overridePendingTransition(R.anim.right_in, R.anim.right_out);
-                            }
-                        };
-                        String mensaje = "El articulo que has introducido ya está en Stock\r\n¿Deseas añadir " + cantidad + " unidades al Stock?";
-                        Util.crearMensajeAlerta(mensaje, sumarCantidad, v.getContext());
-
-                    } else{
-                        if(manejador1.insertarStock(nombre, marca, tipo, cantidad, minimo))
-                            Util.mostrarToast(getApplicationContext(), "Articulo añadido!");
-                        else
-                            Util.mostrarToast(getApplicationContext(), "No se ha podido añadir el articulo al Stock");
-                        manejador.cerrar();
-                        manejador1.cerrar();
-                        finish();
-                        overridePendingTransition(R.anim.right_in, R.anim.right_out);
-                    }
-                }*/
             }
         });
 
@@ -182,7 +144,7 @@ public class StockListaAdd extends AppCompatActivity implements Fragment_listas.
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                et_lista.setText("Nueva lista");
+                et_lista.setText(getResources().getString(R.string.Nueva_lista));
             }
         });
 
@@ -195,7 +157,7 @@ public class StockListaAdd extends AppCompatActivity implements Fragment_listas.
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                et_super.setText("Nuevo supermercado");
+                et_super.setText(getResources().getString(R.string.Nuevo_supermercado));
             }
         });
 

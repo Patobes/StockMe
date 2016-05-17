@@ -81,9 +81,9 @@ public class AdaptadorGridItemCatalogo extends BaseAdapter {
                         BDHandler manejador = new BDHandler(v.getContext());
 
                         if (!manejador.eliminarArticulo(datos.get(position)))
-                            Util.mostrarToast(v.getContext(), "No se ha podido eliminar el artículo");
+                            Util.mostrarToast(v.getContext(), v.getContext().getResources().getString(R.string.No_se_ha_podido_eliminar_articulo));
                         else {
-                            Util.mostrarToast(v.getContext(), "Artículo eliminado");
+                            Util.mostrarToast(v.getContext(), v.getContext().getResources().getString(R.string.Articulo_eliminado));
                             datos.remove(position);
                             notifyDataSetChanged();
 
@@ -92,31 +92,41 @@ public class AdaptadorGridItemCatalogo extends BaseAdapter {
                         manejador.cerrar();
                     }
                 };
-                Util.crearMensajeAlerta("¿Quieres eliminar el artículo?", borrarArticuloListener, v.getContext());
+                Util.crearMensajeAlerta(v.getContext().getResources().getString(R.string.Quieres_eliminar_articulo), borrarArticuloListener, v.getContext());
             }
         });
 
         if(porTipo){
-            if(tipo.equals("Congelados")){
+            if (tipo.equals(view.getContext().getResources().getString(R.string.Congelados))) {
                 view.setBackgroundResource(R.drawable.esquinas_congelados);
-            }else if(tipo.equals("Dulces")){
+            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Dulces))) {
                 view.setBackgroundResource(R.drawable.esquinas_dulces);
-            }else if(tipo.equals("Embutidos")){
-                view.setBackgroundResource(R.drawable.esquinas_embutidos);
-            }else if(tipo.equals("Frutas")){
+            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Bebidas))) {
+                view.setBackgroundResource(R.drawable.esquinas_bebidas);
+            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Frutas))) {
                 view.setBackgroundResource(R.drawable.esquinas_frutas);
-            }else if(tipo.equals("Frutos secos")){
-                view.setBackgroundResource(R.drawable.esquinas_frutos_secos);
-            }else if(tipo.equals("Lácteos")){
+            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Conservas))) {
+                view.setBackgroundResource(R.drawable.esquinas_conservas);
+            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Lacteos))) {
                 view.setBackgroundResource(R.drawable.esquinas_lacteos);
-            }else if(tipo.equals("Panadería")){
+            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Panadería))) {
                 view.setBackgroundResource(R.drawable.esquinas_panaderia);
-            }else if(tipo.equals("Pastas")){
-                view.setBackgroundResource(R.drawable.esquinas_pastas);
-            }else if(tipo.equals("Salsas")){
+            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Drogeria))) {
+                view.setBackgroundResource(R.drawable.esquinas_drogeria);
+            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Salsas_especias))) {
                 view.setBackgroundResource(R.drawable.esquinas_salsas);
-            }else if(tipo.equals("Verduras")){
+            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Verduras))) {
                 view.setBackgroundResource(R.drawable.esquinas_verduras);
+            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Farmacia))) {
+                view.setBackgroundResource(R.drawable.esquinas_farmacia);
+            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Carniceria))) {
+                view.setBackgroundResource(R.drawable.esquinas_carniceria);
+            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Legumbres))) {
+                view.setBackgroundResource(R.drawable.esquinas_legumbres);
+            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Mascotas))) {
+                view.setBackgroundResource(R.drawable.esquinas_mascotas);
+            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Pescaderia))) {
+                view.setBackgroundResource(R.drawable.esquinas_pescaderia);
             }else{
                 view.setBackgroundResource(R.drawable.esquinas);
             }
@@ -134,7 +144,7 @@ public class AdaptadorGridItemCatalogo extends BaseAdapter {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
 
-                builder.setTitle("Editar artículo");
+                builder.setTitle(view.getContext().getResources().getString(R.string.Editar_articulo));
                 vistaModificar = LayoutInflater.from(view.getContext()).inflate(R.layout.dialogo_modificar_articulo, parent,false);
                 builder.setView(vistaModificar);
 
@@ -154,7 +164,7 @@ public class AdaptadorGridItemCatalogo extends BaseAdapter {
                         tipo.setSelection(i);
                 }
 
-                builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(view.getContext().getResources().getString(R.string.Aceptar), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String nNombre = nombre.getText().toString();
@@ -162,14 +172,14 @@ public class AdaptadorGridItemCatalogo extends BaseAdapter {
                         String nTipo = tipo.getSelectedItem().toString();
 
                         if(nNombre.isEmpty()){
-                            Util.mostrarToast(view.getContext(),"Nombre vacío");
+                            Util.mostrarToast(view.getContext(), view.getContext().getResources().getString(R.string.Nombre_vacio));
                         }else{
                             if(!manejador.estaArticulo(nNombre,nMarca)){
                                 manejador.modificarArticuloNombre(articulo, nNombre);
                                 manejador.modificarArticuloMarca(articulo, nMarca);
                                 manejador.modificarArticuloTipo(articulo, nTipo);
                             }else{
-                                Util.mostrarToast(view.getContext(),"Ya existe ");
+                                Util.mostrarToast(view.getContext(), view.getContext().getResources().getString(R.string.Ya_existe));
                             }
                         }
                         datos.get(pos).setNombre(nNombre);
@@ -178,7 +188,7 @@ public class AdaptadorGridItemCatalogo extends BaseAdapter {
                         notifyDataSetChanged();
                     }
                 });
-                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(view.getContext().getResources().getString(R.string.Cancelar), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();

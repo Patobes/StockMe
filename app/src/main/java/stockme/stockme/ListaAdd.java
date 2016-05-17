@@ -1,21 +1,13 @@
 package stockme.stockme;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -26,7 +18,6 @@ import java.util.List;
 
 import stockme.stockme.logica.Lista;
 import stockme.stockme.persistencia.BDHandler;
-import stockme.stockme.util.OpcionesMenus;
 import stockme.stockme.util.Util;
 
 public class ListaAdd extends AppCompatActivity implements Fragment_listas.OnFragmentInteractionListener{
@@ -38,7 +29,7 @@ public class ListaAdd extends AppCompatActivity implements Fragment_listas.OnFra
         setContentView(R.layout.activity_lista_add);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        this.setTitle("Crear lista");
+        this.setTitle(getResources().getString(R.string.Crear_lista));
 
         //para flecha de atrás de navegación
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -71,7 +62,7 @@ public class ListaAdd extends AppCompatActivity implements Fragment_listas.OnFra
                     BDHandler manejador = new BDHandler(v.getContext());
 
                     if (!manejador.insertarLista(nueva))
-                        Toast.makeText(v.getContext(), "Ya existe la lista '" + nueva.getNombre() + "'", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(), getResources().getString(R.string.Ya_existe_la_lista) + nueva.getNombre(), Toast.LENGTH_SHORT).show();
                     else {
                         setResult(Activity.RESULT_OK);
                         finish();
@@ -79,7 +70,7 @@ public class ListaAdd extends AppCompatActivity implements Fragment_listas.OnFra
                     }
                     manejador.cerrar();
                 } else {
-                    Util.mostrarToast(v.getContext(), "¡Falta un nombre!");
+                    Util.mostrarToast(v.getContext(), getResources().getString(R.string.Debes_insertar_nombre));
                 }
 
             }

@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nombre"
+        android:text="@string/Nombre"
         android:id="@+id/listitem_lista_nombre"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -22,7 +22,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Supermercado"
+        android:text="@string/Supermercado"
         android:id="@+id/listitem_lista_supermercado"
         android:textSize="16sp"
         android:clickable="false"
@@ -36,7 +36,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fecha"
+        android:text="@string/Fecha"
         android:id="@+id/listitem_lista_fecha"
         android:layout_marginLeft="10dp"
         android:textSize="16sp"
@@ -83,7 +83,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Arts."
+        android:text="@string/Arts"
         android:id="@+id/textView2"
         android:layout_alignBottom="@+id/listitem_lista_fecha"
         android:layout_marginBottom="8dp"

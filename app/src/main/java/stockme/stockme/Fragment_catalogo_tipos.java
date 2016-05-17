@@ -115,7 +115,7 @@ public class Fragment_catalogo_tipos extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if ((requestCode == 1) && (resultCode == Activity.RESULT_OK)){
-            //TODO actualizar al volver
+
         }
     }
     /**

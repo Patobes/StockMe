@@ -10,7 +10,7 @@
                 android:right="5dp"
                 android:bottom="5dp" />
             <corners android:radius="10dp" />
-            <solid android:color="@color/Lácteos" />
+            <solid android:color="@color/Lacteos" />
         </shape>
 
     </item>

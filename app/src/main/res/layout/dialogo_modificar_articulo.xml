@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/dialogo_modificar_articulo_et_nombre"
         android:layout_gravity="center_horizontal"
-        android:hint="Nombre"
+        android:hint="@string/Nombre"
         android:textAlignment="center"/>
 
     <EditText
@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/dialogo_modificar_articulo_et_marca"
         android:layout_gravity="center_horizontal"
-        android:hint="Marca"
+        android:hint="@string/Marca"
         android:textAlignment="center"/>
 
     <Spinner
