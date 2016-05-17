@@ -30,7 +30,7 @@
             android:background="@drawable/esquinas_boton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="+"
+            android:text="@string/Mas"
             android:textSize="25dp"
             android:id="@+id/fragment_stock_button"
             android:layout_alignParentBottom="true"

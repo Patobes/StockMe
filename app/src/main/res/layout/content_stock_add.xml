@@ -96,7 +96,7 @@
         android:layout_alignStart="@+id/stock_add_et_minimo"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="25dp"
-        android:text="Minimo"
+        android:text="@string/Minimo"
         android:textSize="20sp"
         android:textAlignment="center" />
 
@@ -106,7 +106,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/stock_add_sp_minimo"
         android:layout_toStartOf="@+id/stock_add_sp_minimo"
-        android:hint="Minimo"
+        android:hint="@string/Minimo"
         android:inputType="number"
         android:singleLine="true"
         android:textAlignment="center"/>
@@ -129,7 +129,7 @@
         android:layout_marginTop="45dp"
         android:minWidth="140dp"
         android:maxWidth="160dp"
-        android:text="Añadir desde catálogo"
+        android:text="@string/Añadir_desde_catalogo"
         android:textSize="15dp"
         android:textAlignment="center"
         android:background="@drawable/esquinas_boton" />

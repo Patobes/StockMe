@@ -5,19 +5,19 @@
         <item
             android:id="@+id/nav_listas"
             android:icon="@drawable/ic_content_paste_black_24dp"
-            android:title="Listas" />
+            android:title="@string/Listas" />
         <item
             android:id="@+id/nav_stock"
             android:icon="@drawable/ic_inbox_black_24dp"
-            android:title="Stock" />
+            android:title="@string/Stock" />
         <item
             android:id="@+id/nav_articulos"
             android:icon="@drawable/ic_shopping_basket_black_24dp"
-            android:title="Artículos" />
+            android:title="@string/Articulos" />
         <item
             android:id="@+id/nav_ajustes"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Ajustes" />
+            android:title="@string/Ajustes" />
     </group>
 
 </menu>

@@ -17,7 +17,6 @@ import java.util.Date;
 import java.util.List;
 
 import stockme.stockme.R;
-import stockme.stockme.logica.Articulo;
 import stockme.stockme.logica.ArticuloSupermercado;
 import stockme.stockme.logica.Lista;
 import stockme.stockme.logica.ListaArticulo;

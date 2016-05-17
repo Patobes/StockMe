@@ -1,20 +1,14 @@
 package stockme.stockme;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -26,11 +20,9 @@ import java.util.List;
 
 import stockme.stockme.logica.Articulo;
 import stockme.stockme.logica.ArticuloSupermercado;
-import stockme.stockme.logica.Lista;
 import stockme.stockme.logica.ListaArticulo;
 import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.InputFilterMinMax;
-import stockme.stockme.util.OpcionesMenus;
 import stockme.stockme.util.Util;
 
 public class ArticulosAdd extends AppCompatActivity implements Fragment_listas.OnFragmentInteractionListener {

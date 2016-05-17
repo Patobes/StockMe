@@ -4,10 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v4.view.MotionEventCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -16,16 +13,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import java.math.BigDecimal;
 import java.util.List;
 
-import stockme.stockme.Fragment_stock;
 import stockme.stockme.R;
 import stockme.stockme.StockListaAdd;
 import stockme.stockme.logica.Stock;
 import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.OnSwipeTouchListener;
-import stockme.stockme.util.Preferencias;
 import stockme.stockme.util.Util;
 
 /**
@@ -224,7 +218,8 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
                 final TextView tv_actual = (TextView)vista_minimo.findViewById(R.id.dialogo_cambiar_minimo_tv_actual);
                 final EditText input = (EditText)vista_minimo.findViewById(R.id.dialogo_cambiar_minimo_et_minimo);
 
-                tv_actual.setText("Actual: " + String.valueOf(datos.get(position).getMinimo()) + " unidades");
+                String actual = getContext().getResources().getString(R.string.Actual) + String.valueOf(datos.get(position).getMinimo()) + " unidades";
+                tv_actual.setText(actual);
 
                 builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     @Override

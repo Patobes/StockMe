@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="tipos_array">
-        <item>Cualquiera</item>
-        <item>Congelados</item>
-        <item>Dulces</item>
-        <item>Embutidos</item>
-        <item>Frutas</item>
-        <item>Frutos secos</item>
-        <item>Lácteos</item>
-        <item>Panadería</item>
-        <item>Pastas</item>
-        <item>Salsas</item>
-        <item>Verduras</item>
+        <item>@string/Otros</item>
+        <item>@string/Bebidas</item>
+        <item>@string/Carniceria</item>
+        <item>@string/Congelados</item>
+        <item>@string/Conservas</item>
+        <item>@string/Dulces</item>
+        <item>@string/Drogeria</item>
+        <item>@string/Farmacia</item>
+        <item>@string/Frutas</item>
+        <item>@string/Lacteos</item>
+        <item>@string/Legumbres</item>
+        <item>@string/Mascotas</item>
+        <item>@string/Panadería</item>
+        <item>@string/Pescaderia</item>
+        <item>@string/Salsas_especias</item>
+        <item>@string/Verduras</item>
+
     </string-array>
 </resources>

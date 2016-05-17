@@ -1,23 +1,12 @@
 package stockme.stockme;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.net.Uri;
-import android.os.Build;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.transition.Explode;
-import android.transition.Fade;
-import android.view.Window;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 public class SplashScreenIntro extends AppCompatActivity {
     private ProgressBar prb_carrito;

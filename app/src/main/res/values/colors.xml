@@ -10,17 +10,24 @@
 
     <color name="borde">#d8006aff</color>
 
-    <color name="Cualquiera">#ffffff</color>
+    <color name="Otros">#ffffff</color>
+    <color name="Bebidas">#4300ffc8</color>
+    <color name="Carniceria">#43fd1900</color>
     <color name="Congelados">#58d7f9ff</color>
-    <color name="Dulces">#52ffdedd</color>
-    <color name="Embutidos">#43fd1900</color>
-    <color name="Frutas">#367dff59</color>
-    <color name="Frutos_secos">#3a694d50</color>
-    <color name="Lácteos">#45d4d4d4</color>
-    <color name="Panadería">#3a9b5648</color>
-    <color name="Pastas">#43fffad2</color>
-    <color name="Salsas">#6efcc066</color>
-    <color name="Verduras">#786ac62d</color>
+    <color name="Conservas">#7167ca4c</color>
+    <color name="Dulces">#3a783b41</color>
+    <color name="Drogeria">#45a6a5a5</color>
+    <color name="Farmacia">#85ff2b00</color>
+    <color name="Frutas">#71fcff39</color>
+    <color name="Lacteos">#64e3f1ff</color>
+    <color name="Legumbres">#78529923</color>
+    <color name="Mascotas">#89bebebe</color>
+    <color name="Panadería">#85a95725</color>
+    <color name="Pescaderia">#71014070</color>
+    <color name="Salsas_especias">#7bf404d0</color>
+    <color name="Verduras">#970dff00</color>
+
+
     <color name="black">#000000</color>
 
     <color name="stock_verde">#00FF00</color>
