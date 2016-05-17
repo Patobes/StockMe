@@ -92,7 +92,7 @@
     <string name="pref_title_vibrate">Vibrate</string>
 
     <string name="Listas">Listas</string>
-    <string name="Actual">Actual: </string>
+    <string name="Actual">"Actual: "</string>
     <string name="Stock">Stock</string>
     <string name="Articulos">Articulos</string>
     <string name="Ajustes">Ajustes</string>
@@ -106,10 +106,10 @@
     <string name="Minimo">Mínimo</string>
 
     <string name="Nuevo_supermercado">Nuevo supermercado</string>
-    <string name="A_pagar">A pagar: </string>
+    <string name="A_pagar">"A pagar: "</string>
     <string name="Marcas">Marcas</string>
     <string name="Arts">Arts.</string>
-    <string name="Total">Total: </string>
+    <string name="Total">"Total: "</string>
     <string name="Añadir_desde_catalogo">Añadir desde catálogo</string>
     <string name="Nuevo_precio">Nuevo precio</string>
 
@@ -139,25 +139,25 @@
 
     <string name="Editar_articulo">Editar artículo</string>
     <string name="Nombre_vacio">Nombre vacío</string>
-    <string name="Ya_existe">Ya existe </string>
-    <string name="Comprado">Comprado: </string>
-    <string name="Eliminar">¿Eliminar: </string>
+    <string name="Ya_existe">"Ya existe "</string>
+    <string name="Comprado">"Comprado: "</string>
+    <string name="Eliminar">"¿Eliminar: "</string>
 
     <string name="Nuevo_nombre">Nuevo nombre</string>
     <string name="Lista_renombrada">Lista renombrada</string>
-    <string name="Del_stock"> del stock?</string>
+    <string name="Del_stock">" del stock?"</string>
 
-    <string name="Unidades"> unidades</string>
+    <string name="Unidades">" unidades"</string>
     <string name="Nuevo_minimo">Nuevo mínimo</string>
-    <string name="Conservar">¿Conservar </string>
-    <string name="En_el_stock"> en el Stock?</string>
-    <string name="Agotado"> agotado</string>
+    <string name="Conservar">"¿Conservar "</string>
+    <string name="En_el_stock">" en el Stock?"</string>
+    <string name="Agotado">" agotado"</string>
     <string name="Elimina">Eliminar</string>
     <string name="Conserva">Conservar</string>
 
     <string name="Ha_alcanzado_el_minimo_establecido">ha alcanzado el mínimo establecido</string>
-    <string name="Añadir">¿Añadir </string>
-    <string name="A_una_lista_compra"> a una lista de la compra?</string>
+    <string name="Añadir">"¿Añadir "</string>
+    <string name="A_una_lista_compra">" a una lista de la compra?"</string>
     <string name="Bajo_minimos">Bajo mínimos</string>
 
     <string name="Añadir_articulo">Añadir artículo</string>
@@ -182,9 +182,9 @@
 
     <string name="Articulo_añadido">Artículo añadido</string>
     <string name="No_se_ha_podido_añadir_articulo">No se ha podido añadir el artículo</string>
-    <string name="El_articulo_esta_pregunta">El articulo que has introducido ya está en Stock
-¿Deseas añadir </string>
-    <string name="Unidades_al_stock"> unidades al Stock?</string>
+    <string name="El_articulo_esta_pregunta">"El articulo que has introducido ya está en Stock
+¿Deseas añadir "</string>
+    <string name="Unidades_al_stock">" unidades al Stock?"</string>
 
     <string name="Unidades_añadidas">Unidades añadidas</string>
     <string name="Añadir_stock_a_lista">Añadir Stock a lista</string>
