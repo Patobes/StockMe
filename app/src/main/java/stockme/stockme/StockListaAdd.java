@@ -1,7 +1,5 @@
 package stockme.stockme;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,10 +13,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import stockme.stockme.logica.Articulo;
@@ -152,7 +148,7 @@ public class StockListaAdd extends AppCompatActivity implements Fragment_listas.
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                et_lista.setText("Nueva lista");
+                et_lista.setText(getResources().getString(R.string.Nueva_lista));
             }
         });
 
@@ -165,7 +161,7 @@ public class StockListaAdd extends AppCompatActivity implements Fragment_listas.
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                et_super.setText("Nuevo supermercado");
+                et_super.setText(getResources().getString(R.string.Nuevo_supermercado));
             }
         });
 

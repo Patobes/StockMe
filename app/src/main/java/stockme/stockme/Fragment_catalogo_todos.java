@@ -7,26 +7,18 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import stockme.stockme.adaptadores.AdaptadorGridItemCatalogo;
-import stockme.stockme.adaptadores.AdaptadorListItemListas;
 import stockme.stockme.logica.Articulo;
-import stockme.stockme.logica.Lista;
 import stockme.stockme.persistencia.BDHandler;
-import stockme.stockme.util.Preferencias;
-import stockme.stockme.util.Util;
-
 
 
 public class Fragment_catalogo_todos extends Fragment {

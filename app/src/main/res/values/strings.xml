@@ -32,4 +32,43 @@
     <string name="menu_search">Buscar</string>
     <string name="title_activity_ajustes_prueba">AjustesPrueba</string>
 
+    <string name="Listas">Listas</string>
+    <string name="Actual">Actual: </string>
+    <string name="Stock">Stock</string>
+    <string name="Articulos">Articulos</string>
+    <string name="Ajustes">Ajustes</string>
+    <string name="Nombre_lista">Nombre de la lista</string>
+
+    <string name="Lista">Lista</string>
+    <string name="StockMe">Stock Me</string>
+    <string name="Nueva_lista">Nueva lista</string>
+    <string name="Organiza_tu_vida">Organiza tu vida</string>
+    <string name="Fecha">Fecha</string>
+    <string name="Minimo">Mínimo</string>
+
+    <string name="Nuevo_supermercado">Nuevo supermercado</string>
+    <string name="A_pagar">A pagar: </string>
+    <string name="Marcas">Marcas</string>
+    <string name="Arts">Arts.</string>
+    <string name="Total">Total: </string>
+    <string name="Añadir_desde_catalogo">Añadir desde catálogo</string>
+    <string name="Nuevo_precio">Nuevo precio</string>
+
+    <string name="Otros">Otros</string>
+    <string name="Dulces">Dulces</string>
+    <string name="Drogeria">Drogería</string>
+    <string name="Mascotas">Mascotas</string>
+    <string name="Congelados">Congelados</string>
+    <string name="Farmacia">Farmacia</string>
+    <string name="Frutas">Frutas</string>
+    <string name="Verduras">Verduras</string>
+    <string name="Lacteos">Lácteos</string>
+    <string name="Legumbres">Legumbres</string>
+    <string name="Panadería">Panadería</string>
+    <string name="Conservas">Conservas</string>
+    <string name="Carniceria">Carnicería</string>
+    <string name="Pescaderia">Pescadería</string>
+    <string name="Salsas_especias">Salsas y especias</string>
+    <string name="Bebidas">Bebidas</string>
+
 </resources>

@@ -62,7 +62,7 @@
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="A pagar: "
+                android:text="@string/A_pagar"
                 android:textSize="20dp" />
 
             <TextView
@@ -91,7 +91,7 @@
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Total: "
+                android:text="@string/Total"
                 android:textSize="30dp" />
 
             <TextView

@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import stockme.stockme.logica.Articulo;
 import stockme.stockme.logica.ArticuloSupermercado;
 import stockme.stockme.logica.Lista;
-import stockme.stockme.logica.Articulo;
 import stockme.stockme.logica.ListaArticulo;
 import stockme.stockme.logica.Stock;
 import stockme.stockme.logica.Supermercado;
@@ -125,9 +125,9 @@ public class BDHandler extends SQLiteOpenHelper {
 
         //ELEMENTOS INICIALES
         db.execSQL("INSERT INTO `ARTICULO` VALUES(1, 'Leche', 'Hacendado', 'Lácteos');");
-        db.execSQL("INSERT INTO `ARTICULO` VALUES(2, 'Pizza', 'Hacendado', 'Congelados');");
-        db.execSQL("INSERT INTO `ARTICULO` VALUES(3, 'Ketchup', 'Heinz', 'Salsas');");
-        db.execSQL("INSERT INTO `ARTICULO` VALUES(4, 'Mostaza', 'Heinz', 'Salsas');");
+        db.execSQL("INSERT INTO `ARTICULO` VALUES(2, 'Pizza', 'Hacendado', 'Carnicería');");
+        db.execSQL("INSERT INTO `ARTICULO` VALUES(3, 'Ketchup', 'Heinz', 'Salsas y especias');");
+        db.execSQL("INSERT INTO `ARTICULO` VALUES(4, 'Mostaza', 'Heinz', 'Salsas y especias');");
 
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Cualquiera');");
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Día');");

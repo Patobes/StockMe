@@ -3,31 +3,23 @@ package stockme.stockme.adaptadores;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Color;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.List;
 
-import stockme.stockme.CatalogoArticulos;
 import stockme.stockme.R;
 import stockme.stockme.logica.Articulo;
-import stockme.stockme.logica.ArticuloSupermercado;
 import stockme.stockme.persistencia.BDHandler;
-import stockme.stockme.util.Preferencias;
 import stockme.stockme.util.Util;
 
 public class AdaptadorGridItemCatalogo extends BaseAdapter {
@@ -105,26 +97,36 @@ public class AdaptadorGridItemCatalogo extends BaseAdapter {
         });
 
         if(porTipo){
-            if(tipo.equals("Congelados")){
+            if (tipo.equals(view.getContext().getResources().getString(R.string.Congelados))) {
                 view.setBackgroundResource(R.drawable.esquinas_congelados);
-            }else if(tipo.equals("Dulces")){
+            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Dulces))) {
                 view.setBackgroundResource(R.drawable.esquinas_dulces);
-            }else if(tipo.equals("Embutidos")){
-                view.setBackgroundResource(R.drawable.esquinas_embutidos);
-            }else if(tipo.equals("Frutas")){
+            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Bebidas))) {
+                view.setBackgroundResource(R.drawable.esquinas_bebidas);
+            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Frutas))) {
                 view.setBackgroundResource(R.drawable.esquinas_frutas);
-            }else if(tipo.equals("Frutos secos")){
-                view.setBackgroundResource(R.drawable.esquinas_frutos_secos);
-            }else if(tipo.equals("Lácteos")){
+            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Conservas))) {
+                view.setBackgroundResource(R.drawable.esquinas_conservas);
+            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Lacteos))) {
                 view.setBackgroundResource(R.drawable.esquinas_lacteos);
-            }else if(tipo.equals("Panadería")){
+            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Panadería))) {
                 view.setBackgroundResource(R.drawable.esquinas_panaderia);
-            }else if(tipo.equals("Pastas")){
-                view.setBackgroundResource(R.drawable.esquinas_pastas);
-            }else if(tipo.equals("Salsas")){
+            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Drogeria))) {
+                view.setBackgroundResource(R.drawable.esquinas_drogeria);
+            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Salsas_especias))) {
                 view.setBackgroundResource(R.drawable.esquinas_salsas);
-            }else if(tipo.equals("Verduras")){
+            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Verduras))) {
                 view.setBackgroundResource(R.drawable.esquinas_verduras);
+            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Farmacia))) {
+                view.setBackgroundResource(R.drawable.esquinas_farmacia);
+            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Carniceria))) {
+                view.setBackgroundResource(R.drawable.esquinas_carniceria);
+            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Legumbres))) {
+                view.setBackgroundResource(R.drawable.esquinas_legumbres);
+            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Mascotas))) {
+                view.setBackgroundResource(R.drawable.esquinas_mascotas);
+            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Pescaderia))) {
+                view.setBackgroundResource(R.drawable.esquinas_pescaderia);
             }else{
                 view.setBackgroundResource(R.drawable.esquinas);
             }

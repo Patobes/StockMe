@@ -37,7 +37,7 @@
         android:background="@drawable/esquinas_boton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="+"
+        android:text="@string/Mas"
         android:textSize="25dp"
         android:layout_marginBottom="5dp"
         android:id="@+id/fragment_catalogo_btn_mas"

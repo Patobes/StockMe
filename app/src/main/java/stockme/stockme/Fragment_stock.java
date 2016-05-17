@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -19,7 +18,6 @@ import stockme.stockme.adaptadores.AdaptadorListItemStock;
 import stockme.stockme.logica.Stock;
 import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.Preferencias;
-import stockme.stockme.util.Util;
 
 public class Fragment_stock extends Fragment {
     private OnFragmentInteractionListener mListener;

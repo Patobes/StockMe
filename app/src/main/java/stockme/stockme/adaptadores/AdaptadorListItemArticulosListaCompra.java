@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -21,10 +19,7 @@ import android.widget.TextView;
 import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
 
-import org.w3c.dom.Text;
-
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -269,14 +264,15 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
 
-                builder.setTitle("Nuevo precio");
+                builder.setTitle(getContext().getResources().getString(R.string.Nuevo_precio));
                 vistaPrecio = LayoutInflater.from(view.getContext()).inflate(R.layout.dialogo_cambiar_precio, parent,false);
                 builder.setView(vistaPrecio);
 
                 final TextView txActual = (TextView)vistaPrecio.findViewById(R.id.dialogo_cambiar_precio_tv_actual);
                 final EditText input = (EditText)vistaPrecio.findViewById(R.id.dialogo_cambiar_precio_et_precio);
 
-                txActual.setText("Actual: " + String.valueOf(round(datos.get(pos).getPrecio(), 2)) + " " + Preferencias.getPreferenciaString("moneda"));
+                String actual = getContext().getResources().getString(R.string.Actual) + String.valueOf(round(datos.get(pos).getPrecio(), 2)) + " " + Preferencias.getPreferenciaString("moneda");
+                txActual.setText(actual);
 
                 builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     @Override
