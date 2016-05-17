@@ -1,6 +1,5 @@
 package stockme.stockme.adaptadores;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -23,9 +22,6 @@ import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.OnSwipeTouchListener;
 import stockme.stockme.util.Util;
 
-/**
- * Created by Paris on 17/03/2016.
- */
 public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
     private List<Stock> datos;
     private ImageButton ib_borrar;
@@ -85,9 +81,9 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
                     public void onClick(DialogInterface dialog, int which) {
                         BDHandler manejador = new BDHandler(getContext());
                         if (!manejador.eliminarStock(datos.get(position).getArticulo()))
-                            Util.mostrarToast(getContext(), "No se ha podido quitar el articulo");
+                            Util.mostrarToast(getContext(), getContext().getResources().getString(R.string.No_se_ha_podido_eliminar_articulo));
                         else {
-                            Util.mostrarToast(getContext(), "Articulo quitado del Stock");
+                            Util.mostrarToast(getContext(), getContext().getResources().getString(R.string.Articulo_eliminado));
                             remove(datos.get(position));
                             notifyDataSetChanged();
                         }
@@ -95,8 +91,8 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
                         manejador.cerrar();
                     }
                 };
-                Util.crearMensajeAlerta("¿Quitar " + manejador.obtenerArticulo(datos.get(position).getArticulo()).getNombre() + " " +
-                        manejador.obtenerArticulo(datos.get(position).getArticulo()).getMarca() + " del Stock?", borrarStockListener, getContext());
+                Util.crearMensajeAlerta(getContext().getResources().getString(R.string.Eliminar) + manejador.obtenerArticulo(datos.get(position).getArticulo()).getNombre() + " " +
+                        manejador.obtenerArticulo(datos.get(position).getArticulo()).getMarca() + getContext().getResources().getString(R.string.Del_stock), borrarStockListener, getContext());
             }
         });
 
@@ -130,9 +126,9 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
                             public void onClick(DialogInterface dialog, int which) {
                                 BDHandler manejador = new BDHandler(getContext());
                                 if (!manejador.eliminarStock(datos.get(position).getArticulo()))
-                                    Util.mostrarToast(getContext(), "No se ha podido quitar el articulo");
+                                    Util.mostrarToast(getContext(), getContext().getResources().getString(R.string.No_se_ha_podido_eliminar_articulo));
                                 else {
-                                    Util.mostrarToast(getContext(), "Articulo quitado del Stock");
+                                    Util.mostrarToast(getContext(), getContext().getResources().getString(R.string.Articulo_eliminado));
                                     remove(datos.get(position));
                                     notifyDataSetChanged();
                                 }
@@ -148,12 +144,12 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
                         };
                         String nombre = manejador.obtenerArticulo(datos.get(position).getArticulo()).getNombre();
                         String marca = manejador.obtenerArticulo(datos.get(position).getArticulo()).getMarca();
-                        Util.crearMensajeAlerta("¿Conservar " + nombre + " " + marca + " en el Stock?", nombre + " " + marca + " agotado", "Eliminar", "Conservar", borrarStockListener, cancelar, getContext());
+                        Util.crearMensajeAlerta(getContext().getResources().getString(R.string.Conservar) + nombre + " " + marca + getContext().getResources().getString(R.string.En_el_stock), nombre + " " + marca + getContext().getResources().getString(R.string.Agotado), getContext().getResources().getString(R.string.Eliminar), getContext().getResources().getString(R.string.Conserva), borrarStockListener, cancelar, getContext());
                     }
                     else if(cantidad == minimo) {
                         if(pendiente)
                             Util.mostrarToast(getContext(), manejador.obtenerArticulo(datos.get(position).getArticulo()).getNombre() + " " +
-                                    manejador.obtenerArticulo(datos.get(position).getArticulo()).getMarca() + " ha alcanzado el mínimo establecido");
+                                    manejador.obtenerArticulo(datos.get(position).getArticulo()).getMarca() + getContext().getResources().getString(R.string.Ha_alcanzado_el_minimo_establecido));
                         else {
                             DialogInterface.OnClickListener añadirStockListaListener = new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
@@ -165,7 +161,7 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
                             };
                             String nombre = manejador.obtenerArticulo(datos.get(position).getArticulo()).getNombre();
                             String marca = manejador.obtenerArticulo(datos.get(position).getArticulo()).getMarca();
-                            Util.crearMensajeAlerta("¿Añadir " + nombre + " " + marca + " a una lista de la compra?", nombre + " " + marca + " ha alcanzado el mínimo establecido", añadirStockListaListener, getContext());
+                            Util.crearMensajeAlerta(getContext().getResources().getString(R.string.Añadir) + nombre + " " + marca + getContext().getResources().getString(R.string.A_una_lista_compra), nombre + " " + marca + getContext().getResources().getString(R.string.Ha_alcanzado_el_minimo_establecido), añadirStockListaListener, getContext());
                         }
                     }
                     else if(cantidad < minimo && !pendiente){
@@ -179,7 +175,7 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
                         };
                         String nombre = manejador.obtenerArticulo(datos.get(position).getArticulo()).getNombre();
                         String marca = manejador.obtenerArticulo(datos.get(position).getArticulo()).getMarca();
-                        Util.crearMensajeAlerta("¿Añadir " + nombre + " " + marca + " a una lista de la compra?", nombre + " " + marca + " bajo mínimos", añadirStockListaListener, getContext());
+                        Util.crearMensajeAlerta(getContext().getResources().getString(R.string.Añadir) + nombre + " " + marca + getContext().getResources().getString(R.string.A_una_lista_compra), nombre + " " + marca + getContext().getResources().getString(R.string.Bajo_minimos), añadirStockListaListener, getContext());
                     }
                     manejador.modificarStockCantidad(stock1, cantidad);
                     datos.get(position).setCantidad(cantidad);
@@ -212,7 +208,7 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
 
                 //Diálogo para cambiar nombre
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("Nuevo mínimo");
+                builder.setTitle(getContext().getResources().getString(R.string.Nuevo_minimo));
 
                 View vista_minimo = LayoutInflater.from(getContext()).inflate(R.layout.dialogo_cambiar_minimo, null);
                 builder.setView(vista_minimo);
@@ -220,10 +216,10 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
                 final TextView tv_actual = (TextView)vista_minimo.findViewById(R.id.dialogo_cambiar_minimo_tv_actual);
                 final EditText input = (EditText)vista_minimo.findViewById(R.id.dialogo_cambiar_minimo_et_minimo);
 
-                String actual = getContext().getResources().getString(R.string.Actual) + String.valueOf(datos.get(position).getMinimo()) + " unidades";
+                String actual = getContext().getResources().getString(R.string.Actual) + String.valueOf(datos.get(position).getMinimo()) + getContext().getResources().getString(R.string.Unidades);
                 tv_actual.setText(actual);
 
-                builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(getContext().getResources().getString(R.string.Aceptar), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String aux = input.getText().toString();
@@ -236,7 +232,7 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
                         notifyDataSetChanged();
                     }
                 });
-                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(getContext().getResources().getString(R.string.Cancelar), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();

@@ -81,9 +81,9 @@ public class AdaptadorGridItemCatalogo extends BaseAdapter {
                         BDHandler manejador = new BDHandler(v.getContext());
 
                         if (!manejador.eliminarArticulo(datos.get(position)))
-                            Util.mostrarToast(v.getContext(), "No se ha podido eliminar el artículo");
+                            Util.mostrarToast(v.getContext(), v.getContext().getResources().getString(R.string.No_se_ha_podido_eliminar_articulo));
                         else {
-                            Util.mostrarToast(v.getContext(), "Artículo eliminado");
+                            Util.mostrarToast(v.getContext(), v.getContext().getResources().getString(R.string.Articulo_eliminado));
                             datos.remove(position);
                             notifyDataSetChanged();
 
@@ -92,7 +92,7 @@ public class AdaptadorGridItemCatalogo extends BaseAdapter {
                         manejador.cerrar();
                     }
                 };
-                Util.crearMensajeAlerta("¿Quieres eliminar el artículo?", borrarArticuloListener, v.getContext());
+                Util.crearMensajeAlerta(v.getContext().getResources().getString(R.string.Quieres_eliminar_articulo), borrarArticuloListener, v.getContext());
             }
         });
 
@@ -144,7 +144,7 @@ public class AdaptadorGridItemCatalogo extends BaseAdapter {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
 
-                builder.setTitle("Editar artículo");
+                builder.setTitle(view.getContext().getResources().getString(R.string.Editar_articulo));
                 vistaModificar = LayoutInflater.from(view.getContext()).inflate(R.layout.dialogo_modificar_articulo, parent,false);
                 builder.setView(vistaModificar);
 
@@ -164,7 +164,7 @@ public class AdaptadorGridItemCatalogo extends BaseAdapter {
                         tipo.setSelection(i);
                 }
 
-                builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(view.getContext().getResources().getString(R.string.Aceptar), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String nNombre = nombre.getText().toString();
@@ -172,14 +172,14 @@ public class AdaptadorGridItemCatalogo extends BaseAdapter {
                         String nTipo = tipo.getSelectedItem().toString();
 
                         if(nNombre.isEmpty()){
-                            Util.mostrarToast(view.getContext(),"Nombre vacío");
+                            Util.mostrarToast(view.getContext(), view.getContext().getResources().getString(R.string.Nombre_vacio));
                         }else{
                             if(!manejador.estaArticulo(nNombre,nMarca)){
                                 manejador.modificarArticuloNombre(articulo, nNombre);
                                 manejador.modificarArticuloMarca(articulo, nMarca);
                                 manejador.modificarArticuloTipo(articulo, nTipo);
                             }else{
-                                Util.mostrarToast(view.getContext(),"Ya existe ");
+                                Util.mostrarToast(view.getContext(), view.getContext().getResources().getString(R.string.Ya_existe));
                             }
                         }
                         datos.get(pos).setNombre(nNombre);
@@ -188,7 +188,7 @@ public class AdaptadorGridItemCatalogo extends BaseAdapter {
                         notifyDataSetChanged();
                     }
                 });
-                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(view.getContext().getResources().getString(R.string.Cancelar), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();

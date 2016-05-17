@@ -3,7 +3,6 @@ package stockme.stockme.adaptadores;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,7 +50,7 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
     //para el diálogo
     View vistaPrecio;
 
-    //////atributos static para gestionar el precio. Necesario al no pertenecer los controles a esta vista
+    //atributos static para gestionar el precio. Necesario al no pertenecer los controles a esta vista
     private static TextView tv_precio_total;
     private static TextView tv_precio_compra;
     private static Map<Integer, Float> costes = new TreeMap<>();
@@ -112,11 +111,6 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
         bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
         return bd.floatValue();
     }
-//    static float roundTwoDecimals(float d) {
-//        DecimalFormat twoDForm = new DecimalFormat("#.##");
-//        return Float.valueOf(twoDForm.format(d));
-//    }
-    /////////////
 
     public AdaptadorListItemArticulosListaCompra(Context context, List<ArticuloSupermercado> datos, Lista lista) {
         super(context, R.layout.listitem_articulos_lista_compra, datos);
@@ -132,7 +126,7 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
 
         //pintar los elementos de forma intercalada
         if ( position % 2 == 1) {
-            item.setBackgroundColor(Color.parseColor("#E9EBEB"));
+            item.setBackgroundColor((getContext().getResources().getColor(R.color.impar)));
         }
 
         //se crea un elemento ArticuloSupermercado que contiene los datos de la fila
@@ -172,7 +166,7 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
 
                     Articulo articulo = manejador.obtenerArticulo(articuloSuper.getArticulo());
 
-                    Util.mostrarToast(getContext(), "Comprado: " + articulo.getNombre());
+                    Util.mostrarToast(getContext(), getContext().getResources().getString(R.string.Comprado) + articulo.getNombre());
 
                     addCoste(articulo.getId(), articuloSuper.getPrecio() * numArt);
                 }else{
@@ -188,7 +182,7 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
         });
 
         if (cantidad == 0) {
-            item.setBackgroundColor(Color.parseColor("#D887FF7D"));
+            item.setBackgroundColor((getContext().getResources().getColor(R.color.comprado)));
             cbComprado.setChecked(true);
         }
 
@@ -231,28 +225,6 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
                 notifyDataSetChanged();
             }
         });
-//        cbComprado.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if(isChecked){
-//                    BDHandler manejador = new BDHandler(getContext());
-//                    int idArticulo = datos.get(position).getId();
-//                    ArticuloSupermercado articuloSuper = manejador.obtenerArticuloSupermercado(idArticulo);
-//                    manejador.modificarArticuloEnLista(new ListaArticulo(articuloSuper.getId(), lista.getNombre(), 0));
-//
-//                    Articulo articulo = manejador.obtenerArticulo(articuloSuper.getId());
-//
-//                    Util.mostrarToast(getContext(), "Comprado: " + articulo.getNombre());
-//                    actualizarPrecioTotal();
-//                    addCoste(articulo.getId(), articuloSuper.getPrecio() * manejador.numArticulosEnLista(lista.getNombre()));
-//                    manejador.cerrar();
-//
-//                    actualizarPrecioCompra();
-//                    notifyDataSetChanged();
-//                }
-//            }
-//        });
-        //cbComprado.setChecked(cbComprado.isChecked());
 
         articulos = (DynamicListView)parent.findViewById(R.id.lista_compra_lista);
 
@@ -274,7 +246,7 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
                 String actual = getContext().getResources().getString(R.string.Actual) + String.valueOf(round(datos.get(pos).getPrecio(), 2)) + " " + Preferencias.getPreferenciaString("moneda");
                 txActual.setText(actual);
 
-                builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(view.getContext().getResources().getString(R.string.Aceptar), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String nPrecio = input.getText().toString();
@@ -289,7 +261,7 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
                         notifyDataSetChanged();
                     }
                 });
-                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(view.getContext().getResources().getString(R.string.Cancelar), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
@@ -316,9 +288,9 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
                                     BDHandler manejador = new BDHandler(getContext());
 
                                     if (!manejador.eliminarArticuloEnLista(new ListaArticulo(datos.get(position).getId(), lista.getNombre(),0)))
-                                        Util.mostrarToast(getContext(), "No se ha podido eliminar el articulo");
+                                        Util.mostrarToast(getContext(), getContext().getResources().getString(R.string.No_se_ha_podido_eliminar_articulo));
                                     else {
-                                        Util.mostrarToast(getContext(), "Articulo eliminado");
+                                        Util.mostrarToast(getContext(), getContext().getResources().getString(R.string.Articulo_eliminado));
                                         remove(datos.get(position));
                                         actualizarPrecioTotal();
                                         notifyDataSetChanged();
@@ -327,7 +299,7 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
                                     manejador.cerrar();
                                 }
                             };
-                            Util.crearMensajeAlerta("¿Eliminar "+ articulo.getNombre() +"?", borrarArticuloListener, getContext());
+                            Util.crearMensajeAlerta(getContext().getResources().getString(R.string.Eliminar) + articulo.getNombre() + "?", borrarArticuloListener, getContext());
 
                         }
                     }

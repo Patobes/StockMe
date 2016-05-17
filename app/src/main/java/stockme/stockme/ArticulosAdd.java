@@ -43,7 +43,7 @@ public class ArticulosAdd extends AppCompatActivity implements Fragment_listas.O
         //toolbar + navbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        this.setTitle("Añadir artículo");
+        this.setTitle(getResources().getString(R.string.Añadir_articulo));
 
         //para flecha de atrás de navegación
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -59,8 +59,6 @@ public class ArticulosAdd extends AppCompatActivity implements Fragment_listas.O
         btnCatalogo = (Button)findViewById(R.id.articulos_add_btn_catalogo);
         atv_marcas = (AutoCompleteTextView)findViewById(R.id.articulos_add_atv_marcas);
         atv_marcas.setThreshold(1);
-        /*if(etNombre.requestFocus());
-            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);*/
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tipos_array,
                         android.R.layout.simple_spinner_item);
@@ -116,24 +114,12 @@ public class ArticulosAdd extends AppCompatActivity implements Fragment_listas.O
                             if (artAux == null) {
                                 if (manejador2.insertarArticuloSupermercado(nombre, marca, tipo, supermercado, precio) != -1) {
                                     artAux = manejador2.obtenerArticuloSupermercado(nombre, marca, tipo, supermercado);
-                                    Util.mostrarToast(v.getContext(), "Se ha creado un nuevo artículo");
+                                    Util.mostrarToast(v.getContext(), getResources().getString(R.string.Se_ha_creado_un_nuevo_articulo));
                                 } else {
-                                    Util.mostrarToast(v.getContext(), "No se ha podido crear el artículo");
+                                    Util.mostrarToast(v.getContext(), getResources().getString(R.string.No_se_ha_podido_crear_articulo));
                                     finish();
                                     overridePendingTransition(R.anim.right_in, R.anim.right_out);
-                                    //Aqui deberia acabarse la actividad, pues ni hay articulo en la BBDD ni se ha podido crear (el articulo es null)
                                 }
-                                /*
-                                articulo.setTipo(tipo);
-                                articulo.setSupermercado(supermercado);
-                                articulo.setNombre(nombre);
-                                articulo.setPrecio(precio);
-                                articulo.setMarca(marca);
-                                if(manejador2.insertarArticulo(articulo) != null)
-                                    Util.mostrarToast(v.getContext(), "Se ha creado un nuevo artículo");
-                                else
-                                    Util.mostrarToast(v.getContext(), "No se ha podido crear el artículo");*/
-                                //TODO: podríamos meter función de autocompletar para los tipos y marcas que ya estén en la bd
                             }
                             articulo = artAux;
 
@@ -149,7 +135,7 @@ public class ArticulosAdd extends AppCompatActivity implements Fragment_listas.O
                                             if (articulo.getPrecio() != precio) {
                                                 articulo.setPrecio(precio);
                                                 manejador2.modificarArticuloSupermercadoPrecio(articulo, precio);
-                                                Util.mostrarToast(ArticulosAdd.this, "Precio actualizado");
+                                                Util.mostrarToast(ArticulosAdd.this, getResources().getString(R.string.Precio_actualizado));
                                             }
                                             ListaArticulo la = manejador2.obtenerListaArticulo(articulo.getId(), nLista);
                                             manejador2.modificarArticuloEnListaCantidad(la, la.getCantidad() + cantidad);
@@ -159,7 +145,7 @@ public class ArticulosAdd extends AppCompatActivity implements Fragment_listas.O
                                             overridePendingTransition(R.anim.right_in, R.anim.right_out);
                                         }
                                     };
-                                    Util.crearMensajeAlerta("Ya está el artículo en la lista. ¿Quieres sumar la cantidad?", "Artículo existente",
+                                    Util.crearMensajeAlerta(getResources().getString(R.string.Ya_esta_articulo_lista_pregunta), getResources().getString(R.string.Articulo_existente),
                                             aceptar, ArticulosAdd.this);
                                 } else {
                                     manejador2.insertarArticuloEnLista(new ListaArticulo(articulo.getId(), nLista, cantidad));
@@ -171,12 +157,12 @@ public class ArticulosAdd extends AppCompatActivity implements Fragment_listas.O
                             }
 
                         } else {
-                            Util.mostrarToast(v.getContext(), "Debes insertar un nombre");
+                            Util.mostrarToast(v.getContext(), getResources().getString(R.string.Debes_insertar_nombre));
                             manejador.cerrar();
                             manejador2.cerrar();
                         }
                     } else {
-                        Util.mostrarToast(v.getContext(), "El precio debe ser mayor o igual a 0");
+                        Util.mostrarToast(v.getContext(), getResources().getString(R.string.El_precio_mayor_cero));
                         manejador.cerrar();
                         manejador2.cerrar();
                     }
@@ -184,7 +170,7 @@ public class ArticulosAdd extends AppCompatActivity implements Fragment_listas.O
             });
 
         }else{
-            Util.mostrarToast(this, "No se ha podido cargar la lista");
+            Util.mostrarToast(this, getResources().getString(R.string.No_se_ha_podido_cargar_lista));
             manejador.cerrar();
             finish();
         }

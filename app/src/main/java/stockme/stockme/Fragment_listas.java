@@ -132,7 +132,7 @@ public class Fragment_listas extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if ((requestCode == 1) && (resultCode == Activity.RESULT_OK)){
-            //con esto refrescamos el fragment para actualizar la lista... mejora -> usar el onResume()
+            //con esto refrescamos el fragment para actualizar la lista
             Fragment fragmento = new Fragment_listas();
             FragmentTransaction ft = getFragmentManager().beginTransaction().replace(R.id.contenido_principal, fragmento);
             ft.attach(fragmento).commit();

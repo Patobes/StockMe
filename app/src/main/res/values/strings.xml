@@ -71,4 +71,68 @@
     <string name="Salsas_especias">Salsas y especias</string>
     <string name="Bebidas">Bebidas</string>
 
+    <string name="No_se_ha_podido_eliminar_articulo">No se ha podido eliminar el artículo</string>
+    <string name="Articulo_eliminado">Artículo eliminado</string>
+    <string name="Quieres_eliminar_articulo">¿Quieres eliminar el artículo?</string>
+    <string name="No_se_ha_podido_eliminar_listas">No se ha podido eliminar la lista</string>
+    <string name="Lista_eliminada">Lista eliminada</string>
+    <string name="Quieres_eliminar_lista">¿Quieres eliminar la lista?</string>
+
+    <string name="Editar_articulo">Editar artículo</string>
+    <string name="Nombre_vacio">Nombre vacío</string>
+    <string name="Ya_existe">Ya existe </string>
+    <string name="Comprado">Comprado: </string>
+    <string name="Eliminar">¿Eliminar: </string>
+
+    <string name="Nuevo_nombre">Nuevo nombre</string>
+    <string name="Lista_renombrada">Lista renombrada</string>
+    <string name="Del_stock"> del stock?</string>
+
+    <string name="Unidades"> unidades</string>
+    <string name="Nuevo_minimo">Nuevo mínimo</string>
+    <string name="Conservar">¿Conservar </string>
+    <string name="En_el_stock"> en el Stock?</string>
+    <string name="Agotado"> agotado</string>
+    <string name="Elimina">Eliminar</string>
+    <string name="Conserva">Conservar</string>
+
+    <string name="Ha_alcanzado_el_minimo_establecido">ha alcanzado el mínimo establecido</string>
+    <string name="Añadir">¿Añadir </string>
+    <string name="A_una_lista_compra"> a una lista de la compra?</string>
+    <string name="Bajo_minimos">Bajo mínimos</string>
+
+    <string name="Añadir_articulo">Añadir artículo</string>
+    <string name="Se_ha_creado_un_nuevo_articulo">Se ha creado un nuevo artículo</string>
+    <string name="No_se_ha_podido_crear_articulo">No se ha podido crear el artículo</string>
+    <string name="Ya_esta_articulo_lista_pregunta">Ya está el artículo en la lista. ¿Quieres sumar la cantidad?</string>
+    <string name="Articulo_existente">Artículo existente</string>
+
+    <string name="Precio_actualizado">Precio actualizado</string>
+    <string name="Debes_insertar_nombre">Debes insertar un nombre</string>
+    <string name="Debes_insertar_marca">Debes insertar una marca</string>
+    <string name="Debes_insertar_cantidad">Debes insertar una cantidad mayor que 0</string>
+    <string name="El_precio_mayor_cero">El precio debe ser mayor o igual a 0</string>
+    <string name="No_se_ha_podido_cargar_lista">No se ha podido cargar la lista</string>
+    <string name="Catalogo">Catálogo</string>
+
+    <string name="Todos">Todos</string>
+    <string name="Tipos">Tipos</string>
+    <string name="Crear_lista">Crear lista</string>
+    <string name="Ya_existe_la_lista">Ya existe la lista: </string>
+    <string name="Añadir_stock">Añadir Stock</string>
+
+    <string name="Articulo_añadido">Artículo añadido</string>
+    <string name="No_se_ha_podido_añadir_articulo">No se ha podido añadir el artículo</string>
+    <string name="El_articulo_esta_pregunta">El articulo que has introducido ya está en Stock
+¿Deseas añadir </string>
+    <string name="Unidades_al_stock"> unidades al Stock?</string>
+
+    <string name="Unidades_añadidas">Unidades añadidas</string>
+    <string name="Añadir_stock_a_lista">Añadir Stock a lista</string>
+
+    <string name="Si">Si</string>
+    <string name="No">No</string>
+    <string name="Confirmacion">Confirmación</string>
+
+
 </resources>

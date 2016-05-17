@@ -48,12 +48,10 @@ public class StockAdd extends AppCompatActivity implements Fragment_listas.OnFra
         //Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        this.setTitle("Añadir stock");
+        this.setTitle(this.getResources().getString(R.string.Añadir_stock));
 
         //para flecha de atrás de navegación
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-//        getSupportActionBar().setHomeButtonEnabled(true);
 
         //Contenido
         et_nombre = (EditText)findViewById(R.id.stock_add_et_nombre);
@@ -105,11 +103,11 @@ public class StockAdd extends AppCompatActivity implements Fragment_listas.OnFra
                 minimo = Integer.parseInt(et_minimo.getText().toString());
 
                 if (nombre == null || nombre.isEmpty() || nombre.matches("") || nombre.matches(" ")) {
-                    Util.mostrarToast(getApplicationContext(), "Introduce el nombre del articulo!");
+                    Util.mostrarToast(getApplicationContext(), getResources().getString(R.string.Debes_insertar_nombre));
                 } else if (marca == null || marca.isEmpty() || marca.matches("") || marca.matches(" ")) {
-                    Util.mostrarToast(getApplicationContext(), "Introduce la marca del articulo!");
+                    Util.mostrarToast(getApplicationContext(), getResources().getString(R.string.Debes_insertar_marca));
                 } else if (cantidad == 0) {
-                    Util.mostrarToast(getApplicationContext(), "Introduce una cantidad mayor que 0!");
+                    Util.mostrarToast(getApplicationContext(), getResources().getString(R.string.Debes_insertar_cantidad));
                 } else {
                     final BDHandler manejador1 = new BDHandler(v.getContext());
                     if(manejador1.estaStock(nombre, marca)) {
@@ -117,21 +115,21 @@ public class StockAdd extends AppCompatActivity implements Fragment_listas.OnFra
                         DialogInterface.OnClickListener sumarCantidad = new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 manejador1.modificarStockCantidad(stock, stock.getCantidad() + cantidad);
-                                Util.mostrarToast(getApplicationContext(), cantidad + " unidades añadidas!");
+                                Util.mostrarToast(getApplicationContext(), cantidad + getResources().getString(R.string.Unidades_añadidas));
                                 manejador.cerrar();
                                 manejador1.cerrar();
                                 finish();
                                 overridePendingTransition(R.anim.right_in, R.anim.right_out);
                             }
                         };
-                        String mensaje = "El articulo que has introducido ya está en Stock\r\n¿Deseas añadir " + cantidad + " unidades al Stock?";
+                        String mensaje = getResources().getString(R.string.El_articulo_esta_pregunta) + cantidad + getResources().getString(R.string.Unidades_al_stock);
                         Util.crearMensajeAlerta(mensaje, sumarCantidad, v.getContext());
 
                     } else{
                         if(manejador1.insertarStock(nombre, marca, tipo, cantidad, minimo))
-                            Util.mostrarToast(getApplicationContext(), "Articulo añadido!");
+                            Util.mostrarToast(getApplicationContext(), getResources().getString(R.string.Articulo_añadido));
                         else
-                            Util.mostrarToast(getApplicationContext(), "No se ha podido añadir el articulo al Stock");
+                            Util.mostrarToast(getApplicationContext(), getResources().getString(R.string.No_se_ha_podido_añadir_articulo));
                         manejador.cerrar();
                         manejador1.cerrar();
                         finish();
@@ -169,34 +167,10 @@ public class StockAdd extends AppCompatActivity implements Fragment_listas.OnFra
         manejador.cerrar();
     }
 
-    //TODO: hay que controlar que al añadir el artículo al stock vuelve a la principal y carga la lista
-    //debería cargar stock
-
-
     @Override
     public void onFragmentInteraction(Uri uri) {
 
     }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem menuItem) {
-//        switch (menuItem.getItemId()) {
-//            case android.R.id.home:
-//                // ProjectsActivity is my 'home' activity
-//                startActivityAfterCleanup(Principal.class);
-//                return true;
-//        }
-//        return (super.onOptionsItemSelected(menuItem));
-//    }
-//
-//    private void startActivityAfterCleanup(Class<?> cls) {
-//        //if (projectsDao != null) projectsDao.close();
-//        Intent intent = new Intent(getApplicationContext(), cls);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//        startActivity(intent);
-//        finish();
-//    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

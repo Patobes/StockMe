@@ -68,10 +68,8 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
             holder.btn_delete = (ImageButton)item.findViewById(R.id.listitem_lista_btn_delete);
 
             item.setTag(holder);
-            //Log.v("itemListas", "NUEVO ELEMENTO");
         }else{
             holder = (ViewHolder)item.getTag();
-            //Log.v("itemListas", "REUTILIZO ELEMENTO");
         }
 
         //pintar los elementos de forma intercalada
@@ -110,16 +108,16 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
                         BDHandler manejador = new BDHandler(getContext());
 
                         if (!manejador.eliminarListaCascade(datos.get(position)))
-                            Util.mostrarToast(getContext(), "No se ha podido eliminar la lista");
+                            Util.mostrarToast(getContext(), getContext().getResources().getString(R.string.No_se_ha_podido_eliminar_listas));
                         else {
-                            Util.mostrarToast(getContext(), "Lista eliminada");
+                            Util.mostrarToast(getContext(), getContext().getResources().getString(R.string.Lista_eliminada));
                             remove(datos.get(position));
                         }
                         
                         manejador.cerrar();
                     }
                 };
-                Util.crearMensajeAlerta("¿Quieres eliminar la lista?", borrarListaListener, v.getContext());
+                Util.crearMensajeAlerta(getContext().getResources().getString(R.string.Quieres_eliminar_lista), borrarListaListener, v.getContext());
             }
         });
 
@@ -132,12 +130,12 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
 
                 //Diálogo para cambiar nombre
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                builder.setTitle("Nuevo nombre");
+                builder.setTitle(getContext().getResources().getString(R.string.Nuevo_nombre));
 
                 final EditText input = new EditText(view.getContext());
                 builder.setView(input);
 
-                builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(getContext().getResources().getString(R.string.Aceptar), new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -154,16 +152,13 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
                         }
 
                         manejador.eliminarLista(lista);
-                        Util.mostrarToast(getContext(), "Lista renombrada");
+                        Util.mostrarToast(getContext(), getContext().getResources().getString(R.string.Lista_renombrada));
                         remove(lista);
                         add(nuevaLista);
-                        /*
-                        nuevoNombre = input.getText().toString();
-                        manejador.modificarListaNombre(lista, nuevoNombre);*/
 
                     }
                 });
-                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(getContext().getResources().getString(R.string.Cancelar), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();

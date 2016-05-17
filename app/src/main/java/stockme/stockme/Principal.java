@@ -49,11 +49,6 @@ public class Principal extends AppCompatActivity
         handler.abrir();
         handler.cerrar();
 
-//        Fragment fragmento = new Fragment_listas();
-//        getSupportFragmentManager().beginTransaction().replace(R.id.contenido_principal, fragmento).commit();
-//        this.setTitle("Listas");
-//
-//        nav_menu.getMenu().getItem(0).setChecked(true);
     }
 
     private void crearPreferenciasPorDefecto() {
@@ -61,29 +56,10 @@ public class Principal extends AppCompatActivity
         Preferencias.setPreferencia("anterior", "Listas");
     }
 
-    /*TODO: para la navegabilidad podemos utiliar la traza creada al guardar en Preferencias
-    la activity o fragment anterior. En cada activity implementar este método para que regrese a la anterior*/
     @Override
     public void onBackPressed() {
         OpcionesMenus.onBackPressed(this);
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()){
-//            case R.id.accion_opciones:
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override

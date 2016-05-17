@@ -38,7 +38,7 @@ public class ListaCompra extends AppCompatActivity implements /*NavigationView.O
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        toolbar.setTitle("Artículos");
+        toolbar.setTitle(getResources().getString(R.string.Articulos));
 
         //para flecha de atrás de navegación
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -60,15 +60,6 @@ public class ListaCompra extends AppCompatActivity implements /*NavigationView.O
 
         AdaptadorListItemArticulosListaCompra.resetCostes();
     }
-
-//    @Override
-//    protected void onStop(){
-//        super.onStop();
-//        if(lista == null || nombreLista == null) {
-//            lista = new Lista(getIntent().getStringExtra("NombreLista"), "", "", "");
-//            nombreLista = lista.getNombre();
-//        }
-//    }
 
     @Override
     protected void onResume() {

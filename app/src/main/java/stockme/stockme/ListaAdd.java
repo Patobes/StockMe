@@ -29,7 +29,7 @@ public class ListaAdd extends AppCompatActivity implements Fragment_listas.OnFra
         setContentView(R.layout.activity_lista_add);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        this.setTitle("Crear lista");
+        this.setTitle(getResources().getString(R.string.Crear_lista));
 
         //para flecha de atrás de navegación
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -62,7 +62,7 @@ public class ListaAdd extends AppCompatActivity implements Fragment_listas.OnFra
                     BDHandler manejador = new BDHandler(v.getContext());
 
                     if (!manejador.insertarLista(nueva))
-                        Toast.makeText(v.getContext(), "Ya existe la lista '" + nueva.getNombre() + "'", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(), getResources().getString(R.string.Ya_existe_la_lista) + nueva.getNombre(), Toast.LENGTH_SHORT).show();
                     else {
                         setResult(Activity.RESULT_OK);
                         finish();
@@ -70,7 +70,7 @@ public class ListaAdd extends AppCompatActivity implements Fragment_listas.OnFra
                     }
                     manejador.cerrar();
                 } else {
-                    Util.mostrarToast(v.getContext(), "¡Falta un nombre!");
+                    Util.mostrarToast(v.getContext(), getResources().getString(R.string.Debes_insertar_nombre));
                 }
 
             }

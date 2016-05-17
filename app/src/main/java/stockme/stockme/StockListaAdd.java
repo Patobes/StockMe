@@ -20,14 +20,10 @@ import java.util.List;
 import stockme.stockme.logica.Articulo;
 import stockme.stockme.logica.ArticuloSupermercado;
 import stockme.stockme.logica.Lista;
-import stockme.stockme.logica.ListaArticulo;
 import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.InputFilterMinMax;
 import stockme.stockme.util.Util;
 
-/**
- * Created by paris on 17/05/2016.
- */
 public class StockListaAdd extends AppCompatActivity implements Fragment_listas.OnFragmentInteractionListener{
     private EditText et_lista;
     private Spinner sp_lista;
@@ -48,7 +44,7 @@ public class StockListaAdd extends AppCompatActivity implements Fragment_listas.
         //Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        this.setTitle("Añadir Stock a Lista");
+        this.setTitle(getResources().getString(R.string.Añadir_stock_a_lista));
 
         //para flecha de atrás de navegación
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -104,9 +100,9 @@ public class StockListaAdd extends AppCompatActivity implements Fragment_listas.
                     if (artAux == null) {
                         if (manejador1.insertarArticuloSupermercado(id_articulo, supermercado, precio) != -1) {
                             artAux = manejador1.obtenerArticuloSupermercado(id_articulo, supermercado);
-                            Util.mostrarToast(v.getContext(), "Se ha creado un nuevo artículo");
+                            Util.mostrarToast(v.getContext(), getResources().getString(R.string.Se_ha_creado_un_nuevo_articulo));
                         } else {
-                            Util.mostrarToast(v.getContext(), "No se ha podido crear el artículo");
+                            Util.mostrarToast(v.getContext(), getResources().getString(R.string.No_se_ha_podido_crear_articulo));
                             manejador1.close();
                             manejador.close();
                             finish();
@@ -133,7 +129,7 @@ public class StockListaAdd extends AppCompatActivity implements Fragment_listas.
                     }
 
                 } else {
-                    Util.mostrarToast(v.getContext(), "El precio debe ser mayor o igual a 0");
+                    Util.mostrarToast(v.getContext(), getResources().getString(R.string.El_precio_mayor_cero));
                     manejador.cerrar();
                 }
             }
