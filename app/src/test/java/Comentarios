@@ -5,8 +5,6 @@
 
 -Depurar las listas añadiendo patrones ViewHolder, etc...
 
--BUG: en listas de la compra, al eliminar un articulo arrastrando, al preguntar si quieres borrar el articulo muestra el nombre del ultimo articulo de la lista aunque borra el correcto
-
 ----------Ideas:-------------------------------------------------------------------
 en los Fragments se puede usar getActivity() para trabajar sobre el padre
 
@@ -21,11 +19,3 @@ en los Fragments se puede usar getActivity() para trabajar sobre el padre
 -Poner valore por defecto en la bd
 -Revisar comoprtamiento si no se insertan campos en artículos_add
 -Suma de precio en ListaDeArticulos (quizá renombrar a lista de compra)
-
-
-----------Stock--------------
-- if(cantidad < minimo) {DialogInterface(¿añadir a lista de la compra/a qué lista de la compra desea añadirlo?)}
-
---------A Preguntar---------
-- Cuando entramos en vistas para añadir articulos tanto a listas como a stock, poner el boton de 'añadir desde catalogo' a la izquierda del tick
-  en vez de arriba, porque queda btt mal

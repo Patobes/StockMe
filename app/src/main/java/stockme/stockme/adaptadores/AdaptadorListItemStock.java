@@ -1,5 +1,6 @@
 package stockme.stockme.adaptadores;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -155,30 +156,31 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
                         String marca = manejador.obtenerArticulo(datos.get(position).getArticulo()).getMarca();
                         Util.crearMensajeAlerta("¿Conservar " + nombre + " " + marca + " en el Stock?", nombre + " " + marca + " agotado", "Eliminar", "Conservar", borrarStockListener, cancelar, getContext());
                     }
-                    else if(cantidad == minimo)
-                        Util.mostrarToast(getContext(), manejador.obtenerArticulo(datos.get(position).getArticulo()).getNombre() + " " +
-                                manejador.obtenerArticulo(datos.get(position).getArticulo()).getMarca() + " ha alcanzado el mínimo establecido");
+                    else if(cantidad == minimo) {
+                        if(pendiente)
+                            Util.mostrarToast(getContext(), manejador.obtenerArticulo(datos.get(position).getArticulo()).getNombre() + " " +
+                                    manejador.obtenerArticulo(datos.get(position).getArticulo()).getMarca() + " ha alcanzado el mínimo establecido");
+                        else {
+                            DialogInterface.OnClickListener añadirStockListaListener = new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent i = new Intent(getContext(), StockListaAdd.class);
+                                    i.putExtra("IdArticuloSimple", stock1.getArticulo());
+                                    getContext().startActivity(i);
+                                    //overridePendingTransition(R.anim.left_in, R.anim.left_out);
+                                }
+                            };
+                            String nombre = manejador.obtenerArticulo(datos.get(position).getArticulo()).getNombre();
+                            String marca = manejador.obtenerArticulo(datos.get(position).getArticulo()).getMarca();
+                            Util.crearMensajeAlerta("¿Añadir " + nombre + " " + marca + " a una lista de la compra?", nombre + " " + marca + " ha alcanzado el mínimo establecido", añadirStockListaListener, getContext());
+                        }
+                    }
                     else if(cantidad < minimo && !pendiente){
                         DialogInterface.OnClickListener añadirStockListaListener = new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                //Llamar a una actividad (vista) con un spinner con las listas de la compra o posibilidad de una nueva
-                                //y que aparezca la cantidad que queremos añadir y el precio y super (como llamar al ArticuloListaAdd pero eligiendo tmbn la lista)
-                                //Comprobar que no esté ya en lista (boolean pendiente usado para colear -- fondo amarillo)
-
                                 Intent i = new Intent(getContext(), StockListaAdd.class);
                                 i.putExtra("IdArticuloSimple", stock1.getArticulo());
                                 getContext().startActivity(i);
                                 //getContext().overridePendingTransition(R.anim.left_in, R.anim.left_out);
-//                                BDHandler manejador = new BDHandler(getContext());
-//                                if (!manejador.eliminarStock(datos.get(position).getArticulo()))
-//                                    Util.mostrarToast(getContext(), "No se ha podido quitar el articulo");
-//                                else {
-//                                    Util.mostrarToast(getContext(), "Articulo quitado del Stock");
-//                                    remove(datos.get(position));
-//                                    notifyDataSetChanged();
-//                                }
-//
-//                                manejador.cerrar();
                             }
                         };
                         String nombre = manejador.obtenerArticulo(datos.get(position).getArticulo()).getNombre();
