@@ -1,29 +1,23 @@
 package stockme.stockme;
 
-import android.app.SearchManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,7 +27,6 @@ import android.widget.TextView;
 
 import stockme.stockme.logica.Articulo;
 import stockme.stockme.util.OpcionesMenus;
-import stockme.stockme.util.Preferencias;
 import stockme.stockme.util.Util;
 
 public class CatalogoArticulos extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
@@ -54,7 +47,7 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catalogo_articulos);
-//        Preferencias.setPreferencia("anterior", "Artículos");
+//        Configuracion.setPreferencia("anterior", "Artículos");
 
         //toolbar + navbar
         View vToolbar = findViewById(R.id.toolbar_catalog);
@@ -179,14 +172,16 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
             int id = item.getItemId();
 
             if(id != R.id.nav_articulos) {
-                Intent i = new Intent(this, Principal.class);
+                Intent i;
+                if (id == R.id.nav_ajustes)
+                    i = new Intent(this, Preferencias.class);
+                else
+                    i = new Intent(this, Principal.class);
 
                 if (id == R.id.nav_listas) {
                     i.putExtra("Opcion", "Listas");
                 } else if (id == R.id.nav_stock) {
                     i.putExtra("Opcion", "Stock");
-                } else if (id == R.id.nav_ajustes) {
-                    i.putExtra("Opcion", "Ajustes");
                 }
     //
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

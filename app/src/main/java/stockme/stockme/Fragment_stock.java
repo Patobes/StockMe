@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -18,8 +17,7 @@ import java.util.List;
 import stockme.stockme.adaptadores.AdaptadorListItemStock;
 import stockme.stockme.logica.Stock;
 import stockme.stockme.persistencia.BDHandler;
-import stockme.stockme.util.Preferencias;
-import stockme.stockme.util.Util;
+import stockme.stockme.util.Configuracion;
 
 public class Fragment_stock extends Fragment {
     private OnFragmentInteractionListener mListener;
@@ -52,7 +50,7 @@ public class Fragment_stock extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Preferencias.setPreferencia("anterior", "Stock");
+        Configuracion.setPreferencia("anterior", "Stock");
 
         lv_stock = (ListView) view.findViewById(R.id.fragment_stock_listview);
         //recojo las listas existenes

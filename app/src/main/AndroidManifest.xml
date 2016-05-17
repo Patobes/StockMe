@@ -72,8 +72,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="stockme.stockme.Principal" />
         </activity>
-        <activity android:name=".CatalogoArticulos">
-        </activity>
+        <activity android:name=".CatalogoArticulos"></activity>
         <activity
             android:name=".ArticuloSimpleAdd"
             android:parentActivityName=".CatalogoArticulos">
@@ -97,6 +96,9 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="stockme.stockme.StockListaAdd" />
+        </activity>
+        <activity android:name=".Preferencias"
+            android:label="Preferencias">
         </activity>
     </application>
 

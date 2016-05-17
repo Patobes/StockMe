@@ -4,10 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v4.view.MotionEventCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -16,16 +13,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import java.math.BigDecimal;
 import java.util.List;
 
-import stockme.stockme.Fragment_stock;
 import stockme.stockme.R;
 import stockme.stockme.StockListaAdd;
 import stockme.stockme.logica.Stock;
 import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.OnSwipeTouchListener;
-import stockme.stockme.util.Preferencias;
 import stockme.stockme.util.Util;
 
 /**

@@ -20,7 +20,7 @@ import java.util.List;
 import stockme.stockme.adaptadores.AdaptadorListItemListas;
 import stockme.stockme.logica.Lista;
 import stockme.stockme.persistencia.BDHandler;
-import stockme.stockme.util.Preferencias;
+import stockme.stockme.util.Configuracion;
 import stockme.stockme.util.Util;
 
 public class Fragment_listas extends Fragment {
@@ -56,7 +56,7 @@ public class Fragment_listas extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Preferencias.setPreferencia("anterior", "Listas");
+        Configuracion.setPreferencia("anterior", "Listas");
 
         view.setVerticalScrollBarEnabled(false);
 

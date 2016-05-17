@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -21,10 +19,7 @@ import android.widget.TextView;
 import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
 
-import org.w3c.dom.Text;
-
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -35,7 +30,7 @@ import stockme.stockme.logica.ArticuloSupermercado;
 import stockme.stockme.logica.Lista;
 import stockme.stockme.logica.ListaArticulo;
 import stockme.stockme.persistencia.BDHandler;
-import stockme.stockme.util.Preferencias;
+import stockme.stockme.util.Configuracion;
 import stockme.stockme.util.Util;
 
 public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<ArticuloSupermercado> {
@@ -276,7 +271,7 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
                 final TextView txActual = (TextView)vistaPrecio.findViewById(R.id.dialogo_cambiar_precio_tv_actual);
                 final EditText input = (EditText)vistaPrecio.findViewById(R.id.dialogo_cambiar_precio_et_precio);
 
-                txActual.setText("Actual: " + String.valueOf(round(datos.get(pos).getPrecio(), 2)) + " " + Preferencias.getPreferenciaString("moneda"));
+                txActual.setText("Actual: " + String.valueOf(round(datos.get(pos).getPrecio(), 2)) + " " + Configuracion.getPreferenciaString("moneda"));
 
                 builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     @Override
@@ -331,8 +326,10 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
                                     manejador.cerrar();
                                 }
                             };
-                            Util.crearMensajeAlerta("¿Eliminar "+ articulo.getNombre() +"?", borrarArticuloListener, getContext());
-
+                            BDHandler manejador = new BDHandler(getContext());
+                            Articulo art = manejador.obtenerArticulo(datos.get(position).getArticulo());
+                            Util.crearMensajeAlerta("¿Eliminar "+ art.getNombre() +"?", borrarArticuloListener, getContext());
+                            manejador.close();
                         }
                     }
                 }

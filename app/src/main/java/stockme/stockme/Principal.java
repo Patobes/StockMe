@@ -1,22 +1,20 @@
 package stockme.stockme;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import stockme.stockme.persistencia.BDHandler;
+import stockme.stockme.util.Configuracion;
 import stockme.stockme.util.OpcionesMenus;
-import stockme.stockme.util.Preferencias;
 import stockme.stockme.util.Util;
 
 public class Principal extends AppCompatActivity
@@ -32,8 +30,8 @@ public class Principal extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         //inicialziar preferencias
-        Preferencias.inicializarPreferencias(this);
-        //con esto ya podremos usar los métodos estáticos de Preferencias
+        Configuracion.inicializarPreferencias(this);
+        //con esto ya podremos usar los métodos estáticos de Configuracion
         crearPreferenciasPorDefecto();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -59,11 +57,15 @@ public class Principal extends AppCompatActivity
     }
 
     private void crearPreferenciasPorDefecto() {
-        Preferencias.setPreferencia("moneda", Util.moneda);
-        Preferencias.setPreferencia("anterior", "Listas");
+        Configuracion.setPreferencia("moneda", Util.moneda);
+        Configuracion.setPreferencia("anterior", "Listas");
+        if(!Configuracion.isPreferencia("ordenListas"))
+            Configuracion.setPreferencia("ordernListas", "ASC");
+        if(!Configuracion.isPreferencia("idioma"))
+            Configuracion.setPreferencia("idioma", "ES");
     }
 
-    /*TODO: para la navegabilidad podemos utiliar la traza creada al guardar en Preferencias
+    /*TODO: para la navegabilidad podemos utiliar la traza creada al guardar en Configuracion
     la activity o fragment anterior. En cada activity implementar este método para que regrese a la anterior*/
     @Override
     public void onBackPressed() {
@@ -107,7 +109,9 @@ public class Principal extends AppCompatActivity
             overridePendingTransition(0, 0);
             finish();
         } else if (id == R.id.nav_ajustes) {
-            startActivity(new Intent(this, InfoBD.class));
+            startActivity(new Intent(this, Preferencias.class));
+            overridePendingTransition(0, 0);
+            finish();
         }
 
 
@@ -148,9 +152,6 @@ public class Principal extends AppCompatActivity
                         case "Articulos":
                             onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_articulos));
                             break;
-                        case "Ajustes":
-                            onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_ajustes));
-                            break;
                         default:
                             onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_listas));
                             break;
@@ -158,7 +159,7 @@ public class Principal extends AppCompatActivity
                 }else
                     onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_listas));
             }else {
-                String anterior = Preferencias.getPreferenciaString("anterior");
+                String anterior = Configuracion.getPreferenciaString("anterior");
                 if(anterior != null){
                     switch (anterior) {
                         case "Listas":

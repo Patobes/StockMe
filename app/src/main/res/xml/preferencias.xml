@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+            android:key="idioma"
+            android:title="Idioma"
+            android:summary="Selecciona el idioma"
+            android:dialogTitle="Seleccionar idioma"
+            android:entries="@array/idioma"
+            android:entryValues="@array/codidioma" />
+    <ListPreference
+        android:key="moneda"
+        android:title="Moneda"
+        android:summary="Selecciona la moneda"
+        android:dialogTitle="Seleccionar moneda"
+        android:entries="@array/moneda"
+        android:entryValues="@array/codmoneda" />
+    <ListPreference
+        android:key="orden_listas"
+        android:title="Orden de las listas"
+        android:summary="Selecciona el orden"
+        android:dialogTitle="Seleccionar orden"
+        android:entries="@array/orden"
+        android:entryValues="@array/codorden" />
+</PreferenceScreen>

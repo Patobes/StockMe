@@ -2,22 +2,23 @@ package stockme.stockme.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 //esta clase permite usar las preferencias compartidas sin tener que crear un objeto para ello en cada
 //clase en la que se quieran utilizar
-public class Preferencias {
+public class Configuracion {
     private static SharedPreferences preferencias;
     private static SharedPreferences.Editor editor;
 
-    public Preferencias() {
+    public Configuracion() {
     }
 
     //requeire inicializar las preferencias en la primera activity de la aplicación para obtener el contexto
-//    public Preferencias(Context ctx){
+//    public Configuracion(Context ctx){
 //        this.preferencias = ctx.getSharedPreferences("StockMePref", Context.MODE_PRIVATE);
 //    }
     public static void inicializarPreferencias(Context ctx) {
-        preferencias = ctx.getSharedPreferences("StockMePref", Context.MODE_PRIVATE);
+        preferencias = PreferenceManager.getDefaultSharedPreferences(ctx);
         editor = preferencias.edit();
     }
 
