@@ -32,9 +32,8 @@
 
     <color name="black">#000000</color>
 
-    <color name="stock_verde">#00FF00</color>
-    <color name="stock_amarillo">#FFFF00</color>
-    <color name="stock_naranja1">#FF8000</color>
-    <color name="stock_naranja2">#FFA420</color>
-    <color name="stock_rojo">#FF0000</color>
+    <color name="stock_verde">#81FF81</color>
+    <color name="stock_amarillo">#FFFF81</color>
+    <color name="stock_naranja">#FFB25E</color>
+    <color name="stock_rojo">#FF5757</color>
 </resources>
