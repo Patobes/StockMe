@@ -243,7 +243,7 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
                 final TextView txActual = (TextView)vistaPrecio.findViewById(R.id.dialogo_cambiar_precio_tv_actual);
                 final EditText input = (EditText)vistaPrecio.findViewById(R.id.dialogo_cambiar_precio_et_precio);
 
-                String actual = getContext().getResources().getString(R.string.Actual) + String.valueOf(round(datos.get(pos).getPrecio(), 2)) + " " + Preferencias.getPreferenciaString("moneda");
+                String actual = getContext().getResources().getString(R.string.Actual) + String.valueOf(round(datos.get(pos).getPrecio(), 2)) + " " + Configuracion.getPreferenciaString("moneda");
                 txActual.setText(actual);
 
                 builder.setPositiveButton(view.getContext().getResources().getString(R.string.Aceptar), new DialogInterface.OnClickListener() {
