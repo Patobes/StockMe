@@ -108,4 +108,10 @@
     <string name="title_activity_ajustes_prueba"></string>
     <string name="title_activity_listas">Lists</string>
     <string name="title_activity_preferencias">Configuration</string>
+    <string name="Selecciona_el_idioma">Select language</string>
+    <string name="Selecciona_el_orden">Select order</string>
+    <string name="Selecciona_la_moneda">Select currency</string>
+    <string name="Idioma">Language</string>
+    <string name="Moneda">Currency</string>
+    <string name="Orden_de_las_listas">List order</string>
 </resources>

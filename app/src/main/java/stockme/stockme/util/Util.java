@@ -7,23 +7,22 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 
+import stockme.stockme.R;
+
 public class Util {
 
-    private Util(){}
-
-
+    public static SimpleDateFormat diaMesAnyo = new SimpleDateFormat("dd/MM/yyyy");
+    public static String moneda = "€";
+    public static String vieneDe = "Principal";
     //hay que INCREMENTAR en 1 cada vez que se hace una modificación en la estructura o en contenido inicial
     private static int BD_VERSION = 29;
-    public static int getBD_VERSION(){
-        return BD_VERSION;
+
+    private Util() {
     }
 
-    public static SimpleDateFormat diaMesAnyo = new SimpleDateFormat("dd/MM/yyyy");
-
-    public static String moneda = "€";
-
-    public static String vieneDe = "Principal";
-
+    public static int getBD_VERSION() {
+        return BD_VERSION;
+    }
 
     //método para crear un mensaje de Diálogo. Los listener pasados por parámetro se crean de la siguiente forma:
     /*
@@ -46,11 +45,11 @@ public class Util {
     //esta sobrecarga del método es para usarlo de la forma más habitual, sin un evento para el botón de cancelar y
     //con valores por defecto titulo=Confirmación, acp=Sí, cancl=No
     public static void crearMensajeAlerta(String mensaje, DialogInterface.OnClickListener listenerConfirm, Context ctx){
-        crearMensajeAlerta(mensaje, "Confirmación", "Sí", "No", listenerConfirm, null, ctx);
+        crearMensajeAlerta(mensaje, ctx.getResources().getString(R.string.Confirmacion), ctx.getResources().getString(R.string.Si), ctx.getResources().getString(R.string.No), listenerConfirm, null, ctx);
     }
     //esta sobrecarga permite además establecer el título del diálogo
     public static void crearMensajeAlerta(String mensaje, String titulo, DialogInterface.OnClickListener listenerConfirm, Context ctx){
-        crearMensajeAlerta(mensaje, titulo, "Sí", "No", listenerConfirm, null, ctx);
+        crearMensajeAlerta(mensaje, titulo, ctx.getResources().getString(R.string.Si), ctx.getResources().getString(R.string.No), listenerConfirm, null, ctx);
     }
 
     public static void mostrarToast(Context context, String mensaje){
