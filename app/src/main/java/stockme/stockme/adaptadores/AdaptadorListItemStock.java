@@ -3,6 +3,7 @@ package stockme.stockme.adaptadores;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +19,9 @@ import android.widget.TextView;
 import java.math.BigDecimal;
 import java.util.List;
 
+import stockme.stockme.Fragment_stock;
 import stockme.stockme.R;
+import stockme.stockme.StockListaAdd;
 import stockme.stockme.logica.Stock;
 import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.OnSwipeTouchListener;
@@ -56,8 +59,7 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
 
         int cantidad = stock.getCantidad();
         int minimo = stock.getMinimo();
-        boolean pendiente = false;
-        pendiente = manejador.estaStockEnListaCompra(stock);
+        final boolean pendiente = manejador.estaStockEnListaCompra(stock);
 
         if(cantidad > minimo)
             item.setBackgroundResource(R.drawable.esquinas_stock_verde);
@@ -124,7 +126,7 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
             @Override
             public void onClick(View v) {
                 BDHandler manejador = new BDHandler(getContext());
-                Stock stock1 = manejador.obtenerStock(datos.get(position).getArticulo());
+                final Stock stock1 = manejador.obtenerStock(datos.get(position).getArticulo());
                 if (stock1.getCantidad() > 0) {
                     int cantidad = stock1.getCantidad() - 1;
                     int minimo = stock1.getMinimo();
@@ -156,13 +158,17 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
                     else if(cantidad == minimo)
                         Util.mostrarToast(getContext(), manejador.obtenerArticulo(datos.get(position).getArticulo()).getNombre() + " " +
                                 manejador.obtenerArticulo(datos.get(position).getArticulo()).getMarca() + " ha alcanzado el mínimo establecido");
-                    else if(cantidad < minimo){
+                    else if(cantidad < minimo && !pendiente){
                         DialogInterface.OnClickListener añadirStockListaListener = new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 //Llamar a una actividad (vista) con un spinner con las listas de la compra o posibilidad de una nueva
                                 //y que aparezca la cantidad que queremos añadir y el precio y super (como llamar al ArticuloListaAdd pero eligiendo tmbn la lista)
                                 //Comprobar que no esté ya en lista (boolean pendiente usado para colear -- fondo amarillo)
 
+                                Intent i = new Intent(getContext(), StockListaAdd.class);
+                                i.putExtra("IdArticuloSimple", stock1.getArticulo());
+                                getContext().startActivity(i);
+                                //getContext().overridePendingTransition(R.anim.left_in, R.anim.left_out);
 //                                BDHandler manejador = new BDHandler(getContext());
 //                                if (!manejador.eliminarStock(datos.get(position).getArticulo()))
 //                                    Util.mostrarToast(getContext(), "No se ha podido quitar el articulo");

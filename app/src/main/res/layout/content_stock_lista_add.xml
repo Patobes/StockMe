@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="stockme.stockme.StockAdd"
+    tools:showIn="@layout/activity_stock_lista_add"
+    >
+
+    <TextView
+        android:id="@+id/stock_lista_add_tv_lista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:text="Lista"
+        android:textSize="20sp"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/stock_lista_add_et_lista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stock_lista_add_tv_lista"
+        android:layout_marginTop="5dp"
+        android:hint="Nueva lista"
+        android:singleLine="true"
+        android:textAlignment="center"/>
+
+    <Spinner
+        android:id="@+id/stock_lista_add_sp_lista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/stock_lista_add_et_lista"
+        android:layout_toEndOf="@+id/stock_lista_add_et_lista" />
+
+    <TextView
+        android:id="@+id/stock_lista_add_tv_super"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/stock_lista_add_et_lista"
+        android:layout_marginTop="15dp"
+        android:text="Supermercado"
+        android:textSize="20sp"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/stock_lista_add_et_super"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stock_lista_add_tv_super"
+        android:layout_marginTop="5dp"
+        android:hint="Nueva supermercado"
+        android:singleLine="true"
+        android:textAlignment="center"/>
+
+    <Spinner
+        android:id="@+id/stock_lista_add_sp_super"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/stock_lista_add_et_super"
+        android:layout_toEndOf="@+id/stock_lista_add_et_super" />
+
+    <TextView
+        android:id="@+id/stock_lista_add_tv_cantidad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stock_lista_add_sp_super"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/stock_lista_add_sp_cantidad"
+        android:layout_marginTop="20dp"
+        android:text="@string/Cantidad"
+        android:textSize="20sp"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/stock_lista_add_et_cantidad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stock_lista_add_tv_cantidad"
+        android:layout_marginTop="5dp"
+        android:hint="@string/Cantidad"
+        android:inputType="number"
+        android:singleLine="true"
+        android:textAlignment="center"/>
+
+    <Spinner
+        android:id="@+id/stock_lista_add_sp_cantidad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/stock_lista_add_et_cantidad"
+        android:layout_toEndOf="@+id/stock_lista_add_et_cantidad"
+        android:dropDownWidth="50dp"/>
+
+    <TextView
+        android:id="@+id/stock_lista_add_tv_precio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stock_lista_add_sp_super"
+        android:layout_alignStart="@+id/stock_lista_add_et_precio"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="20dp"
+        android:text="Precio"
+        android:textSize="20sp"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/stock_lista_add_et_precio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/stock_lista_add_sp_cantidad"
+        android:layout_alignParentEnd="true"
+        android:hint="Precio"
+        android:inputType="number"
+        android:singleLine="true"
+        android:textAlignment="center"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:minWidth="60dp"
+        android:maxWidth="60dp"
+        android:minHeight="60dp"
+        android:maxHeight="60dp"
+        android:id="@+id/stock_lista_add_bt_aceptar"
+        android:textSize="23sp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/ic_done_black_24dp"
+        android:background="@drawable/esquinas_boton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>

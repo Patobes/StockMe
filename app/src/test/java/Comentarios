@@ -5,6 +5,8 @@
 
 -Depurar las listas añadiendo patrones ViewHolder, etc...
 
+-BUG: en listas de la compra, al eliminar un articulo arrastrando, al preguntar si quieres borrar el articulo muestra el nombre del ultimo articulo de la lista aunque borra el correcto
+
 ----------Ideas:-------------------------------------------------------------------
 en los Fragments se puede usar getActivity() para trabajar sobre el padre
 
