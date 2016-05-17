@@ -125,6 +125,8 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
             adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
             adapterViewPager.setQuerySearch(texto);
             vpPager.setAdapter(adapterViewPager);
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(etBusqueda.getWindowToken(), 0);
             //etBusqueda.setText("");
         }
         if(reset){
