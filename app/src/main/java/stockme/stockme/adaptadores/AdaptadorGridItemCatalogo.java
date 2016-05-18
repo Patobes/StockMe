@@ -80,7 +80,7 @@ public class AdaptadorGridItemCatalogo extends BaseAdapter {
                     public void onClick(DialogInterface dialog, int which) {
                         BDHandler manejador = new BDHandler(v.getContext());
 
-                        if (!manejador.eliminarArticulo(datos.get(position)))
+                        if (!manejador.eliminarArticuloCascade(datos.get(position)))
                             Util.mostrarToast(v.getContext(), v.getContext().getResources().getString(R.string.No_se_ha_podido_eliminar_articulo));
                         else {
                             Util.mostrarToast(v.getContext(), v.getContext().getResources().getString(R.string.Articulo_eliminado));
@@ -97,35 +97,35 @@ public class AdaptadorGridItemCatalogo extends BaseAdapter {
         });
 
         if(porTipo){
-            if (tipo.equals(view.getContext().getResources().getString(R.string.Congelados)) || tipo.equals("Congelados")) {
+            if (tipo.equals("Frozen") || tipo.equals("Congelados")) {
                 view.setBackgroundResource(R.drawable.esquinas_congelados);
-            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Dulces)) || tipo.equals("Dulces")) {
+            } else if (tipo.equals("Sweets") || tipo.equals("Dulces")) {
                 view.setBackgroundResource(R.drawable.esquinas_dulces);
-            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Bebidas)) || tipo.equals("Bebidas")) {
+            } else if (tipo.equals("Drinks") || tipo.equals("Bebidas")) {
                 view.setBackgroundResource(R.drawable.esquinas_bebidas);
-            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Frutas)) || tipo.equals("Frutas")) {
+            } else if (tipo.equals("Fruits") || tipo.equals("Frutas")) {
                 view.setBackgroundResource(R.drawable.esquinas_frutas);
-            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Conservas)) || tipo.equals("Conservas")) {
+            } else if (tipo.equals("Preserved") || tipo.equals("Conservas")) {
                 view.setBackgroundResource(R.drawable.esquinas_conservas);
-            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Lacteos)) || tipo.equals("Lácteos")) {
+            } else if (tipo.equals("Dairy") || tipo.equals("Lácteos")) {
                 view.setBackgroundResource(R.drawable.esquinas_lacteos);
-            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Panadería)) || tipo.equals("Panadería")) {
+            } else if (tipo.equals("Bakery") || tipo.equals("Panadería")) {
                 view.setBackgroundResource(R.drawable.esquinas_panaderia);
-            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Drogeria)) || tipo.equals("Droguería")) {
+            } else if (tipo.equals("Drugstore") || tipo.equals("Droguería")) {
                 view.setBackgroundResource(R.drawable.esquinas_drogeria);
-            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Salsas_especias)) || tipo.equals("Salsas y especias")) {
+            } else if (tipo.equals("Sauces and spices") || tipo.equals("Salsas y especias")) {
                 view.setBackgroundResource(R.drawable.esquinas_salsas);
-            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Verduras)) || tipo.equals("Verduras")) {
+            } else if (tipo.equals("Greens") || tipo.equals("Verduras")) {
                 view.setBackgroundResource(R.drawable.esquinas_verduras);
-            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Farmacia)) || tipo.equals("Farmacia")) {
+            } else if (tipo.equals("Pharmacy") || tipo.equals("Farmacia")) {
                 view.setBackgroundResource(R.drawable.esquinas_farmacia);
-            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Carniceria)) || tipo.equals("Carnicería")) {
+            } else if (tipo.equals("Butchery") || tipo.equals("Carnicería")) {
                 view.setBackgroundResource(R.drawable.esquinas_carniceria);
-            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Legumbres)) || tipo.equals("Legumbres")) {
+            } else if (tipo.equals("Vegetables") || tipo.equals("Legumbres")) {
                 view.setBackgroundResource(R.drawable.esquinas_legumbres);
-            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Mascotas)) || tipo.equals("Mascotas")) {
+            } else if (tipo.equals("Pets") || tipo.equals("Mascotas")) {
                 view.setBackgroundResource(R.drawable.esquinas_mascotas);
-            } else if (tipo.equals(view.getContext().getResources().getString(R.string.Pescaderia)) || tipo.equals("Pescadería")) {
+            } else if (tipo.equals("Fish") || tipo.equals("Pescadería")) {
                 view.setBackgroundResource(R.drawable.esquinas_pescaderia);
             }else{
                 view.setBackgroundResource(R.drawable.esquinas);

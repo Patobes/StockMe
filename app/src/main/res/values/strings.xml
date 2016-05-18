@@ -155,7 +155,7 @@
     <string name="Elimina">Eliminar</string>
     <string name="Conserva">Conservar</string>
 
-    <string name="Ha_alcanzado_el_minimo_establecido">ha alcanzado el mínimo establecido</string>
+    <string name="Ha_alcanzado_el_minimo_establecido">" ha alcanzado el mínimo establecido"</string>
     <string name="Añadir">"¿Añadir "</string>
     <string name="A_una_lista_compra">" a una lista de la compra?"</string>
     <string name="Bajo_minimos">Bajo mínimos</string>
