@@ -23,12 +23,12 @@ import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.Util;
 
 public class AdaptadorGridItemCatalogo extends BaseAdapter {
+    boolean porTipo;
+    View vistaModificar;
     private Context context;
     private List<Articulo> datos;
     private ImageButton borrar;
-    boolean porTipo;
     private GridView articulos;
-    View vistaModificar;
 
     public AdaptadorGridItemCatalogo(Context context, List<Articulo> articulos, boolean porTipo) {
         this.context = context;
@@ -53,7 +53,7 @@ public class AdaptadorGridItemCatalogo extends BaseAdapter {
 
     @Override
     public View getView(final int position, View view, final ViewGroup viewGroup) {
-
+        notifyDataSetChanged();
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -205,5 +205,6 @@ public class AdaptadorGridItemCatalogo extends BaseAdapter {
 
         return view;
     }
+
 
 }

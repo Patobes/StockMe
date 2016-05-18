@@ -31,17 +31,14 @@ import stockme.stockme.util.Util;
 
 public class CatalogoArticulos extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         Fragment_listas.OnFragmentInteractionListener, Fragment_catalogo_todos.OnFragmentInteractionListener, Fragment_catalogo_tipos.OnFragmentInteractionListener {
+    private static NavigationView nav_menu;
     private GridView articulos;
     private Button aniadir;
     private ImageButton btn_reset;
     private EditText etBusqueda;
-
     private ViewPager vpPager;
     private MyPagerAdapter adapterViewPager;
-
     private Toolbar toolbar;
-
-    private static NavigationView nav_menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +50,7 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
         View vToolbar = findViewById(R.id.toolbar_catalog);
 
         vpPager = (ViewPager) findViewById(R.id.pager_catalogo);
+
 
         etBusqueda = (EditText) vToolbar.findViewById(R.id.et_busqueda);
         etBusqueda.setVisibility(View.GONE);
@@ -229,19 +227,40 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
         vpPager.setAdapter(adapterViewPager);
     }
 
+    @Override
+    public void onArticuloSeleccionado(Articulo articulo) {
+        if (Util.vieneDe.equals("articulosAdd") || Util.vieneDe.equals("stockAdd")) {
+            Intent i = new Intent();
+            i.putExtra("Articulo", articulo);
+            setResult(1, i);
+            finish();
+            overridePendingTransition(R.anim.right_in, R.anim.right_out);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(Util.vieneDe.equals("articulosAdd") || Util.vieneDe.equals("stockAdd")){
+            finish();
+            overridePendingTransition(R.anim.right_in, R.anim.right_out);
+        }else
+            OpcionesMenus.onBackPressed(this);
+    }
+
     public static class MyPagerAdapter extends FragmentStatePagerAdapter {
         //Número de páginas
         private static int NUM_ITEMS = 2;
         private Context context;
 
         private String querySearch;
-        public void setQuerySearch(String querySearch){
-            this.querySearch = querySearch;
-        }
 
         public MyPagerAdapter(FragmentManager fragmentManager, Context context) {
             super(fragmentManager);
             this.context = context;
+        }
+
+        public void setQuerySearch(String querySearch) {
+            this.querySearch = querySearch;
         }
 
         // Devolver el total de páginas
@@ -257,21 +276,21 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
             switch (position) {
                 case 0:
                     Fragment_catalogo_todos ft = new Fragment_catalogo_todos();
-                    if(querySearch != null)
+                    if (querySearch != null)
                         ft.setQuerySearch(querySearch);
                     else
                         ft.setQuerySearch(null);
                     return ft;
                 case 1:
                     Fragment_catalogo_tipos fti = new Fragment_catalogo_tipos();
-                    if(querySearch != null)
+                    if (querySearch != null)
                         fti.setQuerySearch(querySearch);
                     else
                         fti.setQuerySearch(null);
                     return fti;
                 default:
                     Fragment_catalogo_todos ftd = new Fragment_catalogo_todos();
-                    if(querySearch != null)
+                    if (querySearch != null)
                         ftd.setQuerySearch(querySearch);
                     else
                         ftd.setQuerySearch(null);
@@ -296,26 +315,6 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
         public int getItemPosition(Object object) {
             return POSITION_NONE;
         }
-    }
-
-    @Override
-    public void onArticuloSeleccionado(Articulo articulo) {
-        if(Util.vieneDe.equals("articulosAdd") || Util.vieneDe.equals("stockAdd")){
-            Intent i = new Intent();
-            i.putExtra("Articulo",articulo);
-            setResult(1,i);
-            finish();
-            overridePendingTransition(R.anim.right_in, R.anim.right_out);
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        if(Util.vieneDe.equals("articulosAdd") || Util.vieneDe.equals("stockAdd")){
-            finish();
-            overridePendingTransition(R.anim.right_in, R.anim.right_out);
-        }else
-            OpcionesMenus.onBackPressed(this);
     }
 
 }

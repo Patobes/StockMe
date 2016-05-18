@@ -22,17 +22,17 @@ import stockme.stockme.persistencia.BDHandler;
 
 
 public class Fragment_catalogo_todos extends Fragment {
+    List<Articulo> listaArticulos;
     private OnFragmentInteractionListener mListener;
     private GridView articulos;
-
     private String querySeacrh;
-
-    public void setQuerySearch(String querySeacrh){
-        this.querySeacrh = querySeacrh;
-    }
 
     public Fragment_catalogo_todos() {
         // Required empty public constructor
+    }
+
+    public void setQuerySearch(String querySeacrh){
+        this.querySeacrh = querySeacrh;
     }
 
     @Override
@@ -59,10 +59,10 @@ public class Fragment_catalogo_todos extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        articulos = (GridView)view.findViewById(R.id.gridView_catalogo_articulos);
+        articulos = (GridView) view.findViewById(R.id.gridView_catalogo_articulos);
 
         final BDHandler manejador = new BDHandler(view.getContext());
-        List<Articulo> listaArticulos = new ArrayList<>();
+        listaArticulos = new ArrayList<>();
 
         if(querySeacrh != null)
             listaArticulos = manejador.obtenerArticulosConQuerySearch(querySeacrh);
@@ -84,6 +84,33 @@ public class Fragment_catalogo_todos extends Fragment {
         manejador.cerrar();
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            // load data here
+
+            if (getView() != null) {
+                articulos = (GridView) getView().findViewById(R.id.gridView_catalogo_articulos);
+
+                final BDHandler manejador = new BDHandler(getContext());
+                listaArticulos = new ArrayList<>();
+
+                if (querySeacrh != null)
+                    listaArticulos = manejador.obtenerArticulosConQuerySearch(querySeacrh);
+                else
+                    listaArticulos = manejador.obtenerArticulos();
+
+                final AdaptadorGridItemCatalogo adaptador = new AdaptadorGridItemCatalogo(getContext(), listaArticulos, false);
+                articulos.setAdapter(adaptador);
+
+                manejador.cerrar();
+
+            }
+        } else {
+            // fragment is no longer visible
+        }
+    }
 
     @Override
     public void onAttach(Context context) {

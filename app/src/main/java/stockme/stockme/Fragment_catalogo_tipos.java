@@ -22,18 +22,17 @@ import stockme.stockme.persistencia.BDHandler;
 
 
 public class Fragment_catalogo_tipos extends Fragment {
+    List<Articulo> listaArticulos;
     private OnFragmentInteractionListener mListener;
     private GridView articulos;
-    List<Articulo> listaArticulos;
-
     private String querySeacrh;
-
-    public void setQuerySearch(String querySeacrh){
-        this.querySeacrh = querySeacrh;
-    }
 
     public Fragment_catalogo_tipos() {
         // Required empty public constructor
+    }
+
+    public void setQuerySearch(String querySeacrh){
+        this.querySeacrh = querySeacrh;
     }
 
     @Override
@@ -60,24 +59,6 @@ public class Fragment_catalogo_tipos extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        listaArticulos = new ArrayList<Articulo>();
-        articulos = (GridView) view.findViewById(R.id.gridView_catalogo_articulos_tipos);
-
-        final BDHandler manejador = new BDHandler(view.getContext());
-
-        String[] tipos = getResources().getStringArray(R.array.tipos_array);
-
-        for(String tipo : tipos){
-            if(querySeacrh != null){
-                listaArticulos.addAll(manejador.obtenerArticulosPorTipoYQuerySearch(tipo, querySeacrh));
-            }else
-                listaArticulos.addAll(manejador.obtenerArticulosPorTipo(tipo));
-        }
-
-
-
-        final AdaptadorGridItemCatalogo adaptador = new AdaptadorGridItemCatalogo(view.getContext(), listaArticulos, true);
-        articulos.setAdapter(adaptador);
 
         articulos = (GridView) view.findViewById(R.id.gridView_catalogo_articulos_tipos);
 
@@ -90,7 +71,38 @@ public class Fragment_catalogo_tipos extends Fragment {
             }
         });
 
-        manejador.cerrar();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            // load data here
+
+            if (articulos != null) {
+
+                listaArticulos = new ArrayList<Articulo>();
+
+                final BDHandler manejador = new BDHandler(getContext());
+
+                String[] tipos = getResources().getStringArray(R.array.tipos_array);
+
+                for (String tipo : tipos) {
+                    if (querySeacrh != null) {
+                        listaArticulos.addAll(manejador.obtenerArticulosPorTipoYQuerySearch(tipo, querySeacrh));
+                    } else
+                        listaArticulos.addAll(manejador.obtenerArticulosPorTipo(tipo));
+                }
+
+                final AdaptadorGridItemCatalogo adaptador = new AdaptadorGridItemCatalogo(getContext(), listaArticulos, true);
+                articulos.setAdapter(adaptador);
+
+                manejador.cerrar();
+
+            }
+        } else {
+            // fragment is no longer visible
+        }
     }
 
 
