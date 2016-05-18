@@ -48,7 +48,6 @@ public class OpcionesMenus {
 //    }
 
     public static void onBackPressed(final Activity activity){
-        //TODO: debería comprobar si hay un "vieneDe"
         DrawerLayout drawer = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);

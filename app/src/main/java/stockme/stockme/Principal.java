@@ -43,8 +43,6 @@ public class Principal extends AppCompatActivity
         nav_menu = (NavigationView) findViewById(R.id.nav_view);
         nav_menu.setNavigationItemSelectedListener(this);
 
-        //esto es para obtener la primera instancia de la bd, si no, no se crea la primera vez..
-        //seguro q hay una forma mejor de hacerla pero bueh
         BDHandler handler = new BDHandler(this);
         handler.abrir();
         handler.cerrar();
@@ -60,8 +58,6 @@ public class Principal extends AppCompatActivity
             Configuracion.setPreferencia("idioma", "ES");
     }
 
-    /*TODO: para la navegabilidad podemos utiliar la traza creada al guardar en Configuracion
-    la activity o fragment anterior. En cada activity implementar este método para que regrese a la anterior*/
     @Override
     public void onBackPressed() {
         OpcionesMenus.onBackPressed(this);

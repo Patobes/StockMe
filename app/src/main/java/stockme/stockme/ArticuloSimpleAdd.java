@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
+import java.util.List;
+
 import stockme.stockme.logica.Articulo;
 import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.Util;
@@ -34,11 +36,16 @@ public class ArticuloSimpleAdd extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //contenido
+        final BDHandler manejador = new BDHandler(this);
 
         etNombre = (EditText)findViewById(R.id.articulo_simple_add_et_nombre);
         spTipos = (Spinner)findViewById(R.id.articulo_simple_add_sp_tipos);
         atv_marcas = (AutoCompleteTextView)findViewById(R.id.articulo_simple_add_atv_marcas);
-        atv_marcas.setThreshold(1);
+
+        List<String> marcas = manejador.obtenerMarcas();
+        ArrayAdapter<String> adapter_marcas = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, marcas);
+        atv_marcas.setAdapter(adapter_marcas);
+
         btnAceptar = (ImageButton)findViewById(R.id.articulo_simple_add_btn_aceptar);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tipos_array,
@@ -82,7 +89,7 @@ public class ArticuloSimpleAdd extends AppCompatActivity {
 
             }
         });
-
+        manejador.close();
     }
 
     @Override

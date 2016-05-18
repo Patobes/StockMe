@@ -144,7 +144,7 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
                         };
                         String nombre = manejador.obtenerArticulo(datos.get(position).getArticulo()).getNombre();
                         String marca = manejador.obtenerArticulo(datos.get(position).getArticulo()).getMarca();
-                        Util.crearMensajeAlerta(getContext().getResources().getString(R.string.Conservar) + nombre + " " + marca + getContext().getResources().getString(R.string.En_el_stock), nombre + " " + marca + getContext().getResources().getString(R.string.Agotado), getContext().getResources().getString(R.string.Eliminar), getContext().getResources().getString(R.string.Conserva), borrarStockListener, cancelar, getContext());
+                        Util.crearMensajeAlerta(getContext().getResources().getString(R.string.Conservar) + nombre + " " + marca + getContext().getResources().getString(R.string.En_el_stock), nombre + " " + marca + getContext().getResources().getString(R.string.Agotado), getContext().getResources().getString(R.string.Elimina), getContext().getResources().getString(R.string.Conserva), borrarStockListener, cancelar, getContext());
                     }
                     else if(cantidad == minimo) {
                         if(pendiente)
