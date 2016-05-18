@@ -59,8 +59,24 @@ public class Fragment_catalogo_tipos extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         articulos = (GridView) view.findViewById(R.id.gridView_catalogo_articulos_tipos);
+
+        listaArticulos = new ArrayList<Articulo>();
+
+        final BDHandler manejador = new BDHandler(getContext());
+
+        String[] tipos = getResources().getStringArray(R.array.tipos_array);
+
+        for (String tipo : tipos) {
+            if (querySeacrh != null) {
+                listaArticulos.addAll(manejador.obtenerArticulosPorTipoYQuerySearch(tipo, querySeacrh));
+            } else
+                listaArticulos.addAll(manejador.obtenerArticulosPorTipo(tipo));
+        }
+
+        final AdaptadorGridItemCatalogo adaptador = new AdaptadorGridItemCatalogo(getContext(), listaArticulos, true);
+        articulos.setAdapter(adaptador);
+
 
         articulos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -70,6 +86,9 @@ public class Fragment_catalogo_tipos extends Fragment {
 
             }
         });
+
+
+        manejador.cerrar();
 
     }
 
