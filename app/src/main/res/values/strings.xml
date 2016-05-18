@@ -200,5 +200,10 @@
     <string name="Moneda">Moneda</string>
     <string name="Orden_de_las_listas">Orden de las listas</string>
 
+    <string name="Español">Español</string>
+    <string name="Ingles">Inglés</string>
+    <string name="Ascendente">Ascendente</string>
+    <string name="Descendente">Descendete</string>
+
 
 </resources>

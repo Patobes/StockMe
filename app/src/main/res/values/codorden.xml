@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
     <string-array name="orden">
-        <item>Ascendente</item>
-        <item>Descendente</item>
+        <item>@string/Ascendente</item>
+        <item>@string/Descendente</item>
     </string-array>
     <string-array name="codorden">
         <item>ASC</item>
