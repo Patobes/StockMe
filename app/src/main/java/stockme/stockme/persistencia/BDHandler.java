@@ -1674,7 +1674,7 @@ public class BDHandler extends SQLiteOpenHelper {
 
     public List<Stock> obtenerStocks(){
         ArrayList<Stock> lista = new ArrayList<Stock>();
-        String query = "SELECT * FROM STOCK";
+        String query = "SELECT * FROM STOCK AS S JOIN ARTICULO AS A ON S.Articulo = A.Id ORDER BY A.Nombre";
 
         SQLiteDatabase db = this.obtenerManejadorLectura();
         Cursor cursor = db.rawQuery(query, null);

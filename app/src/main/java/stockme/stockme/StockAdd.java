@@ -105,11 +105,11 @@ public class StockAdd extends AppCompatActivity implements Fragment_listas.OnFra
 
                 if (nombre == null || nombre.isEmpty() || nombre.matches("") || nombre.matches(" ")) {
                     Util.mostrarToast(getApplicationContext(), getResources().getString(R.string.Debes_insertar_nombre));
-                } else if (marca == null || marca.isEmpty() || marca.matches("") || marca.matches(" ")) {
-                    Util.mostrarToast(getApplicationContext(), getResources().getString(R.string.Debes_insertar_marca));
                 } else if (cantidad == 0) {
                     Util.mostrarToast(getApplicationContext(), getResources().getString(R.string.Debes_insertar_cantidad));
                 } else {
+                    if (marca == null || marca.isEmpty() || marca.matches("") || marca.matches(" "))
+                        marca = "Cualquiera";
                     final BDHandler manejador1 = new BDHandler(v.getContext());
                     if(manejador1.estaStock(nombre, marca)) {
                         stock = manejador1.obtenerStock(nombre, marca);
