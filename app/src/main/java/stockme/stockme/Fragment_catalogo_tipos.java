@@ -65,14 +65,11 @@ public class Fragment_catalogo_tipos extends Fragment {
 
         final BDHandler manejador = new BDHandler(getContext());
 
-        String[] tipos = getResources().getStringArray(R.array.tipos_array);
+        if (querySeacrh != null) {
+            listaArticulos.addAll(manejador.obtenerArticulosOrdenPorTipoYQuerySearch(querySeacrh));
+        } else
+            listaArticulos.addAll(manejador.obtenerArticulosOrdenPorTipo());
 
-        for (String tipo : tipos) {
-            if (querySeacrh != null) {
-                listaArticulos.addAll(manejador.obtenerArticulosPorTipoYQuerySearch(tipo, querySeacrh));
-            } else
-                listaArticulos.addAll(manejador.obtenerArticulosPorTipo(tipo));
-        }
 
         final AdaptadorGridItemCatalogo adaptador = new AdaptadorGridItemCatalogo(getContext(), listaArticulos, true);
         articulos.setAdapter(adaptador);
@@ -104,14 +101,10 @@ public class Fragment_catalogo_tipos extends Fragment {
 
                 final BDHandler manejador = new BDHandler(getContext());
 
-                String[] tipos = getResources().getStringArray(R.array.tipos_array);
-
-                for (String tipo : tipos) {
-                    if (querySeacrh != null) {
-                        listaArticulos.addAll(manejador.obtenerArticulosPorTipoYQuerySearch(tipo, querySeacrh));
-                    } else
-                        listaArticulos.addAll(manejador.obtenerArticulosPorTipo(tipo));
-                }
+                if (querySeacrh != null) {
+                    listaArticulos.addAll(manejador.obtenerArticulosOrdenPorTipoYQuerySearch(querySeacrh));
+                } else
+                    listaArticulos.addAll(manejador.obtenerArticulosOrdenPorTipo());
 
                 final AdaptadorGridItemCatalogo adaptador = new AdaptadorGridItemCatalogo(getContext(), listaArticulos, true);
                 articulos.setAdapter(adaptador);

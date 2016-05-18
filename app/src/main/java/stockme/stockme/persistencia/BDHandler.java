@@ -31,7 +31,6 @@ public class BDHandler extends SQLiteOpenHelper {
         insertarIniciales(db);
     }
 
-    //TODO: añadir valores por defecto
     private void insertarIniciales(SQLiteDatabase db) {
         /* TABLA ARTICULO
         ID - INT - PK
@@ -389,6 +388,50 @@ public class BDHandler extends SQLiteOpenHelper {
         SQLiteDatabase lectura = this.obtenerManejadorLectura();
 
         Cursor cursor = lectura.rawQuery(query, new String[]{tipo});
+
+        if (cursor.moveToFirst()) {
+            do {
+                Articulo articulo = new Articulo(cursor.getInt(cursor.getColumnIndex(Articulo.ID)),
+                        cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)),
+                        cursor.getString(cursor.getColumnIndex(Articulo.MARCA)),
+                        cursor.getString(cursor.getColumnIndex(Articulo.TIPO)));
+
+                articulos.add(articulo);
+            } while (cursor.moveToNext());
+        }
+        lectura.close();
+        return articulos;
+    }
+
+    public List<Articulo> obtenerArticulosOrdenPorTipoYQuerySearch(String querySearch) {
+        ArrayList<Articulo> articulos = new ArrayList<Articulo>();
+
+        String query = "SELECT * FROM ARTICULO WHERE NOMBRE LIKE ? ORDER BY " + Articulo.TIPO;
+        SQLiteDatabase lectura = this.obtenerManejadorLectura();
+
+        Cursor cursor = lectura.rawQuery(query, new String[]{"%" + querySearch + "%"});
+
+        if (cursor.moveToFirst()) {
+            do {
+                Articulo articulo = new Articulo(cursor.getInt(cursor.getColumnIndex(Articulo.ID)),
+                        cursor.getString(cursor.getColumnIndex(Articulo.NOMBRE)),
+                        cursor.getString(cursor.getColumnIndex(Articulo.MARCA)),
+                        cursor.getString(cursor.getColumnIndex(Articulo.TIPO)));
+
+                articulos.add(articulo);
+            } while (cursor.moveToNext());
+        }
+        lectura.close();
+        return articulos;
+    }
+
+    public List<Articulo> obtenerArticulosOrdenPorTipo() {
+        ArrayList<Articulo> articulos = new ArrayList<Articulo>();
+
+        String query = "SELECT * FROM ARTICULO ORDER BY " + Articulo.TIPO;
+        SQLiteDatabase lectura = this.obtenerManejadorLectura();
+
+        Cursor cursor = lectura.rawQuery(query, new String[]{});
 
         if(cursor.moveToFirst()){
             do{
