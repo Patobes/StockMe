@@ -6,10 +6,13 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.util.DisplayMetrics;
 
 import java.util.Locale;
+
+import stockme.stockme.util.Util;
 
 
 public class PreferenciasFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener{
@@ -17,15 +20,26 @@ public class PreferenciasFragment extends PreferenceFragment implements SharedPr
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /*ListPreference tutoriales = (ListPreference) findPreference("activar_tutoriales");
-        ListPreference orden = (ListPreference) findPreference("orden_listas");
-        ListPreference idioma = (ListPreference) findPreference("idioma");
-
-        tutoriales.setValueIndex(1);
-        orden.setValueIndex(0);
-        idioma.setValueIndex(0);*/
 
         addPreferencesFromResource(R.xml.preferencias);
+
+        Preference tutorial = findPreference("activar_tutoriales");
+        tutorial.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+
+                SharedPreferences sharedPreferences = getPreferenceManager().getSharedPreferences();
+
+                sharedPreferences.edit().putBoolean("tutoListas", false).apply();
+                sharedPreferences.edit().putBoolean("tutoStock", false).apply();
+                sharedPreferences.edit().putBoolean("tutoArticulo", false).apply();
+
+                Util.mostrarToast(getActivity().getApplicationContext(), getResources().getString(R.string.Tutoriales_reset));
+
+                return true;
+            }
+        });
+
     }
 
     @Override
@@ -45,15 +59,6 @@ public class PreferenciasFragment extends PreferenceFragment implements SharedPr
         if (key.equals("idioma")) {
             String lang = sharedPreferences.getString(key, "es");
             setLocale(lang);
-        }
-        if (key.equals("activar_tutoriales")) {
-            if (sharedPreferences.getString(key, "no").equals("si")) {
-                sharedPreferences.edit().putBoolean("tutoListas", false).apply();
-                sharedPreferences.edit().putBoolean("tutoStock", false).apply();
-                sharedPreferences.edit().putBoolean("tutoArticulo", false).apply();
-                sharedPreferences.edit().putString(key, "no");
-            }
-
         }
     }
 

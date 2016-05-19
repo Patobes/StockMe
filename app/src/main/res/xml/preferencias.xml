@@ -22,10 +22,7 @@
         android:key="orden_listas"
         android:summary="@string/Selecciona_el_orden"
         android:title="@string/Orden_de_las_listas" />
-    <ListPreference
-        android:dialogTitle="@string/Activar_tutoriales"
-        android:entries="@array/tutorial"
-        android:entryValues="@array/codtutorial"
+    <Preference
         android:key="activar_tutoriales"
         android:summary="@string/Activar_tutoriales"
         android:title="@string/Tutoriales" />

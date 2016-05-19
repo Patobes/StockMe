@@ -20,10 +20,10 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -126,10 +126,12 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
                             if (counter < 5) {
                                 switch (counter) {
                                     case 0:
-                                        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(200, 130);
-                                        params.topMargin = 1000;
-                                        params.leftMargin = 50;
-                                        showcaseView.setButtonPosition(new RelativeLayout.LayoutParams(params));
+                                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+                                        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                                        params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+
+                                        showcaseView.setButtonPosition(params);
                                         showcaseView.setShowcase(new ViewTarget(aniadir), true);
                                         showcaseView.setContentText(getResources().getString(R.string.Tuto_articulo2));
                                         break;
@@ -140,6 +142,12 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
                                         break;
 
                                     case 2:
+                                        RelativeLayout.LayoutParams params1 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+                                        params1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                                        params1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+
+                                        showcaseView.setButtonPosition(params1);
                                         showcaseView.setShowcase(new ViewTarget(btn_reset), true);
                                         showcaseView.setContentText(getResources().getString(R.string.Tuto_articulo4));
                                         break;

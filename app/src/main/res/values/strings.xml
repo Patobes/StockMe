@@ -219,6 +219,7 @@
 
     <string name="Activar_tutoriales">¿Activar tutoriales?</string>
     <string name="Tutoriales">Tutoriales</string>
+    <string name="Tutoriales_reset">Tutoriales restablecidos</string>
 
 
 </resources>

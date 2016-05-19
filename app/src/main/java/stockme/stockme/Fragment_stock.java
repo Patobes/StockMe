@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
@@ -98,10 +97,12 @@ public class Fragment_stock extends Fragment {
                             if (counter < 3) {
                                 switch (counter) {
                                     case 0:
-                                        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(200, 130);
-                                        params.topMargin = 1000;
-                                        params.leftMargin = 50;
-                                        showcaseView.setButtonPosition(new RelativeLayout.LayoutParams(params));
+                                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+                                        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                                        params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+
+                                        showcaseView.setButtonPosition(params);
                                         showcaseView.setShowcase(new ViewTarget(bt_añadir), true);
                                         showcaseView.setContentText(getResources().getString(R.string.Tuto_stock2));
                                         break;
