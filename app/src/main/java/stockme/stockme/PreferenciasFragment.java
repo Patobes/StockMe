@@ -17,7 +17,13 @@ public class PreferenciasFragment extends PreferenceFragment implements SharedPr
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        /*ListPreference tutoriales = (ListPreference) findPreference("activar_tutoriales");
+        ListPreference orden = (ListPreference) findPreference("orden_listas");
+        ListPreference idioma = (ListPreference) findPreference("idioma");
 
+        tutoriales.setValueIndex(1);
+        orden.setValueIndex(0);
+        idioma.setValueIndex(0);*/
 
         addPreferencesFromResource(R.xml.preferencias);
     }
@@ -39,6 +45,15 @@ public class PreferenciasFragment extends PreferenceFragment implements SharedPr
         if (key.equals("idioma")) {
             String lang = sharedPreferences.getString(key, "es");
             setLocale(lang);
+        }
+        if (key.equals("activar_tutoriales")) {
+            if (sharedPreferences.getString(key, "no").equals("si")) {
+                sharedPreferences.edit().putBoolean("tutoListas", false).apply();
+                sharedPreferences.edit().putBoolean("tutoStock", false).apply();
+                sharedPreferences.edit().putBoolean("tutoArticulo", false).apply();
+                sharedPreferences.edit().putString(key, "no");
+            }
+
         }
     }
 

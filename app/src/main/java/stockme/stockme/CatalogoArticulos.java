@@ -2,8 +2,10 @@ package stockme.stockme;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,9 +23,15 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.Target;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
 import stockme.stockme.logica.Articulo;
 import stockme.stockme.util.OpcionesMenus;
@@ -40,6 +48,9 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
     private MyPagerAdapter adapterViewPager;
     private Toolbar toolbar;
 
+    private ShowcaseView showcaseView;
+    private int counter = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +58,7 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
 //        Configuracion.setPreferencia("anterior", "Artículos");
 
         //toolbar + navbar
-        View vToolbar = findViewById(R.id.toolbar_catalog);
+        final View vToolbar = findViewById(R.id.toolbar_catalog);
 
         vpPager = (ViewPager) findViewById(R.id.pager_catalogo);
 
@@ -99,6 +110,59 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
         });
 
         //handleIntent(getIntent());
+
+        //TUTORIAL
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if (!prefs.getBoolean("tutoArticulo", false)) {
+
+            showcaseView = new ShowcaseView.Builder(this)
+                    .setTarget(new ViewTarget(vpPager))
+                    .setContentText(getResources().getString(R.string.Tuto_articulo1))
+                    .setStyle(R.style.ShowcaseTheme)
+                    .setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (counter < 5) {
+                                switch (counter) {
+                                    case 0:
+                                        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(200, 130);
+                                        params.topMargin = 1000;
+                                        params.leftMargin = 50;
+                                        showcaseView.setButtonPosition(new RelativeLayout.LayoutParams(params));
+                                        showcaseView.setShowcase(new ViewTarget(aniadir), true);
+                                        showcaseView.setContentText(getResources().getString(R.string.Tuto_articulo2));
+                                        break;
+
+                                    case 1:
+                                        showcaseView.setShowcase(new ViewTarget(vToolbar), true);
+                                        showcaseView.setContentText(getResources().getString(R.string.Tuto_articulo3));
+                                        break;
+
+                                    case 2:
+                                        showcaseView.setShowcase(new ViewTarget(btn_reset), true);
+                                        showcaseView.setContentText(getResources().getString(R.string.Tuto_articulo4));
+                                        break;
+
+                                    case 3:
+                                        showcaseView.setTarget(Target.NONE);
+                                        showcaseView.setContentText(getResources().getString(R.string.Tuto_articulo5));
+                                        showcaseView.setButtonText(getString(R.string.Aceptar));
+                                        break;
+
+                                    case 4:
+                                        showcaseView.hide();
+                                        break;
+                                }
+                                counter++;
+                            }
+                        }
+                    })
+                    .build();
+            showcaseView.setButtonText(getString(R.string.Aceptar));
+
+            prefs.edit().putBoolean("tutoArticulo", true).apply();
+        }
     }
 
     private void realizarBusqueda(KeyEvent event, boolean reset) {

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tutorial">
+        <item>@string/Si</item>
+        <item>@string/No</item>
+    </string-array>
+    <string-array name="codtutorial">
+        <item>si</item>
+        <item>no</item>
+    </string-array>
+</resources>

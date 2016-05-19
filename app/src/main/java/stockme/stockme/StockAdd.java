@@ -3,7 +3,6 @@ package stockme.stockme;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -28,6 +27,9 @@ import stockme.stockme.util.InputFilterMinMax;
 import stockme.stockme.util.Util;
 
 public class StockAdd extends AppCompatActivity implements Fragment_listas.OnFragmentInteractionListener{
+    Stock stock;
+    int cantidad;
+    int minimo;
     private EditText et_nombre;
     private AutoCompleteTextView atv_marca;
     private Spinner sp_tipo;
@@ -37,9 +39,6 @@ public class StockAdd extends AppCompatActivity implements Fragment_listas.OnFra
     private Spinner sp_minimo;
     private Button bt_añadir;
     private ImageButton bt_aceptar;
-    Stock stock;
-    int cantidad;
-    int minimo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

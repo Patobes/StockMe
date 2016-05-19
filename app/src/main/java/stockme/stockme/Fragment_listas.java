@@ -3,8 +3,10 @@ package stockme.stockme;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -13,7 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.Target;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
 import java.util.List;
 
@@ -27,6 +35,8 @@ public class Fragment_listas extends Fragment {
     private OnFragmentInteractionListener mListener;
     private ListView listas;
     private Button btn_mas;
+    private ShowcaseView showcaseView;
+    private int counter = 0;
 
 
     public Fragment_listas() {
@@ -94,8 +104,51 @@ public class Fragment_listas extends Fragment {
         });
 
         manejador.cerrar();
-    }
 
+        //TUTORIAL
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        if (!prefs.getBoolean("tutoListas", false)) {
+
+            showcaseView = new ShowcaseView.Builder(getActivity())
+                    .setTarget(new ViewTarget(view.findViewById(R.id.fragment_listas_listview)))
+                    .setContentText(getResources().getString(R.string.Tuto_lista1))
+                    .setStyle(R.style.ShowcaseTheme)
+                    .setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (counter < 3) {
+                                switch (counter) {
+                                    case 0:
+                                        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(200, 130);
+                                        params.topMargin = 1000;
+                                        params.leftMargin = 50;
+                                        showcaseView.setButtonPosition(new RelativeLayout.LayoutParams(params));
+                                        showcaseView.setShowcase(new ViewTarget(btn_mas), true);
+                                        showcaseView.setContentText(getResources().getString(R.string.Tuto_lista2));
+                                        break;
+
+                                    case 1:
+                                        showcaseView.setTarget(Target.NONE);
+                                        showcaseView.setContentText(getResources().getString(R.string.Tuto_lista3));
+                                        showcaseView.setButtonText(getString(R.string.Aceptar));
+                                        break;
+
+                                    case 2:
+                                        showcaseView.hide();
+                                        break;
+                                }
+                                counter++;
+                            }
+                        }
+                    })
+                    .build();
+            showcaseView.setButtonText(getString(R.string.Aceptar));
+
+            prefs.edit().putBoolean("tutoListas", true).apply();
+        }
+
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -114,6 +167,17 @@ public class Fragment_listas extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if ((requestCode == 1) && (resultCode == Activity.RESULT_OK)) {
+            //con esto refrescamos el fragment para actualizar la lista
+            Fragment fragmento = new Fragment_listas();
+            FragmentTransaction ft = getFragmentManager().beginTransaction().replace(R.id.contenido_principal, fragmento);
+            ft.attach(fragmento).commit();
+        }
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -126,16 +190,5 @@ public class Fragment_listas extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if ((requestCode == 1) && (resultCode == Activity.RESULT_OK)){
-            //con esto refrescamos el fragment para actualizar la lista
-            Fragment fragmento = new Fragment_listas();
-            FragmentTransaction ft = getFragmentManager().beginTransaction().replace(R.id.contenido_principal, fragmento);
-            ft.attach(fragmento).commit();
-        }
     }
 }

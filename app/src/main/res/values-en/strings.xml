@@ -118,4 +118,17 @@
     <string name="Ingles">English</string>
     <string name="Ascendente">Down-Up</string>
     <string name="Descendente">Up-Down</string>
+    <string name="Activar_tutoriales">Reset tutorials?</string>
+    <string name="Tuto_articulo1">Here will appear the article catalogue, order by types on the right tab</string>
+    <string name="Tuto_articulo2">Press this button to add an article to the catalogue</string>
+    <string name="Tuto_articulo3">You can search the article here</string>
+    <string name="Tuto_articulo4">Press to reset the previous search</string>
+    <string name="Tuto_articulo5">Thats all!, add your articles</string>
+    <string name="Tuto_lista1">Here will appear all the buy lists</string>
+    <string name="Tuto_lista2">Press to add a new list</string>
+    <string name="Tuto_lista3">Thats all!, add your lists</string>
+    <string name="Tuto_stock1">Here will appear all the articles and their quantities in your stock</string>
+    <string name="Tuto_stock2">Press to add a new article to your stock</string>
+    <string name="Tuto_stock3">Thats all!, add your articles, their colours represents their state</string>
+    <string name="Tutoriales">Tutorials</string>
 </resources>

@@ -2,15 +2,23 @@ package stockme.stockme;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.Target;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
 import java.util.List;
 
@@ -20,10 +28,12 @@ import stockme.stockme.persistencia.BDHandler;
 import stockme.stockme.util.Configuracion;
 
 public class Fragment_stock extends Fragment {
+    AdaptadorListItemStock adaptador;
     private OnFragmentInteractionListener mListener;
     private ListView lv_stock;
     private Button bt_añadir;
-    AdaptadorListItemStock adaptador;
+    private ShowcaseView showcaseView;
+    private int counter = 0;
 
     public Fragment_stock() {
         // Required empty public constructor
@@ -72,6 +82,50 @@ public class Fragment_stock extends Fragment {
         });
 
         manejador.cerrar();
+
+        //TUTORIAL
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        if (!prefs.getBoolean("tutoStock", false)) {
+
+            showcaseView = new ShowcaseView.Builder(getActivity())
+                    .setTarget(new ViewTarget(lv_stock))
+                    .setContentText(getResources().getString(R.string.Tuto_stock1))
+                    .setStyle(R.style.ShowcaseTheme)
+                    .setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (counter < 3) {
+                                switch (counter) {
+                                    case 0:
+                                        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(200, 130);
+                                        params.topMargin = 1000;
+                                        params.leftMargin = 50;
+                                        showcaseView.setButtonPosition(new RelativeLayout.LayoutParams(params));
+                                        showcaseView.setShowcase(new ViewTarget(bt_añadir), true);
+                                        showcaseView.setContentText(getResources().getString(R.string.Tuto_stock2));
+                                        break;
+
+                                    case 1:
+                                        showcaseView.setTarget(Target.NONE);
+                                        showcaseView.setContentText(getResources().getString(R.string.Tuto_stock3));
+                                        showcaseView.setButtonText(getString(R.string.Aceptar));
+                                        break;
+
+                                    case 2:
+                                        showcaseView.hide();
+                                        break;
+                                }
+                                counter++;
+                            }
+                        }
+                    })
+                    .build();
+            showcaseView.setButtonText(getString(R.string.Aceptar));
+
+            prefs.edit().putBoolean("tutoStock", true).apply();
+        }
+
     }
 
     @Override
@@ -91,6 +145,12 @@ public class Fragment_stock extends Fragment {
         mListener = null;
     }
 
+    //este método recoje los datos obtenidos al añadir elementos a la lista
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -103,11 +163,5 @@ public class Fragment_stock extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
-    }
-
-    //este método recoje los datos obtenidos al añadir elementos a la lista
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
     }
 }

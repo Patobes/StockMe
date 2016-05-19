@@ -203,7 +203,23 @@
     <string name="Español">Español</string>
     <string name="Ingles">Inglés</string>
     <string name="Ascendente">Ascendente</string>
-    <string name="Descendente">Descendete</string>
+    <string name="Descendente">Descendente</string>
+
+    <string name="Tuto_lista1">Aquí saldrán las listas de la compra</string>
+    <string name="Tuto_lista2">Pulsa en este botón para crear una lista nueva</string>
+    <string name="Tuto_lista3">Esto es todo, añade las listas que quieras</string>
+    <string name="Tuto_stock1">Aquí saldrán los artículos y su cantidad en tu despensa</string>
+    <string name="Tuto_stock2">Pulsa en este botón para añadir un artículo a tu despensa</string>
+    <string name="Tuto_stock3">Esto es todo, añade los artículos que quieras, los colores indicarán sus estados</string>
+    <string name="Tuto_articulo1">Aquí saldrá un catálogo con todos los artículos, ordénalos por tipos en la pestaña de tipos</string>
+    <string name="Tuto_articulo2">Pulsa en este botón para añadir un artículo al catálogo</string>
+    <string name="Tuto_articulo3">Utiliza el buscador para encontrar los artículos</string>
+    <string name="Tuto_articulo4">Pulsa para quitar la búsqueda previa</string>
+    <string name="Tuto_articulo5">Esto es todo, añade los artículos que quieras</string>
+
+    <string name="Activar_tutoriales">¿Activar tutoriales?</string>
+    <string name="Tutoriales">Tutoriales</string>
+    <string name="Descendente">Descendente</string>
 
 
 </resources>
