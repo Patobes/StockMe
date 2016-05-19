@@ -24,14 +24,13 @@ import stockme.stockme.persistencia.BDHandler;
 
 public class ListaCompra extends AppCompatActivity implements /*NavigationView.OnNavigationItemSelectedListener,*/
         Fragment_listas.OnFragmentInteractionListener{
+    private static String nombreLista;
     private DynamicListView articulos;
     private Button lista_compra_btn_mas;
     private ImageButton ibtn_reset;
     private TextView tv_precio_total;
     private TextView tv_precio_compra;
-
     private Lista lista;
-    private static String nombreLista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +50,15 @@ public class ListaCompra extends AppCompatActivity implements /*NavigationView.O
         ibtn_reset = (ImageButton)findViewById(R.id.lista_compra_btn_reset);
         tv_precio_total = (TextView)findViewById(R.id.lista_compra_tv_precio_total);
         tv_precio_compra = (TextView)findViewById(R.id.lista_compra_tv_precio_compra);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String mon = prefs.getString("moneda", "€");
+
+        TextView moneda1 = (TextView) findViewById(R.id.lista_compra_tv_simb_moneda);
+        moneda1.setText(mon);
+
+        TextView moneda2 = (TextView) findViewById(R.id.lista_compra_tv_simb_moneda2);
+        moneda2.setText(mon);
 
         ibtn_reset.setOnClickListener(new View.OnClickListener() {
             @Override

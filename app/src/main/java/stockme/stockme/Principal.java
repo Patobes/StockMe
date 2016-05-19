@@ -43,6 +43,7 @@ public class Principal extends AppCompatActivity
         nav_menu = (NavigationView) findViewById(R.id.nav_view);
         nav_menu.setNavigationItemSelectedListener(this);
 
+
         BDHandler handler = new BDHandler(this);
         handler.abrir();
         handler.cerrar();
@@ -50,12 +51,14 @@ public class Principal extends AppCompatActivity
     }
 
     private void crearPreferenciasPorDefecto() {
-        Configuracion.setPreferencia("moneda", Util.moneda);
         Configuracion.setPreferencia("anterior", "Listas");
-        if(!Configuracion.isPreferencia("ordenListas"))
-            Configuracion.setPreferencia("ordernListas", "ASC");
+        if (!Configuracion.isPreferencia("orden_listas"))
+            Configuracion.setPreferencia("orden_listas", "ASC");
         if(!Configuracion.isPreferencia("idioma"))
-            Configuracion.setPreferencia("idioma", "ES");
+            Configuracion.setPreferencia("idioma", "es");
+        if (!Configuracion.isPreferencia("moneda")) {
+            Configuracion.setPreferencia("moneda", Util.moneda);
+        }
     }
 
     @Override

@@ -8,9 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ProgressBar;
 
 public class SplashScreenIntro extends AppCompatActivity {
-    private ProgressBar prb_carrito;
-    private final static int duracion = 3000;
+    private final static int duracion = 1400;
     private final static int tick = 200;
+    private ProgressBar prb_carrito;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

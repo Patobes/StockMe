@@ -3,6 +3,8 @@ package stockme.stockme.adaptadores;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,10 +31,15 @@ import stockme.stockme.logica.ArticuloSupermercado;
 import stockme.stockme.logica.Lista;
 import stockme.stockme.logica.ListaArticulo;
 import stockme.stockme.persistencia.BDHandler;
-import stockme.stockme.util.Configuracion;
 import stockme.stockme.util.Util;
 
 public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<ArticuloSupermercado> {
+    //atributos static para gestionar el precio. Necesario al no pertenecer los controles a esta vista
+    private static TextView tv_precio_total;
+    private static TextView tv_precio_compra;
+    private static Map<Integer, Float> costes = new TreeMap<>();
+    //para el diálogo
+    View vistaPrecio;
     private DynamicListView articulos;
     private List<ArticuloSupermercado> datos;
     private Lista lista;
@@ -47,25 +54,18 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
     private ImageButton btnMenos;
     private CheckBox cbComprado;
 
-    //para el diálogo
-    View vistaPrecio;
-
-    //atributos static para gestionar el precio. Necesario al no pertenecer los controles a esta vista
-    private static TextView tv_precio_total;
-    private static TextView tv_precio_compra;
-    private static Map<Integer, Float> costes = new TreeMap<>();
+    public AdaptadorListItemArticulosListaCompra(Context context, List<ArticuloSupermercado> datos, Lista lista) {
+        super(context, R.layout.listitem_articulos_lista_compra, datos);
+        this.datos = datos;
+        this.lista = lista;
+    }
 
     public static TextView getTv_precio_total() {
         return tv_precio_total;
     }
+
     public static void setTv_precio_total(TextView tv_precio_total) {
         AdaptadorListItemArticulosListaCompra.tv_precio_total = tv_precio_total;
-    }
-
-    private void actualizarPrecioTotal(){
-        BDHandler manejador = new BDHandler(getContext());
-        tv_precio_total.setText(String.valueOf(round(manejador.obtenerPrecioTotal(lista.getNombre()), 2)));
-        manejador.cerrar();
     }
 
     public static TextView getTv_precio_compra() {
@@ -75,25 +75,25 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
         AdaptadorListItemArticulosListaCompra.tv_precio_compra = tv_precio_compra;
     }
 
-    private void actualizarPrecioCompra(){
-        tv_precio_compra.setText(String.valueOf(getTotalCostes()));
-    }
-
     private static void addCoste(Integer id, Float coste){
         if(isCoste(id)) {
             costes.put(id, getCoste(id) + coste);//actualiza su valor
         }else
             costes.put(id, coste);
     }
+
     private static void delCoste(Integer id){
         costes.remove(id);
     }
+
     private static Float getCoste(Integer id){
         return costes.get(id);
     }
+
     private static boolean isCoste(Integer id){
         return costes.containsKey(id);
     }
+
     public static void resetCostes(){
         costes.clear();
     }
@@ -112,10 +112,14 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
         return bd.floatValue();
     }
 
-    public AdaptadorListItemArticulosListaCompra(Context context, List<ArticuloSupermercado> datos, Lista lista) {
-        super(context, R.layout.listitem_articulos_lista_compra, datos);
-        this.datos = datos;
-        this.lista = lista;
+    private void actualizarPrecioTotal() {
+        BDHandler manejador = new BDHandler(getContext());
+        tv_precio_total.setText(String.valueOf(round(manejador.obtenerPrecioTotal(lista.getNombre()), 2)));
+        manejador.cerrar();
+    }
+
+    private void actualizarPrecioCompra() {
+        tv_precio_compra.setText(String.valueOf(getTotalCostes()));
     }
 
     @Override
@@ -139,9 +143,11 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
         lblMarca = (TextView)item.findViewById(R.id.listitem_articulos_marca);
         lblMarca.setText(articulo.getMarca());
 
-//        TextView moneda = (TextView) item.findViewById(R.id.listitem_articulos_moneda);
-//        String mon = getContext().getSharedPreferences("StockMePref", Context.MODE_PRIVATE).getString("moneda","fallo");
-//        moneda.setText(mon);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+        TextView moneda = (TextView) item.findViewById(R.id.listitem_articulos_moneda);
+        String mon = prefs.getString("moneda", "€");
+        moneda.setText(mon);
 
         lblSupermercado = (TextView)item.findViewById(R.id.listitem_articulos_superm);
         lblSupermercado.setText(articuloSupermercado.getSupermercado());
@@ -247,7 +253,9 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
                 final TextView txActual = (TextView)vistaPrecio.findViewById(R.id.dialogo_cambiar_precio_tv_actual);
                 final EditText input = (EditText)vistaPrecio.findViewById(R.id.dialogo_cambiar_precio_et_precio);
 
-                String actual = getContext().getResources().getString(R.string.Actual) + String.valueOf(round(datos.get(pos).getPrecio(), 2)) + " " + Configuracion.getPreferenciaString("moneda");
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+                String actual = getContext().getResources().getString(R.string.Actual) + String.valueOf(round(datos.get(pos).getPrecio(), 2)) + " " + prefs.getString("moneda", "€");
                 txActual.setText(actual);
 
                 builder.setPositiveButton(view.getContext().getResources().getString(R.string.Aceptar), new DialogInterface.OnClickListener() {

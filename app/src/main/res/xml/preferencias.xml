@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <ListPreference
         android:dialogTitle="@string/Selecciona_el_idioma"
-            android:entries="@array/idioma"
+        android:entries="@array/idioma"
         android:entryValues="@array/codidioma"
         android:key="idioma"
         android:summary="@string/Selecciona_el_idioma"
