@@ -139,6 +139,10 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
         lblMarca = (TextView)item.findViewById(R.id.listitem_articulos_marca);
         lblMarca.setText(articulo.getMarca());
 
+//        TextView moneda = (TextView) item.findViewById(R.id.listitem_articulos_moneda);
+//        String mon = getContext().getSharedPreferences("StockMePref", Context.MODE_PRIVATE).getString("moneda","fallo");
+//        moneda.setText(mon);
+
         lblSupermercado = (TextView)item.findViewById(R.id.listitem_articulos_superm);
         lblSupermercado.setText(articuloSupermercado.getSupermercado());
 

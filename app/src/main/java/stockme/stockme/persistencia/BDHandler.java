@@ -1514,6 +1514,27 @@ public class BDHandler extends SQLiteOpenHelper {
         return articulos;
     }
 
+    public List<ArticuloSupermercado> obtenerArticulosEnLista(Lista lista, String orderBy) {
+        String nombre = lista.getNombre();
+        ArrayList<ArticuloSupermercado> articulos = new ArrayList();
+        String query = "SELECT * FROM LISTA_ARTICULO AS LA JOIN ARTICULO_SUPERMERCADO AS AR ON LA.Articulo = AR.Id " +
+                "JOIN ARTICULO AS A ON AR.Articulo = A.ID WHERE LA.NOMBRE = ? ORDER BY A.NOMBRE " + orderBy;
+
+        SQLiteDatabase db = this.obtenerManejadorLectura();
+        Cursor cursor = db.rawQuery(query, new String[]{nombre});
+
+        if (cursor.moveToFirst()) {
+            do {
+                ArticuloSupermercado art = obtenerArticuloSupermercado(cursor.getInt(cursor.getColumnIndex(ListaArticulo.ARTICULO)));
+                articulos.add(art);
+            } while (cursor.moveToNext());
+        }
+
+        Log.d("obtenerArticulosEnLista", articulos.toString());
+        db.close();
+        return articulos;
+    }
+
     public int obtenerCantidadArticuloEnLista(int articulo, Lista lista){
         return obtenerCantidadArticuloEnLista(articulo, lista.getNombre());
     }

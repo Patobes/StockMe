@@ -1,8 +1,10 @@
 package stockme.stockme;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -77,8 +79,9 @@ public class ListaCompra extends AppCompatActivity implements /*NavigationView.O
         }
         this.setTitle(lista.getNombre());
 
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         final BDHandler manejador = new BDHandler(this);
-        List<ArticuloSupermercado> listaArticulos = manejador.obtenerArticulosEnLista(lista);
+        List<ArticuloSupermercado> listaArticulos = manejador.obtenerArticulosEnLista(lista, prefs.getString("orden_listas", "ASC"));
         final AdaptadorListItemArticulosListaCompra adaptador = new AdaptadorListItemArticulosListaCompra(this, listaArticulos, lista);
 
 

@@ -12,10 +12,10 @@ import stockme.stockme.R;
 public class Util {
 
     public static SimpleDateFormat diaMesAnyo = new SimpleDateFormat("dd/MM/yyyy");
-    public static String moneda = "€";
+    public static String moneda = Configuracion.getPreferenciaString("moneda");
     public static String vieneDe = "Principal";
     //hay que INCREMENTAR en 1 cada vez que se hace una modificación en la estructura o en contenido inicial
-    private static int BD_VERSION = 33;
+    private static int BD_VERSION = 34;
 
     private Util() {
     }

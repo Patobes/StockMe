@@ -131,4 +131,5 @@
     <string name="Tuto_stock2">Press to add a new article to your stock</string>
     <string name="Tuto_stock3">Thats all!, add your articles, their colours represents their state</string>
     <string name="Tutoriales">Tutorials</string>
+    <string name="Tutoriales_reset">Tutorial has been reset</string>
 </resources>
