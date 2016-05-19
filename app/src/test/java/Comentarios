@@ -19,3 +19,6 @@ en los Fragments se puede usar getActivity() para trabajar sobre el padre
 -Poner valore por defecto en la bd
 -Revisar comoprtamiento si no se insertan campos en artículos_add
 -Suma de precio en ListaDeArticulos (quizá renombrar a lista de compra)
+
+
+- BUG: listas -> seleccionar lista -> darle a la flecha de volver atras -> lleva a Stock en vez de a listas

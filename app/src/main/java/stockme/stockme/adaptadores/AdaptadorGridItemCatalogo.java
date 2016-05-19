@@ -80,7 +80,7 @@ public class AdaptadorGridItemCatalogo extends BaseAdapter {
                     public void onClick(DialogInterface dialog, int which) {
                         BDHandler manejador = new BDHandler(v.getContext());
 
-                        if (!manejador.eliminarArticuloCascade(datos.get(position)))
+                        if (!manejador.eliminarArticulo(datos.get(position)))
                             Util.mostrarToast(v.getContext(), v.getContext().getResources().getString(R.string.No_se_ha_podido_eliminar_articulo));
                         else {
                             Util.mostrarToast(v.getContext(), v.getContext().getResources().getString(R.string.Articulo_eliminado));

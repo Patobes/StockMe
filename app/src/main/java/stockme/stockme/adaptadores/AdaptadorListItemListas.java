@@ -107,7 +107,7 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
                     public void onClick(DialogInterface dialog, int which) {
                         BDHandler manejador = new BDHandler(getContext());
 
-                        if (!manejador.eliminarListaCascade(datos.get(position)))
+                        if (!manejador.eliminarLista(datos.get(position)))
                             Util.mostrarToast(getContext(), getContext().getResources().getString(R.string.No_se_ha_podido_eliminar_listas));
                         else {
                             Util.mostrarToast(getContext(), getContext().getResources().getString(R.string.Lista_eliminada));

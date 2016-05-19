@@ -31,6 +31,9 @@ public class BDHandler extends SQLiteOpenHelper {
         insertarIniciales(db);
     }
 
+    @Override
+    public void onOpen(SQLiteDatabase db){ db.execSQL("PRAGMA foreign_keys = ON;"); }
+
     private void insertarIniciales(SQLiteDatabase db) {
         /* TABLA ARTICULO
         ID - INT - PK
@@ -68,7 +71,7 @@ public class BDHandler extends SQLiteOpenHelper {
                 "`Articulo` INT NOT NULL," +
                 "`Supermercado` TEXT NOT NULL DEFAULT 'Cualquiera'," +
                 "`Precio` REAL DEFAULT 0.0," +
-                "FOREIGN KEY(`Articulo`) REFERENCES `ARTICULO`(`Id`)," +
+                "FOREIGN KEY(`Articulo`) REFERENCES `ARTICULO`(`Id`) ON DELETE CASCADE," +
                 "FOREIGN KEY(`Supermercado`) REFERENCES `SUPERMERCADO`(`Nombre`)" +
                 ")";
         db.execSQL("DROP TABLE IF EXISTS 'ARTICULO_SUPERMERCADO';");
@@ -84,7 +87,7 @@ public class BDHandler extends SQLiteOpenHelper {
                 "`Cantidad` INTEGER NOT NULL DEFAULT 1," +
                 "`Minimo` INTEGER NOT NULL DEFAULT 0," +
                 "PRIMARY KEY(Articulo)," +
-                "FOREIGN KEY(`Articulo`) REFERENCES `ARTICULO`(`Id`)" +
+                "FOREIGN KEY(`Articulo`) REFERENCES `ARTICULO`(`Id`) ON DELETE CASCADE" +
                 ")";
         db.execSQL("DROP TABLE IF EXISTS 'STOCK';");
         db.execSQL(stock);
@@ -101,7 +104,7 @@ public class BDHandler extends SQLiteOpenHelper {
                 "`FechaModificacion` TEXT NOT NULL," +
                 "`Supermercado` TEXT NOT NULL DEFAULT 'Cualquiera'," +
                 "PRIMARY KEY(Nombre)," +
-                "FOREIGN KEY(`Supermercado`) REFERENCES ARTICULO(Nombre)" +
+                "FOREIGN KEY(`Supermercado`) REFERENCES SUPERMERCADO(Nombre)" +
                 ")";
         db.execSQL("DROP TABLE IF EXISTS 'LISTA';");
         db.execSQL(lista);
@@ -116,8 +119,8 @@ public class BDHandler extends SQLiteOpenHelper {
                 "`Nombre` TEXT NOT NULL," +
                 "`Cantidad` INTEGER NOT NULL DEFAULT 0," +
                 "PRIMARY KEY(Articulo,Nombre)," +
-                "FOREIGN KEY(`Articulo`) REFERENCES `ARTICULO_SUPERMERCADO`(`Id`)," +
-                "FOREIGN KEY(`Nombre`) REFERENCES `LISTA`(`Nombre`)" +
+                "FOREIGN KEY(`Articulo`) REFERENCES `ARTICULO_SUPERMERCADO`(`Id`) ON DELETE CASCADE," +
+                "FOREIGN KEY(`Nombre`) REFERENCES `LISTA`(`Nombre`) ON DELETE CASCADE" +
                 ")";
         db.execSQL("DROP TABLE IF EXISTS 'LISTA_ARTICULO';");
         db.execSQL(listaArticulo);
@@ -576,18 +579,8 @@ public class BDHandler extends SQLiteOpenHelper {
 
     //ARTICULO - DELETE
 
-    //Borrar en cascada de otras tablas?
-
     public boolean eliminarArticulo(Articulo articulo){
-        int filaBorrada = 0;
-
-        if(estaArticulo(articulo.getId())){
-            SQLiteDatabase db = this.obtenerManejadorEscritura();
-            filaBorrada = db.delete("ARTICULO", Articulo.ID + " = ?", new String[]{Integer.toString(articulo.getId())});
-            db.close();
-        }
-
-        return filaBorrada > 0;
+        return eliminarArticulo(articulo.getNombre(), articulo.getMarca());
     }
 
     public boolean eliminarArticulo(String nombre, String marca){
@@ -599,30 +592,6 @@ public class BDHandler extends SQLiteOpenHelper {
             db.close();
         }
         return filaBorrada> 0;
-    }
-
-    public boolean eliminarArticuloCascade(Articulo articulo){
-        boolean ok = false;
-        if(estaArticulo(articulo.getId())){
-            SQLiteDatabase db = this.obtenerManejadorEscritura();
-            db.beginTransaction();
-            try{
-                db.delete("ARTICULO", Articulo.ID + " = ?", new String[]{Integer.toString(articulo.getId())});
-                db.delete("STOCK", Stock.ARTICULO + " = ?", new String[]{Integer.toString(articulo.getId())});
-                List<ArticuloSupermercado> articulosSupermercado = this.obtenerArticulosSupermercadoPorArticulo(articulo.getId());
-                for (ArticuloSupermercado articuloSupermercado: articulosSupermercado) {
-                    db.delete("LISTA_ARTICULO", ListaArticulo.ARTICULO + " = ?", new String[]{Integer.toString(articuloSupermercado.getId())});
-                }
-                db.delete("ARTICULO_SUPERMERCADO", ArticuloSupermercado.ARTICULO + " = ?", new String[]{Integer.toString(articulo.getId())});
-
-            } catch (Exception e){
-                ok = false;
-            } finally {
-                db.endTransaction();
-                db.close();
-            }
-        }
-        return ok;
     }
 
     //-------------------------------------------------------------------------------------------
@@ -728,8 +697,6 @@ public class BDHandler extends SQLiteOpenHelper {
         }
         return filaBorrada> 0;
     }
-
-    //public boolean eliminarSupermercadoCascade(){}
 
     //-------------------------------------------------------------------------------------------
 
@@ -1201,24 +1168,6 @@ public class BDHandler extends SQLiteOpenHelper {
         }
 
         return filaBorrada > 0;
-    }
-
-    public boolean eliminarArticuloSupermercadoCascade(ArticuloSupermercado articuloSupermercado){
-        boolean ok = false;
-        if(estaArticuloSupermercado(articuloSupermercado.getId())){
-            SQLiteDatabase db = this.obtenerManejadorEscritura();
-            db.beginTransaction();
-            try{
-                db.delete("LISTA_ARTICULO", ListaArticulo.ARTICULO + " = ?", new String[]{Integer.toString(articuloSupermercado.getId())});
-                db.delete("ARTICULO_SUPERMERCADO", ArticuloSupermercado.ID + " = ?", new String[]{Integer.toString(articuloSupermercado.getId())});
-            } catch (Exception e){
-                ok = false;
-            } finally {
-                db.endTransaction();
-                db.close();
-            }
-        }
-        return ok;
     }
 
     //-------------------------------------------------------------------------------------------
