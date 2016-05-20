@@ -26,15 +26,15 @@ import stockme.stockme.util.InputFilterMinMax;
 import stockme.stockme.util.Util;
 
 public class ArticulosAdd extends AppCompatActivity implements Fragment_listas.OnFragmentInteractionListener {
+    String nLista;
+    ArticuloSupermercado articulo;
+    int cantidad;
+    float precio;
     private EditText etNombre, etPrecio, etCantidad;
     private AutoCompleteTextView atv_marcas;
     private Spinner spTipos, spSupermercado;
     private Button btnCatalogo;
     private ImageButton btnAceptar;
-    String nLista;
-    ArticuloSupermercado articulo;
-    int cantidad;
-    float precio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +105,8 @@ public class ArticulosAdd extends AppCompatActivity implements Fragment_listas.O
 
                     if (!etPrecio.getText().toString().isEmpty())
                         precio = Float.parseFloat(etPrecio.getText().toString());
+                    else
+                        precio = 0;
 
                     if (precio >= 0) {
                         if (nombre != null && !nombre.isEmpty()) {
