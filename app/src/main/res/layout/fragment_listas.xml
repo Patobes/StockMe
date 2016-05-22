@@ -6,38 +6,38 @@
     >
 
     <RelativeLayout
+        android:id="@+id/fragment_listas_relayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:id="@+id/fragment_listas_relayout"
         >
 
 
-        <ListView
+        <com.nhaarman.listviewanimations.itemmanipulation.DynamicListView
+            android:id="@+id/fragment_listas_listview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/fragment_listas_listview"
-            android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:clickable="false"
-            android:scrollbars="none"
             android:divider="@android:color/transparent"
             android:dividerHeight="4dp"
             android:scrollIndicators="none"
+            android:scrollbars="none"
             />
 
         <Button
+            android:id="@+id/fragment_listas_btn_mas"
             style="?android:attr/buttonStyleSmall"
-            android:background="@drawable/esquinas_boton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Mas"
-            android:textSize="25dp"
-            android:id="@+id/fragment_listas_btn_mas"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/esquinas_boton"
+            android:text="@string/Mas"
+            android:textSize="25dp" />
     </RelativeLayout>
 </FrameLayout>

@@ -3,6 +3,7 @@ package stockme.stockme.adaptadores;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +11,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
+
+import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
+import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
 
 import java.util.Date;
 import java.util.List;
@@ -26,16 +29,7 @@ import stockme.stockme.util.Util;
 
 
 public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
-    //patrón ViewHolder para optimización de listas
-    private static class ViewHolder{
-        ImageButton btn_delete;
-        TextView lblNombre;
-        TextView lblSupermercado;
-        TextView lblFecha;
-        TextView lblNProductos;
-    }
-
-    private ListView listas;
+    private DynamicListView listas;
     private List<Lista> datos;
     private ImageButton btn_delete;
     private TextView lblNombre;
@@ -44,7 +38,6 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
     private TextView lblNProductos;
     private Lista lista;
     private String nuevoNombre;
-
     public AdaptadorListItemListas(Context context, List<Lista> datos) {
         super(context, R.layout.listitem_lista, datos);
 //        this.context = context;
@@ -113,7 +106,7 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
                             Util.mostrarToast(getContext(), getContext().getResources().getString(R.string.Lista_eliminada));
                             remove(datos.get(position));
                         }
-                        
+
                         manejador.cerrar();
                     }
                 };
@@ -121,7 +114,7 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
             }
         });
 
-        listas = (ListView)parent.findViewById(R.id.fragment_listas_listview);
+        listas = (DynamicListView) parent.findViewById(R.id.fragment_listas_listview);
         listas.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -171,8 +164,42 @@ public class AdaptadorListItemListas extends ArrayAdapter<Lista> {
             }
         });
 
+        listas.enableSwipeToDismiss(
+                new OnDismissCallback() {
+                    @Override
+                    public void onDismiss(@NonNull final ViewGroup listView, @NonNull final int[] reverseSortedPositions) {
+                        for (final int position : reverseSortedPositions) {
+                            DialogInterface.OnClickListener borrarListaListener = new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    BDHandler manejador = new BDHandler(getContext());
+
+                                    if (!manejador.eliminarLista(datos.get(position)))
+                                        Util.mostrarToast(getContext(), getContext().getResources().getString(R.string.No_se_ha_podido_eliminar_listas));
+                                    else {
+                                        Util.mostrarToast(getContext(), getContext().getResources().getString(R.string.Lista_eliminada));
+                                        remove(datos.get(position));
+                                    }
+
+                                    manejador.cerrar();
+                                }
+                            };
+                            Util.crearMensajeAlerta(getContext().getResources().getString(R.string.Quieres_eliminar_lista), borrarListaListener, getContext());
+                        }
+                    }
+                }
+        );
+
         manejador.close();
 
         return(item);
+    }
+
+    //patrón ViewHolder para optimización de listas
+    private static class ViewHolder {
+        ImageButton btn_delete;
+        TextView lblNombre;
+        TextView lblSupermercado;
+        TextView lblFecha;
+        TextView lblNProductos;
     }
 }
