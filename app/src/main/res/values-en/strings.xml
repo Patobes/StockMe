@@ -134,6 +134,7 @@
     <string name="Tutoriales_reset">Tutorial has been reset</string>
     <string name="Mostrar_precio_lista_compra_descripcion">Show/Hide price in shopping lists</string>
     <string name="Mostrar_precio_lista_compra_titulo">Show price</string>
-    <string name="Pregunta_salida">Are you sure you want to quit?</string>
+    <string name="Preferencias">Preferences</string>
     <string name="Precio_actual">Current</string>
+    <string name="Pregunta_salida">Are you sure you want to quit?</string>
 </resources>

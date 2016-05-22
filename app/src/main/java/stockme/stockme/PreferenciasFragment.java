@@ -20,6 +20,7 @@ public class PreferenciasFragment extends PreferenceFragment implements SharedPr
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        getActivity().setTitle(getResources().getString(R.string.Preferencias));
 
         addPreferencesFromResource(R.xml.preferencias);
 

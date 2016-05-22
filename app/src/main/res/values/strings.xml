@@ -226,6 +226,7 @@
 
     <string name="Pregunta_salida">¿Seguro que quieres salir?</string>
     <string name="Precio_actual">Actual</string>
+    <string name="Preferencias">Preferencias</string>
 
 
 </resources>
