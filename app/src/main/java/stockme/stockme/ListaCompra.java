@@ -104,7 +104,8 @@ public class ListaCompra extends AppCompatActivity implements /*NavigationView.O
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         final BDHandler manejador = new BDHandler(this);
-        List<ArticuloSupermercado> listaArticulos = manejador.obtenerArticulosEnLista(lista, prefs.getString("orden_listas", "ASC"));
+        List<ArticuloSupermercado> listaArticulos = manejador.obtenerArticulosEnLista(lista);
+
 //        List<ArticuloSupermercado> listaArticulos = manejador.obtenerArticulosEnLista(lista);
         final AdaptadorListItemArticulosListaCompra adaptador = new AdaptadorListItemArticulosListaCompra(this, listaArticulos, lista);
 

@@ -52,8 +52,8 @@ public class Principal extends AppCompatActivity
 
     private void crearPreferenciasPorDefecto() {
         Configuracion.setPreferencia("anterior", "Listas");
-        if (!Configuracion.isPreferencia("orden_listas"))
-            Configuracion.setPreferencia("orden_listas", "ASC");
+//        if (!Configuracion.isPreferencia("orden_listas"))
+//            Configuracion.setPreferencia("orden_listas", "ASC");
         if(!Configuracion.isPreferencia("idioma"))
             Configuracion.setPreferencia("idioma", "es");
         if (!Configuracion.isPreferencia("moneda")) {

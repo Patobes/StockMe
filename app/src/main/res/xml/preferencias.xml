@@ -17,19 +17,19 @@
         android:title="@string/Moneda" />
     <CheckBoxPreference
         android:key="mostrar_marca_stock"
-        android:title="@string/Mostrar_marca_stock_titulo"
-        android:summary="@string/Mostrar_marca_stock_descripcion" />
-    <ListPreference
-        android:dialogTitle="@string/Selecciona_el_orden"
-        android:entries="@array/orden"
-        android:entryValues="@array/codorden"
-        android:key="orden_listas"
-        android:summary="@string/Selecciona_el_orden"
-        android:title="@string/Orden_de_las_listas" />
+        android:summary="@string/Mostrar_marca_stock_descripcion"
+        android:title="@string/Mostrar_marca_stock_titulo" />
+    <!--<ListPreference-->
+    <!--android:dialogTitle="@string/Selecciona_el_orden"-->
+    <!--android:entries="@array/orden"-->
+    <!--android:entryValues="@array/codorden"-->
+    <!--android:key="orden_listas"-->
+    <!--android:summary="@string/Selecciona_el_orden"-->
+    <!--android:title="@string/Orden_de_las_listas" />-->
     <CheckBoxPreference
         android:key="mostrar_precio"
-        android:title="@string/Mostrar_precio_lista_compra_titulo"
-        android:summary="@string/Mostrar_precio_lista_compra_descripcion" />
+        android:summary="@string/Mostrar_precio_lista_compra_descripcion"
+        android:title="@string/Mostrar_precio_lista_compra_titulo" />
     <Preference
         android:key="activar_tutoriales"
         android:summary="@string/Activar_tutoriales"
