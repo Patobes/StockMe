@@ -132,4 +132,6 @@
     <string name="Tuto_stock3">Thats all!, add your articles, their colours represents their state</string>
     <string name="Tutoriales">Tutorials</string>
     <string name="Tutoriales_reset">Tutorial has been reset</string>
+    <string name="Mostrar_precio_lista_compra_descripcion">Show/Hide price in shopping lists</string>
+    <string name="Mostrar_precio_lista_compra_titulo">Show price</string>
 </resources>

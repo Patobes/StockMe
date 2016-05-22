@@ -63,7 +63,6 @@ public class PreferenciasFragment extends PreferenceFragment implements SharedPr
     }
 
     public void setLocale(String lang) {
-
         Activity activity = getActivity();
 
         Locale myLocale = new Locale(lang);

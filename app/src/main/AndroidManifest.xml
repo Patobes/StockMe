@@ -81,15 +81,6 @@
                 android:value="stockme.stockme.CatalogoArticulos" />
         </activity>
         <activity
-            android:name=".AjustesPrueba"
-            android:label="@string/title_activity_ajustes_prueba"
-            android:parentActivityName=".Principal"
-            android:theme="@style/AppTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="stockme.stockme.Principal" />
-        </activity>
-        <activity
             android:name=".StockListaAdd"
             android:parentActivityName=".Principal"
             android:theme="@style/AppTheme">

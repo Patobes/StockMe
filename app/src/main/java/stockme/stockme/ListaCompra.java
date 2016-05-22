@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
@@ -21,6 +22,7 @@ import stockme.stockme.adaptadores.AdaptadorListItemArticulosListaCompra;
 import stockme.stockme.logica.ArticuloSupermercado;
 import stockme.stockme.logica.Lista;
 import stockme.stockme.persistencia.BDHandler;
+import stockme.stockme.util.Configuracion;
 
 public class ListaCompra extends AppCompatActivity implements /*NavigationView.OnNavigationItemSelectedListener,*/
         Fragment_listas.OnFragmentInteractionListener{
@@ -31,6 +33,7 @@ public class ListaCompra extends AppCompatActivity implements /*NavigationView.O
     private TextView tv_precio_total;
     private TextView tv_precio_compra;
     private Lista lista;
+    private LinearLayout lyPrecio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,7 @@ public class ListaCompra extends AppCompatActivity implements /*NavigationView.O
         articulos = (DynamicListView)findViewById(R.id.lista_compra_lista);
         lista_compra_btn_mas = (Button)findViewById(R.id.lista_compra_btn_mas);
         ibtn_reset = (ImageButton)findViewById(R.id.lista_compra_btn_reset);
+        lyPrecio = (LinearLayout)findViewById(R.id.lista_compra_ly_precio);
         tv_precio_total = (TextView)findViewById(R.id.lista_compra_tv_precio_total);
         tv_precio_compra = (TextView)findViewById(R.id.lista_compra_tv_precio_compra);
 
@@ -74,6 +78,16 @@ public class ListaCompra extends AppCompatActivity implements /*NavigationView.O
     @Override
     protected void onResume() {
         super.onResume();
+
+        //mostrar o no el precio según la configuración
+        if(!Configuracion.getPreferenciaBoolean("mostrar_precio")) {
+            ibtn_reset.setVisibility(View.INVISIBLE);
+            lyPrecio.setVisibility(View.INVISIBLE);
+        }else {
+            ibtn_reset.setVisibility(View.VISIBLE);
+            lyPrecio.setVisibility(View.VISIBLE);
+        }
+
 
         //contenido
         //controlo con el atributo estático ya que al implementar el botón de arriba (flecha)

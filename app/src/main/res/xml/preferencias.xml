@@ -22,6 +22,10 @@
         android:key="orden_listas"
         android:summary="@string/Selecciona_el_orden"
         android:title="@string/Orden_de_las_listas" />
+    <CheckBoxPreference
+        android:key="mostrar_precio"
+        android:title="@string/Mostrar_precio_lista_compra_titulo"
+        android:summary="@string/Mostrar_precio_lista_compra_descripcion" />
     <Preference
         android:key="activar_tutoriales"
         android:summary="@string/Activar_tutoriales"

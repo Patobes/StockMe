@@ -59,6 +59,9 @@ public class Principal extends AppCompatActivity
         if (!Configuracion.isPreferencia("moneda")) {
             Configuracion.setPreferencia("moneda", Util.moneda);
         }
+        if(!Configuracion.isPreferencia("mostrar_precio")){
+            Configuracion.setPreferencia("mostrar_precio", true);
+        }
     }
 
     @Override

@@ -1,11 +1,18 @@
 package stockme.stockme;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.widget.ProgressBar;
+
+import java.util.Locale;
 
 public class SplashScreenIntro extends AppCompatActivity {
     private final static int duracion = 1400;
@@ -40,6 +47,28 @@ public class SplashScreenIntro extends AppCompatActivity {
             public void onFinish() {
                 prb_carrito.setProgress(prb_carrito.getProgress() + 1);
                 Intent i = new Intent(SplashScreenIntro.this, Principal.class);
+
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                if(prefs == null) {
+                    Locale myLocale = new Locale("es");
+                    Resources res = getResources();
+                    DisplayMetrics dm = res.getDisplayMetrics();
+                    Configuration conf = res.getConfiguration();
+                    conf.locale = myLocale;
+                    res.updateConfiguration(conf, dm);
+                }else{
+                    String lang = prefs.getString("idioma", "es");
+                    Locale myLocale;
+                    if(lang != null)
+                        myLocale = new Locale(lang);
+                    else
+                        myLocale = new Locale("es");
+                    Resources res = getResources();
+                    DisplayMetrics dm = res.getDisplayMetrics();
+                    Configuration conf = res.getConfiguration();
+                    conf.locale = myLocale;
+                    res.updateConfiguration(conf, dm);
+                }
 
                 startActivity(i);
                 finish();
