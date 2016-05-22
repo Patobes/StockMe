@@ -34,6 +34,7 @@ import com.github.amlcurran.showcaseview.targets.Target;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
 import stockme.stockme.logica.Articulo;
+import stockme.stockme.util.Configuracion;
 import stockme.stockme.util.OpcionesMenus;
 import stockme.stockme.util.Util;
 
@@ -231,6 +232,7 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         if (!Util.vieneDe.equals("articulosAdd") && !Util.vieneDe.equals("stockAdd")) {
+            Configuracion.setPreferencia("anterior", "Artículos");
             int id = item.getItemId();
 
             if(id != R.id.nav_articulos) {
@@ -241,9 +243,9 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
                     i = new Intent(this, Principal.class);
 
                 if (id == R.id.nav_listas) {
-                    i.putExtra("Opcion", "Listas");
+                    Configuracion.setPreferencia("anterior", "Listas");
                 } else if (id == R.id.nav_stock) {
-                    i.putExtra("Opcion", "Stock");
+                    Configuracion.setPreferencia("anterior", "Stock");
                 }
 
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

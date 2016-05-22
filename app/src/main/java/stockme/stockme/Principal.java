@@ -91,7 +91,6 @@ public class Principal extends AppCompatActivity
             finish();
         }
 
-
         if(fragTransact){
             getSupportFragmentManager().beginTransaction().replace(R.id.contenido_principal, fragmento).commit();
             item.setChecked(true);
@@ -111,52 +110,24 @@ public class Principal extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        Util.vieneDe = "Listas";//esto es para resetear la navegacion
-        Intent i = getIntent();
-        if(i != null) {
-            Bundle extras = i.getExtras();
-            if(extras != null) {
-                String opc = extras.getString("Opcion");
-                if (opc != null) {
-                    //Util.mostrarToast(this, "He seleccionado: " + opc);
-                    switch (opc) {
-                        case "Listas":
-                            onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_listas));
-                            break;
-                        case "Stock":
-                            onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_stock));
-                            break;
-                        case "Articulos":
-                            onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_articulos));
-                            break;
-                        default:
-                            onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_listas));
-                            break;
-                    }
-                }else
+        String anterior = Configuracion.getPreferenciaString("anterior");
+        if(anterior != null){
+            switch (anterior) {
+                case "Listas":
                     onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_listas));
-            }else {
-                String anterior = Configuracion.getPreferenciaString("anterior");
-                if(anterior != null){
-                    switch (anterior) {
-                        case "Listas":
-                            onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_listas));
-                            break;
-                        case "Stock":
-                            onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_stock));
-                            break;
-                        case "Articulos":
-                            onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_articulos));
-                            break;
-                        case "Ajustes":
-                            onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_ajustes));
-                            break;
-                        default:
-                            onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_listas));
-                            break;
-                    }
-                }else
+                    break;
+                case "Stock":
+                    onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_stock));
+                    break;
+                case "Articulos":
+                    onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_articulos));
+                    break;
+                case "Ajustes":
+                    onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_ajustes));
+                    break;
+                default:
                     onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_listas));
+                    break;
             }
         }else
             onNavigationItemSelected(nav_menu.getMenu().findItem(R.id.nav_listas));

@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import stockme.stockme.util.Configuracion;
 import stockme.stockme.util.OpcionesMenus;
 import stockme.stockme.util.Util;
 
@@ -47,39 +48,35 @@ public class Preferencias extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        if (!Util.vieneDe.equals("articulosAdd") && !Util.vieneDe.equals("stockAdd")) {
-            int id = item.getItemId();
+        int id = item.getItemId();
 
-            if(id != R.id.nav_ajustes) {
-                Intent i;
-                if (id == R.id.nav_articulos)
-                    i = new Intent(this, CatalogoArticulos.class);
-                else
-                    i = new Intent(this, Principal.class);
+        if(id != R.id.nav_ajustes) {
+            Intent i;
+            if (id == R.id.nav_articulos)
+                i = new Intent(this, CatalogoArticulos.class);
+            else
+                i = new Intent(this, Principal.class);
 
-                if (id == R.id.nav_listas) {
-                    i.putExtra("Opcion", "Listas");
-                } else if (id == R.id.nav_stock) {
-                    i.putExtra("Opcion", "Stock");
-                }
-                //
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-
-                startActivity(i);
-                overridePendingTransition(0, 0);
-
-                finish();
-            }else{
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                if (drawer.isDrawerOpen(GravityCompat.START)) {
-                    drawer.closeDrawer(GravityCompat.START);
-                }
+            if (id == R.id.nav_listas) {
+                Configuracion.setPreferencia("anterior", "Listas");
+            } else if (id == R.id.nav_stock) {
+                Configuracion.setPreferencia("anterior", "Stock");
             }
-            return true;
-        } else {
-            return false;
+            //
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+
+            startActivity(i);
+            overridePendingTransition(0, 0);
+
+            finish();
+        }else{
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            }
         }
+        return true;
     }
 
 
