@@ -79,9 +79,10 @@ public class ListaCompra extends AppCompatActivity implements /*NavigationView.O
         //controlo con el atributo estático ya que al implementar el botón de arriba (flecha)
         //se llama de nuevo la activity, no solo se cierra, por lo que getIntent() no obtenría el
         //extra NombreLista al volver de ArticulosAdd
-        if(nombreLista == null){
-            lista = new Lista(getIntent().getStringExtra("NombreLista"),"","","");
-            nombreLista = lista.getNombre();
+        String nomL = getIntent().getStringExtra("NombreLista");
+        if(nomL != null){//viene de presionar la lista de la compra
+            lista = new Lista(nomL, "", "", "");
+            nombreLista = nomL; //esto para la traza de cuando se vuelva
         }else{
             lista = new Lista(nombreLista, "", "", "");
         }
@@ -90,6 +91,7 @@ public class ListaCompra extends AppCompatActivity implements /*NavigationView.O
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         final BDHandler manejador = new BDHandler(this);
         List<ArticuloSupermercado> listaArticulos = manejador.obtenerArticulosEnLista(lista, prefs.getString("orden_listas", "ASC"));
+//        List<ArticuloSupermercado> listaArticulos = manejador.obtenerArticulosEnLista(lista);
         final AdaptadorListItemArticulosListaCompra adaptador = new AdaptadorListItemArticulosListaCompra(this, listaArticulos, lista);
 
 
