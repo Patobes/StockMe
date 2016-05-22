@@ -48,6 +48,7 @@ public class OpcionesMenus {
 //    }
 
     public static void onBackPressed(final Activity activity){
+//        Configuracion.setPreferencia("anterior", "Listas");
         DrawerLayout drawer = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);

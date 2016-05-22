@@ -51,7 +51,8 @@ public class Principal extends AppCompatActivity
     }
 
     private void crearPreferenciasPorDefecto() {
-        Configuracion.setPreferencia("anterior", "Listas");
+        if(!Configuracion.isPreferencia("anterior"))
+            Configuracion.setPreferencia("anterior", "Listas");
 //        if (!Configuracion.isPreferencia("orden_listas"))
 //            Configuracion.setPreferencia("orden_listas", "ASC");
         if(!Configuracion.isPreferencia("idioma"))
@@ -115,6 +116,7 @@ public class Principal extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        Util.vieneDe = "Listas";
         String anterior = Configuracion.getPreferenciaString("anterior");
         if(anterior != null){
             switch (anterior) {
