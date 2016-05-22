@@ -53,7 +53,7 @@ public class OpcionesMenus {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             //super.onBackPressed();
-            Util.crearMensajeAlerta("¿Seguro que quieres salir?", new DialogInterface.OnClickListener() {
+            Util.crearMensajeAlerta(activity.getResources().getString(R.string.Pregunta_salida), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     activity.finish();

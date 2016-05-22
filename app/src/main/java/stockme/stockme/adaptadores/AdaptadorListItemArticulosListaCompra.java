@@ -255,7 +255,7 @@ public class AdaptadorListItemArticulosListaCompra extends ArrayAdapter<Articulo
 
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
 
-                String actual = getContext().getResources().getString(R.string.Actual) + String.valueOf(round(datos.get(pos).getPrecio(), 2)) + " " + prefs.getString("moneda", "€");
+                String actual = view.getContext().getResources().getString(R.string.Precio_actual) + ": " + String.valueOf(round(datos.get(pos).getPrecio(), 2)) + " " + prefs.getString("moneda", "€");
                 txActual.setText(actual);
 
                 builder.setPositiveButton(view.getContext().getResources().getString(R.string.Aceptar), new DialogInterface.OnClickListener() {

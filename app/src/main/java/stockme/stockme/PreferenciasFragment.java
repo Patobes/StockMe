@@ -75,5 +75,6 @@ public class PreferenciasFragment extends PreferenceFragment implements SharedPr
         Intent refresh = new Intent(activity.getApplicationContext(), Preferencias.class);
         startActivity(refresh);
         activity.finish();
+        activity.overridePendingTransition(0, 0);
     }
 }

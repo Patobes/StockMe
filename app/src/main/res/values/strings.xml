@@ -224,5 +224,8 @@
     <string name="Tutoriales">Tutoriales</string>
     <string name="Tutoriales_reset">Tutoriales restablecidos</string>
 
+    <string name="Pregunta_salida">¿Seguro que quieres salir?</string>
+    <string name="Precio_actual">Actual</string>
+
 
 </resources>
