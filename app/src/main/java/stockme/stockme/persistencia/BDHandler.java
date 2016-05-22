@@ -1755,16 +1755,16 @@ public class BDHandler extends SQLiteOpenHelper {
 
     public boolean estaStockEnListaCompra(int articulo){
         List<Lista> listas = obtenerListas();
-        List<ArticuloSupermercado> articulosSupermercado = new ArrayList<>();
-        for (Lista lista:
-             listas) {
-            articulosSupermercado.addAll(obtenerArticulosEnLista(lista));
+
+        for (Lista lista : listas) {
+
+            for (ArticuloSupermercado art : obtenerArticulosEnLista(lista)) {
+                if (art.getArticulo() == articulo)
+                    return true;
+            }
+
         }
-        for (ArticuloSupermercado as:
-             articulosSupermercado) {
-            if (as.getArticulo() == articulo)
-                return true;
-        }
+
         return false;
     }
 

@@ -8,9 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -19,7 +21,6 @@ import stockme.stockme.R;
 import stockme.stockme.StockListaAdd;
 import stockme.stockme.logica.Stock;
 import stockme.stockme.persistencia.BDHandler;
-import stockme.stockme.util.OnSwipeTouchListener;
 import stockme.stockme.util.Util;
 
 public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
@@ -50,12 +51,11 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
 
         int cantidad = stock.getCantidad();
         int minimo = stock.getMinimo();
-        final boolean pendiente = manejador.estaStockEnListaCompra(stock);
 
         if(cantidad > minimo)
             item.setBackgroundResource(R.drawable.esquinas_stock_verde);
-        else if(pendiente)
-            item.setBackgroundResource(R.drawable.esquinas_stock_amarillo);
+        /*else if(pendiente)
+            item.setBackgroundResource(R.drawable.esquinas_stock_amarillo);*/
         else if(cantidad == 0)
             item.setBackgroundResource(R.drawable.esquinas_stock_rojo);
         else
@@ -147,6 +147,8 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
                         Util.crearMensajeAlerta(getContext().getResources().getString(R.string.Conservar) + nombre + " " + marca + getContext().getResources().getString(R.string.En_el_stock), nombre + " " + marca + getContext().getResources().getString(R.string.Agotado), getContext().getResources().getString(R.string.Elimina), getContext().getResources().getString(R.string.Conserva), borrarStockListener, cancelar, getContext());
                     }
                     else if(cantidad == minimo) {
+                        boolean pendiente = manejador.estaStockEnListaCompra(stock);
+
                         if(pendiente)
                             Util.mostrarToast(getContext(), manejador.obtenerArticulo(datos.get(position).getArticulo()).getNombre() + " " +
                                     manejador.obtenerArticulo(datos.get(position).getArticulo()).getMarca() + getContext().getResources().getString(R.string.Ha_alcanzado_el_minimo_establecido));
@@ -163,19 +165,21 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
                             String marca = manejador.obtenerArticulo(datos.get(position).getArticulo()).getMarca();
                             Util.crearMensajeAlerta(getContext().getResources().getString(R.string.Añadir) + nombre + " " + marca + getContext().getResources().getString(R.string.A_una_lista_compra), nombre + " " + marca + getContext().getResources().getString(R.string.Ha_alcanzado_el_minimo_establecido), añadirStockListaListener, getContext());
                         }
-                    }
-                    else if(cantidad < minimo && !pendiente){
-                        DialogInterface.OnClickListener añadirStockListaListener = new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent i = new Intent(getContext(), StockListaAdd.class);
-                                i.putExtra("IdArticuloSimple", stock1.getArticulo());
-                                getContext().startActivity(i);
-                                //getContext().overridePendingTransition(R.anim.left_in, R.anim.left_out);
-                            }
-                        };
-                        String nombre = manejador.obtenerArticulo(datos.get(position).getArticulo()).getNombre();
-                        String marca = manejador.obtenerArticulo(datos.get(position).getArticulo()).getMarca();
-                        Util.crearMensajeAlerta(getContext().getResources().getString(R.string.Añadir) + nombre + " " + marca + getContext().getResources().getString(R.string.A_una_lista_compra), nombre + " " + marca + getContext().getResources().getString(R.string.Bajo_minimos), añadirStockListaListener, getContext());
+                    } else if (cantidad < minimo) {
+                        if (!manejador.estaStockEnListaCompra(stock)) {
+
+                            DialogInterface.OnClickListener añadirStockListaListener = new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent i = new Intent(getContext(), StockListaAdd.class);
+                                    i.putExtra("IdArticuloSimple", stock1.getArticulo());
+                                    getContext().startActivity(i);
+                                    //getContext().overridePendingTransition(R.anim.left_in, R.anim.left_out);
+                                }
+                            };
+                            String nombre = manejador.obtenerArticulo(datos.get(position).getArticulo()).getNombre();
+                            String marca = manejador.obtenerArticulo(datos.get(position).getArticulo()).getMarca();
+                            Util.crearMensajeAlerta(getContext().getResources().getString(R.string.Añadir) + nombre + " " + marca + getContext().getResources().getString(R.string.A_una_lista_compra), nombre + " " + marca + getContext().getResources().getString(R.string.Bajo_minimos), añadirStockListaListener, getContext());
+                        }
                     }
                     manejador.modificarStockCantidad(stock1, cantidad);
                     datos.get(position).setCantidad(cantidad);
@@ -185,24 +189,13 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
                     manejador.cerrar();
                 }
             }
+
         });
 
-        item.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
+        ListView stocks = (ListView) parent.findViewById(R.id.fragment_stock_listview);
+        stocks.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onSwipeLeft() {
-                ib_menos.performClick();
-            }
-            @Override
-            public void onSwipeRight() {
-                ib_mas.performClick();
-            }
-            @Override
-            public boolean onDoubleClick(){
-                ib_borrar.performClick();
-                return true;
-            }
-            @Override
-            public void onLongClick(){
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 final BDHandler manejador = new BDHandler(getContext());
                 final Stock stock1 = datos.get(position);
 
@@ -244,10 +237,13 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
                     ad.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
                 manejador.cerrar();
+
+                return true;
             }
         });
 
         manejador.cerrar();
         return(item);
     }
+
 }
