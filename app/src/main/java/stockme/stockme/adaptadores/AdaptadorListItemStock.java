@@ -21,6 +21,7 @@ import stockme.stockme.R;
 import stockme.stockme.StockListaAdd;
 import stockme.stockme.logica.Stock;
 import stockme.stockme.persistencia.BDHandler;
+import stockme.stockme.util.Configuracion;
 import stockme.stockme.util.Util;
 
 public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
@@ -70,7 +71,10 @@ public class AdaptadorListItemStock extends ArrayAdapter<Stock>{
         ib_menos = (ImageButton) item.findViewById(R.id.listitem_stock_menos);
 
         tv_nombre.setText(manejador.obtenerArticulo(stock.getArticulo()).getNombre());
-        tv_marca.setText(manejador.obtenerArticulo(stock.getArticulo()).getMarca());
+        if(Configuracion.getPreferenciaBoolean("mostrar_marca_stock"))
+            tv_marca.setText(manejador.obtenerArticulo(stock.getArticulo()).getMarca());
+        else
+            tv_marca.setVisibility(View.INVISIBLE);
         tv_cantidad.setText(String.valueOf(stock.getCantidad()));
         tv_minimo.setText(String.valueOf(stock.getMinimo()));
 

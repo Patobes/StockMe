@@ -208,6 +208,9 @@
     <string name="Mostrar_precio_lista_compra_titulo">Mostrar precios</string>
     <string name="Mostrar_precio_lista_compra_descripcion">Mostrar/Ocultar precios en las listas de la compra</string>
 
+    <string name="Mostrar_marca_stock_titulo">Mostrar marcas en stock</string>
+    <string name="Mostrar_marca_stock_descripcion">Mostrar/Ocultar las marcas en el stock</string>
+
     <string name="Tuto_lista1">Aquí saldrán las listas de la compra</string>
     <string name="Tuto_lista2">Pulsa en este botón para crear una lista nueva</string>
     <string name="Tuto_lista3">Esto es todo, añade las listas que quieras</string>

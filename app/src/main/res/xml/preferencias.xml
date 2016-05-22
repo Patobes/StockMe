@@ -15,6 +15,10 @@
         android:key="moneda"
         android:summary="@string/Selecciona_la_moneda"
         android:title="@string/Moneda" />
+    <CheckBoxPreference
+        android:key="mostrar_marca_stock"
+        android:title="@string/Mostrar_marca_stock_titulo"
+        android:summary="@string/Mostrar_marca_stock_descripcion" />
     <ListPreference
         android:dialogTitle="@string/Selecciona_el_orden"
         android:entries="@array/orden"

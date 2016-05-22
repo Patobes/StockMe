@@ -62,6 +62,8 @@ public class Principal extends AppCompatActivity
         if(!Configuracion.isPreferencia("mostrar_precio")){
             Configuracion.setPreferencia("mostrar_precio", true);
         }
+        if(!Configuracion.isPreferencia("mostrar_marca_stock"))
+            Configuracion.setPreferencia("mostrar_marca_stock", false);
     }
 
     @Override

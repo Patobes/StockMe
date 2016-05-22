@@ -137,4 +137,6 @@
     <string name="Preferencias">Preferences</string>
     <string name="Precio_actual">Current</string>
     <string name="Pregunta_salida">Are you sure you want to quit?</string>
+    <string name="Mostrar_marca_stock_titulo">Show brands in stock</string>
+    <string name="Mostrar_marca_stock_descripcion">Show/Hide brands in stock</string>
 </resources>
