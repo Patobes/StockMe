@@ -4,11 +4,11 @@
 
     <!-- para limitar la instalación en pantallas pequeñas -->
     <supports-screens
-        android:smallScreens="false"
-        android:normalScreens="false"
+        android:anyDensity="true"
         android:largeScreens="true"
-        android:xlargeScreens="true"
-        android:anyDensity="true"/>
+        android:normalScreens="false"
+        android:smallScreens="false"
+        android:xlargeScreens="true" />
 
     <application
         android:allowBackup="true"
@@ -21,6 +21,7 @@
         <activity
             android:name=".Principal"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="stockme.stockme.MAINACTIVITY" />
@@ -32,6 +33,7 @@
             android:name=".ListaAdd"
             android:label="@string/title_activity_lista_add"
             android:parentActivityName=".Principal"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -41,6 +43,7 @@
             android:name=".ListaCompra"
             android:label="@string/title_activity_lista_de_articulos"
             android:parentActivityName=".Principal"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -48,7 +51,8 @@
         </activity>
         <activity
             android:name=".StockAdd"
-            android:parentActivityName=".Principal">
+            android:parentActivityName=".Principal"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="stockme.stockme.Principal" />
@@ -70,22 +74,29 @@
 
         <activity
             android:name=".ArticulosAdd"
-            android:parentActivityName=".ListaCompra">
+            android:parentActivityName=".ListaCompra"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="stockme.stockme.ListaCompra" />
         </activity>
         <activity
             android:name=".InfoBD"
-            android:parentActivityName=".Principal">
+            android:parentActivityName=".Principal"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="stockme.stockme.Principal" />
         </activity>
-        <activity android:name=".CatalogoArticulos"></activity>
+        <activity
+            android:name=".CatalogoArticulos"
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:name=".ArticuloSimpleAdd"
-            android:parentActivityName=".CatalogoArticulos">
+            android:parentActivityName=".CatalogoArticulos"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="stockme.stockme.CatalogoArticulos" />
@@ -93,13 +104,15 @@
         <activity
             android:name=".StockListaAdd"
             android:parentActivityName=".Principal"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="stockme.stockme.StockListaAdd" />
         </activity>
         <activity android:name=".Preferencias"
-            android:label="Preferencias">
+            android:label="Preferencias"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 
