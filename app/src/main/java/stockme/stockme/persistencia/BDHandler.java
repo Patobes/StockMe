@@ -134,16 +134,15 @@ public class BDHandler extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Cualquiera');");
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Día');");
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Mercadona');");
-        db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('SuperUltraHiperMercadona');");
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Eroski');");
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Simply');");
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Carrefour');");
         db.execSQL("INSERT INTO `SUPERMERCADO` VALUES('Supersol');");
 
-        db.execSQL("INSERT INTO `ARTICULO_SUPERMERCADO` VALUES(1, 1, 'Mercadona', 0.60);");
+        db.execSQL("INSERT INTO `ARTICULO_SUPERMERCADO` VALUES(1, 1, 'Mercadona', 0.69);");
         db.execSQL("INSERT INTO `ARTICULO_SUPERMERCADO` VALUES(2, 2, 'Mercadona', 2.60);");
-        db.execSQL("INSERT INTO `ARTICULO_SUPERMERCADO` VALUES(3, 3, 'Mercadona', 0.60);");
-        db.execSQL("INSERT INTO `ARTICULO_SUPERMERCADO` VALUES(4, 4, 'Mercadona', 0.60);");
+        db.execSQL("INSERT INTO `ARTICULO_SUPERMERCADO` VALUES(3, 3, 'Mercadona', 0.72);");
+        db.execSQL("INSERT INTO `ARTICULO_SUPERMERCADO` VALUES(4, 4, 'Mercadona', 0.53);");
         db.execSQL("INSERT INTO `ARTICULO_SUPERMERCADO` VALUES(5, 1, 'Eroski', 0.59);");
         db.execSQL("INSERT INTO `ARTICULO_SUPERMERCADO` VALUES(6, 2, 'Eroski', 2.59);");
 

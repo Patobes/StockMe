@@ -49,7 +49,7 @@ public class ArticuloSimpleAdd extends AppCompatActivity {
         btnAceptar = (ImageButton)findViewById(R.id.articulo_simple_add_btn_aceptar);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tipos_array,
-                android.R.layout.simple_spinner_item);
+                R.layout.spinner_item);
         spTipos.setAdapter(adapter);
 
         btnAceptar.setOnClickListener(new View.OnClickListener() {

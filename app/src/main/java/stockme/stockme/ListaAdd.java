@@ -39,7 +39,7 @@ public class ListaAdd extends AppCompatActivity implements Fragment_listas.OnFra
         Spinner spinner = (Spinner) findViewById(R.id.lista_add_spinner_supermercados);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, supermercados);
+                R.layout.spinner_item, supermercados);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
