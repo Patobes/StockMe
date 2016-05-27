@@ -66,6 +66,7 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
 
         etBusqueda = (EditText) vToolbar.findViewById(R.id.et_busqueda);
         etBusqueda.setVisibility(View.GONE);
+        etBusqueda.setSingleLine();
         etBusqueda.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -175,16 +176,13 @@ public class CatalogoArticulos extends AppCompatActivity implements NavigationVi
     }
 
     private void realizarBusqueda(KeyEvent event, boolean reset) {
-        if(event != null && event.getAction() == KeyEvent.ACTION_UP) {
-            String texto = etBusqueda.getText().toString();
-            texto = texto != null && !texto.isEmpty() ? texto : null;
-            adapterViewPager = new MyPagerAdapter(getSupportFragmentManager(), this);
-            adapterViewPager.setQuerySearch(texto);
-            vpPager.setAdapter(adapterViewPager);
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(etBusqueda.getWindowToken(), 0);
-            //etBusqueda.setText("");
-        }
+        String texto = etBusqueda.getText().toString();
+        texto = texto != null && !texto.isEmpty() ? texto : null;
+        adapterViewPager = new MyPagerAdapter(getSupportFragmentManager(), this);
+        adapterViewPager.setQuerySearch(texto);
+        vpPager.setAdapter(adapterViewPager);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(etBusqueda.getWindowToken(), 0);
         if(reset){
             adapterViewPager = new MyPagerAdapter(getSupportFragmentManager(), this);
             adapterViewPager.setQuerySearch(null);
